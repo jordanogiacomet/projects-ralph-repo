@@ -1,0 +1,8 @@
+{
+  "heading": "A Streamlined Process for Exceptional Design",
+  "steps": [
+    { "number": "01", "title": "Discover & Research", "description": "Deep dive into your brand, audience, and goals to establish a strong foundation." },
+    { "number": "02", "title": "Design & Prototype", "description": "Crafting wireframes, visual concepts, mockups, and interactive prototypes." },
+    { "number": "03", "title": "Refine & Deliver", "description": "Iterating based on feedback for a polished, production-ready final design." }
+  ]
+}

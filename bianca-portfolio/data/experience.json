@@ -1,0 +1,17 @@
+{
+  "sectionLabel": "Experience",
+  "items": [
+    {
+      "company": "Freelance",
+      "role": "UI/UX & Brand Designer",
+      "period": "2024 — Present",
+      "description": "Designing brand identities and digital interfaces for startups and small businesses."
+    },
+    {
+      "company": "PUCRS",
+      "role": "Design Student",
+      "period": "2022 — Present",
+      "description": "Studying Design with focus on visual communication, branding, and digital product design."
+    }
+  ]
+}

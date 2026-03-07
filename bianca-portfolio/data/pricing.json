@@ -1,0 +1,24 @@
+{
+  "heading": "Choose Your Plan",
+  "description": "Creative solutions to fit every project need — from branding to complete digital presence.",
+  "plans": [
+    {
+      "name": "Basic",
+      "subtitle": "Brand Essentials",
+      "price": "R$ 2.990",
+      "features": ["Logo & brand guidelines", "Social media templates", "Basic brand manual", "2 revision rounds"]
+    },
+    {
+      "name": "Pro",
+      "subtitle": "Growth Package",
+      "price": "R$ 4.990",
+      "features": ["Full brand identity design", "UI/UX design for mobile or web", "Complete brand manual", "Responsive in 4 weeks"]
+    },
+    {
+      "name": "Premium",
+      "subtitle": "Full Experience",
+      "price": "R$ 6.990",
+      "features": ["Complete brand strategy & identity", "Full responsive design (3 devices)", "Custom illustration package", "Priority support"]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "heading": "Frequently Asked Questions",
+  "items": [
+    { "question": "What services do you offer?", "answer": "I specialize in UI/UX design, brand identity, visual design, and digital product design." },
+    { "question": "How long does a typical project take?", "answer": "Depending on the scope, most projects take between 2-6 weeks from kickoff to final delivery." },
+    { "question": "Do you work with startups or established brands?", "answer": "Both! I love working with startups building from scratch and established brands looking to refresh." },
+    { "question": "What does your design process look like?", "answer": "I follow a structured process: discover & research, design & prototype, then refine & deliver. Collaboration is at the center of every step." }
+  ]
+}
