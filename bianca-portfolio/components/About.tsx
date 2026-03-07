@@ -28,8 +28,8 @@ export default function About() {
     { src: "/images/about-1.jpg", alt: "Brand design workspace" },
     { src: "/images/about-2.jpg", alt: "UI mockup on screen" },
     { src: "/images/about-3.jpg", alt: "Typography samples" },
-    { src: "/images/about-4.jpg", alt: "Color palette inspiration" },
-    { src: "/images/about-5.jpg", alt: "Mobile app design" },
+    { src: "/images/trabalho-1.svg", alt: "Baby Chef brand identity design" },
+    { src: "/images/trabalho-8.svg", alt: "Aura Tullis typography and branding" },
     { src: "/images/about-6.jpg", alt: "Wireframe sketches" },
     { src: "/images/about-7.jpg", alt: "Logo design process" },
     { src: "/images/about-8.jpg", alt: "Prototype interaction" },
@@ -78,6 +78,7 @@ export default function About() {
             <div className="grid grid-cols-2 gap-4">
               {images.map((image, index) => {
                 const isLarge = index === 0 || index === 5;
+                const isSvg = image.src.endsWith(".svg");
                 return (
                   <div
                     key={image.alt}
@@ -89,7 +90,7 @@ export default function About() {
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-cover"
+                      className={isSvg ? "object-contain p-2" : "object-cover"}
                       sizes={isLarge ? "(max-width: 768px) 50vw, 300px" : "(max-width: 768px) 50vw, 150px"}
                     />
                   </div>

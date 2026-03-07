@@ -7,14 +7,14 @@
       "title": "Soundwave",
       "description": "Designing an Immersive Audio Tech Experience",
       "tags": ["UI/UX", "Product Design"],
-      "image": "/images/project-placeholder-1.jpg",
+      "image": "/images/project-soundwave.svg",
       "links": { "live": "#", "behance": "#" }
     },
     {
       "title": "Lumiglow",
       "description": "Creating Beauty with a Luxurious Skincare Identity",
       "tags": ["Branding", "Visual Identity"],
-      "image": "/images/project-placeholder-2.jpg",
+      "image": "/images/project-lumiglow.svg",
       "links": { "live": "#", "behance": "#" }
     }
   ]

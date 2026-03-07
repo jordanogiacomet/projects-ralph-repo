@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D0D0D"/>
+      <stop offset="100%" stop-color="#1A1A2E"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2A2A3E"/>
+      <stop offset="50%" stop-color="#4A4A6A"/>
+      <stop offset="100%" stop-color="#2A2A3E"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0D0D0D" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <!-- Subtle grid -->
+  <g opacity="0.05" stroke="#ffffff" stroke-width="0.5">
+    <line x1="400" y1="0" x2="400" y2="900"/>
+    <line x1="800" y1="0" x2="800" y2="900"/>
+    <line x1="1200" y1="0" x2="1200" y2="900"/>
+    <line x1="0" y1="300" x2="1600" y2="300"/>
+    <line x1="0" y1="600" x2="1600" y2="600"/>
+  </g>
+  <!-- Sound wave bars -->
+  <g fill="url(#wave)" opacity="0.6">
+    <rect x="200" y="380" width="8" height="140" rx="4"/>
+    <rect x="230" y="340" width="8" height="220" rx="4"/>
+    <rect x="260" y="300" width="8" height="300" rx="4"/>
+    <rect x="290" y="350" width="8" height="200" rx="4"/>
+    <rect x="320" y="370" width="8" height="160" rx="4"/>
+    <rect x="350" y="280" width="8" height="340" rx="4"/>
+    <rect x="380" y="320" width="8" height="260" rx="4"/>
+    <rect x="410" y="360" width="8" height="180" rx="4"/>
+    <rect x="440" y="250" width="8" height="400" rx="4"/>
+    <rect x="470" y="300" width="8" height="300" rx="4"/>
+    <rect x="500" y="340" width="8" height="220" rx="4"/>
+    <rect x="530" y="380" width="8" height="140" rx="4"/>
+    <rect x="560" y="310" width="8" height="280" rx="4"/>
+    <rect x="590" y="270" width="8" height="360" rx="4"/>
+  </g>
+  <!-- Central waveform -->
+  <g fill="none" stroke="#6366F1" stroke-width="2" opacity="0.4">
+    <path d="M600,450 Q650,350 700,450 Q750,550 800,450 Q850,350 900,450 Q950,550 1000,450 Q1050,350 1100,450 Q1150,550 1200,450 Q1250,350 1300,450 Q1350,550 1400,450"/>
+  </g>
+  <g fill="none" stroke="#818CF8" stroke-width="1.5" opacity="0.25">
+    <path d="M600,450 Q650,300 700,450 Q750,600 800,450 Q850,300 900,450 Q950,600 1000,450 Q1050,300 1100,450 Q1150,600 1200,450 Q1250,300 1300,450 Q1350,600 1400,450"/>
+  </g>
+  <!-- Right side bars -->
+  <g fill="url(#wave)" opacity="0.6">
+    <rect x="1010" y="360" width="8" height="180" rx="4"/>
+    <rect x="1040" y="300" width="8" height="300" rx="4"/>
+    <rect x="1070" y="340" width="8" height="220" rx="4"/>
+    <rect x="1100" y="380" width="8" height="140" rx="4"/>
+    <rect x="1130" y="270" width="8" height="360" rx="4"/>
+    <rect x="1160" y="320" width="8" height="260" rx="4"/>
+    <rect x="1190" y="350" width="8" height="200" rx="4"/>
+    <rect x="1220" y="290" width="8" height="320" rx="4"/>
+    <rect x="1250" y="340" width="8" height="220" rx="4"/>
+    <rect x="1280" y="370" width="8" height="160" rx="4"/>
+    <rect x="1310" y="330" width="8" height="240" rx="4"/>
+    <rect x="1340" y="360" width="8" height="180" rx="4"/>
+    <rect x="1370" y="390" width="8" height="120" rx="4"/>
+  </g>
+  <!-- Glow effect -->
+  <ellipse cx="800" cy="450" rx="500" ry="200" fill="url(#glow)"/>
+  <!-- Circular element -->
+  <circle cx="800" cy="450" r="60" fill="none" stroke="#4A4A6A" stroke-width="1" opacity="0.4"/>
+  <circle cx="800" cy="450" r="40" fill="none" stroke="#6366F1" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="800" cy="450" r="8" fill="#6366F1" opacity="0.5"/>
+  <!-- Corner accents -->
+  <g stroke="#3A3A5A" stroke-width="1" opacity="0.3">
+    <line x1="60" y1="60" x2="120" y2="60"/>
+    <line x1="60" y1="60" x2="60" y2="120"/>
+    <line x1="1540" y1="840" x2="1480" y2="840"/>
+    <line x1="1540" y1="840" x2="1540" y2="780"/>
+  </g>
+</svg>
