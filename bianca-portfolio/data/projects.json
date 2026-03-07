@@ -4,17 +4,17 @@
   "description": "Explore my recent work with design creations and discover how we can bring your ideas to life.",
   "items": [
     {
-      "title": "Soundwave",
-      "description": "Designing an Immersive Audio Tech Experience",
+      "title": "Aura",
+      "description": "Designing an Immersive Wine Experience",
       "tags": ["UI/UX", "Product Design"],
-      "image": "/images/project-soundwave.svg",
+      "image": "/images/trabalho-10.svg",
       "links": { "live": "#", "behance": "#" }
     },
     {
-      "title": "Lumiglow",
-      "description": "Creating Beauty with a Luxurious Skincare Identity",
+      "title": "BabyChef",
+      "description": "Creating Beauty with a Baby Chef Identity",
       "tags": ["Branding", "Visual Identity"],
-      "image": "/images/project-lumiglow.svg",
+      "image": "/images/trabalho-1.svg",
       "links": { "live": "#", "behance": "#" }
     }
   ]

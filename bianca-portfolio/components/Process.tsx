@@ -82,7 +82,7 @@ export default function Process() {
           >
             <div className="rounded-xl bg-bg-accent-block border border-border overflow-hidden relative min-h-[400px] lg:min-h-[500px]">
               <Image
-                src="/images/process-image.jpg"
+                src="/images/trabalho-6.svg"
                 alt="Creative design process workspace"
                 fill
                 className="object-cover"
