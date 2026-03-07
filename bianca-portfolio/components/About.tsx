@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import aboutData from "@/data/about.json";
 
 export default function About() {
@@ -23,15 +24,15 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  const imageLabels = [
-    "Brand Design",
-    "UI Mockup",
-    "Typography",
-    "Color Palette",
-    "Mobile App",
-    "Wireframe",
-    "Logo Design",
-    "Prototype",
+  const images = [
+    { src: "/images/about-1.jpg", alt: "Brand design workspace" },
+    { src: "/images/about-2.jpg", alt: "UI mockup on screen" },
+    { src: "/images/about-3.jpg", alt: "Typography samples" },
+    { src: "/images/about-4.jpg", alt: "Color palette inspiration" },
+    { src: "/images/about-5.jpg", alt: "Mobile app design" },
+    { src: "/images/about-6.jpg", alt: "Wireframe sketches" },
+    { src: "/images/about-7.jpg", alt: "Logo design process" },
+    { src: "/images/about-8.jpg", alt: "Prototype interaction" },
   ];
 
   return (
@@ -75,18 +76,22 @@ export default function About() {
             }`}
           >
             <div className="grid grid-cols-2 gap-4">
-              {imageLabels.map((label, index) => {
+              {images.map((image, index) => {
                 const isLarge = index === 0 || index === 5;
                 return (
                   <div
-                    key={label}
-                    className={`rounded-xl bg-bg-accent-block border border-border overflow-hidden flex items-center justify-center ${
+                    key={image.alt}
+                    className={`rounded-xl bg-bg-accent-block border border-border overflow-hidden relative ${
                       isLarge ? "row-span-2 min-h-[240px]" : "min-h-[120px]"
                     }`}
                   >
-                    <span className="text-text-secondary font-body text-sm">
-                      {label}
-                    </span>
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover"
+                      sizes={isLarge ? "(max-width: 768px) 50vw, 300px" : "(max-width: 768px) 50vw, 150px"}
+                    />
                   </div>
                 );
               })}

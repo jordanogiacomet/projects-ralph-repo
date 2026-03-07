@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import processData from "@/data/process.json";
 
 export default function Process() {
@@ -79,10 +80,14 @@ export default function Process() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="rounded-xl bg-bg-accent-block border border-border overflow-hidden flex items-center justify-center min-h-[400px] lg:min-h-[500px]">
-              <span className="text-text-secondary font-body text-sm">
-                Process Image
-              </span>
+            <div className="rounded-xl bg-bg-accent-block border border-border overflow-hidden relative min-h-[400px] lg:min-h-[500px]">
+              <Image
+                src="/images/process-image.jpg"
+                alt="Creative design process workspace"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
