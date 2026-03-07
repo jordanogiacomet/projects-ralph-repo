@@ -1,66 +1,48 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import faqData from "@/data/faq.json";
 
 export default function FAQ() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section
-      id="faq"
-      ref={sectionRef}
-      className="py-24 bg-bg-primary"
-    >
+    <section id="faq" className="py-24 bg-bg-primary">
       <div className="max-w-3xl mx-auto px-6">
         {/* Heading */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ease-out ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          className="text-center mb-16"
+          initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }}
         >
           <h2 className="font-display text-4xl md:text-5xl leading-tight text-text-primary">
             {faqData.heading}
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Accordion items */}
+        {/* Accordion items - staggered */}
         <div className="divide-y divide-border">
           {faqData.items.map((item, index) => {
             const isOpen = openIndex === index;
             return (
-              <div
+              <motion.div
                 key={index}
-                className={`transition-all duration-700 ease-out ${
-                  visible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${(index + 1) * 150}ms` }}
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.1, 0.25, 1.0] as const,
+                }}
               >
                 <button
                   onClick={() => toggle(index)}
@@ -91,7 +73,7 @@ export default function FAQ() {
                     {item.answer}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

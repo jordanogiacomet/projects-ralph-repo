@@ -1,28 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import aboutData from "@/data/about.json";
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
 
   const images = [
     { src: "/images/about-1.jpg", alt: "Brand design workspace" },
@@ -36,20 +19,15 @@ export default function About() {
   ];
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="py-24 bg-bg-primary"
-    >
+    <section id="about" className="py-24 bg-bg-primary">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left column - text */}
-          <div
-            className={`transition-all duration-700 ease-out ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
+          {/* Left column - text slides in from left */}
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] as const }}
           >
             <p className="text-text-secondary font-body text-sm uppercase tracking-widest mb-4">
               {aboutData.sectionLabel}
@@ -65,15 +43,14 @@ export default function About() {
                 {paragraph}
               </p>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Right column - image grid */}
-          <div
-            className={`transition-all duration-700 ease-out delay-200 ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
+          {/* Right column - image grid slides in from right */}
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1.0] as const }}
           >
             <div className="grid grid-cols-2 gap-4">
               {images.map((image, index) => {
@@ -97,7 +74,7 @@ export default function About() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,43 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import projectsData from "@/data/projects.json";
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section
-      id="portfolio"
-      ref={sectionRef}
-      className="py-24 bg-bg-primary"
-    >
+    <section id="portfolio" className="py-24 bg-bg-primary">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div
-          className={`mb-16 transition-all duration-700 ease-out ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          className="mb-16"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }}
         >
           <p className="text-text-secondary font-body text-sm uppercase tracking-widest mb-4">
             {projectsData.sectionLabel}
@@ -45,21 +24,23 @@ export default function Projects() {
           <p className="font-body text-text-secondary text-lg max-w-2xl">
             {projectsData.description}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Project cards */}
+        {/* Project cards - scale from 0.95 to 1 */}
         <div className="space-y-16">
           {projectsData.items.map((project, index) => (
-            <div
+            <motion.div
               key={project.title}
-              className={`transition-all duration-700 ease-out ${
-                visible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: visible ? `${(index + 1) * 200}ms` : "0ms" }}
+              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.15,
+                ease: [0.25, 0.1, 0.25, 1.0] as const,
+              }}
             >
-              {/* Image placeholder */}
+              {/* Image */}
               <div className="group relative rounded-xl overflow-hidden bg-bg-accent-block border border-border mb-6">
                 <div className="aspect-[16/9] relative transition-transform duration-500 group-hover:scale-[1.02]">
                   <Image
@@ -109,7 +90,7 @@ export default function Projects() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

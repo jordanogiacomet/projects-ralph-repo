@@ -1,42 +1,79 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import skillsData from "@/data/skills.json";
 
-export default function Skills() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (!inView) return;
+    if (prefersReducedMotion) {
+      setCount(target);
+      return;
     }
-    return () => observer.disconnect();
-  }, []);
+    let start = 0;
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      start = Math.round(eased * target);
+      setCount(start);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [inView, target, prefersReducedMotion]);
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="py-24 bg-bg-primary"
-    >
+    <span ref={ref}>
+      {count}{suffix}
+    </span>
+  );
+}
+
+export default function Skills() {
+  const prefersReducedMotion = useReducedMotion();
+
+  const containerVariants = prefersReducedMotion
+    ? undefined
+    : {
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.1 },
+        },
+      };
+
+  const itemVariants = prefersReducedMotion
+    ? undefined
+    : {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1.0] as const },
+        },
+      };
+
+  return (
+    <section id="skills" className="py-24 bg-bg-primary">
       <div className="max-w-7xl mx-auto px-6">
         {/* Heading */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ease-out ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          className="text-center mb-16"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }}
         >
           <p className="text-text-secondary font-body text-sm uppercase tracking-widest mb-4">
             {skillsData.sectionLabel}
@@ -44,35 +81,39 @@ export default function Skills() {
           <h2 className="font-display text-4xl md:text-5xl leading-tight text-text-primary">
             {skillsData.heading}
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Stats grid */}
-        <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 transition-all duration-700 ease-out delay-200 ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        {/* Stats grid with counting-up */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1.0] as const }}
         >
-          {skillsData.stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <span className="font-display text-5xl md:text-6xl text-text-primary">
-                {stat.value}
-              </span>
-              <p className="font-body text-text-secondary text-sm mt-2 uppercase tracking-wide">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
+          {skillsData.stats.map((stat) => {
+            const numericValue = parseInt(stat.value.replace(/\D/g, ""), 10);
+            const suffix = stat.value.replace(/\d/g, "");
+            return (
+              <div key={stat.label} className="text-center">
+                <span className="font-display text-5xl md:text-6xl text-text-primary">
+                  <CountUp target={numericValue} suffix={suffix} />
+                </span>
+                <p className="font-body text-text-secondary text-sm mt-2 uppercase tracking-wide">
+                  {stat.label}
+                </p>
+              </div>
+            );
+          })}
+        </motion.div>
 
         {/* CTA button */}
-        <div
-          className={`text-center mb-20 transition-all duration-700 ease-out delay-200 ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          className="text-center mb-20"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
         >
           <a
             href="#contact"
@@ -80,18 +121,18 @@ export default function Skills() {
           >
             Get in touch
           </a>
-        </div>
+        </motion.div>
 
-        {/* Skill categories */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-3 gap-12 transition-all duration-700 ease-out delay-300 ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
+        {/* Skill categories - staggered children */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
           {skillsData.categories.map((category) => (
-            <div key={category.name}>
+            <motion.div key={category.name} variants={itemVariants}>
               <h3 className="font-display text-2xl text-text-primary mb-6">
                 {category.name}
               </h3>
@@ -105,9 +146,9 @@ export default function Skills() {
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,29 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
 
   const validate = () => {
     const newErrors: typeof errors = {};
@@ -54,17 +38,15 @@ export default function Contact() {
   };
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="py-24 bg-bg-primary"
-    >
+    <section id="contact" className="py-24 bg-bg-primary">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Heading */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ease-out ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+        {/* Heading - slide in from right */}
+        <motion.div
+          className="text-center mb-16"
+          initial={prefersReducedMotion ? {} : { opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }}
         >
           <p className="font-body text-sm uppercase tracking-widest text-text-secondary mb-4">
             Contact
@@ -75,14 +57,16 @@ export default function Contact() {
           <p className="font-body text-text-secondary max-w-xl mx-auto">
             Have a project in mind? I&apos;d love to hear about it. Send me a message and let&apos;s create something extraordinary.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-3 gap-12">
           {/* Form */}
-          <div
-            className={`md:col-span-2 transition-all duration-700 ease-out delay-200 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+          <motion.div
+            className="md:col-span-2"
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.1, 0.25, 1.0] as const }}
           >
             {submitted ? (
               <div className="bg-bg-secondary border border-border rounded-xl p-12 text-center">
@@ -172,13 +156,14 @@ export default function Contact() {
                 </button>
               </form>
             )}
-          </div>
+          </motion.div>
 
           {/* Social links */}
-          <div
-            className={`transition-all duration-700 ease-out delay-300 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.1, 0.25, 1.0] as const }}
           >
             <h3 className="font-display text-xl text-text-primary mb-6">
               Get in Touch
@@ -221,7 +206,7 @@ export default function Contact() {
                 Instagram
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
