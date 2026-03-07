@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import projectsData from "@/data/projects.json";
 
 export default function Projects() {
@@ -60,10 +61,14 @@ export default function Projects() {
             >
               {/* Image placeholder */}
               <div className="group relative rounded-xl overflow-hidden bg-bg-accent-block border border-border mb-6">
-                <div className="aspect-[16/9] flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.02]">
-                  <span className="text-text-secondary font-body text-sm">
-                    {project.title} Preview
-                  </span>
+                <div className="aspect-[16/9] relative transition-transform duration-500 group-hover:scale-[1.02]">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1280px) 100vw, 1280px"
+                  />
                 </div>
                 <div className="absolute inset-0 bg-text-primary/0 group-hover:bg-text-primary/10 transition-colors duration-300 rounded-xl" />
               </div>

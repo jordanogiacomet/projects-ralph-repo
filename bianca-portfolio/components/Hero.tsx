@@ -1,4 +1,6 @@
+import Image from "next/image";
 import heroData from "@/data/hero.json";
+import aboutData from "@/data/about.json";
 
 const icons = [
   // Lightbulb - User-Centered Design
@@ -39,8 +41,15 @@ export default function Hero() {
 
           {/* Right column - profile photo placeholder */}
           <div className="animate-fade-in animation-delay-200 flex justify-center lg:justify-end">
-            <div className="w-80 h-96 md:w-96 md:h-[28rem] rounded-2xl bg-bg-accent-block border-2 border-border overflow-hidden flex items-center justify-center">
-              <span className="text-text-secondary font-body text-sm">Profile Photo</span>
+            <div className="w-80 h-96 md:w-96 md:h-[28rem] rounded-2xl bg-bg-accent-block border-2 border-border overflow-hidden relative">
+              <Image
+                src={aboutData.profileImage}
+                alt={heroData.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 320px, 384px"
+                priority
+              />
             </div>
           </div>
         </div>
