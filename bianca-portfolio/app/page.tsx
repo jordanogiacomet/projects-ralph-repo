@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Pricing from "@/components/Pricing";
+import FAQ from "@/components/FAQ";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Projects />
       <Experience />
       <Pricing />
+      <FAQ />
     </>
   );
 }
