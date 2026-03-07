@@ -3,6 +3,7 @@ import TrustedBy from "@/components/TrustedBy";
 import About from "@/components/About";
 import Process from "@/components/Process";
 import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <About />
       <Process />
       <Skills />
+      <Projects />
     </>
   );
 }
