@@ -311,3 +311,20 @@ Three manual commits (4378ef9, f99ffa7, b77f26f) made after US-015 with message 
   - `key={activeFilter}` on motion container forces re-mount for animation replay on filter change (same pattern as SocialPosts)
   - Category labels derived from data mean no component changes needed for new categories
 ---
+
+## 2026-03-08 - US-018
+- Integrated Formspree contact form with fetch-based submission (no page redirect)
+- Added loading state: button disabled + "Enviando..." label while request is in flight
+- Added inline error handling: network failures and Formspree errors shown in styled alert div
+- Added honeypot field (_gotcha) for spam protection, hidden via absolute positioning + aria-hidden
+- Form fields cleared on successful submission
+- Validation messages translated to Portuguese to match rest of site
+- Added aria-describedby and aria-invalid on all inputs, role="alert" on error messages
+- Formspree form ID stored as constant at top of file (FORMSPREE_FORM_ID) — replace with real ID
+- Files changed: components/Contact.tsx
+- **Learnings for future iterations:**
+  - Formspree accepts JSON POST with Content-Type + Accept headers; returns JSON for inline handling
+  - Honeypot field should use `style` prop (not Tailwind classes) to guarantee it stays hidden regardless of purge
+  - The `_gotcha` field name is Formspree's recommended honeypot convention
+  - Formspree endpoint format: `https://formspree.io/f/{FORM_ID}` — form ID from dashboard
+---

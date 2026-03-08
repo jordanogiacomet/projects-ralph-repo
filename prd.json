@@ -626,6 +626,39 @@
       "DO NOT add new npm dependencies.",
       "Extensibility: adding a new certificate only requires appending an object to the items array in certifications.json. No component changes needed. If a new category is added, it automatically appears in the filter (if implemented) and as a badge. Add a code comment at the top of the component documenting this."
     ]
+  },
+  {
+    "id": "US-018",
+    "title": "Integrate Formspree contact form",
+    "passes": true,
+    "description": "Implement Formspree in the Contact section so visitors can submit the portfolio form and Bianca receives the message by email without requiring a custom backend. The integration must preserve the current warm editorial design, keep client-side validation, and provide clear success/error feedback inline.",
+    "acceptanceCriteria": [
+      "Replace the current static or mock contact form submit behavior with a real Formspree integration.",
+      "Use Bianca's Formspree endpoint as the form action target, with method='POST'.",
+      "Keep the existing Contact section layout, visual style, spacing, and warm neutral theme unchanged unless a small adjustment is required for form usability.",
+      "Preserve the existing form fields: Name, Email, Message.",
+      "All form field labels, placeholders, and button text remain editable inside the Contact component and are not hardcoded in multiple places.",
+      "Client-side validation remains active before submit: all fields required, email must have valid format, message must not be empty.",
+      "If validation fails, inline error messages are shown near the affected field(s) in an accessible way.",
+      "On successful submit, show an inline success state inside the Contact section instead of a browser default page redirect.",
+      "The success message must be visually consistent with the site's editorial aesthetic and clearly communicate that the message was sent successfully.",
+      "If Formspree returns an error or the request fails, show an inline error message with clear recovery guidance (for example: 'Please try again in a moment').",
+      "The submit button enters a loading/submitting state while the request is in flight, preventing duplicate submissions.",
+      "While submitting, the button is disabled and its label changes to reflect progress (for example: 'Sending...').",
+      "After a successful submit, the form fields are cleared.",
+      "Spam protection is implemented using at least one lightweight mechanism compatible with Formspree, such as a honeypot field.",
+      "The honeypot field must not be visible to normal users and must not disturb layout, keyboard navigation, or accessibility.",
+      "The integration must not introduce any custom backend route, API route, server action, database, or third-party email SDK.",
+      "The solution must work in a statically exported Next.js app.",
+      "Use fetch-based submission or Formspree's recommended React-friendly approach so the user stays on the same page and receives inline feedback.",
+      "Accessibility is preserved: inputs remain properly labeled, error states are announced or associated with fields, and the success/error feedback is readable by assistive technologies.",
+      "The form continues to be fully responsive across mobile, tablet, and desktop.",
+      "Do not modify unrelated sections or components outside the Contact flow, except for minimal integration wiring if strictly necessary.",
+      "Document the required environment/setup step in progress.txt or README-style notes: where to place the Formspree form ID/endpoint and how to change it later.",
+      "If the Formspree endpoint is not yet available, implement the integration using a clear placeholder value and mark the exact location that must be replaced.",
+      "No new heavy dependencies are added for this story. Prefer native fetch and existing project utilities.",
+      "All existing hover, focus, and transition behaviors in the Contact section remain intact or are improved without changing the overall visual language."
+    ]
   }
   ],
   "functionalRequirements": [
