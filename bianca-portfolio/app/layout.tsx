@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://biancasato.com"),
   title: "Bianca Sato — Designer Gráfico",
   description:
-    "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
+    "Transformando ideias em visuais impressionantes — Designer Gráfico que cativa, envolve e gera resultados.",
   openGraph: {
     title: "Bianca Sato — Designer Gráfico",
     description:
-      "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
+      "Transformando ideias em visuais impressionantes — Designer Gráfico que cativa, envolve e gera resultados.",
     images: ["/images/og-image.jpg"],
     type: "website",
   },
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang="pt-BR" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="font-body antialiased">
         <Navbar />
         <main>{children}</main>
