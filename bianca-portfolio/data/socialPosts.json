@@ -1,0 +1,138 @@
+{
+  "sectionLabel": "Social Media Design",
+  "heading": "Design para Redes Sociais",
+  "description": "Projeto de identidade visual para conteúdo de psicologia no Instagram — série de posts com palavras e conceitos japoneses.",
+  "client": "@psicologamarinahiga",
+  "posts": [
+    {
+      "id": 1,
+      "type": "portuguese",
+      "word": "PALAVRA",
+      "pronunciation": "pa-la-vra",
+      "classification": "Nome feminino",
+      "definitions": [
+        "Substantivo feminino que se refere a uma unidade de linguagem que possui significado e é composta por um ou mais fonemas.",
+        "São usadas para formar frases e expressar ideias e sentimentos. Podem ser classificadas em diferentes categorias."
+      ]
+    },
+    {
+      "id": 2,
+      "type": "japanese",
+      "characters": "我慢",
+      "romanization": "gaman",
+      "meaning": null,
+      "divider": true
+    },
+    {
+      "id": 3,
+      "type": "portuguese",
+      "word": "AMOR",
+      "pronunciation": "a-mor",
+      "classification": "palavra masculina",
+      "definitions": [
+        "1. Forte afeição por outra pessoa, nascida de laços de consanguinidade ou de relações sociais.",
+        "2. Atração baseada no desejo sexual."
+      ]
+    },
+    {
+      "id": 4,
+      "type": "portuguese",
+      "word": "SOLIDÃO",
+      "pronunciation": "so-li-dão",
+      "classification": "Substantivo feminino",
+      "definitions": [
+        "1. estado de quem se acha ou se sente desacompanhado ou só; isolamento.",
+        "2. caráter dos locais ermos, solitários."
+      ]
+    },
+    {
+      "id": 5,
+      "type": "japanese",
+      "characters": "生き甲斐",
+      "romanization": "Ikigai",
+      "meaning": "e o sentido da vida"
+    },
+    {
+      "id": 6,
+      "type": "portuguese",
+      "word": "LUTO",
+      "pronunciation": "lu-to",
+      "classification": "Substantivo masculino",
+      "definitions": [
+        "1. sentimento de tristeza profunda pela morte de alguém.",
+        "2. tempo durante o qual devem manifestar-se certos sinais do luto.",
+        "3. conjunto de sinais externos que os costumes associam à perda de parente próximo ou pessoa querida."
+      ]
+    },
+    {
+      "id": 7,
+      "type": "portuguese",
+      "word": "MUDANÇA",
+      "pronunciation": null,
+      "classification": "Substantivo feminino",
+      "definitions": [
+        "Alteração ou modificação do estado normal de algo;",
+        "modificação ou transferência de alguma coisa para um outro lugar;",
+        "alteração ou substituição de uma pessoa ou coisa por outra.",
+        "alavanca com a qual se realiza a troca das marchas num automóvel."
+      ]
+    },
+    {
+      "id": 8,
+      "type": "japanese",
+      "characters": "しょうがない",
+      "romanization": "Shouganai",
+      "meaning": "\"Não há o que possa fazer\""
+    },
+    {
+      "id": 9,
+      "type": "portuguese",
+      "word": "MOTIVAÇÃO",
+      "pronunciation": "mo-ti-va-ção",
+      "classification": "Substantivo feminino",
+      "definitions": [
+        "1. Ato ou efeito de motivar.",
+        "1. Ato ou efeito de motivar, exposição de motivos ou causas, conjunto de fatores, os quais agem entre si e determinam a conduta de um indivíduo."
+      ]
+    },
+    {
+      "id": 10,
+      "type": "portuguese",
+      "word": "EQUILÍBRIO",
+      "pronunciation": null,
+      "classification": "Substantivo masculino",
+      "definitions": [
+        "[Física] Estado do sistema cujas forças que sobre ele agem se contrabalançam e se anulam de maneira análoga;",
+        "posição do corpo que se encontra estável (desprovido de oscilação ou desvio);",
+        "força que age de maneira igual entre duas ou mais coisas (ou pessoas);",
+        "cujas quantidades se apresentam de modo igual, proporcional;",
+        "em estado aquilo que permanece estável (constante);",
+        "estabilidade; equilíbrio de oportunidades de trabalho;",
+        "em que há harmonia; que se distribui de maneira proporcional;",
+        "equilíbrio de uma estátua; que apresenta comedimento emocional;",
+        "cujo estado mental é estável; autocontrole."
+      ]
+    },
+    {
+      "id": 11,
+      "type": "japanese",
+      "characters": "侘び寂び",
+      "romanization": "wabi-sabi",
+      "meaning": null,
+      "bullets": [
+        "\"wabi\" significa quietude e \"sabi\" simplicidade.",
+        "é uma concepção que fala da contemplação do que é imperfeito e assimétrios."
+      ]
+    },
+    {
+      "id": 12,
+      "type": "portuguese",
+      "word": "AUTOCONHECIMENTO",
+      "pronunciation": "au-to-co-nhe-ci-men-to",
+      "classification": "Substantivo masculino",
+      "definitions": [
+        "Conhecimento de si próprio, das suas características, qualidades, imperfeições, sentimentos etc.; que caracterizam o indivíduos por si próprio."
+      ]
+    }
+  ]
+}

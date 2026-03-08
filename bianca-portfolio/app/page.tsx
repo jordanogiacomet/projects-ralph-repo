@@ -3,6 +3,7 @@ import About from "@/components/About";
 import Process from "@/components/Process";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import SocialPosts from "@/components/SocialPosts";
 import Experience from "@/components/Experience";
 
 import FAQ from "@/components/FAQ";
@@ -16,6 +17,7 @@ export default function Home() {
       <Process />
       <Skills />
       <Projects />
+      <SocialPosts />
       <Experience />
       <FAQ />
       <Contact />

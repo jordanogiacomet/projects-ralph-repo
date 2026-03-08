@@ -1,0 +1,276 @@
+## Codebase Patterns
+- Project lives in `/workspace/bianca-portfolio/` - all paths relative to that
+- Use `next/font/google` for Playfair Display and DM Sans, exposed as CSS variables `--font-playfair` and `--font-dm-sans`
+- Tailwind config maps these to `font-display` and `font-body` utility classes
+- Custom color tokens defined both as CSS variables in globals.css and in tailwind.config.ts (e.g. `bg-primary`, `text-primary`, `accent`)
+- Static export configured: `output: "export"` in next.config.mjs, images unoptimized
+- Path alias `@/*` maps to project root
+- Data files in `data/` directory, imported as JSON
+- favicon.ico must be in `public/`, NOT `app/` — app/ favicon breaks static export builds
+- All commands must be run from `/workspace/bianca-portfolio/`
+- Build command: `npx next build`, Lint: `npx next lint`
+- Animation pattern: Framer Motion `whileInView` with `viewport={{ once: true }}` for scroll-triggered entrances; `useScroll`+`useTransform` for parallax
+- Framer Motion ease arrays need `as const` (e.g. `ease: [0.25, 0.1, 0.25, 1.0] as const`) for TypeScript compatibility
+- Conditional variants with `useReducedMotion`: use `undefined` not `{}` to satisfy `Variants` type
+- All animations use `useReducedMotion` hook to respect `prefers-reduced-motion`
+
+---
+
+## 2026-03-07 - US-001
+- Set up Next.js project with TypeScript, Tailwind CSS, Playfair Display + DM Sans fonts
+- Created Navbar (fixed, transparent->blur on scroll, mobile hamburger with animation)
+- Created Footer (dark section, 3-column: brand, sitemap, socials)
+- Updated layout.tsx with semantic HTML (header via Navbar, main wrapper, footer)
+- Configured smooth scroll, theme tokens, static export
+- Files changed: app/layout.tsx, app/page.tsx, app/globals.css, components/Navbar.tsx, components/Footer.tsx, tailwind.config.ts, next.config.mjs, data/*.json
+- **Learnings for future iterations:**
+  - next-env.d.ts is gitignored, don't try to stage it
+  - The cwd for git commands is /workspace but bianca-portfolio files are in the subdirectory
+  - Tailwind custom colors like `bg-primary` need careful naming to avoid conflicts with Tailwind's `bg-` prefix utilities
+---
+
+## 2026-03-07 - US-002
+- Implemented full-viewport Hero section with editorial layout
+- Left column: greeting, large serif title with italic "& Brand", description, dark CTA button
+- Right column: profile photo placeholder with warm-toned border
+- 4 highlight cards below with inline SVG icons
+- Staggered fade-in CSS animations with animation-delay classes
+- Content sourced from data/hero.json
+- Files changed: components/Hero.tsx (new), app/page.tsx, app/globals.css
+- **Learnings for future iterations:**
+  - CSS animation classes (animate-fade-in, animation-delay-*) defined in globals.css — reuse for other sections
+  - Dynamic Tailwind class names (e.g. template literals for `animation-delay-${n}`) won't be purged if the full class name is in the source
+  - SVG icons inlined directly in components to avoid dependencies
+---
+
+## 2026-03-07 - US-003
+- Implemented Trusted By section with horizontal row of logo pill badges
+- White background badges with subtle border, logo name as text placeholder
+- Content sourced from data/trustedBy.json
+- Responsive: badges wrap naturally on mobile using flex-wrap
+- Files changed: components/TrustedBy.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - Badge styling uses `badge-bg` and `badge-border` Tailwind color tokens already defined in config
+  - Page sections are composed in app/page.tsx using Fragment wrapper
+  - Simple sections don't need Intersection Observer — save that for sections with fade-in requirements
+---
+
+## 2026-03-07 - US-004
+- Implemented About section with two-column editorial layout
+- Left column: section label, large serif headline, bio paragraphs from about.json
+- Right column: 8-cell image placeholder grid with varied sizes (row-span-2 for masonry effect)
+- Fade-in on scroll using Intersection Observer + CSS transitions (not animation classes)
+- Content sourced from data/about.json
+- Files changed: components/About.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - For scroll-triggered fade-in, use "use client" + Intersection Observer + CSS transition classes instead of the animation keyframe approach
+  - Tailwind's `delay-200` utility works for transition-delay on CSS transitions
+  - Grid `row-span-2` creates masonry-like varied sizes without a masonry library
+---
+
+## 2026-03-07 - US-005
+- Implemented Process section with two-column editorial layout
+- Left column: large Playfair Display heading + 3 numbered steps (01, 02, 03) with title and description, separated by border-b
+- Right column: large image placeholder with rounded corners
+- Fade-in on scroll using Intersection Observer + CSS transitions (same pattern as About)
+- Content sourced from data/process.json
+- Files changed: components/Process.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - The two-column layout with fade-in pattern is now well-established — reuse sectionRef + visible state + IntersectionObserver + transition classes
+  - Using `space-y-0` with manual `py-8` + `border-b border-border` gives better control over step separation than `space-y-*`
+---
+
+## 2026-03-07 - US-006
+- Implemented Skills & Stats section with centered heading, 4 large stat numbers, dark CTA button, and categorized skill badges
+- Stats: 2x2 on mobile, 4-col on desktop with large Playfair Display numbers
+- Skill badges use `badge-bg` and `badge-border` tokens with rounded-full pills
+- Fade-in on scroll with staggered delays (delay-200, delay-300)
+- Content sourced from data/skills.json
+- Files changed: components/Skills.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - Badge tokens `badge-bg` and `badge-border` work well for pill-style tags
+  - Centered section layout works well for stats-heavy sections (vs two-column for text+image)
+---
+
+## 2026-03-07 - US-007
+- Projects / Portfolio section was already implemented in components/Projects.tsx
+- Stacked vertical project cards with 16:9 image placeholders, dark overlay on hover, scale effect
+- Project title in Playfair Display, description in DM Sans, tag pills with badge tokens
+- Links to live site and Behance for each project
+- Fade-in on scroll with staggered delays per card
+- Content sourced from data/projects.json
+- Fixed build: moved favicon.ico from app/ to public/ (was causing static export ENOENT error)
+- Files changed: components/Projects.tsx (staged), app/page.tsx (staged), app/favicon.ico -> public/favicon.ico
+- **Learnings for future iterations:**
+  - favicon.ico in app/ directory breaks `output: "export"` static builds — place it in public/ instead
+  - The Projects component follows the same Intersection Observer fade-in pattern as other sections
+---
+
+## 2026-03-07 - US-008
+- Implemented Experience timeline section with vertical connector line and timeline dots
+- Stacked entries: company name in Playfair Display, role, period (right-aligned on desktop), description
+- Visual connector line on left with animated dots at each entry
+- Border-bottom separator between entries
+- Fade-in on scroll with staggered delays per entry using inline transitionDelay
+- Content sourced from data/experience.json
+- Files changed: components/Experience.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - Inline `style={{ transitionDelay }}` works well for dynamic stagger when number of items varies
+  - Timeline dot positioning uses `-translate-x-[6px]` to center on the connector line
+---
+
+## 2026-03-07 - US-009
+- Implemented 3-tier Pricing section with plan cards (Basic, Pro, Premium)
+- Middle card (Pro) visually highlighted: dark bg, scaled up on desktop, "Recommended" badge
+- Each card: subtitle, plan name, price in large Playfair Display, feature list with checkmark SVGs, dark CTA button
+- Highlighted card inverts colors (light CTA on dark bg)
+- Fade-in on scroll with staggered delays per card using inline transitionDelay
+- Content sourced from data/pricing.json
+- Files changed: components/Pricing.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - Inverted color scheme for highlighted card: use bg-accent + text-text-on-dark, CTA becomes bg-bg-primary + text-text-primary
+  - `items-stretch` on grid ensures cards have equal height even when one is scaled
+  - Stale .next cache can cause spurious build failures — `rm -rf .next` before build if seeing MODULE_NOT_FOUND errors
+- SVG images in `<Image fill>` should use `object-contain` (not `object-cover`) to avoid cropping vector art
+- trabalho-*.svg files in public/images/ are Bianca's original design work (Baby Chef, Aura Tullis brands) — use for portfolio authenticity
+---
+
+## 2026-03-07 - US-010
+- Implemented FAQ accordion section with expand/collapse interaction
+- Plus icon rotates 45° to become X when open, CSS transition for smooth animation
+- Only one item open at a time (clicking another closes the current)
+- max-h transition for smooth expand/collapse of answer content
+- Fade-in on scroll with staggered delays per item
+- Content sourced from data/faq.json
+- Files changed: components/FAQ.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - `max-h-0` / `max-h-40` with `overflow-hidden` + `transition-all` gives smooth accordion expand/collapse
+  - Rotating a plus (+) SVG icon 45° turns it into an X — simple alternative to swapping icons
+  - `aria-expanded` attribute added to accordion buttons for accessibility
+---
+
+## 2026-03-07 - US-011
+- Implemented Contact section with form (Name, Email, Message) and social links sidebar
+- Client-side validation: required fields, email format regex
+- Success message shown inline on submit (no backend)
+- Social links: Email, Behance, LinkedIn, Instagram with inline SVG icons
+- Fade-in on scroll with staggered delays (form delay-200, socials delay-300)
+- Responsive: form and social links stack on mobile (md:grid-cols-3 layout)
+- Files changed: components/Contact.tsx (new), app/page.tsx
+- **Learnings for future iterations:**
+  - Form validation pattern: useState for formData + errors + submitted, validate on submit, clear individual errors on change
+  - `noValidate` on form element disables browser default validation UI in favor of custom
+  - Red border for error state uses hardcoded `border-red-400` since no error token in theme
+---
+
+## 2026-03-07 - US-012
+- Added `metadataBase` to layout.tsx metadata to resolve OG image URL warnings
+- Converted Hero profile photo placeholder to Next.js `Image` component with `fill` + `priority`
+- Converted Projects card image placeholders to Next.js `Image` component with `fill`
+- Page title, meta description, and Open Graph tags were already configured from US-001
+- All images now use `unoptimized: true` (required for static export) via next.config.mjs
+- Files changed: app/layout.tsx, components/Hero.tsx, components/Projects.tsx
+- **Learnings for future iterations:**
+  - `metadataBase` must be set in metadata export to avoid warnings about OG image resolution
+  - For `fill` images, parent container needs `relative` positioning
+  - `priority` prop on hero images tells Next.js to preload them (improves LCP)
+  - About/Process image grids remain as placeholder divs since no image paths exist in their data files
+---
+
+## 2026-03-07 - US-013
+- Replaced all placeholder divs/images with real free-license stock photos from public/images/
+- About.tsx: replaced 8 text placeholder divs with `<Image>` components using about-1.jpg through about-8.jpg
+- Process.tsx: replaced text placeholder div with `<Image>` component using process-image.jpg
+- Hero profile photo and Project card images were already using `<Image>` with local files
+- Added IMAGE_SOURCES.md in public/images/ documenting all image sources and licenses
+- All images use Next.js `<Image>` component with fill, appropriate alt text, and sizes prop
+- Files changed: components/About.tsx, components/Process.tsx, public/images/IMAGE_SOURCES.md, public/images/*.jpg
+- **Learnings for future iterations:**
+  - Images were already downloaded to public/images/ — just needed component updates to reference them
+  - For `fill` images in grid cells, parent needs `relative` positioning (replaced `flex items-center justify-center` with `relative`)
+  - The `sizes` prop should vary based on image display size for optimal loading
+---
+
+## 2026-03-07 - US-014
+- Audited all 12 images in public/images/ for content relevance to their sections
+- Kept 8 images that fit their context (profile portrait, 6 about grid design photos, process workspace)
+- Replaced 4 mismatched images:
+  - about-4.jpg (rainbow corridor) -> trabalho-1.svg (Baby Chef brand identity - actual design work)
+  - about-5.jpg (iPhone home screen) -> trabalho-8.svg (Aura Tullis branding - actual design work)
+  - project-placeholder-1.jpg (yellow headphones) -> project-soundwave.svg (dark tech audio visualization)
+  - project-placeholder-2.jpg (Curology branded products) -> project-lumiglow.svg (warm skincare illustration)
+- Added trabalho-*.svg files (10 original design work SVGs) to the repository
+- Updated About.tsx with SVG-aware rendering (object-contain for SVGs vs object-cover for photos)
+- Updated data/projects.json with new image references
+- Complete before/after audit log in IMAGE_SOURCES.md
+- Files changed: components/About.tsx, data/projects.json, public/images/IMAGE_SOURCES.md, public/images/project-soundwave.svg (new), public/images/project-lumiglow.svg (new), public/images/trabalho-*.svg (new)
+- **Learnings for future iterations:**
+  - SVGs with `fill` + `object-cover` get cropped — use `object-contain` with padding for vector art
+  - trabalho SVGs are in warm cream/burgundy tones that complement the site's editorial palette
+  - When creating themed SVGs: use dark gradients + geometric shapes for tech themes; use warm cream + organic shapes for beauty/luxury themes
+  - Stale .next and out directories must be cleaned before rebuild (`rm -rf .next out`)
+---
+
+## 2026-03-07 - US-015
+- Implemented interactive scroll-driven animations with Framer Motion across all sections
+- All components converted from CSS-only Intersection Observer fade-ins to Framer Motion animations
+- Hero: staggered title lines (0.15s delay each) with fadeUp on load, parallax on profile image via useScroll+useTransform
+- About: split-reveal effect — text slides from left (x:-40), image grid slides from right (x:40)
+- Process: staggered steps fade-up with delay, large image has parallax offset (40 to -40)
+- Portfolio: project cards scale from 0.95 to 1 with fade-in on viewport entry
+- Skills: counting-up effect (0->target) with requestAnimationFrame + easeOutCubic, staggered children variants for skill categories
+- Experience: heading slides from left, timeline entries stagger in, connector line animates scaleY, dots animate scale
+- Pricing: staggered fade-up cards
+- FAQ: heading scales from 0.95, items stagger in
+- Contact: heading slides from right, form and socials fade-up with stagger
+- TrustedBy: badges scale from 0.9 with stagger
+- Parallax on 2 sections: Hero profile image and Process large image
+- All animations respect prefers-reduced-motion via useReducedMotion hook
+- All animations use transform+opacity only (GPU-composited), easing [0.25, 0.1, 0.25, 1.0], durations 0.4-0.8s
+- viewport={{ once: true }} on all whileInView animations (fire once only)
+- CSS transitions kept for hover states (buttons, cards, links)
+- Old CSS animation keyframes removed from globals.css
+- Fixed TypeScript type errors: ease arrays need `as const` assertion, variant objects use `undefined` instead of `{}` for reduced motion
+- Files changed: components/Hero.tsx, About.tsx, Process.tsx, Projects.tsx, Skills.tsx, Experience.tsx, Pricing.tsx, FAQ.tsx, Contact.tsx, TrustedBy.tsx, app/globals.css, package.json, package-lock.json
+- **Learnings for future iterations:**
+  - Framer Motion ease arrays like `[0.25, 0.1, 0.25, 1.0]` need `as const` to satisfy TypeScript's `Easing` type (tuple vs number[])
+  - When using conditional variants with `prefersReducedMotion`, use `undefined` not `{}` — empty objects with optional properties don't match the `Variants` type
+  - `useScroll` + `useTransform` creates parallax: target the container ref, map scrollYProgress to a y offset range
+  - `useInView` from framer-motion replaces custom IntersectionObserver for triggering effects like counting animations
+  - CountUp pattern: requestAnimationFrame loop with easeOutCubic `1 - Math.pow(1-progress, 3)` feels natural
+---
+
+## 2026-03-08 - Manual Changes Audit (pre-US-016)
+Three manual commits (4378ef9, f99ffa7, b77f26f) made after US-015 with message "fotos implentadas, tradução para para português e ajustes em geral". Changes:
+- **app/page.tsx**: Removed TrustedBy and Pricing imports/usage. Current order: Hero → About → Process → Skills → Projects → Experience → FAQ → Contact
+- **app/layout.tsx**: OG title changed to "Bianca Sato — Designer Gráfico"
+- **components/TrustedBy.tsx**: Emptied (0 lines), component no longer rendered
+- **components/Skills.tsx**: Removed CountUp component, stats grid, heading section. Only CTA button ("Entre em Contato") and skill categories remain
+- **data/hero.json**: Full Portuguese translation. greeting → "Oi! Sou a Bianca,", titleLines[0] → "Designer gráfico", description in Portuguese, cta → "Entre em contato"
+- **data/about.json**: Portuguese translation, sectionLabel → "Sobre", headline in Portuguese, bio rewritten in Portuguese, profileImage → "/images/trabalho-11.svg"
+- **data/experience.json**: sectionLabel → "Trajetória Acadêmica", items changed to academic timeline (PUCRS, Colégio Marista, Kunimi Elementary)
+- **data/process.json**: Full Portuguese translation of heading and all steps
+- **data/projects.json**: Portuguese translation, projects replaced: "Aura" (trabalho-10.png) and "BabyChef" (trabalho-1.svg)
+- **data/skills.json**: Categories updated to Portuguese, tools changed to Adobe Illustrator/Photoshop/Canva/Capcut
+- **data/faq.json**: heading → "Perguntas Frequentes", Q&A translated, 4th item removed
+- **public/images/**: Added trabalho-10.png (6.2MB) and trabalho-6.png (7.5MB)
+- **Key insight**: Portfolio repositioned from "UI/UX & Brand Designer" to "Designer Gráfico" (student/academic focus), content localized to pt-BR
+---
+
+## 2026-03-08 - US-016
+- Created SocialPosts section: 12 Instagram post cards for @psicologamarinahiga rendered as HTML/CSS
+- Portuguese cards: cream background with burgundy (#6B1A1A) left accent bar, word definitions layout
+- Japanese cards: burgundy gradient background with diagonal stripe overlay, centered characters
+- Filter tabs (Todos / Português / 日本語) with React useState
+- Project metadata footer with client info, post count, and "Ver no Instagram" link
+- Staggered Framer Motion animations with whileInView, respects useReducedMotion
+- Hover effect: translateY(-4px) with elevated box-shadow
+- Extensible type-switch pattern for future post types documented in component header
+- Files changed: data/socialPosts.json (new), components/SocialPosts.tsx (new), app/page.tsx (import + render only)
+- **Learnings for future iterations:**
+  - Inline styles used for burgundy colors (#6B1A1A, #8B2E2E) to avoid modifying tailwind.config.ts
+  - `clamp()` CSS function works well for responsive font sizing on card content (long words like AUTOCONHECIMENTO)
+  - `key={filter}` on motion grid forces re-mount for stagger animation replay when filter changes
+  - onMouseEnter/onMouseLeave for hover color changes on links avoids needing CSS classes for non-theme colors
+  - The description text is split by client handle to wrap it in a styled span — fragile if handle appears multiple times
+---

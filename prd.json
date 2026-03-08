@@ -1,0 +1,626 @@
+{
+  "projectName": "bianca-sato-portfolio",
+  "branchName": "ralph/bianca-portfolio",
+  "description": "Personal portfolio website for Bianca Tomoe Sato — UI/UX & Brand Designer. Single-page scrolling site built with Next.js (App Router) and Tailwind CSS. Light editorial aesthetic inspired by modern design agency sites with warm neutral tones, elegant serif typography, and generous whitespace. All content hardcoded via JSON files.",
+  "techStack": ["Next.js 14 (App Router)", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  "designDirection": {
+    "aesthetic": "Light editorial — warm, clean, magazine-like. NOT dark mode. Inspired by modern design agency portfolios with organic photography, warm neutrals, and confident serif typography.",
+    "colorPalette": {
+      "--bg-primary": "#F5F0EB",
+      "--bg-secondary": "#FFFFFF",
+      "--bg-accent-block": "#E8E2DA",
+      "--bg-dark-section": "#1A1A1A",
+      "--text-primary": "#1A1A1A",
+      "--text-secondary": "#6B6560",
+      "--text-on-dark": "#F5F0EB",
+      "--accent": "#1A1A1A",
+      "--accent-hover": "#3A3A3A",
+      "--border": "#D4CEC6",
+      "--badge-bg": "#FFFFFF",
+      "--badge-border": "#D4CEC6"
+    },
+    "typography": {
+      "display": "Playfair Display — elegant serif for headings, hero name, and section titles. Used at large scale with italic variant for emphasis.",
+      "body": "DM Sans — clean geometric sans-serif for body text, nav, buttons, and labels.",
+      "accent": "DM Sans italic or Playfair Display italic — for taglines, quotes, and decorative text."
+    },
+    "designPrinciples": [
+      "Light and warm — cream/off-white backgrounds, dark text, warm neutral accents",
+      "Editorial layout — asymmetric grids, mixed-size columns, text alongside large imagery",
+      "Typography-driven — oversized serif headings, strong hierarchy, mixed serif/sans pairing",
+      "Generous whitespace — sections breathe, nothing cramped, gallery-like spacing",
+      "Interactive scroll animations — scroll-reactive transitions between sections via Framer Motion, with smooth parallax and staggered reveals",
+      "Photography-forward — large image placeholders integrated into the layout, not afterthoughts",
+      "Trust signals — trusted-by logos section, process breakdown, stats/metrics display"
+    ]
+  },
+  "folderStructure": {
+    "app/": ["layout.tsx", "page.tsx", "globals.css"],
+    "components/": [
+      "Navbar.tsx",
+      "Hero.tsx",
+      "TrustedBy.tsx",
+      "About.tsx",
+      "Process.tsx",
+      "Projects.tsx",
+      "SocialPosts.tsx",
+      "Skills.tsx",
+      "Experience.tsx",
+      "Pricing.tsx",
+      "FAQ.tsx",
+      "Contact.tsx",
+      "Footer.tsx",
+      "SectionHeading.tsx",
+      "ProjectCard.tsx",
+      "SkillBadge.tsx",
+      "ExperienceEntry.tsx"
+    ],
+    "data/": [
+      "hero.json",
+      "trustedBy.json",
+      "about.json",
+      "process.json",
+      "projects.json",
+      "socialPosts.json",
+      "skills.json",
+      "experience.json",
+      "pricing.json",
+      "faq.json"
+    ],
+    "public/images/": []
+  },
+  "dataFiles": {
+    "hero.json": {
+      "name": "Bianca Tomoe Sato",
+      "greeting": "Hey, I'm Bian,",
+      "titleLines": ["A UI/UX", "& Brand", "DESIGNER"],
+      "description": "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
+      "cta": { "text": "Contact me", "link": "#contact" },
+      "highlights": [
+        { "label": "User-Centered Design", "description": "Intuitive interfaces that put users first" },
+        { "label": "Brand Identity & Strategy", "description": "Visual systems that tell your story" },
+        { "label": "Responsive & Modern UI", "description": "Pixel-perfect across every device" },
+        { "label": "Seamless Prototyping", "description": "From wireframe to polished interaction" }
+      ]
+    },
+    "trustedBy.json": {
+      "heading": "Trusted by",
+      "logos": ["Frame Blox", "Super Blox", "Hype Blox", "Strip Blox", "Ultra Blox"]
+    },
+    "about.json": {
+      "sectionLabel": "About",
+      "headline": "Crafting Meaningful Brands & Intuitive Experiences",
+      "bio": [
+        "Hey, I'm Bian, a UI/UX and brand designer passionate about creating visually compelling and user-friendly digital experiences.",
+        "With a keen eye for aesthetics and a deep understanding of user behavior, I design brands and interfaces that not only look great but also resonate with audiences. Whether it's building a brand identity from scratch, designing a digital product for mobile, or refining an existing design — I blend strategy, creativity, and functionality to bring ideas to life.",
+        "Let's collaborate and make something extraordinary."
+      ],
+      "profileImage": "/images/profile-placeholder.jpg"
+    },
+    "process.json": {
+      "heading": "A Streamlined Process for Exceptional Design",
+      "steps": [
+        { "number": "01", "title": "Discover & Research", "description": "Deep dive into your brand, audience, and goals to establish a strong foundation." },
+        { "number": "02", "title": "Design & Prototype", "description": "Crafting wireframes, visual concepts, mockups, and interactive prototypes." },
+        { "number": "03", "title": "Refine & Deliver", "description": "Iterating based on feedback for a polished, production-ready final design." }
+      ]
+    },
+    "projects.json": {
+      "sectionLabel": "Portfolio",
+      "heading": "Portfolio",
+      "description": "Explore my recent work with design creations and discover how we can bring your ideas to life.",
+      "items": [
+        {
+          "title": "Soundwave",
+          "description": "Designing an Immersive Audio Tech Experience",
+          "tags": ["UI/UX", "Product Design"],
+          "image": "/images/project-placeholder-1.jpg",
+          "links": { "live": "#", "behance": "#" }
+        },
+        {
+          "title": "Lumiglow",
+          "description": "Creating Beauty with a Luxurious Skincare Identity",
+          "tags": ["Branding", "Visual Identity"],
+          "image": "/images/project-placeholder-2.jpg",
+          "links": { "live": "#", "behance": "#" }
+        }
+      ]
+    },
+    "socialPosts.json": {
+      "sectionLabel": "Social Media",
+      "heading": "Design para Redes Sociais",
+      "description": "Projeto de identidade visual para conteúdo de psicologia no Instagram — série de posts com palavras e conceitos japoneses.",
+      "client": "@psicologamarinahiga",
+      "posts": [
+        {
+          "id": 1,
+          "type": "portuguese",
+          "word": "PALAVRA",
+          "pronunciation": "pa-la-vra",
+          "classification": "Nome feminino",
+          "definitions": [
+            "Substantivo feminino que se refere a uma unidade de linguagem que possui significado e é composta por um ou mais fonemas.",
+            "São usadas para formar frases e expressar ideias e sentimentos. Podem ser classificadas em diferentes categorias."
+          ]
+        },
+        {
+          "id": 2,
+          "type": "japanese",
+          "characters": "我慢",
+          "romanization": "gaman",
+          "meaning": null,
+          "divider": true
+        },
+        {
+          "id": 3,
+          "type": "portuguese",
+          "word": "AMOR",
+          "pronunciation": "a-mor",
+          "classification": "palavra masculina",
+          "definitions": [
+            "1. Forte afeição por outra pessoa, nascida de laços de consanguinidade ou de relações sociais.",
+            "2. Atração baseada no desejo sexual."
+          ]
+        },
+        {
+          "id": 4,
+          "type": "portuguese",
+          "word": "SOLIDÃO",
+          "pronunciation": "so-li-dão",
+          "classification": "Substantivo feminino",
+          "definitions": [
+            "1. estado de quem se acha ou se sente desacompanhado ou só; isolamento.",
+            "2. caráter dos locais ermos, solitários."
+          ]
+        },
+        {
+          "id": 5,
+          "type": "japanese",
+          "characters": "生き甲斐",
+          "romanization": "Ikigai",
+          "meaning": "e o sentido da vida"
+        },
+        {
+          "id": 6,
+          "type": "portuguese",
+          "word": "LUTO",
+          "pronunciation": "lu-to",
+          "classification": "Substantivo masculino",
+          "definitions": [
+            "1. sentimento de tristeza profunda pela morte de alguém.",
+            "2. tempo durante o qual devem manifestar-se certos sinais do luto.",
+            "3. conjunto de sinais externos que os costumes associam à perda de parente próximo ou pessoa querida."
+          ]
+        },
+        {
+          "id": 7,
+          "type": "portuguese",
+          "word": "MUDANÇA",
+          "pronunciation": null,
+          "classification": "Substantivo feminino",
+          "definitions": [
+            "Alteração ou modificação do estado normal de algo;",
+            "modificação ou transferência de alguma coisa para um outro lugar;",
+            "alteração ou substituição de uma pessoa ou coisa por outra.",
+            "alavanca com a qual se realiza a troca das marchas num automóvel."
+          ]
+        },
+        {
+          "id": 8,
+          "type": "japanese",
+          "characters": "しょうがない",
+          "romanization": "Shouganai",
+          "meaning": "\"Não há o que possa fazer\""
+        },
+        {
+          "id": 9,
+          "type": "portuguese",
+          "word": "MOTIVAÇÃO",
+          "pronunciation": "mo-ti-va-ção",
+          "classification": "Substantivo feminino",
+          "definitions": [
+            "1. Ato ou efeito de motivar.",
+            "1. Ato ou efeito de motivar, exposição de motivos ou causas, conjunto de fatores, os quais agem entre si e determinam a conduta de um indivíduo."
+          ]
+        },
+        {
+          "id": 10,
+          "type": "portuguese",
+          "word": "EQUILÍBRIO",
+          "pronunciation": null,
+          "classification": "Substantivo masculino",
+          "definitions": [
+            "[Física] Estado do sistema cujas forças que sobre ele agem se contrabalançam e se anulam de maneira análoga;",
+            "posição do corpo que se encontra estável (desprovido de oscilação ou desvio);",
+            "força que age de maneira igual entre duas ou mais coisas (ou pessoas);",
+            "cujas quantidades se apresentam de modo igual, proporcional;",
+            "em estado aquilo que permanece estável (constante);",
+            "estabilidade; equilíbrio de oportunidades de trabalho;",
+            "em que há harmonia; que se distribui de maneira proporcional;",
+            "equilíbrio de uma estátua; que apresenta comedimento emocional;",
+            "cujo estado mental é estável; autocontrole."
+          ]
+        },
+        {
+          "id": 11,
+          "type": "japanese",
+          "characters": "侘び寂び",
+          "romanization": "wabi-sabi",
+          "meaning": null,
+          "bullets": [
+            "\"wabi\" significa quietude e \"sabi\" simplicidade.",
+            "é uma concepção que fala da contemplação do que é imperfeito e assimétrios."
+          ]
+        },
+        {
+          "id": 12,
+          "type": "portuguese",
+          "word": "AUTOCONHECIMENTO",
+          "pronunciation": "au-to-co-nhe-ci-men-to",
+          "classification": "Substantivo masculino",
+          "definitions": [
+            "Conhecimento de si próprio, das suas características, qualidades, imperfeições, sentimentos etc.; que caracterizam o indivíduos por si próprio."
+          ]
+        }
+      ]
+    },
+    "skills.json": {
+      "sectionLabel": "Skills",
+      "heading": "Crafting Intuitive & Impactful Designs",
+      "stats": [
+        { "value": "98%", "label": "Accuracy" },
+        { "value": "85%", "label": "Efficiency" },
+        { "value": "92%", "label": "Enhanced" },
+        { "value": "98%", "label": "Satisfaction" }
+      ],
+      "categories": [
+        { "name": "Design", "items": ["UI/UX Design", "Brand Identity", "Visual Design", "Typography", "Layout & Composition"] },
+        { "name": "Tools", "items": ["Figma", "Adobe Illustrator", "Photoshop", "After Effects", "InDesign"] },
+        { "name": "Process", "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Motion Design"] }
+      ]
+    },
+    "experience.json": {
+      "sectionLabel": "Experience",
+      "items": [
+        {
+          "company": "Freelance",
+          "role": "UI/UX & Brand Designer",
+          "period": "2024 — Present",
+          "description": "Designing brand identities and digital interfaces for startups and small businesses."
+        },
+        {
+          "company": "PUCRS",
+          "role": "Design Student",
+          "period": "2022 — Present",
+          "description": "Studying Design with focus on visual communication, branding, and digital product design."
+        }
+      ]
+    },
+    "pricing.json": {
+      "heading": "Choose Your Plan",
+      "description": "Creative solutions to fit every project need — from branding to complete digital presence.",
+      "plans": [
+        {
+          "name": "Basic",
+          "subtitle": "Brand Essentials",
+          "price": "R$ 2.990",
+          "features": ["Logo & brand guidelines", "Social media templates", "Basic brand manual", "2 revision rounds"]
+        },
+        {
+          "name": "Pro",
+          "subtitle": "Growth Package",
+          "price": "R$ 4.990",
+          "features": ["Full brand identity design", "UI/UX design for mobile or web", "Complete brand manual", "Responsive in 4 weeks"]
+        },
+        {
+          "name": "Premium",
+          "subtitle": "Full Experience",
+          "price": "R$ 6.990",
+          "features": ["Complete brand strategy & identity", "Full responsive design (3 devices)", "Custom illustration package", "Priority support"]
+        }
+      ]
+    },
+    "faq.json": {
+      "heading": "Frequently Asked Questions",
+      "items": [
+        { "question": "What services do you offer?", "answer": "I specialize in UI/UX design, brand identity, visual design, and digital product design." },
+        { "question": "How long does a typical project take?", "answer": "Depending on the scope, most projects take between 2-6 weeks from kickoff to final delivery." },
+        { "question": "Do you work with startups or established brands?", "answer": "Both! I love working with startups building from scratch and established brands looking to refresh." },
+        { "question": "What does your design process look like?", "answer": "I follow a structured process: discover & research, design & prototype, then refine & deliver. Collaboration is at the center of every step." }
+      ]
+    }
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Project scaffolding and layout",
+      "passes": true,
+      "description": "Set up Next.js project with TypeScript and Tailwind CSS, responsive layout shell with navbar, footer, and smooth scroll.",
+      "acceptanceCriteria": [
+        "Next.js app created with TypeScript and Tailwind CSS configured",
+        "Custom theme tokens applied: warm neutral palette (--bg-primary: #F5F0EB, --text-primary: #1A1A1A, --accent: #1A1A1A), Playfair Display + DM Sans fonts loaded via next/font",
+        "Fixed navbar: logo/name on left, nav links on right (Home, About, Portfolio, Pricing, Contact), dark CTA button 'MENU' or hamburger on mobile",
+        "Navbar background is transparent, becomes semi-transparent with backdrop-blur on scroll",
+        "Footer with copyright, social links (Behance, LinkedIn, Instagram), and sitemap-style link columns",
+        "Mobile hamburger menu with smooth animation",
+        "Smooth scroll behavior enabled globally (html { scroll-behavior: smooth })",
+        "Semantic HTML throughout (header, main, section, footer)",
+        "Static export configured (output: 'export' in next.config.js)"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Hero section",
+      "passes": true,
+      "description": "Full-viewport hero with editorial layout: greeting text, large serif name/title, description, CTA button, and 4 highlight cards below. Asymmetric layout with profile photo placeholder on right.",
+      "acceptanceCriteria": [
+        "Full-viewport hero section (min-h-screen) with --bg-primary (#F5F0EB) background",
+        "Left column: greeting 'Hey, I'm Bian,' in DM Sans, then 'A UI/UX & Brand DESIGNER' in large Playfair Display with '& Brand' in italic",
+        "Description paragraph below title in --text-secondary",
+        "Dark CTA button ('Contact me') with rounded corners",
+        "Right side: large profile photo placeholder (rounded corners, warm-toned border)",
+        "Below hero: 4 highlight cards in a row (User-Centered Design, Brand Identity & Strategy, Responsive & Modern UI, Seamless Prototyping) with icon and short description",
+        "Content sourced from data/hero.json",
+        "Staggered fade-in animation on page load (CSS only, using animation-delay)",
+        "Responsive: stacks vertically on mobile"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Trusted By section",
+      "passes": true,
+      "description": "Horizontal row of client/brand logo placeholders to establish credibility.",
+      "acceptanceCriteria": [
+        "Section with 'TRUSTED BY' label and horizontal scrolling row of logo pill badges",
+        "Each badge: white background, subtle border, logo name as text placeholder",
+        "Content sourced from data/trustedBy.json",
+        "Responsive: wraps or scrolls on mobile"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "About section with bio and photo grid",
+      "passes": true,
+      "description": "Two-column editorial layout: large serif headline + bio text on left, photo grid or image on right.",
+      "acceptanceCriteria": [
+        "Section heading 'Crafting Meaningful Brands & Intuitive Experiences' in large Playfair Display",
+        "Bio paragraphs in DM Sans, --text-secondary color",
+        "Right side: grid of 6-8 placeholder images in varied sizes (masonry-like or structured grid)",
+        "Content sourced from data/about.json",
+        "Generous whitespace between text and images",
+        "Fade-in on scroll (CSS only with Intersection Observer trigger)",
+        "Responsive: stacks vertically on mobile, image grid collapses to 2 columns"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "Process section",
+      "passes": true,
+      "description": "A Streamlined Process section showing 3 design steps with numbered entries and description alongside a large image.",
+      "acceptanceCriteria": [
+        "Section heading 'A Streamlined Process for Exceptional Design' in Playfair Display",
+        "3 process steps displayed as numbered list (01, 02, 03) with title and description",
+        "Large image placeholder to the right of the process steps",
+        "Steps stacked vertically with clear visual separation (border or spacing)",
+        "Content sourced from data/process.json",
+        "Responsive: stacks vertically on mobile"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "Skills & Stats section",
+      "passes": true,
+      "description": "Section with headline, 4 large stat numbers, a dark CTA button, and categorized skill badges below.",
+      "acceptanceCriteria": [
+        "Section heading 'Crafting Intuitive & Impactful Designs' in Playfair Display",
+        "4 large stat numbers in a grid (98%, 85%, 92%, 98%) with labels below each",
+        "Dark CTA button below stats",
+        "Skill categories (Design, Tools, Process) each with badge/tag list",
+        "Badges: white background, subtle border, DM Sans text",
+        "Content sourced from data/skills.json",
+        "Responsive: stats become 2x2 grid on mobile, badges wrap naturally"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "Projects / Portfolio section",
+      "passes": true,
+      "description": "Portfolio section with large project cards featuring full-width images, project title, description, and tags.",
+      "acceptanceCriteria": [
+        "Section label 'PORTFOLIO' and description text",
+        "Project cards stacked vertically: each has a large image placeholder (16:9 or wider), dark overlay on hover",
+        "Below image: project title in Playfair Display, description in DM Sans, tag pills",
+        "Hover effect: subtle scale or shadow lift (CSS only)",
+        "Links to live site and/or Behance for each project",
+        "Content sourced from data/projects.json",
+        "Responsive: full-width cards on all breakpoints"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "Experience timeline",
+      "passes": true,
+      "description": "Vertical timeline or stacked list of professional experience entries.",
+      "acceptanceCriteria": [
+        "Section heading 'Experience'",
+        "Stacked cards or timeline: company, role, date range, description for each entry",
+        "Visual connector line or border between entries in --border color",
+        "Most recent entry first",
+        "Content sourced from data/experience.json",
+        "Fade-in on scroll for each entry",
+        "Responsive: full-width on mobile"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "Pricing section",
+      "passes": true,
+      "description": "3-tier pricing cards with plan name, price, features list, and CTA button.",
+      "acceptanceCriteria": [
+        "Section heading 'Choose Your Plan' with description",
+        "3 pricing cards side by side: Basic (R$ 2.990), Pro (R$ 4.990), Premium (R$ 6.990)",
+        "Each card: plan name, subtitle, price, feature list with checkmarks, dark CTA button",
+        "Middle card (Pro) visually highlighted as recommended (slightly larger or different border)",
+        "Content sourced from data/pricing.json",
+        "Responsive: cards stack vertically on mobile"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "FAQ section",
+      "passes": true,
+      "description": "Accordion-style FAQ section with expand/collapse interaction.",
+      "acceptanceCriteria": [
+        "Section heading 'Frequently Asked Questions'",
+        "4 FAQ items as expandable accordions (click to toggle open/close)",
+        "Question in DM Sans bold, answer in regular weight on expand",
+        "Plus/minus or arrow icon to indicate expand state",
+        "Only one item open at a time (optional: allow multiple)",
+        "Content sourced from data/faq.json",
+        "CSS transitions for smooth expand/collapse animation"
+      ]
+    },
+    {
+      "id": "US-011",
+      "title": "Contact section",
+      "passes": true,
+      "description": "Contact section with form and social links.",
+      "acceptanceCriteria": [
+        "Section heading and short prompt text",
+        "Form fields: Name, Email, Message — styled with warm neutral theme (--bg-secondary background, --border borders)",
+        "Focus state: darker border or subtle accent",
+        "Client-side validation: all required, valid email format",
+        "Submit button in dark accent (--accent: #1A1A1A) with hover state",
+        "Success message shown inline on submit (no backend, use mailto or static handler)",
+        "Social links alongside form (Behance, LinkedIn, Instagram, email)",
+        "Responsive: form and links stack on mobile"
+      ]
+    },
+    {
+      "id": "US-012",
+      "title": "SEO and performance",
+      "passes": true,
+      "description": "Meta tags, Open Graph, and performance optimization.",
+      "acceptanceCriteria": [
+        "Page title: 'Bianca Sato — UI/UX & Brand Designer'",
+        "Meta description set",
+        "Open Graph tags (og:title, og:description, og:image) configured",
+        "All images use Next.js Image component",
+        "Lighthouse performance score >= 90 on desktop"
+      ]
+    },
+    {
+      "id": "US-013",
+      "title": "Placeholder images with free-license stock photos",
+      "passes": true,
+      "description": "Replace all image placeholders throughout the site with real free-license images (Unsplash/Pexels) for visual testing and realistic preview of the final layout.",
+      "acceptanceCriteria": [
+        "Profile photo in Hero section replaced with a real portrait-style image from Unsplash (e.g. https://images.unsplash.com — UTM params stripped, no attribution required under Unsplash License)",
+        "About section photo grid populated with 6–8 varied free-license images (mix of workspace, design process, lifestyle) from Unsplash or Pexels",
+        "Process section large image replaced with a relevant workspace or creative process photo from Unsplash",
+        "Project card for 'Soundwave' uses a dark/tech-aesthetic image from Unsplash (e.g. audio equipment, abstract tech)",
+        "Project card for 'Lumiglow' uses a beauty/skincare-aesthetic image from Unsplash (e.g. soft lighting, minimal product shot)",
+        "All images referenced via direct HTTPS URL (no local download required for testing) or downloaded to public/images/ with filename matching the existing JSON references",
+        "All images use Next.js <Image> component with appropriate width, height, and alt text",
+        "Images chosen to match the warm editorial aesthetic (neutral tones, soft lighting, no harsh filters)",
+        "No paid or rights-reserved images — only Unsplash License or CC0",
+        "A comment or README note documents the image sources for future reference"
+      ]
+    },
+    {
+      "id": "US-014",
+      "title": "Audit and replace project images based on content relevance",
+      "passes": true,
+      "description": "Review all images currently in the project's public/images/ directory. For each image, evaluate whether it visually matches the section it's used in (hero portrait, about grid, process, portfolio cards). Replace images that don't fit the context — e.g. a generic stock photo used for a skincare brand project card, or an unrelated image in the about grid — with better-suited free-license alternatives. Keep images that already align well with their section's tone and subject matter.",
+      "acceptanceCriteria": [
+        "All images in public/images/ are catalogued with their current usage location (hero, about grid, process, project cards, etc.)",
+        "Each image is evaluated for relevance: does the subject, color tone, and mood match the section's content and the warm editorial aesthetic?",
+        "Images that are clearly mismatched or generic placeholders are flagged for replacement",
+        "Images that already fit their context (correct subject matter, appropriate tone, good quality) are explicitly kept and documented as 'approved'",
+        "Replacement images for portfolio project cards must match the project theme — e.g. 'Soundwave' (audio/tech) gets a dark, tech-forward image; 'Lumiglow' (skincare/beauty) gets a soft, luxurious product image",
+        "Replacement images for the about section grid should reflect the designer's world: workspace shots, design tools, creative process, lifestyle — varied but cohesive",
+        "Replacement images for the hero section portrait should be a professional, warm-toned portrait that fits the editorial aesthetic",
+        "Replacement images for the process section should depict hands-on creative work (sketching, prototyping, design review)",
+        "All replacement images must be free-license (Unsplash License or CC0) with source URLs documented",
+        "Replaced images use the same filenames or the JSON data files are updated to reference new filenames",
+        "All images continue to use Next.js <Image> component with correct width, height, and descriptive alt text",
+        "A before/after log is produced listing: image filename, section used, verdict (keep/replace), and reason",
+        "The overall visual coherence of the site is maintained or improved — no jarring mismatches in color temperature or style between sections"
+      ]
+    },
+    {
+      "id": "US-015",
+      "title": "Interactive scroll-driven animations with Framer Motion",
+      "passes": true,
+      "description": "Add scroll-reactive animations throughout the site using Framer Motion, focused on smooth transitions between sections. The goal is an interactive, engaging feel where content responds to the user's scroll position — parallax layers, staggered reveals, and fluid section entrances that make the single-page experience feel cinematic rather than static.",
+      "acceptanceCriteria": [
+        "Framer Motion installed and configured as the animation library (supersedes previous CSS-only animation constraint in FR-9)",
+        "Each major section (Hero, About, Process, Portfolio, Skills, Experience, Pricing, FAQ, Contact) has a scroll-triggered entrance animation using Framer Motion's `whileInView`",
+        "Section entrances are varied — not every section uses the same animation. Mix of: fade-up, fade-in with scale, slide-in from left/right, staggered children reveals",
+        "Parallax depth effect on at least 2 sections: background elements or images move at a different speed than foreground content using `useScroll` + `useTransform`",
+        "Hero section: title lines animate in sequentially (staggered by ~0.15s each) with a subtle vertical slide + opacity transition on page load",
+        "About section: bio text fades in from left while the photo grid fades in from right, creating a split-reveal effect",
+        "Process section: each step (01, 02, 03) staggers in as the user scrolls, with the large image having a parallax offset",
+        "Portfolio project cards: each card scales subtly from 0.95 to 1 and fades in as it enters the viewport",
+        "Skills stats: numbers animate with a counting-up effect (e.g. 0% → 98%) when the section scrolls into view, triggered once",
+        "Smooth section-to-section flow: sections overlap slightly in their animation timing so there are no 'dead zones' while scrolling — content is always in motion or settling",
+        "All animations respect `prefers-reduced-motion`: if the user's OS has reduced motion enabled, animations are disabled or simplified to simple fades",
+        "Animations are performant: use `transform` and `opacity` only (GPU-composited properties), no layout-triggering animations. Target 60fps on mid-range devices",
+        "Animation durations between 0.4s–0.8s with easing curves that feel organic (e.g. easeOut, [0.25, 0.1, 0.25, 1.0]), not mechanical linear",
+        "No animation plays on elements that are already visible in the initial viewport on page load (above-the-fold content animates on load, not on scroll)",
+        "Scroll-triggered animations fire once (not re-trigger when scrolling back up), unless parallax-based",
+        "CSS transitions remain for hover states and micro-interactions (buttons, cards, links) — Framer Motion is used for scroll-driven and entrance animations only"
+      ]
+    },
+    {
+    "id": "US-016",
+    "title": "Social Media Showcase component",
+    "passes": true,
+    "description": "Create a new SocialPosts section that renders 12 Instagram post cards for @psicologamarinahiga as HTML/CSS (not images). The cards mix Portuguese word definitions (cream background + burgundy sidebar) with Japanese philosophical concepts (burgundy background + light text). The component must be extensible — the JSON data uses a `type` discriminator field so future post types (quote, carousel, image, etc.) can be added without changing the component structure. Includes filter tabs (Todos / Português / 日本語), project metadata footer (client, type, post count, link to Instagram), and staggered scroll animations via Framer Motion. This is a NEW standalone component — do NOT modify any existing components, data files, styles, or configs.",
+    "acceptanceCriteria": [
+      "PREREQUISITE: Before writing any code, execute the Mandatory Change Audit (Step 4 in Ralph agent instructions). The project owner made manual changes after US-015 that are NOT in progress.txt. Audit the full project, document all unrecorded changes in progress.txt as a 'Manual Changes Audit (pre-US-016)' block, then proceed. Without this audit the agent will work with stale information.",
+      "New file: data/socialPosts.json containing sectionLabel, heading, description, client handle, and a posts array with all 12 posts. Each post has a `type` field ('portuguese' or 'japanese') used as discriminator for rendering. Portuguese posts have: id, type, word, pronunciation (nullable), classification, definitions array. Japanese posts have: id, type, characters, romanization, meaning (nullable), optional divider boolean, optional bullets array. No content hardcoded in the component — everything comes from the JSON.",
+      "New file: components/SocialPosts.tsx — a single 'use client' component. No separate sub-component files. All sub-components (PortugueseCard, JapaneseCard, FilterTabs, project metadata) defined inside this one file.",
+      "Section header: label 'SOCIAL MEDIA DESIGN' in DM Sans uppercase with wide letter-spacing (0.2em), heading 'Design para Redes Sociais' in Playfair Display with 'Redes Sociais' in italic, description paragraph mentioning @psicologamarinahiga in burgundy (#6B1A1A) font weight 500.",
+      "Filter tabs: row of pill buttons (Todos, Português, 日本語) that filter the grid by post type. Active tab has burgundy (#6B1A1A) background with cream text. Inactive tabs have transparent background with border. Filters use React useState — no URL state. 'Todos' shows all 12 posts.",
+      "Portuguese cards (type 'portuguese'): aspect-ratio 1:1, cream background (#F5F0EB), thin burgundy (#6B1A1A) accent bar on left edge (6px wide), word in Playfair Display bold (font-size scales down for long words like AUTOCONHECIMENTO via clamp), pronunciation in parentheses + classification in brackets below in DM Sans small muted text, definitions listed below in DM Sans 0.72rem, handle @psicologamarinahiga at card bottom in small muted text. Card content uses flexbox column with justify-between so handle stays at bottom.",
+      "Japanese cards (type 'japanese'): aspect-ratio 1:1, burgundy gradient background (linear-gradient 145deg from #6B1A1A to #8B2E2E), subtle diagonal stripe pattern overlay at 0.04 opacity, characters centered in large serif font (~2-3rem via clamp), romanization in brackets below in DM Sans with 0.05em letter-spacing, meaning text below in italic when present, bullet items prefixed with ✦ when bullets array exists, decorative horizontal line divider when divider:true, handle @psicologamarinahiga at card bottom in cream text at 0.5 opacity.",
+      "Grid layout: CSS grid with auto-fill, minmax(280px, 1fr) — yields 3 columns on desktop, 2 on tablet, 1 on mobile. Gap of 20px between cards.",
+      "Project metadata footer below grid: separated by top border in --border color. Displays client (@psicologamarinahiga), type (Social Media Design), post count (dynamic from data length). Right-aligned dark pill button 'Ver no Instagram' linking to https://instagram.com/psicologamarinahiga (target=_blank, rel=noopener noreferrer) that changes to burgundy on hover. Metadata section uses flex-wrap for mobile stacking.",
+      "Hover effect on all cards: translateY(-4px) with elevated box-shadow on hover, transition duration 0.4s with cubic-bezier(0.25, 0.1, 0.25, 1). No transform or shadow at rest beyond a subtle base shadow.",
+      "Framer Motion animations: section heading and filter tabs use whileInView fade-up. Cards use staggered fade-up with 0.08s delay between each card, using variants with staggerChildren. All animations use viewport={{ once: true }}, ease [0.25, 0.1, 0.25, 1.0] as const, duration 0.4-0.8s. Respect useReducedMotion — when active, set animation to simple opacity fade with no transform.",
+      "Accessibility: section element with id='social-posts' and aria-label='Social Media Design Showcase'. h2 for section heading. h3 for each card word/concept. All interactive elements (filter buttons, instagram link) keyboard accessible.",
+      "Integration: import and render <SocialPosts /> in app/page.tsx — this is the ONLY modification to an existing file. Suggested position: between Projects and Skills sections, or after Experience. Single import line + single JSX line.",
+      "DO NOT modify: Navbar.tsx, Footer.tsx, Hero.tsx, About.tsx, Process.tsx, Projects.tsx, Skills.tsx, Experience.tsx, Pricing.tsx, FAQ.tsx, Contact.tsx, SectionHeading.tsx, ProjectCard.tsx, SkillBadge.tsx, ExperienceEntry.tsx, or any other existing component.",
+      "DO NOT modify: any existing data file (hero.json, trustedBy.json, about.json, process.json, projects.json, skills.json, experience.json, pricing.json, faq.json).",
+      "DO NOT modify: globals.css, tailwind.config.ts, next.config.mjs, or layout.tsx.",
+      "DO NOT add new npm dependencies — Framer Motion is already installed.",
+      "Use inline styles or Tailwind classes for the burgundy color (#6B1A1A, #8B2E2E) rather than modifying tailwind.config.ts. The cream color #F5F0EB already exists as --bg-primary / bg-primary.",
+      "Extensibility: the component renders cards via a switch/map on post.type. Adding a new type in the future (e.g. 'quote', 'carousel', 'image') only requires: (1) adding the new type's data shape to the JSON, (2) adding a new card sub-component inside SocialPosts.tsx, (3) adding a case in the render switch. The grid, filters, metadata, and animations don't change. Add a code comment documenting this pattern at the top of the component."
+    ]
+  }
+  ],
+  "functionalRequirements": [
+    "FR-1: Built with Next.js (App Router) and TypeScript",
+    "FR-2: Styled with Tailwind CSS using warm neutral light theme (cream backgrounds, dark text, serif headings)",
+    "FR-3: All content stored in JSON files under data/ directory",
+    "FR-4: Navbar highlights active section and supports smooth scroll",
+    "FR-5: Fully responsive across mobile, tablet, and desktop",
+    "FR-6: Project cards link out to live demos and/or Behance",
+    "FR-7: Contact form validates inputs client-side before showing success state",
+    "FR-8: Semantic HTML elements throughout for accessibility",
+    "FR-9: Framer Motion for scroll-driven and entrance animations; CSS transitions for hover states and micro-interactions",
+    "FR-10: Static export (output: 'export') for deployment to Vercel/Netlify/GitHub Pages",
+    "FR-11: All animations respect prefers-reduced-motion media query for accessibility"
+  ],
+  "nonGoals": [
+    "No backend server or database",
+    "No CMS integration",
+    "No blog or writing section",
+    "No authentication or user accounts",
+    "No GSAP or other heavy animation libraries (Framer Motion is the sole animation library)",
+    "No dark/light theme toggle — ships light only",
+    "No analytics integration in v1",
+    "No real payment processing for pricing plans"
+  ]
+}
