@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description:
     "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
   openGraph: {
-    title: "Bianca Sato — UI/UX & Brand Designer",
+    title: "Bianca Sato — Designer Gráfico",
     description:
       "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
     images: ["/images/og-image.jpg"],
