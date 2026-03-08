@@ -8,14 +8,14 @@
       "description": "Design de Identidade Visual",
       "tags": ["Design Gráfico", "Design de Produto"],
       "image": "/images/trabalho-10.png",
-      "links": { "live": "#", "behance": "#" }
+      "links": {"behance": "https://www.behance.net/gallery/225330257/AURA-AURA-TULLIS" }
     },
     {
       "title": "BabyChef",
       "description": "Design de Identidade Visual",
       "tags": ["Marca", "Identidade Visual"],
       "image": "/images/babychef.png",
-      "links": { "live": "#", "behance": "#" }
+      "links": {"behance": "https://www.behance.net/gallery/225527857/BabyChef-Bianca-Sato" }
     }
   ]
 }

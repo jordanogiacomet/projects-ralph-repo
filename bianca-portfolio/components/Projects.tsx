@@ -77,12 +77,6 @@ export default function Projects() {
 
                 <div className="flex gap-4 shrink-0">
                   <a
-                    href={project.links.live}
-                    className="font-body text-sm text-text-primary underline underline-offset-4 hover:text-accent-hover transition-colors"
-                  >
-                    Live Site
-                  </a>
-                  <a
                     href={project.links.behance}
                     className="font-body text-sm text-text-primary underline underline-offset-4 hover:text-accent-hover transition-colors"
                   >
