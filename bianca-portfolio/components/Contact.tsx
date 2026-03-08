@@ -3,29 +3,59 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+// Replace this with your actual Formspree form ID (found at https://formspree.io/forms)
+const FORMSPREE_FORM_ID = "YOUR_FORMSPREE_FORM_ID";
+const FORMSPREE_URL = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
+
 export default function Contact() {
   const prefersReducedMotion = useReducedMotion();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: typeof errors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.name.trim()) newErrors.name = "Nome é obrigatório";
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Email é obrigatório";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = "Por favor, insira um email válido";
     }
-    if (!formData.message.trim()) newErrors.message = "Message is required";
+    if (!formData.message.trim()) newErrors.message = "Mensagem é obrigatória";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setSubmitted(true);
+    if (!validate()) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setSubmitError("Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente em instantes.");
+      }
+    } catch {
+      setSubmitError("Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -88,6 +118,22 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                {/* Honeypot field — hidden from real users, catches bots */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0, overflow: "hidden" }}
+                  aria-hidden="true"
+                />
+
+                {submitError && (
+                  <div role="alert" className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 font-body text-sm">
+                    {submitError}
+                  </div>
+                )}
+
                 <div>
                   <label htmlFor="name" className="block font-body text-sm font-medium text-text-primary mb-2">
                     Nome
@@ -98,13 +144,15 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                    aria-invalid={!!errors.name}
                     className={`w-full px-4 py-3 rounded-lg bg-bg-secondary border font-body text-text-primary placeholder:text-text-secondary/50 outline-none transition-colors duration-200 ${
                       errors.name ? "border-red-400" : "border-border focus:border-accent"
                     }`}
                     placeholder="Seu nome"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-500 font-body">{errors.name}</p>
+                    <p id="name-error" role="alert" className="mt-1 text-sm text-red-500 font-body">{errors.name}</p>
                   )}
                 </div>
 
@@ -118,13 +166,15 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    aria-describedby={errors.email ? "email-error" : undefined}
+                    aria-invalid={!!errors.email}
                     className={`w-full px-4 py-3 rounded-lg bg-bg-secondary border font-body text-text-primary placeholder:text-text-secondary/50 outline-none transition-colors duration-200 ${
                       errors.email ? "border-red-400" : "border-border focus:border-accent"
                     }`}
                     placeholder="seu@email.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-500 font-body">{errors.email}</p>
+                    <p id="email-error" role="alert" className="mt-1 text-sm text-red-500 font-body">{errors.email}</p>
                   )}
                 </div>
 
@@ -138,21 +188,26 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
+                    aria-describedby={errors.message ? "message-error" : undefined}
+                    aria-invalid={!!errors.message}
                     className={`w-full px-4 py-3 rounded-lg bg-bg-secondary border font-body text-text-primary placeholder:text-text-secondary/50 outline-none transition-colors duration-200 resize-none ${
                       errors.message ? "border-red-400" : "border-border focus:border-accent"
                     }`}
                     placeholder="Me fale sobre seu projeto..."
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-500 font-body">{errors.message}</p>
+                    <p id="message-error" role="alert" className="mt-1 text-sm text-red-500 font-body">{errors.message}</p>
                   )}
                 </div>
 
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-accent text-text-on-dark font-body font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
+                  disabled={submitting}
+                  className={`px-8 py-3 bg-accent text-text-on-dark font-body font-medium rounded-full transition-colors duration-200 ${
+                    submitting ? "opacity-70 cursor-not-allowed" : "hover:bg-accent-hover"
+                  }`}
                 >
-                  Envie uma mensagem
+                  {submitting ? "Enviando..." : "Envie uma mensagem"}
                 </button>
               </form>
             )}
