@@ -1,33 +1,14 @@
 {
-  "sectionLabel": "Social Media Design",
-  "heading": "Design para Redes Sociais",
-  "description": "Projeto de identidade visual para conteúdo de psicologia no Instagram — série de posts com palavras e conceitos japoneses.",
+  "sectionLabel": "Portfólio",
   "client": "@psicologamarinahiga",
+  "description": "Posts de redes sociais criados para @psicologamarinahiga — conteúdo educativo bilíngue em português e japonês.",
   "posts": [
     {
       "id": 1,
       "type": "portuguese",
-      "word": "PALAVRA",
-      "pronunciation": "pa-la-vra",
-      "classification": "Nome feminino",
-      "definitions": [
-        "Substantivo feminino que se refere a uma unidade de linguagem que possui significado e é composta por um ou mais fonemas.",
-        "São usadas para formar frases e expressar ideias e sentimentos. Podem ser classificadas em diferentes categorias."
-      ]
-    },
-    {
-      "id": 2,
-      "type": "japanese",
-      "characters": "我慢",
-      "romanization": "gaman",
-      "meaning": null,
-      "divider": true
-    },
-    {
-      "id": 3,
-      "type": "portuguese",
-      "word": "AMOR",
-      "pronunciation": "a-mor",
+      "image": "/images/insta-01.png",
+      "word": "Amor",
+      "pronunciation": "a·mor",
       "classification": "palavra masculina",
       "definitions": [
         "1. Forte afeição por outra pessoa, nascida de laços de consanguinidade ou de relações sociais.",
@@ -35,104 +16,119 @@
       ]
     },
     {
-      "id": 4,
+      "id": 2,
+      "type": "japanese",
+      "image": "/images/insta-02.png",
+      "characters": "愛",
+      "romanization": "ai",
+      "meaning": "amor",
+      "divider": true,
+      "bullets": []
+    },
+    {
+      "id": 3,
       "type": "portuguese",
-      "word": "SOLIDÃO",
-      "pronunciation": "so-li-dão",
-      "classification": "Substantivo feminino",
+      "image": "/images/insta-03.png",
+      "word": "Saudade",
+      "pronunciation": "sau·da·de",
+      "classification": "palavra feminina",
       "definitions": [
-        "1. estado de quem se acha ou se sente desacompanhado ou só; isolamento.",
-        "2. caráter dos locais ermos, solitários."
+        "1. Sentimento melancólico pela ausência de algo ou alguém."
       ]
+    },
+    {
+      "id": 4,
+      "type": "japanese",
+      "image": "/images/insta-04.png",
+      "characters": "懐かしい",
+      "romanization": "natsukashii",
+      "meaning": "nostálgico",
+      "divider": true,
+      "bullets": []
     },
     {
       "id": 5,
-      "type": "japanese",
-      "characters": "生き甲斐",
-      "romanization": "Ikigai",
-      "meaning": "e o sentido da vida"
+      "type": "portuguese",
+      "image": "/images/insta-05.png",
+      "word": "Resiliência",
+      "pronunciation": "re·si·li·ên·cia",
+      "classification": "palavra feminina",
+      "definitions": [
+        "1. Capacidade de se recuperar de adversidades."
+      ]
     },
     {
       "id": 6,
-      "type": "portuguese",
-      "word": "LUTO",
-      "pronunciation": "lu-to",
-      "classification": "Substantivo masculino",
-      "definitions": [
-        "1. sentimento de tristeza profunda pela morte de alguém.",
-        "2. tempo durante o qual devem manifestar-se certos sinais do luto.",
-        "3. conjunto de sinais externos que os costumes associam à perda de parente próximo ou pessoa querida."
-      ]
+      "type": "japanese",
+      "image": "/images/insta-06.png",
+      "characters": "回復力",
+      "romanization": "kaifukuryoku",
+      "meaning": "resiliência",
+      "divider": true,
+      "bullets": []
     },
     {
       "id": 7,
       "type": "portuguese",
-      "word": "MUDANÇA",
-      "pronunciation": null,
-      "classification": "Substantivo feminino",
+      "image": "/images/insta-07.png",
+      "word": "Empatia",
+      "pronunciation": "em·pa·ti·a",
+      "classification": "palavra feminina",
       "definitions": [
-        "Alteração ou modificação do estado normal de algo;",
-        "modificação ou transferência de alguma coisa para um outro lugar;",
-        "alteração ou substituição de uma pessoa ou coisa por outra.",
-        "alavanca com a qual se realiza a troca das marchas num automóvel."
+        "1. Capacidade de se identificar com o outro."
       ]
     },
     {
       "id": 8,
       "type": "japanese",
-      "characters": "しょうがない",
-      "romanization": "Shouganai",
-      "meaning": "\"Não há o que possa fazer\""
+      "image": "/images/insta-08.png",
+      "characters": "共感",
+      "romanization": "kyōkan",
+      "meaning": "empatia",
+      "divider": true,
+      "bullets": []
     },
     {
       "id": 9,
       "type": "portuguese",
-      "word": "MOTIVAÇÃO",
-      "pronunciation": "mo-ti-va-ção",
-      "classification": "Substantivo feminino",
+      "image": "/images/insta-09.png",
+      "word": "Gratidão",
+      "pronunciation": "gra·ti·dão",
+      "classification": "palavra feminina",
       "definitions": [
-        "1. Ato ou efeito de motivar.",
-        "1. Ato ou efeito de motivar, exposição de motivos ou causas, conjunto de fatores, os quais agem entre si e determinam a conduta de um indivíduo."
+        "1. Sentimento de reconhecimento por um benefício recebido."
       ]
     },
     {
       "id": 10,
-      "type": "portuguese",
-      "word": "EQUILÍBRIO",
-      "pronunciation": null,
-      "classification": "Substantivo masculino",
-      "definitions": [
-        "[Física] Estado do sistema cujas forças que sobre ele agem se contrabalançam e se anulam de maneira análoga;",
-        "posição do corpo que se encontra estável (desprovido de oscilação ou desvio);",
-        "força que age de maneira igual entre duas ou mais coisas (ou pessoas);",
-        "cujas quantidades se apresentam de modo igual, proporcional;",
-        "em estado aquilo que permanece estável (constante);",
-        "estabilidade; equilíbrio de oportunidades de trabalho;",
-        "em que há harmonia; que se distribui de maneira proporcional;",
-        "equilíbrio de uma estátua; que apresenta comedimento emocional;",
-        "cujo estado mental é estável; autocontrole."
-      ]
+      "type": "japanese",
+      "image": "/images/insta-10.png",
+      "characters": "感謝",
+      "romanization": "kansha",
+      "meaning": "gratidão",
+      "divider": true,
+      "bullets": []
     },
     {
       "id": 11,
-      "type": "japanese",
-      "characters": "侘び寂び",
-      "romanization": "wabi-sabi",
-      "meaning": null,
-      "bullets": [
-        "\"wabi\" significa quietude e \"sabi\" simplicidade.",
-        "é uma concepção que fala da contemplação do que é imperfeito e assimétrios."
+      "type": "portuguese",
+      "image": "/images/insta-11.png",
+      "word": "Coragem",
+      "pronunciation": "co·ra·gem",
+      "classification": "palavra feminina",
+      "definitions": [
+        "1. Firmeza de ânimo diante do perigo."
       ]
     },
     {
       "id": 12,
-      "type": "portuguese",
-      "word": "AUTOCONHECIMENTO",
-      "pronunciation": "au-to-co-nhe-ci-men-to",
-      "classification": "Substantivo masculino",
-      "definitions": [
-        "Conhecimento de si próprio, das suas características, qualidades, imperfeições, sentimentos etc.; que caracterizam o indivíduos por si próprio."
-      ]
+      "type": "japanese",
+      "image": "/images/insta-12.png",
+      "characters": "勇気",
+      "romanization": "yūki",
+      "meaning": "coragem",
+      "divider": true,
+      "bullets": []
     }
   ]
 }

@@ -72,9 +72,6 @@ export default function Experience() {
                     <p className="font-body text-text-primary text-lg mt-1">
                       {item.role}
                     </p>
-                    <p className="font-body text-text-secondary text-base mt-3">
-                      {item.description}
-                    </p>
                   </div>
                   <span className="font-body text-text-secondary text-sm uppercase tracking-wide whitespace-nowrap md:mt-2">
                     {item.period}

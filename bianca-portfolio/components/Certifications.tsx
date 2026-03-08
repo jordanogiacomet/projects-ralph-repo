@@ -37,6 +37,7 @@ const categoryLabels: Record<string, string> = {
   criatividade: "Criatividade",
   educação: "Educação",
   tecnologia: "Tecnologia",
+  idioma: "Idioma",
 };
 
 function getCategoryLabel(cat: string): string {

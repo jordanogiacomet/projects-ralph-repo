@@ -7,7 +7,7 @@ const siteLinks = [
 
 const socialLinks = [
   { label: "Behance", href: "https://www.behance.net/biancasato1" },
-  { label: "LinkedIn", href: "www.linkedin.com/in/bianca-tomoe-sato-968703268" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/bianca-tomoe-sato-968703268" },
 ];
 
 export default function Footer() {

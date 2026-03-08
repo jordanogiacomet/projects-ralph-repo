@@ -25,7 +25,7 @@
     {
       "id": 4,
       "title": "Marketing de redes sociais – curso completo 10 em 1",
-      "institution": "Udemy",
+      "institution": "Ûdemy",
       "category": "marketing"
     },
     {
@@ -57,6 +57,18 @@
       "title": "Avaliadora – Festival Marista de Robótica 2023",
       "institution": "PUCRS",
       "category": "tecnologia"
+    },
+    {
+      "id": 10,
+      "title": "TOEFL JR - Classificação mais alta adquirida",
+      "institution": "ETS (Educational Testing Service)",
+      "category": "idioma"
+    },
+    {
+      "id": 11,
+      "title": "JLPT N1 - Nota máxima alcançada",
+      "institution": "Japan Foundation and Japan Educational Exchanges and Services (JEES)",
+      "category": "idioma"
     }
   ]
 }

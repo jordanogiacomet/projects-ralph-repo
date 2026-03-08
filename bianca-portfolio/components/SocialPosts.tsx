@@ -1,19 +1,19 @@
 /**
  * SocialPosts — Social Media Design Showcase
  *
- * Extensible card-based component for displaying social media post designs
- * in a horizontal carousel. Cards are rendered via a switch/map on `post.type`.
+ * Displays actual Instagram post images in a horizontal carousel.
+ * Images are loaded from /public/images/insta-XX.png.
  *
- * To add a new post type (e.g. 'quote', 'carousel', 'image'):
- *   1. Add the new type's data shape to data/socialPosts.json
- *   2. Add a new card sub-component inside this file (e.g. QuoteCard)
- *   3. Add a case in the renderCard switch below
- * The carousel, filters, metadata, and animations don't need to change.
+ * To add new posts:
+ *   1. Add the image to /public/images/ (e.g. insta-13.png)
+ *   2. Add the entry to data/socialPosts.json with the correct type and image path
+ *   The carousel, filters, metadata, and animations don't need to change.
  */
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import socialPostsData from "@/data/socialPosts.json";
 
 // ---------------------------------------------------------------------------
@@ -23,6 +23,7 @@ import socialPostsData from "@/data/socialPosts.json";
 interface PortuguesePost {
   id: number;
   type: "portuguese";
+  image: string;
   word: string;
   pronunciation: string | null;
   classification: string;
@@ -32,6 +33,7 @@ interface PortuguesePost {
 interface JapanesePost {
   id: number;
   type: "japanese";
+  image: string;
   characters: string;
   romanization: string;
   meaning: string | null;
@@ -45,190 +47,33 @@ type Post = PortuguesePost | JapanesePost;
 // Sub-components
 // ---------------------------------------------------------------------------
 
-function PortugueseCard({ post }: { post: PortuguesePost }) {
-  const isLongWord = post.word.length > 10;
+function PostImageCard({ post }: { post: Post }) {
+  const alt =
+    post.type === "portuguese"
+      ? `Post sobre a palavra "${post.word}"`
+      : `Post sobre "${post.characters}"`;
 
   return (
     <div
-      className="relative flex flex-col justify-between bg-bg-primary rounded-xl overflow-hidden h-full"
+      className="relative rounded-xl overflow-hidden h-full"
       style={{
         aspectRatio: "1 / 1",
         boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
       }}
     >
-      {/* Burgundy accent bar */}
-      <div
-        className="absolute left-0 top-0 bottom-0 rounded-l-xl"
-        style={{ width: "6px", backgroundColor: "#6B1A1A" }}
+      <Image
+        src={post.image}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover"
+        quality={90}
       />
-
-      <div className="flex flex-col flex-1 p-6 pl-8">
-        <h3
-          className="font-display font-bold text-text-primary leading-tight"
-          style={{
-            fontSize: isLongWord
-              ? "clamp(1.2rem, 4vw, 1.6rem)"
-              : "clamp(1.6rem, 5vw, 2.2rem)",
-          }}
-        >
-          {post.word}
-        </h3>
-
-        {(post.pronunciation || post.classification) && (
-          <p className="font-body text-text-secondary mt-1" style={{ fontSize: "0.7rem" }}>
-            {post.pronunciation && <>({post.pronunciation}) </>}
-            {post.classification && <>[{post.classification}]</>}
-          </p>
-        )}
-
-        <div className="mt-3 flex-1">
-          {post.definitions.map((def, i) => (
-            <p
-              key={i}
-              className="font-body text-text-secondary leading-relaxed"
-              style={{ fontSize: "0.72rem" }}
-            >
-              {def}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      <p
-        className="font-body text-text-secondary px-6 pl-8 pb-4"
-        style={{ fontSize: "0.65rem", opacity: 0.6 }}
-      >
-        {socialPostsData.client}
-      </p>
     </div>
   );
 }
 
-function JapaneseCard({ post }: { post: JapanesePost }) {
-  return (
-    <div
-      className="relative flex flex-col justify-between rounded-xl overflow-hidden h-full"
-      style={{
-        aspectRatio: "1 / 1",
-        background: "linear-gradient(145deg, #6B1A1A, #8B2E2E)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
-      }}
-    >
-      {/* Diagonal stripe overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: 0.04,
-          backgroundImage:
-            "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.5) 10px, rgba(255,255,255,0.5) 11px)",
-        }}
-      />
 
-      <div className="relative flex flex-col items-center justify-center flex-1 p-6 text-center">
-        <h3
-          className="font-display font-bold leading-tight"
-          style={{
-            color: "#F5F0EB",
-            fontSize: "clamp(2rem, 6vw, 3rem)",
-          }}
-        >
-          {post.characters}
-        </h3>
-
-        <p
-          className="font-body mt-2"
-          style={{
-            color: "#F5F0EB",
-            fontSize: "0.85rem",
-            letterSpacing: "0.05em",
-            opacity: 0.85,
-          }}
-        >
-          [{post.romanization}]
-        </p>
-
-        {post.divider && (
-          <hr
-            className="my-3 border-0"
-            style={{
-              width: "40px",
-              height: "1px",
-              backgroundColor: "rgba(245, 240, 235, 0.3)",
-            }}
-          />
-        )}
-
-        {post.meaning && (
-          <p
-            className="font-body italic mt-2"
-            style={{ color: "#F5F0EB", fontSize: "0.8rem", opacity: 0.85 }}
-          >
-            {post.meaning}
-          </p>
-        )}
-
-        {post.bullets && (
-          <div className="mt-3 space-y-1">
-            {post.bullets.map((bullet, i) => (
-              <p
-                key={i}
-                className="font-body"
-                style={{ color: "#F5F0EB", fontSize: "0.72rem", opacity: 0.85 }}
-              >
-                &#10022; {bullet}
-              </p>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <p
-        className="relative font-body text-center pb-4"
-        style={{ color: "#F5F0EB", fontSize: "0.65rem", opacity: 0.5 }}
-      >
-        {socialPostsData.client}
-      </p>
-    </div>
-  );
-}
-
-type FilterType = "all" | "portuguese" | "japanese";
-
-function FilterTabs({
-  active,
-  onChange,
-}: {
-  active: FilterType;
-  onChange: (f: FilterType) => void;
-}) {
-  const tabs: { label: string; value: FilterType }[] = [
-    { label: "Todos", value: "all" },
-    { label: "Português", value: "portuguese" },
-    { label: "日本語", value: "japanese" },
-  ];
-
-  return (
-    <div className="flex flex-wrap gap-3">
-      {tabs.map((tab) => {
-        const isActive = active === tab.value;
-        return (
-          <button
-            key={tab.value}
-            onClick={() => onChange(tab.value)}
-            className="font-body text-sm px-5 py-2 rounded-full transition-colors duration-200"
-            style={{
-              backgroundColor: isActive ? "#6B1A1A" : "transparent",
-              color: isActive ? "#F5F0EB" : "#1A1A1A",
-              border: isActive ? "1px solid #6B1A1A" : "1px solid #D4CEC6",
-            }}
-          >
-            {tab.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Carousel hooks
@@ -257,22 +102,19 @@ function useCardsPerView() {
 
 export default function SocialPosts() {
   const prefersReducedMotion = useReducedMotion();
-  const [filter, setFilter] = useState<FilterType>("all");
   const [currentSlide, setCurrentSlide] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
   const cardsPerView = useCardsPerView();
   const posts = socialPostsData.posts as Post[];
-  const filtered =
-    filter === "all" ? posts : posts.filter((p) => p.type === filter);
 
-  const totalSlides = Math.max(1, Math.ceil(filtered.length / cardsPerView));
+  const totalSlides = Math.max(1, Math.ceil(posts.length / cardsPerView));
 
-  // Clamp currentSlide when filter or cardsPerView changes
+  // Clamp currentSlide when cardsPerView changes
   useEffect(() => {
     setCurrentSlide(0);
-  }, [filter, cardsPerView]);
+  }, [cardsPerView]);
 
   const goTo = useCallback(
     (slide: number) => {
@@ -319,17 +161,6 @@ export default function SocialPosts() {
   const gap = 20; // px
   const transitionDuration = prefersReducedMotion ? "0.15s" : "0.5s";
 
-  function renderCard(post: Post) {
-    switch (post.type) {
-      case "portuguese":
-        return <PortugueseCard post={post} />;
-      case "japanese":
-        return <JapaneseCard post={post} />;
-      default:
-        return null;
-    }
-  }
-
   const isFirst = currentSlide === 0;
   const isLast = currentSlide >= totalSlides - 1;
 
@@ -368,27 +199,6 @@ export default function SocialPosts() {
             </span>
             {socialPostsData.description.split(socialPostsData.client)[1] || ""}
           </p>
-        </motion.div>
-
-        {/* Filter tabs */}
-        <motion.div
-          className="mb-10"
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.1,
-            ease: [0.25, 0.1, 0.25, 1.0] as const,
-          }}
-        >
-          <FilterTabs
-            active={filter}
-            onChange={(f) => {
-              setFilter(f);
-              setCurrentSlide(0);
-            }}
-          />
         </motion.div>
 
         {/* Carousel */}
@@ -472,7 +282,7 @@ export default function SocialPosts() {
                 onPointerDown={handlePointerDown}
                 onPointerUp={handlePointerUp}
               >
-                {filtered.map((post) => (
+                {posts.map((post) => (
                   <div
                     key={post.id}
                     className="flex-shrink-0 transition-all duration-[400ms]"
@@ -489,7 +299,7 @@ export default function SocialPosts() {
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    {renderCard(post)}
+                    <PostImageCard post={post} />
                   </div>
                 ))}
               </div>

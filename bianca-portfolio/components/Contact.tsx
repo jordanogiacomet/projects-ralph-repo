@@ -179,7 +179,8 @@ export default function Contact() {
                 bianca.sato@icloud.com
               </a>
               <a
-                href="#"
+                href="https://www.behance.net/biancasato1"
+                target="_blank"
                 className="flex items-center gap-3 font-body text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -188,7 +189,8 @@ export default function Contact() {
                 Behance
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/bianca-tomoe-sato-968703268"
+                target="_blank"
                 className="flex items-center gap-3 font-body text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
