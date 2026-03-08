@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Sobre", href: "#about" },
+  { label: "Portfólio", href: "#portfolio" },
+  { label: "Contato", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -53,7 +52,7 @@ export default function Navbar() {
               href="#contact"
               className="font-body text-sm bg-accent text-text-on-dark px-5 py-2.5 rounded-full hover:bg-accent-hover transition-colors"
             >
-              Contact me
+              Entre em Contato
             </a>
           </li>
         </ul>
@@ -106,7 +105,7 @@ export default function Navbar() {
               className="font-body text-sm bg-accent text-text-on-dark px-5 py-2.5 rounded-full hover:bg-accent-hover transition-colors"
               onClick={() => setMenuOpen(false)}
             >
-              Contact me
+              Entre em Contato
             </a>
           </li>
         </ul>

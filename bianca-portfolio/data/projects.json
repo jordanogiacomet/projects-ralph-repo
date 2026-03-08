@@ -1,19 +1,19 @@
 {
-  "sectionLabel": "Portfolio",
-  "heading": "Portfolio",
-  "description": "Explore my recent work with design creations and discover how we can bring your ideas to life.",
+  "sectionLabel": "Portfólio",
+  "heading": "Portfólio",
+  "description": "Explore meus trabalhos recentes com criações de design e descubra como podemos dar vida às suas ideias.",
   "items": [
     {
       "title": "Aura",
-      "description": "Designing an Immersive Wine Experience",
-      "tags": ["UI/UX", "Product Design"],
-      "image": "/images/trabalho-10.svg",
+      "description": "Design de Identidade Visual",
+      "tags": ["Design Gráfico", "Design de Produto"],
+      "image": "/images/trabalho-10.png",
       "links": { "live": "#", "behance": "#" }
     },
     {
       "title": "BabyChef",
-      "description": "Creating Beauty with a Baby Chef Identity",
-      "tags": ["Branding", "Visual Identity"],
+      "description": "Design de Identidade Visual",
+      "tags": ["Marca", "Identidade Visual"],
       "image": "/images/trabalho-1.svg",
       "links": { "live": "#", "behance": "#" }
     }

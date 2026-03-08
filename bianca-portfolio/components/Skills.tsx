@@ -1,44 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import skillsData from "@/data/skills.json";
-
-function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!inView) return;
-    if (prefersReducedMotion) {
-      setCount(target);
-      return;
-    }
-    let start = 0;
-    const duration = 1200;
-    const startTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      start = Math.round(eased * target);
-      setCount(start);
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    requestAnimationFrame(animate);
-  }, [inView, target, prefersReducedMotion]);
-
-  return (
-    <span ref={ref}>
-      {count}{suffix}
-    </span>
-  );
-}
 
 export default function Skills() {
   const prefersReducedMotion = useReducedMotion();
@@ -65,47 +28,10 @@ export default function Skills() {
       };
 
   return (
-    <section id="skills" className="py-24 bg-bg-primary">
+    <section id="skills" className="py-4 bg-bg-primary">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <motion.div
-          className="text-center mb-16"
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1.0] as const }}
-        >
-          <p className="text-text-secondary font-body text-sm uppercase tracking-widest mb-4">
-            {skillsData.sectionLabel}
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl leading-tight text-text-primary">
-            {skillsData.heading}
-          </h2>
-        </motion.div>
-
-        {/* Stats grid with counting-up */}
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12"
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1.0] as const }}
-        >
-          {skillsData.stats.map((stat) => {
-            const numericValue = parseInt(stat.value.replace(/\D/g, ""), 10);
-            const suffix = stat.value.replace(/\d/g, "");
-            return (
-              <div key={stat.label} className="text-center">
-                <span className="font-display text-5xl md:text-6xl text-text-primary">
-                  <CountUp target={numericValue} suffix={suffix} />
-                </span>
-                <p className="font-body text-text-secondary text-sm mt-2 uppercase tracking-wide">
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
-        </motion.div>
+      
+         
 
         {/* CTA button */}
         <motion.div
@@ -119,7 +45,7 @@ export default function Skills() {
             href="#contact"
             className="inline-block bg-accent text-text-on-dark font-body text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-accent-hover transition-colors"
           >
-            Get in touch
+            Entre em Contato
           </a>
         </motion.div>
 

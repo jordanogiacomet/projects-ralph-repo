@@ -102,7 +102,7 @@ export default function Pricing() {
                       : "bg-accent text-text-on-dark hover:bg-accent-hover"
                   }`}
                 >
-                  Get Started
+                  Vamos Começar
                 </a>
               </motion.div>
             );

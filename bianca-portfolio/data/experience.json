@@ -1,17 +1,21 @@
 {
-  "sectionLabel": "Experience",
+  "sectionLabel": "Trajetória Acadêmica",
   "items": [
-    {
-      "company": "Freelance",
-      "role": "UI/UX & Brand Designer",
-      "period": "2024 — Present",
-      "description": "Designing brand identities and digital interfaces for startups and small businesses."
+      {
+      "company": "PUCRS",
+      "role": "Estudante de Design",
+      "period": "2023 — Present",
+      "description": "Estudando Design com foco em comunicação visual, branding e design de produtos digitais"
     },
     {
-      "company": "PUCRS",
-      "role": "Design Student",
-      "period": "2022 — Present",
-      "description": "Studying Design with focus on visual communication, branding, and digital product design."
+      "company": "Colégio Marista Champagna",
+      "role": "Ensino Médio",
+      "period": "2016 — 2022"
+    },
+    {
+      "company": "Kunimi Elementary School",
+      "role": "Ensino Fundamental",
+      "period": "2011 — 2015"
     }
   ]
 }

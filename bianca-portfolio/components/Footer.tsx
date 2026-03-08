@@ -1,15 +1,13 @@
 const siteLinks = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Sobre", href: "#about" },
+  { label: "Portfólio", href: "#portfolio" },
+  { label: "Contato", href: "#contact" },
 ];
 
 const socialLinks = [
-  { label: "Behance", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Instagram", href: "#" },
+  { label: "Behance", href: "https://www.behance.net/biancasato1" },
+  { label: "LinkedIn", href: "www.linkedin.com/in/bianca-tomoe-sato-968703268" },
 ];
 
 export default function Footer() {
@@ -23,15 +21,14 @@ export default function Footer() {
               Bianca Sato
             </h3>
             <p className="font-body text-sm text-text-on-dark/70">
-              UI/UX &amp; Brand Designer crafting meaningful digital
-              experiences.
+              Designer gráfico e de marca, criando experiências digitais significativas.
             </p>
           </div>
 
           {/* Site links */}
           <div>
             <h4 className="font-body text-sm font-semibold uppercase tracking-wider mb-4 text-text-on-dark/50">
-              Sitemap
+              Mapa do Site
             </h4>
             <ul className="flex flex-col gap-3">
               {siteLinks.map((link) => (
@@ -50,13 +47,15 @@ export default function Footer() {
           {/* Socials */}
           <div>
             <h4 className="font-body text-sm font-semibold uppercase tracking-wider mb-4 text-text-on-dark/50">
-              Connect
+              Vamos se Conectar
             </h4>
             <ul className="flex flex-col gap-3">
               {socialLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="font-body text-sm text-text-on-dark/70 hover:text-text-on-dark transition-colors"
                   >
                     {link.label}
@@ -69,7 +68,7 @@ export default function Footer() {
 
         <div className="border-t border-text-on-dark/20 pt-8 text-center">
           <p className="font-body text-sm text-text-on-dark/50">
-            &copy; {new Date().getFullYear()} Bianca Sato. All rights reserved.
+            &copy; {new Date().getFullYear()} Bianca Sato. Todos os Direitos Reservados.
           </p>
         </div>
       </div>

@@ -77,7 +77,7 @@ export default function Process() {
               style={prefersReducedMotion ? {} : { y: imageY }}
             >
               <Image
-                src="/images/trabalho-6.svg"
+                src="/images/trabalho-6.png"
                 alt="Creative design process workspace"
                 fill
                 className="object-cover"

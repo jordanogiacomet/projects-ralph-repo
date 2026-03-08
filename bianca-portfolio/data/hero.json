@@ -1,13 +1,7 @@
 {
   "name": "Bianca Tomoe Sato",
-  "greeting": "Hey, I'm Bianca,",
-  "titleLines": ["A UI/UX", "& Brand", "DESIGNER"],
-  "description": "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
-  "cta": { "text": "Contact me", "link": "#contact" },
-  "highlights": [
-    { "label": "User-Centered Design", "description": "Intuitive interfaces that put users first" },
-    { "label": "Brand Identity & Strategy", "description": "Visual systems that tell your story" },
-    { "label": "Responsive & Modern UI", "description": "Pixel-perfect across every device" },
-    { "label": "Seamless Prototyping", "description": "From wireframe to polished interaction" }
-  ]
+  "greeting": "Oi! Sou a Bianca,",
+  "titleLines": ["Designer gráfico", "& Brand"],
+  "description": "Criando designs que contam histórias — transformando conceitos em visuais marcantes que conectam pessoas e elevam marcas.",
+  "cta": { "text": "Entre em contato", "link": "#contact" }
 }

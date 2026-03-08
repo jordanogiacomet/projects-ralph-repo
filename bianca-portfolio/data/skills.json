@@ -1,15 +1,7 @@
 {
-  "sectionLabel": "Skills",
-  "heading": "Crafting Intuitive & Impactful Designs",
-  "stats": [
-    { "value": "98%", "label": "Accuracy" },
-    { "value": "85%", "label": "Efficiency" },
-    { "value": "92%", "label": "Enhanced" },
-    { "value": "98%", "label": "Satisfaction" }
-  ],
   "categories": [
-    { "name": "Design", "items": ["UI/UX Design", "Brand Identity", "Visual Design", "Typography", "Layout & Composition"] },
-    { "name": "Tools", "items": ["Figma", "Adobe Illustrator", "Photoshop", "After Effects", "InDesign"] },
-    { "name": "Process", "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Motion Design"] }
+    { "name": "Design", "items": ["Design Gráfico", "Design Visual", "Visual Design", "Identidade Visual", "Layout Para Redes Sociais"] },
+    { "name": "Ferramentas", "items": ["Adobe Illustrator", "Adobe Photoshop", "Canva", "Capcut"] },
+    { "name": "Processo", "items": ["Pesquisa Qualificada", "Prototipagem", "Estrutura para Redes Sociais"] }
   ]
 }
