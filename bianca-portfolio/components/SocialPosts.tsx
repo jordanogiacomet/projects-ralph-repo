@@ -1,16 +1,18 @@
 /**
  * SocialPosts — Social Media Design Showcase
  *
- * Extensible card-based component for displaying social media post designs.
- * Cards are rendered via a switch/map on `post.type`. To add a new post type:
+ * Extensible card-based component for displaying social media post designs
+ * in a horizontal carousel. Cards are rendered via a switch/map on `post.type`.
+ *
+ * To add a new post type (e.g. 'quote', 'carousel', 'image'):
  *   1. Add the new type's data shape to data/socialPosts.json
  *   2. Add a new card sub-component inside this file (e.g. QuoteCard)
  *   3. Add a case in the renderCard switch below
- * The grid, filters, metadata, and animations don't need to change.
+ * The carousel, filters, metadata, and animations don't need to change.
  */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import socialPostsData from "@/data/socialPosts.json";
 
@@ -40,7 +42,7 @@ interface JapanesePost {
 type Post = PortuguesePost | JapanesePost;
 
 // ---------------------------------------------------------------------------
-// Sub-components (all defined inside this file per acceptance criteria)
+// Sub-components
 // ---------------------------------------------------------------------------
 
 function PortugueseCard({ post }: { post: PortuguesePost }) {
@@ -48,7 +50,7 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
 
   return (
     <div
-      className="relative flex flex-col justify-between bg-bg-primary rounded-xl overflow-hidden"
+      className="relative flex flex-col justify-between bg-bg-primary rounded-xl overflow-hidden h-full"
       style={{
         aspectRatio: "1 / 1",
         boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
@@ -61,7 +63,6 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
       />
 
       <div className="flex flex-col flex-1 p-6 pl-8">
-        {/* Word */}
         <h3
           className="font-display font-bold text-text-primary leading-tight"
           style={{
@@ -73,7 +74,6 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
           {post.word}
         </h3>
 
-        {/* Pronunciation + classification */}
         {(post.pronunciation || post.classification) && (
           <p className="font-body text-text-secondary mt-1" style={{ fontSize: "0.7rem" }}>
             {post.pronunciation && <>({post.pronunciation}) </>}
@@ -81,7 +81,6 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
           </p>
         )}
 
-        {/* Definitions */}
         <div className="mt-3 flex-1">
           {post.definitions.map((def, i) => (
             <p
@@ -95,7 +94,6 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
         </div>
       </div>
 
-      {/* Handle at bottom */}
       <p
         className="font-body text-text-secondary px-6 pl-8 pb-4"
         style={{ fontSize: "0.65rem", opacity: 0.6 }}
@@ -109,7 +107,7 @@ function PortugueseCard({ post }: { post: PortuguesePost }) {
 function JapaneseCard({ post }: { post: JapanesePost }) {
   return (
     <div
-      className="relative flex flex-col justify-between rounded-xl overflow-hidden"
+      className="relative flex flex-col justify-between rounded-xl overflow-hidden h-full"
       style={{
         aspectRatio: "1 / 1",
         background: "linear-gradient(145deg, #6B1A1A, #8B2E2E)",
@@ -127,7 +125,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
       />
 
       <div className="relative flex flex-col items-center justify-center flex-1 p-6 text-center">
-        {/* Characters */}
         <h3
           className="font-display font-bold leading-tight"
           style={{
@@ -138,7 +135,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
           {post.characters}
         </h3>
 
-        {/* Romanization */}
         <p
           className="font-body mt-2"
           style={{
@@ -151,7 +147,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
           [{post.romanization}]
         </p>
 
-        {/* Divider line */}
         {post.divider && (
           <hr
             className="my-3 border-0"
@@ -163,7 +158,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
           />
         )}
 
-        {/* Meaning */}
         {post.meaning && (
           <p
             className="font-body italic mt-2"
@@ -173,7 +167,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
           </p>
         )}
 
-        {/* Bullets */}
         {post.bullets && (
           <div className="mt-3 space-y-1">
             {post.bullets.map((bullet, i) => (
@@ -189,7 +182,6 @@ function JapaneseCard({ post }: { post: JapanesePost }) {
         )}
       </div>
 
-      {/* Handle at bottom */}
       <p
         className="relative font-body text-center pb-4"
         style={{ color: "#F5F0EB", fontSize: "0.65rem", opacity: 0.5 }}
@@ -239,41 +231,93 @@ function FilterTabs({
 }
 
 // ---------------------------------------------------------------------------
+// Carousel hooks
+// ---------------------------------------------------------------------------
+
+function useCardsPerView() {
+  const [cpv, setCpv] = useState(3);
+
+  useEffect(() => {
+    function update() {
+      if (window.innerWidth < 768) setCpv(1);
+      else if (window.innerWidth < 1024) setCpv(2);
+      else setCpv(3);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return cpv;
+}
+
+// ---------------------------------------------------------------------------
 // Main component
 // ---------------------------------------------------------------------------
 
 export default function SocialPosts() {
   const prefersReducedMotion = useReducedMotion();
   const [filter, setFilter] = useState<FilterType>("all");
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
+  const cardsPerView = useCardsPerView();
   const posts = socialPostsData.posts as Post[];
   const filtered =
     filter === "all" ? posts : posts.filter((p) => p.type === filter);
 
-  const containerVariants = prefersReducedMotion
-    ? undefined
-    : {
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.08,
-          },
-        },
-      };
+  const totalSlides = Math.max(1, Math.ceil(filtered.length / cardsPerView));
 
-  const cardVariants = prefersReducedMotion
-    ? undefined
-    : {
-        hidden: { opacity: 0, y: 24 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.5,
-            ease: [0.25, 0.1, 0.25, 1.0] as const,
-          },
-        },
-      };
+  // Clamp currentSlide when filter or cardsPerView changes
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [filter, cardsPerView]);
+
+  const goTo = useCallback(
+    (slide: number) => {
+      setCurrentSlide(Math.max(0, Math.min(slide, totalSlides - 1)));
+    },
+    [totalSlides]
+  );
+
+  const goNext = useCallback(() => goTo(currentSlide + 1), [goTo, currentSlide]);
+  const goPrev = useCallback(() => goTo(currentSlide - 1), [goTo, currentSlide]);
+
+  // Keyboard navigation
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+      }
+    },
+    [goNext, goPrev]
+  );
+
+  // Touch/pointer swipe
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    pointerStart.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      if (!pointerStart.current) return;
+      const dx = e.clientX - pointerStart.current.x;
+      pointerStart.current = null;
+      if (Math.abs(dx) > 50) {
+        if (dx < 0) goNext();
+        else goPrev();
+      }
+    },
+    [goNext, goPrev]
+  );
+
+  const gap = 20; // px
+  const transitionDuration = prefersReducedMotion ? "0.15s" : "0.5s";
 
   function renderCard(post: Post) {
     switch (post.type) {
@@ -285,6 +329,9 @@ export default function SocialPosts() {
         return null;
     }
   }
+
+  const isFirst = currentSlide === 0;
+  const isLast = currentSlide >= totalSlides - 1;
 
   return (
     <section
@@ -335,41 +382,194 @@ export default function SocialPosts() {
             ease: [0.25, 0.1, 0.25, 1.0] as const,
           }}
         >
-          <FilterTabs active={filter} onChange={setFilter} />
+          <FilterTabs
+            active={filter}
+            onChange={(f) => {
+              setFilter(f);
+              setCurrentSlide(0);
+            }}
+          />
         </motion.div>
 
-        {/* Cards grid */}
+        {/* Carousel */}
         <motion.div
-          className="grid gap-5"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          initial={prefersReducedMotion ? {} : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.25, 0.1, 0.25, 1.0] as const,
           }}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.05 }}
-          key={filter}
         >
-          {filtered.map((post) => (
-            <motion.div
-              key={post.id}
-              variants={cardVariants}
-              className="transition-all duration-[400ms]"
-              style={{
-                transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
-              }}
-              whileHover={
-                prefersReducedMotion
-                  ? undefined
-                  : {
-                      y: -4,
-                      boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
-                    }
-              }
-            >
-              {renderCard(post)}
-            </motion.div>
-          ))}
+          <div
+            className="relative"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Posts de redes sociais"
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+          >
+            {/* Left arrow — hidden on mobile, shown on md+ */}
+            {!isFirst && (
+              <button
+                onClick={goPrev}
+                aria-label="Anterior"
+                className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  backgroundColor: "#1A1A1A",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#6B1A1A";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A1A1A";
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M10 12L6 8L10 4" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
+
+            {/* Right arrow — hidden on mobile, shown on md+ */}
+            {!isLast && (
+              <button
+                onClick={goNext}
+                aria-label="Próximo"
+                className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  backgroundColor: "#1A1A1A",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#6B1A1A";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A1A1A";
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 4L10 8L6 12" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
+
+            {/* Carousel track */}
+            <div className="overflow-hidden" style={{ margin: "0 -10px", padding: "0 10px" }}>
+              <div
+                ref={carouselRef}
+                role="group"
+                aria-roledescription="slide"
+                className="flex touch-pan-y"
+                style={{
+                  gap: `${gap}px`,
+                  transform: `translateX(calc(-${currentSlide * 100}% - ${currentSlide * gap}px))`,
+                  transition: `transform ${transitionDuration} cubic-bezier(0.25, 0.1, 0.25, 1)`,
+                }}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+              >
+                {filtered.map((post) => (
+                  <div
+                    key={post.id}
+                    className="flex-shrink-0 transition-all duration-[400ms]"
+                    style={{
+                      width: `calc((100% - ${(cardsPerView - 1) * gap}px) / ${cardsPerView})`,
+                      transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    {renderCard(post)}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile arrows — shown on mobile only */}
+            <div className="flex md:hidden justify-center gap-4 mt-4">
+              <button
+                onClick={goPrev}
+                aria-label="Anterior"
+                disabled={isFirst}
+                className="flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30"
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  backgroundColor: "#1A1A1A",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isFirst) e.currentTarget.style.backgroundColor = "#6B1A1A";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A1A1A";
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M10 12L6 8L10 4" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={goNext}
+                aria-label="Próximo"
+                disabled={isLast}
+                className="flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30"
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  backgroundColor: "#1A1A1A",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isLast) e.currentTarget.style.backgroundColor = "#6B1A1A";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A1A1A";
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 4L10 8L6 12" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Dot indicators */}
+            <div className="flex justify-center gap-2 mt-6" role="tablist" aria-label="Slides">
+              {Array.from({ length: totalSlides }).map((_, i) => {
+                const isActive = i === currentSlide;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    aria-label={`Ir para slide ${i + 1}`}
+                    role="tab"
+                    aria-selected={isActive}
+                    className="rounded-full transition-all duration-200"
+                    style={{
+                      width: isActive ? "10px" : "8px",
+                      height: isActive ? "10px" : "8px",
+                      backgroundColor: isActive ? "#6B1A1A" : "#D4CEC6",
+                      transform: "scale(1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </motion.div>
 
         {/* Project metadata footer */}
@@ -401,12 +601,10 @@ export default function SocialPosts() {
               color: "#F5F0EB",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor =
-                "#6B1A1A";
+              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#6B1A1A";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor =
-                "#1A1A1A";
+              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#1A1A1A";
             }}
           >
             Ver no Instagram

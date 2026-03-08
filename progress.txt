@@ -274,3 +274,22 @@ Three manual commits (4378ef9, f99ffa7, b77f26f) made after US-015 with message 
   - onMouseEnter/onMouseLeave for hover color changes on links avoids needing CSS classes for non-theme colors
   - The description text is split by client handle to wrap it in a styled span — fragile if handle appears multiple times
 ---
+
+## 2026-03-08 - US-016 (Carousel Rewrite)
+- Rewrote SocialPosts component from grid layout to horizontal carousel as required by acceptance criteria
+- Carousel shows 3 cards on desktop, 2 on tablet (md), 1 on mobile via responsive useCardsPerView hook
+- Left/right arrow navigation: positioned at vertical center on md+, bottom-center pair on mobile
+- Dot indicators below carousel: active dot is burgundy (10px), inactive is border color (8px), with scale hover effect
+- Touch/swipe support via pointerdown/pointerup with 50px threshold
+- Keyboard navigation: left/right arrow keys when carousel has focus
+- CSS transform translateX for smooth sliding with cubic-bezier easing, 0.5s (0.15s for reduced motion)
+- No infinite loop, no autoplay, last slide left-aligns remaining cards
+- ARIA: role=region + aria-roledescription=carousel, role=group + aria-roledescription=slide, labeled arrows and dots
+- Cards, filters, metadata footer, and Framer Motion animations preserved from previous implementation
+- Files changed: components/SocialPosts.tsx
+- **Learnings for future iterations:**
+  - Carousel translateX with calc: `translateX(calc(-${slide * 100}% - ${slide * gap}px))` handles gap accumulation
+  - Card width calc: `calc((100% - ${(cpv-1) * gap}px) / ${cpv})` distributes cards evenly with gaps
+  - useCardsPerView hook with resize listener for responsive carousel is cleaner than CSS media queries for JS-driven layouts
+  - Pointer events (pointerdown/pointerup) work for both mouse and touch swipe detection
+---
