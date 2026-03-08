@@ -18,7 +18,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://biancasato.com"),
-  title: "Bianca Sato — UI/UX & Brand Designer",
+  title: "Bianca Sato — Designer Gráfico",
   description:
     "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
   openGraph: {
