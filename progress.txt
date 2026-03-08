@@ -293,3 +293,21 @@ Three manual commits (4378ef9, f99ffa7, b77f26f) made after US-015 with message 
   - useCardsPerView hook with resize listener for responsive carousel is cleaner than CSS media queries for JS-driven layouts
   - Pointer events (pointerdown/pointerup) work for both mouse and touch swipe detection
 ---
+
+## 2026-03-08 - US-017
+- Implemented Certifications section: 9 professional certificates in two-column card grid
+- Data file: certifications.json with sectionLabel, heading, headingItalic, description, and items array
+- Component: Certifications.tsx with category filter pills (Todos + 6 categories), card grid with institution as visual anchor
+- Cards: white bg, subtle border, institution in Playfair Display bold, title in DM Sans, category badge top-right
+- Hover: border darkens to rgba(26,26,26,0.3), subtle translateY(-2px) lift
+- Category filter: dark bg active state (site palette, not burgundy), auto-derived from data
+- Framer Motion: staggered fade-up cards (0.06s stagger), heading fade-up, viewport once, useReducedMotion support
+- Accessibility: section aria-label, h2 heading, article cards, h3 institution names
+- Placed after Experience in page.tsx (Experience → Certifications → FAQ)
+- Files changed: data/certifications.json (new), components/Certifications.tsx (new), app/page.tsx (import + render)
+- **Learnings for future iterations:**
+  - headingItalic field in JSON allows splitting heading text for italic styling without hardcoding in component
+  - onMouseEnter/onMouseLeave for border color changes works when Tailwind tokens don't cover the exact hover state needed
+  - `key={activeFilter}` on motion container forces re-mount for animation replay on filter change (same pattern as SocialPosts)
+  - Category labels derived from data mean no component changes needed for new categories
+---
