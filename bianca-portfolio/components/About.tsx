@@ -5,12 +5,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import aboutData from "@/data/about.json";
 
 const images = [
-  { src: "/images/about-1.jpg", alt: "Brand design workspace" },
+  { src: "/images/about-1.jpeg", alt: "Brand design workspace" },
   { src: "/images/about-2.jpg", alt: "UI mockup on screen" },
   { src: "/images/about-3.jpg", alt: "Typography samples" },
   { src: "/images/about-4.jpg", alt: "Baby Chef brand identity design" },
   { src: "/images/about-5.jpg", alt: "Aura Tullis typography and branding" },
-  { src: "/images/about-6.jpg", alt: "Wireframe sketches" },
+  { src: "/images/about-6.jpeg", alt: "Wireframe sketches" },
   { src: "/images/about-7.jpg", alt: "Logo design process" },
   { src: "/images/about-8.jpg", alt: "Prototype interaction" },
 ];
