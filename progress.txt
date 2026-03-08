@@ -13,6 +13,10 @@
 - Framer Motion ease arrays need `as const` (e.g. `ease: [0.25, 0.1, 0.25, 1.0] as const`) for TypeScript compatibility
 - Conditional variants with `useReducedMotion`: use `undefined` not `{}` to satisfy `Variants` type
 - All animations use `useReducedMotion` hook to respect `prefers-reduced-motion`
+- Below-fold sections use `next/dynamic` for code splitting (Process through Contact)
+- Hover styles for non-theme colors use CSS classes in globals.css (e.g. `.carousel-arrow`, `.btn-dark-burgundy`) instead of JS event handlers
+- Hoist static arrays, constants, and computed-from-static-data values to module scope to avoid re-creation on render
+- Font weights are limited: Playfair Display 400,700; DM Sans 400,500,700 — headings use Arial Black override via CSS `!important`
 
 ---
 
@@ -327,4 +331,38 @@ Three manual commits (4378ef9, f99ffa7, b77f26f) made after US-015 with message 
   - Honeypot field should use `style` prop (not Tailwind classes) to guarantee it stays hidden regardless of purge
   - The `_gotcha` field name is Formspree's recommended honeypot convention
   - Formspree endpoint format: `https://formspree.io/f/{FORM_ID}` — form ID from dashboard
+---
+
+## 2026-03-08 - US-019
+
+### Performance Audit Findings & Optimizations Applied
+
+| Issue | Severity | Component(s) | Fix Applied | Impact |
+|-------|----------|---------------|-------------|--------|
+| Oversized images (trabalho-6.png 7.2MB, trabalho-10.png 6.0MB, insta PNGs 2MB+) | HIGH | Process, Projects, SocialPosts | Resized to 1600px max, compressed to ~2MB and ~350K respectively | -10.2MB total image payload |
+| All sections loaded in single JS bundle | HIGH | page.tsx | `next/dynamic` for 8 below-fold sections (Process through Contact) | Smaller initial JS, code-split chunks |
+| JS onMouseEnter/Leave handlers for hover effects | MEDIUM | SocialPosts, Certifications | Replaced with CSS classes (carousel-arrow, carousel-card, carousel-dot, btn-dark-burgundy, hover:border-text-primary/30) | Eliminated DOM style mutations, fewer event listeners |
+| Images array recreated every render | MEDIUM | About.tsx | Hoisted `images` array to module scope | Stable reference, no GC churn |
+| Categories recalculated every render | MEDIUM | Certifications.tsx | Hoisted `items` cast and `getCategories()` call to module scope | No recalculation on re-render |
+| SocialPosts constants recreated every render | MEDIUM | SocialPosts.tsx | Hoisted `posts` cast and `GAP` constant to module scope | Stable references |
+| Font loading all weights | MEDIUM | layout.tsx | Limited Playfair Display to 400,700 and DM Sans to 400,500,700 | Reduced font payload |
+| Navbar scroll listener not passive | LOW | Navbar.tsx | Added `{ passive: true }` to scroll listener | Smoother scrolling, no blocking |
+
+### Audit Verification
+- All animations use transform+opacity only (GPU-composited) ✓
+- All `whileInView` use `viewport={{ once: true }}` ✓
+- All components with animations use `useReducedMotion` ✓
+- All images use Next.js Image with fill, alt text, and sizes ✓
+- Hero image has `priority` flag for above-fold ✓
+- No hydration mismatch warnings ✓
+- Semantic HTML and ARIA preserved ✓
+- Build passes, lint clean ✓
+
+- Files changed: app/page.tsx, app/layout.tsx, app/globals.css, components/About.tsx, components/Certifications.tsx, components/Navbar.tsx, components/SocialPosts.tsx, public/images/trabalho-6.png, public/images/trabalho-10.png, public/images/insta-02.png, public/images/insta-03.png, public/images/insta-07.png
+- **Learnings for future iterations:**
+  - `next/dynamic` works with static export for code splitting — components still SSR but JS chunks are split
+  - CSS hover classes in globals.css are cleaner than JS onMouseEnter/Leave for simple color/transform changes
+  - ImageMagick `convert -resize 1600x1600\> -quality 85` is effective for PNG compression without sharp
+  - Limiting Google Font weights via `weight: ["400", "700"]` significantly reduces font payload
+  - Module-scope constants (arrays, computed values from static data) prevent unnecessary GC pressure
 ---

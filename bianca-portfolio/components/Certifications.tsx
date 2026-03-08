@@ -64,16 +64,7 @@ function getCategories(items: CertItem[]): string[] {
 function CertCard({ item }: { item: CertItem }) {
   return (
     <article
-      className="relative bg-bg-secondary border border-border rounded-lg p-5 transition-all duration-300 ease-in-out hover:-translate-y-0.5"
-      style={{
-        // Hover border handled via group or inline — using CSS for simplicity
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "rgba(26, 26, 26, 0.3)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "";
-      }}
+      className="relative bg-bg-secondary border border-border hover:border-text-primary/30 rounded-lg p-5 transition-all duration-300 ease-in-out hover:-translate-y-0.5"
     >
       {/* Category badge — top right */}
       <span className="absolute top-4 right-4 bg-badge-bg border border-badge-border rounded-full px-2.5 py-0.5 font-body uppercase text-text-secondary"
@@ -99,10 +90,11 @@ function CertCard({ item }: { item: CertItem }) {
 // Main Component
 // ---------------------------------------------------------------------------
 
+const items = certData.items as CertItem[];
+const categories = getCategories(items);
+
 export default function Certifications() {
   const prefersReducedMotion = useReducedMotion();
-  const items = certData.items as CertItem[];
-  const categories = getCategories(items);
   const [activeFilter, setActiveFilter] = useState("todos");
 
   const filteredItems =

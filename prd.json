@@ -2,7 +2,12 @@
   "projectName": "bianca-sato-portfolio",
   "branchName": "ralph/bianca-portfolio",
   "description": "Personal portfolio website for Bianca Tomoe Sato — UI/UX & Brand Designer. Single-page scrolling site built with Next.js (App Router) and Tailwind CSS. Light editorial aesthetic inspired by modern design agency sites with warm neutral tones, elegant serif typography, and generous whitespace. All content hardcoded via JSON files.",
-  "techStack": ["Next.js 14 (App Router)", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  "techStack": [
+    "Next.js 14 (App Router)",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
   "designDirection": {
     "aesthetic": "Light editorial — warm, clean, magazine-like. NOT dark mode. Inspired by modern design agency portfolios with organic photography, warm neutrals, and confident serif typography.",
     "colorPalette": {
@@ -35,7 +40,11 @@
     ]
   },
   "folderStructure": {
-    "app/": ["layout.tsx", "page.tsx", "globals.css"],
+    "app/": [
+      "layout.tsx",
+      "page.tsx",
+      "globals.css"
+    ],
     "components/": [
       "Navbar.tsx",
       "Hero.tsx",
@@ -73,19 +82,44 @@
     "hero.json": {
       "name": "Bianca Tomoe Sato",
       "greeting": "Hey, I'm Bian,",
-      "titleLines": ["A UI/UX", "& Brand", "DESIGNER"],
+      "titleLines": [
+        "A UI/UX",
+        "& Brand",
+        "DESIGNER"
+      ],
       "description": "Transforming ideas into stunning visuals — UI/UX and brand design that captivates, engages, and delivers results.",
-      "cta": { "text": "Contact me", "link": "#contact" },
+      "cta": {
+        "text": "Contact me",
+        "link": "#contact"
+      },
       "highlights": [
-        { "label": "User-Centered Design", "description": "Intuitive interfaces that put users first" },
-        { "label": "Brand Identity & Strategy", "description": "Visual systems that tell your story" },
-        { "label": "Responsive & Modern UI", "description": "Pixel-perfect across every device" },
-        { "label": "Seamless Prototyping", "description": "From wireframe to polished interaction" }
+        {
+          "label": "User-Centered Design",
+          "description": "Intuitive interfaces that put users first"
+        },
+        {
+          "label": "Brand Identity & Strategy",
+          "description": "Visual systems that tell your story"
+        },
+        {
+          "label": "Responsive & Modern UI",
+          "description": "Pixel-perfect across every device"
+        },
+        {
+          "label": "Seamless Prototyping",
+          "description": "From wireframe to polished interaction"
+        }
       ]
     },
     "trustedBy.json": {
       "heading": "Trusted by",
-      "logos": ["Frame Blox", "Super Blox", "Hype Blox", "Strip Blox", "Ultra Blox"]
+      "logos": [
+        "Frame Blox",
+        "Super Blox",
+        "Hype Blox",
+        "Strip Blox",
+        "Ultra Blox"
+      ]
     },
     "about.json": {
       "sectionLabel": "About",
@@ -100,9 +134,21 @@
     "process.json": {
       "heading": "A Streamlined Process for Exceptional Design",
       "steps": [
-        { "number": "01", "title": "Discover & Research", "description": "Deep dive into your brand, audience, and goals to establish a strong foundation." },
-        { "number": "02", "title": "Design & Prototype", "description": "Crafting wireframes, visual concepts, mockups, and interactive prototypes." },
-        { "number": "03", "title": "Refine & Deliver", "description": "Iterating based on feedback for a polished, production-ready final design." }
+        {
+          "number": "01",
+          "title": "Discover & Research",
+          "description": "Deep dive into your brand, audience, and goals to establish a strong foundation."
+        },
+        {
+          "number": "02",
+          "title": "Design & Prototype",
+          "description": "Crafting wireframes, visual concepts, mockups, and interactive prototypes."
+        },
+        {
+          "number": "03",
+          "title": "Refine & Deliver",
+          "description": "Iterating based on feedback for a polished, production-ready final design."
+        }
       ]
     },
     "projects.json": {
@@ -113,16 +159,28 @@
         {
           "title": "Soundwave",
           "description": "Designing an Immersive Audio Tech Experience",
-          "tags": ["UI/UX", "Product Design"],
+          "tags": [
+            "UI/UX",
+            "Product Design"
+          ],
           "image": "/images/project-placeholder-1.jpg",
-          "links": { "live": "#", "behance": "#" }
+          "links": {
+            "live": "#",
+            "behance": "#"
+          }
         },
         {
           "title": "Lumiglow",
           "description": "Creating Beauty with a Luxurious Skincare Identity",
-          "tags": ["Branding", "Visual Identity"],
+          "tags": [
+            "Branding",
+            "Visual Identity"
+          ],
           "image": "/images/project-placeholder-2.jpg",
-          "links": { "live": "#", "behance": "#" }
+          "links": {
+            "live": "#",
+            "behance": "#"
+          }
         }
       ]
     },
@@ -268,15 +326,54 @@
       "sectionLabel": "Skills",
       "heading": "Crafting Intuitive & Impactful Designs",
       "stats": [
-        { "value": "98%", "label": "Accuracy" },
-        { "value": "85%", "label": "Efficiency" },
-        { "value": "92%", "label": "Enhanced" },
-        { "value": "98%", "label": "Satisfaction" }
+        {
+          "value": "98%",
+          "label": "Accuracy"
+        },
+        {
+          "value": "85%",
+          "label": "Efficiency"
+        },
+        {
+          "value": "92%",
+          "label": "Enhanced"
+        },
+        {
+          "value": "98%",
+          "label": "Satisfaction"
+        }
       ],
       "categories": [
-        { "name": "Design", "items": ["UI/UX Design", "Brand Identity", "Visual Design", "Typography", "Layout & Composition"] },
-        { "name": "Tools", "items": ["Figma", "Adobe Illustrator", "Photoshop", "After Effects", "InDesign"] },
-        { "name": "Process", "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Motion Design"] }
+        {
+          "name": "Design",
+          "items": [
+            "UI/UX Design",
+            "Brand Identity",
+            "Visual Design",
+            "Typography",
+            "Layout & Composition"
+          ]
+        },
+        {
+          "name": "Tools",
+          "items": [
+            "Figma",
+            "Adobe Illustrator",
+            "Photoshop",
+            "After Effects",
+            "InDesign"
+          ]
+        },
+        {
+          "name": "Process",
+          "items": [
+            "User Research",
+            "Wireframing",
+            "Prototyping",
+            "Design Systems",
+            "Motion Design"
+          ]
+        }
       ]
     },
     "experience.json": {
@@ -304,29 +401,56 @@
           "name": "Basic",
           "subtitle": "Brand Essentials",
           "price": "R$ 2.990",
-          "features": ["Logo & brand guidelines", "Social media templates", "Basic brand manual", "2 revision rounds"]
+          "features": [
+            "Logo & brand guidelines",
+            "Social media templates",
+            "Basic brand manual",
+            "2 revision rounds"
+          ]
         },
         {
           "name": "Pro",
           "subtitle": "Growth Package",
           "price": "R$ 4.990",
-          "features": ["Full brand identity design", "UI/UX design for mobile or web", "Complete brand manual", "Responsive in 4 weeks"]
+          "features": [
+            "Full brand identity design",
+            "UI/UX design for mobile or web",
+            "Complete brand manual",
+            "Responsive in 4 weeks"
+          ]
         },
         {
           "name": "Premium",
           "subtitle": "Full Experience",
           "price": "R$ 6.990",
-          "features": ["Complete brand strategy & identity", "Full responsive design (3 devices)", "Custom illustration package", "Priority support"]
+          "features": [
+            "Complete brand strategy & identity",
+            "Full responsive design (3 devices)",
+            "Custom illustration package",
+            "Priority support"
+          ]
         }
       ]
     },
     "faq.json": {
       "heading": "Frequently Asked Questions",
       "items": [
-        { "question": "What services do you offer?", "answer": "I specialize in UI/UX design, brand identity, visual design, and digital product design." },
-        { "question": "How long does a typical project take?", "answer": "Depending on the scope, most projects take between 2-6 weeks from kickoff to final delivery." },
-        { "question": "Do you work with startups or established brands?", "answer": "Both! I love working with startups building from scratch and established brands looking to refresh." },
-        { "question": "What does your design process look like?", "answer": "I follow a structured process: discover & research, design & prototype, then refine & deliver. Collaboration is at the center of every step." }
+        {
+          "question": "What services do you offer?",
+          "answer": "I specialize in UI/UX design, brand identity, visual design, and digital product design."
+        },
+        {
+          "question": "How long does a typical project take?",
+          "answer": "Depending on the scope, most projects take between 2-6 weeks from kickoff to final delivery."
+        },
+        {
+          "question": "Do you work with startups or established brands?",
+          "answer": "Both! I love working with startups building from scratch and established brands looking to refresh."
+        },
+        {
+          "question": "What does your design process look like?",
+          "answer": "I follow a structured process: discover & research, design & prototype, then refine & deliver. Collaboration is at the center of every step."
+        }
       ]
     }
   },
@@ -573,93 +697,129 @@
       ]
     },
     {
-    "id": "US-016",
-    "title": "Social Media Showcase component",
-    "passes": true,
-    "description": "Create a new SocialPosts section that renders 12 Instagram post cards for @psicologamarinahiga as HTML/CSS (not images) in a horizontal carousel showing 3 cards at a time. The cards mix Portuguese word definitions (cream background + burgundy sidebar) with Japanese philosophical concepts (burgundy background + light text). The component must be extensible — the JSON data uses a `type` discriminator field so future post types (quote, carousel, image, etc.) can be added without changing the component structure. Includes filter tabs (Todos / Português / 日本語), navigation arrows + dot indicators, project metadata footer (client, type, post count, link to Instagram), and staggered scroll animations via Framer Motion. This is a NEW standalone component — do NOT modify any existing components, data files, styles, or configs.",
-    "acceptanceCriteria": [
-      "PREREQUISITE: Before writing any code, execute the Mandatory Change Audit (Step 4 in Ralph agent instructions). The project owner made manual changes after US-015 that are NOT in progress.txt. Audit the full project, document all unrecorded changes in progress.txt as a 'Manual Changes Audit (pre-US-016)' block, then proceed. Without this audit the agent will work with stale information.",
-      "New file: data/socialPosts.json containing sectionLabel, heading, description, client handle, and a posts array with all 12 posts. Each post has a `type` field ('portuguese' or 'japanese') used as discriminator for rendering. Portuguese posts have: id, type, word, pronunciation (nullable), classification, definitions array. Japanese posts have: id, type, characters, romanization, meaning (nullable), optional divider boolean, optional bullets array. No content hardcoded in the component — everything comes from the JSON.",
-      "New file: components/SocialPosts.tsx — a single 'use client' component. No separate sub-component files. All sub-components (PortugueseCard, JapaneseCard, FilterTabs, carousel controls, project metadata) defined inside this one file.",
-      "Section header: label 'SOCIAL MEDIA DESIGN' in DM Sans uppercase with wide letter-spacing (0.2em), heading 'Design para Redes Sociais' in Playfair Display with 'Redes Sociais' in italic, description paragraph mentioning @psicologamarinahiga in burgundy (#6B1A1A) font weight 500.",
-      "Filter tabs: row of pill buttons (Todos, Português, 日本語) that filter the visible posts by type. Active tab has burgundy (#6B1A1A) background with cream text. Inactive tabs have transparent background with border. Filters use React useState — no URL state. 'Todos' shows all 12 posts. When a filter changes, the carousel resets to the first slide.",
-      "CAROUSEL LAYOUT (replaces the previous grid approach): Display exactly 3 cards side by side at a time on desktop, 2 on tablet (md breakpoint), 1 on mobile. The carousel is a horizontal sliding container — NOT a CSS grid. Cards slide left/right as a group when navigating. Use CSS transform translateX for smooth sliding (GPU-composited, 60fps). Transition duration 0.5s with ease [0.25, 0.1, 0.25, 1.0]. Gap of 20px between visible cards.",
-      "Carousel navigation — LEFT/RIGHT ARROWS: Two circular arrow buttons (40px diameter) positioned at the vertical center of the carousel area, one on each side. Left arrow on the far left edge (slightly overlapping or just outside the cards), right arrow on the far right edge. Arrows have dark background (#1A1A1A) with cream icon, hover state changes to burgundy (#6B1A1A). Left arrow is disabled/hidden on the first slide, right arrow is disabled/hidden on the last slide. Arrows use inline SVG chevron icons (no icon library). On mobile, arrows are smaller (32px) and positioned at bottom-center as a pair instead of on the sides.",
-      "Carousel navigation — DOT INDICATORS: Row of small dots centered below the carousel. Number of dots = number of slides (ceil of filteredPosts.length / cardsPerView). Active dot is burgundy (#6B1A1A) and slightly larger (10px), inactive dots are border color (#D4CEC6, 8px). Clicking a dot navigates directly to that slide. Dots have a subtle scale transition on hover.",
-      "Carousel behavior: no infinite loop — it stops at the first and last slide. No autoplay. Swipe/drag support on touch devices using pointer events (pointerdown, pointermove, pointerup) with a threshold of 50px to trigger slide change. The carousel must feel smooth and responsive, not janky. When the last slide has fewer cards than cardsPerView (e.g. 2 remaining cards out of 3 slots), those cards should still display left-aligned with empty space on the right — do NOT stretch or center them.",
-      "Portuguese cards (type 'portuguese'): aspect-ratio 1:1, cream background (#F5F0EB), thin burgundy (#6B1A1A) accent bar on left edge (6px wide), word in Playfair Display bold (font-size scales down for long words like AUTOCONHECIMENTO via clamp), pronunciation in parentheses + classification in brackets below in DM Sans small muted text, definitions listed below in DM Sans 0.72rem, handle @psicologamarinahiga at card bottom in small muted text. Card content uses flexbox column with justify-between so handle stays at bottom.",
-      "Japanese cards (type 'japanese'): aspect-ratio 1:1, burgundy gradient background (linear-gradient 145deg from #6B1A1A to #8B2E2E), subtle diagonal stripe pattern overlay at 0.04 opacity, characters centered in large serif font (~2-3rem via clamp), romanization in brackets below in DM Sans with 0.05em letter-spacing, meaning text below in italic when present, bullet items prefixed with ✦ when bullets array exists, decorative horizontal line divider when divider:true, handle @psicologamarinahiga at card bottom in cream text at 0.5 opacity.",
-      "Hover effect on all cards: translateY(-4px) with elevated box-shadow on hover, transition duration 0.4s with cubic-bezier(0.25, 0.1, 0.25, 1). No transform or shadow at rest beyond a subtle base shadow.",
-      "Project metadata footer below carousel: separated by top border in --border color. Displays client (@psicologamarinahiga), type (Social Media Design), post count (dynamic from data length). Right-aligned dark pill button 'Ver no Instagram' linking to https://instagram.com/psicologamarinahiga (target=_blank, rel=noopener noreferrer) that changes to burgundy on hover. Metadata section uses flex-wrap for mobile stacking.",
-      "Framer Motion animations: section heading and filter tabs use whileInView fade-up. The carousel container fades in as a whole on viewport entry (no per-card stagger on initial load — the stagger effect comes naturally from the carousel sliding). All animations use viewport={{ once: true }}, ease [0.25, 0.1, 0.25, 1.0] as const, duration 0.4-0.8s. Respect useReducedMotion — when active, carousel still slides but with reduced duration (0.15s) and no other animations.",
-      "Accessibility: section element with id='social-posts' and aria-label='Social Media Design Showcase'. h2 for section heading. h3 for each card word/concept. Carousel has role='region' and aria-roledescription='carousel'. Each slide group has role='group' and aria-roledescription='slide'. Arrow buttons have aria-label ('Anterior' / 'Próximo'). Dots have aria-label ('Ir para slide N'). All interactive elements keyboard accessible. Left/right arrow keys navigate the carousel when it has focus.",
-      "Integration: import and render <SocialPosts /> in app/page.tsx — this is the ONLY modification to an existing file. Suggested position: between Projects and Skills sections, or after Experience. Single import line + single JSX line.",
-      "DO NOT modify: Navbar.tsx, Footer.tsx, Hero.tsx, About.tsx, Process.tsx, Projects.tsx, Skills.tsx, Experience.tsx, Pricing.tsx, FAQ.tsx, Contact.tsx, SectionHeading.tsx, ProjectCard.tsx, SkillBadge.tsx, ExperienceEntry.tsx, or any other existing component.",
-      "DO NOT modify: any existing data file (hero.json, trustedBy.json, about.json, process.json, projects.json, skills.json, experience.json, pricing.json, faq.json).",
-      "DO NOT modify: globals.css, tailwind.config.ts, next.config.mjs, or layout.tsx.",
-      "DO NOT add new npm dependencies — Framer Motion is already installed. The carousel is built with plain React state + CSS transforms, NOT a carousel library like Swiper or Embla.",
-      "Use inline styles or Tailwind classes for the burgundy color (#6B1A1A, #8B2E2E) rather than modifying tailwind.config.ts. The cream color #F5F0EB already exists as --bg-primary / bg-primary.",
-      "Extensibility: the component renders cards via a switch/map on post.type. Adding a new type in the future (e.g. 'quote', 'carousel', 'image') only requires: (1) adding the new type's data shape to the JSON, (2) adding a new card sub-component inside SocialPosts.tsx, (3) adding a case in the render switch. The carousel, filters, metadata, and animations don't change. Add a code comment documenting this pattern at the top of the component."
+      "id": "US-016",
+      "title": "Social Media Showcase component",
+      "passes": true,
+      "description": "Create a new SocialPosts section that renders 12 Instagram post cards for @psicologamarinahiga as HTML/CSS (not images) in a horizontal carousel showing 3 cards at a time. The cards mix Portuguese word definitions (cream background + burgundy sidebar) with Japanese philosophical concepts (burgundy background + light text). The component must be extensible — the JSON data uses a `type` discriminator field so future post types (quote, carousel, image, etc.) can be added without changing the component structure. Includes filter tabs (Todos / Português / 日本語), navigation arrows + dot indicators, project metadata footer (client, type, post count, link to Instagram), and staggered scroll animations via Framer Motion. This is a NEW standalone component — do NOT modify any existing components, data files, styles, or configs.",
+      "acceptanceCriteria": [
+        "PREREQUISITE: Before writing any code, execute the Mandatory Change Audit (Step 4 in Ralph agent instructions). The project owner made manual changes after US-015 that are NOT in progress.txt. Audit the full project, document all unrecorded changes in progress.txt as a 'Manual Changes Audit (pre-US-016)' block, then proceed. Without this audit the agent will work with stale information.",
+        "New file: data/socialPosts.json containing sectionLabel, heading, description, client handle, and a posts array with all 12 posts. Each post has a `type` field ('portuguese' or 'japanese') used as discriminator for rendering. Portuguese posts have: id, type, word, pronunciation (nullable), classification, definitions array. Japanese posts have: id, type, characters, romanization, meaning (nullable), optional divider boolean, optional bullets array. No content hardcoded in the component — everything comes from the JSON.",
+        "New file: components/SocialPosts.tsx — a single 'use client' component. No separate sub-component files. All sub-components (PortugueseCard, JapaneseCard, FilterTabs, carousel controls, project metadata) defined inside this one file.",
+        "Section header: label 'SOCIAL MEDIA DESIGN' in DM Sans uppercase with wide letter-spacing (0.2em), heading 'Design para Redes Sociais' in Playfair Display with 'Redes Sociais' in italic, description paragraph mentioning @psicologamarinahiga in burgundy (#6B1A1A) font weight 500.",
+        "Filter tabs: row of pill buttons (Todos, Português, 日本語) that filter the visible posts by type. Active tab has burgundy (#6B1A1A) background with cream text. Inactive tabs have transparent background with border. Filters use React useState — no URL state. 'Todos' shows all 12 posts. When a filter changes, the carousel resets to the first slide.",
+        "CAROUSEL LAYOUT (replaces the previous grid approach): Display exactly 3 cards side by side at a time on desktop, 2 on tablet (md breakpoint), 1 on mobile. The carousel is a horizontal sliding container — NOT a CSS grid. Cards slide left/right as a group when navigating. Use CSS transform translateX for smooth sliding (GPU-composited, 60fps). Transition duration 0.5s with ease [0.25, 0.1, 0.25, 1.0]. Gap of 20px between visible cards.",
+        "Carousel navigation — LEFT/RIGHT ARROWS: Two circular arrow buttons (40px diameter) positioned at the vertical center of the carousel area, one on each side. Left arrow on the far left edge (slightly overlapping or just outside the cards), right arrow on the far right edge. Arrows have dark background (#1A1A1A) with cream icon, hover state changes to burgundy (#6B1A1A). Left arrow is disabled/hidden on the first slide, right arrow is disabled/hidden on the last slide. Arrows use inline SVG chevron icons (no icon library). On mobile, arrows are smaller (32px) and positioned at bottom-center as a pair instead of on the sides.",
+        "Carousel navigation — DOT INDICATORS: Row of small dots centered below the carousel. Number of dots = number of slides (ceil of filteredPosts.length / cardsPerView). Active dot is burgundy (#6B1A1A) and slightly larger (10px), inactive dots are border color (#D4CEC6, 8px). Clicking a dot navigates directly to that slide. Dots have a subtle scale transition on hover.",
+        "Carousel behavior: no infinite loop — it stops at the first and last slide. No autoplay. Swipe/drag support on touch devices using pointer events (pointerdown, pointermove, pointerup) with a threshold of 50px to trigger slide change. The carousel must feel smooth and responsive, not janky. When the last slide has fewer cards than cardsPerView (e.g. 2 remaining cards out of 3 slots), those cards should still display left-aligned with empty space on the right — do NOT stretch or center them.",
+        "Portuguese cards (type 'portuguese'): aspect-ratio 1:1, cream background (#F5F0EB), thin burgundy (#6B1A1A) accent bar on left edge (6px wide), word in Playfair Display bold (font-size scales down for long words like AUTOCONHECIMENTO via clamp), pronunciation in parentheses + classification in brackets below in DM Sans small muted text, definitions listed below in DM Sans 0.72rem, handle @psicologamarinahiga at card bottom in small muted text. Card content uses flexbox column with justify-between so handle stays at bottom.",
+        "Japanese cards (type 'japanese'): aspect-ratio 1:1, burgundy gradient background (linear-gradient 145deg from #6B1A1A to #8B2E2E), subtle diagonal stripe pattern overlay at 0.04 opacity, characters centered in large serif font (~2-3rem via clamp), romanization in brackets below in DM Sans with 0.05em letter-spacing, meaning text below in italic when present, bullet items prefixed with ✦ when bullets array exists, decorative horizontal line divider when divider:true, handle @psicologamarinahiga at card bottom in cream text at 0.5 opacity.",
+        "Hover effect on all cards: translateY(-4px) with elevated box-shadow on hover, transition duration 0.4s with cubic-bezier(0.25, 0.1, 0.25, 1). No transform or shadow at rest beyond a subtle base shadow.",
+        "Project metadata footer below carousel: separated by top border in --border color. Displays client (@psicologamarinahiga), type (Social Media Design), post count (dynamic from data length). Right-aligned dark pill button 'Ver no Instagram' linking to https://instagram.com/psicologamarinahiga (target=_blank, rel=noopener noreferrer) that changes to burgundy on hover. Metadata section uses flex-wrap for mobile stacking.",
+        "Framer Motion animations: section heading and filter tabs use whileInView fade-up. The carousel container fades in as a whole on viewport entry (no per-card stagger on initial load — the stagger effect comes naturally from the carousel sliding). All animations use viewport={{ once: true }}, ease [0.25, 0.1, 0.25, 1.0] as const, duration 0.4-0.8s. Respect useReducedMotion — when active, carousel still slides but with reduced duration (0.15s) and no other animations.",
+        "Accessibility: section element with id='social-posts' and aria-label='Social Media Design Showcase'. h2 for section heading. h3 for each card word/concept. Carousel has role='region' and aria-roledescription='carousel'. Each slide group has role='group' and aria-roledescription='slide'. Arrow buttons have aria-label ('Anterior' / 'Próximo'). Dots have aria-label ('Ir para slide N'). All interactive elements keyboard accessible. Left/right arrow keys navigate the carousel when it has focus.",
+        "Integration: import and render <SocialPosts /> in app/page.tsx — this is the ONLY modification to an existing file. Suggested position: between Projects and Skills sections, or after Experience. Single import line + single JSX line.",
+        "DO NOT modify: Navbar.tsx, Footer.tsx, Hero.tsx, About.tsx, Process.tsx, Projects.tsx, Skills.tsx, Experience.tsx, Pricing.tsx, FAQ.tsx, Contact.tsx, SectionHeading.tsx, ProjectCard.tsx, SkillBadge.tsx, ExperienceEntry.tsx, or any other existing component.",
+        "DO NOT modify: any existing data file (hero.json, trustedBy.json, about.json, process.json, projects.json, skills.json, experience.json, pricing.json, faq.json).",
+        "DO NOT modify: globals.css, tailwind.config.ts, next.config.mjs, or layout.tsx.",
+        "DO NOT add new npm dependencies — Framer Motion is already installed. The carousel is built with plain React state + CSS transforms, NOT a carousel library like Swiper or Embla.",
+        "Use inline styles or Tailwind classes for the burgundy color (#6B1A1A, #8B2E2E) rather than modifying tailwind.config.ts. The cream color #F5F0EB already exists as --bg-primary / bg-primary.",
+        "Extensibility: the component renders cards via a switch/map on post.type. Adding a new type in the future (e.g. 'quote', 'carousel', 'image') only requires: (1) adding the new type's data shape to the JSON, (2) adding a new card sub-component inside SocialPosts.tsx, (3) adding a case in the render switch. The carousel, filters, metadata, and animations don't change. Add a code comment documenting this pattern at the top of the component."
       ]
     },
     {
-    "id": "US-017",
-    "title": "Certifications showcase component",
-    "passes": true,
-    "description": "Create a new Certifications section that displays Bianca's 9 professional certificates in an elegant, compact layout. Each certificate shows the course name, issuing institution, and an optional badge/tag for the institution. The section sits right after Experience in the page flow — forming a natural 'Experience → Certifications' narrative. The design uses a two-column masonry-style card layout on desktop (single column on mobile) with institution names as visual anchors. Like US-016, this is a NEW standalone component — do NOT modify any existing components, data files, styles, or configs.",
-    "acceptanceCriteria": [
-      "PREREQUISITE: Execute the Mandatory Change Audit (Step 4 in Ralph agent instructions) before writing any code. Document any unrecorded changes in progress.txt as 'Manual Changes Audit (pre-US-017)' block. If the audit was already done for US-016 in the same session and no further manual changes occurred, note 'Audit: clean since US-016' and proceed.",
-      "New file: data/certifications.json with the following structure: { sectionLabel, heading, description, items: [...] }. Each item has: id (number), title (string), institution (string), category (string — one of 'produtividade', 'comunicação', 'marketing', 'criatividade', 'educação', 'tecnologia'). The 9 certificates are: (1) 'Estratégia de produtividade: clareza, propósito e priorização de tarefas' from ENAP, category 'produtividade'; (2) 'Happiness: Managing Happiness' from HarvardX, category 'educação'; (3) 'Comunicação não violenta' from Educaweb, category 'comunicação'; (4) 'Marketing de redes sociais – curso completo 10 em 1' from Udemy, category 'marketing'; (5) 'World Creativity Day' from World Creativity Organization, category 'criatividade'; (6) 'Relacionamento interpessoal' from Associação Brasileira de Educação a Distância, category 'comunicação'; (7) 'Marketing digital para o empreendedor' from SEBRAE, category 'marketing'; (8) 'Comunicação científica visual' from MIND, category 'comunicação'; (9) 'Avaliadora – Festival Marista de Robótica 2023' from PUCRS, category 'tecnologia'. No content hardcoded in the component.",
-      "New file: components/Certifications.tsx — a single 'use client' component. All sub-components defined inside this one file.",
-      "Section header: label 'CERTIFICATIONS' in DM Sans uppercase with wide letter-spacing (0.2em), heading 'Certificados & Formação' in Playfair Display with 'Formação' in italic, short description like 'Aprendizado contínuo em design, comunicação e estratégia.' in DM Sans --text-secondary.",
-      "Card layout: two-column grid on desktop (grid-cols-2), single column on mobile. Gap of 16px. Cards are NOT square — they are compact horizontal cards (auto height, no fixed aspect-ratio). Each card has: institution name in Playfair Display bold (font-size ~1rem) as the primary visual anchor, certificate title below in DM Sans regular (font-size 0.85rem, --text-secondary), and a small category pill/badge in the top-right corner (same badge-bg/badge-border tokens from the project: white background, subtle border, DM Sans 0.65rem uppercase). Cards have --bg-secondary (#FFFFFF) background with subtle border (--border: #D4CEC6), rounded-lg corners, padding 20-24px.",
-      "Institution emphasis: the institution name is the visual hero of each card because it conveys credibility (HarvardX, SEBRAE, ENAP, PUCRS). Use Playfair Display at readable size with --text-primary color. For long institution names (like 'Associação Brasileira de Educação a Distância'), ensure text wraps gracefully without breaking the card layout.",
-      "Category badges: each card shows its category as a small pill in the top-right. Categories use the existing badge styling (badge-bg + badge-border Tailwind tokens). Text is uppercase, 0.65rem, DM Sans. Categories are in Portuguese: 'Produtividade', 'Comunicação', 'Marketing', 'Criatividade', 'Educação', 'Tecnologia'.",
-      "Optional category filter: a row of small pill buttons above the grid (same style as the filter tabs in SocialPosts/US-016) that filter certificates by category. 'Todos' shows all 9. Since there are 6 categories for 9 items, the filter is optional — implement it only if it looks good with the layout. If implemented, active state is dark (#1A1A1A) background with cream text (not burgundy — this section uses the main site palette, not the social media burgundy). If skipped, add a code comment noting it can be added later.",
-      "Hover effect on cards: subtle border color darkening (border goes from #D4CEC6 to #1A1A1A at 0.3 opacity) and a very slight translateY(-2px) lift. Transition 0.3s ease. Keep it understated — this section should feel calm and professional, not flashy.",
-      "Framer Motion animations: cards stagger in with fade-up (staggerChildren 0.06s). Section heading fades up on viewport entry. All animations use viewport={{ once: true }}, ease [0.25, 0.1, 0.25, 1.0] as const, duration 0.5s. Respect useReducedMotion — when active, simple opacity fade only.",
-      "Accessibility: section element with id='certifications' and aria-label='Certificados e Formação'. h2 for section heading. Each card is an article element. Institution name in h3. All filter buttons (if implemented) keyboard accessible.",
-      "Integration: import and render <Certifications /> in app/page.tsx — this is the ONLY modification to an existing file. Position: immediately after the Experience section (<Experience /> then <Certifications />). Single import line + single JSX line.",
-      "DO NOT modify: any existing component file (Navbar, Footer, Hero, About, Process, Projects, SocialPosts, Skills, Experience, Pricing, FAQ, Contact, SectionHeading, ProjectCard, SkillBadge, ExperienceEntry).",
-      "DO NOT modify: any existing data file (hero.json, trustedBy.json, about.json, process.json, projects.json, socialPosts.json, skills.json, experience.json, pricing.json, faq.json).",
-      "DO NOT modify: globals.css, tailwind.config.ts, next.config.mjs, or layout.tsx.",
-      "DO NOT add new npm dependencies.",
-      "Extensibility: adding a new certificate only requires appending an object to the items array in certifications.json. No component changes needed. If a new category is added, it automatically appears in the filter (if implemented) and as a badge. Add a code comment at the top of the component documenting this."
-    ]
-  },
-  {
-    "id": "US-018",
-    "title": "Integrate Formspree contact form",
-    "passes": true,
-    "description": "Implement Formspree in the Contact section so visitors can submit the portfolio form and Bianca receives the message by email without requiring a custom backend. The integration must preserve the current warm editorial design, keep client-side validation, and provide clear success/error feedback inline.",
-    "acceptanceCriteria": [
-      "Replace the current static or mock contact form submit behavior with a real Formspree integration.",
-      "Use Bianca's Formspree endpoint as the form action target, with method='POST'.",
-      "Keep the existing Contact section layout, visual style, spacing, and warm neutral theme unchanged unless a small adjustment is required for form usability.",
-      "Preserve the existing form fields: Name, Email, Message.",
-      "All form field labels, placeholders, and button text remain editable inside the Contact component and are not hardcoded in multiple places.",
-      "Client-side validation remains active before submit: all fields required, email must have valid format, message must not be empty.",
-      "If validation fails, inline error messages are shown near the affected field(s) in an accessible way.",
-      "On successful submit, show an inline success state inside the Contact section instead of a browser default page redirect.",
-      "The success message must be visually consistent with the site's editorial aesthetic and clearly communicate that the message was sent successfully.",
-      "If Formspree returns an error or the request fails, show an inline error message with clear recovery guidance (for example: 'Please try again in a moment').",
-      "The submit button enters a loading/submitting state while the request is in flight, preventing duplicate submissions.",
-      "While submitting, the button is disabled and its label changes to reflect progress (for example: 'Sending...').",
-      "After a successful submit, the form fields are cleared.",
-      "Spam protection is implemented using at least one lightweight mechanism compatible with Formspree, such as a honeypot field.",
-      "The honeypot field must not be visible to normal users and must not disturb layout, keyboard navigation, or accessibility.",
-      "The integration must not introduce any custom backend route, API route, server action, database, or third-party email SDK.",
-      "The solution must work in a statically exported Next.js app.",
-      "Use fetch-based submission or Formspree's recommended React-friendly approach so the user stays on the same page and receives inline feedback.",
-      "Accessibility is preserved: inputs remain properly labeled, error states are announced or associated with fields, and the success/error feedback is readable by assistive technologies.",
-      "The form continues to be fully responsive across mobile, tablet, and desktop.",
-      "Do not modify unrelated sections or components outside the Contact flow, except for minimal integration wiring if strictly necessary.",
-      "Document the required environment/setup step in progress.txt or README-style notes: where to place the Formspree form ID/endpoint and how to change it later.",
-      "If the Formspree endpoint is not yet available, implement the integration using a clear placeholder value and mark the exact location that must be replaced.",
-      "No new heavy dependencies are added for this story. Prefer native fetch and existing project utilities.",
-      "All existing hover, focus, and transition behaviors in the Contact section remain intact or are improved without changing the overall visual language."
-    ]
-  }
+      "id": "US-017",
+      "title": "Certifications showcase component",
+      "passes": true,
+      "description": "Create a new Certifications section that displays Bianca's 9 professional certificates in an elegant, compact layout. Each certificate shows the course name, issuing institution, and an optional badge/tag for the institution. The section sits right after Experience in the page flow — forming a natural 'Experience → Certifications' narrative. The design uses a two-column masonry-style card layout on desktop (single column on mobile) with institution names as visual anchors. Like US-016, this is a NEW standalone component — do NOT modify any existing components, data files, styles, or configs.",
+      "acceptanceCriteria": [
+        "PREREQUISITE: Execute the Mandatory Change Audit (Step 4 in Ralph agent instructions) before writing any code. Document any unrecorded changes in progress.txt as 'Manual Changes Audit (pre-US-017)' block. If the audit was already done for US-016 in the same session and no further manual changes occurred, note 'Audit: clean since US-016' and proceed.",
+        "New file: data/certifications.json with the following structure: { sectionLabel, heading, description, items: [...] }. Each item has: id (number), title (string), institution (string), category (string — one of 'produtividade', 'comunicação', 'marketing', 'criatividade', 'educação', 'tecnologia'). The 9 certificates are: (1) 'Estratégia de produtividade: clareza, propósito e priorização de tarefas' from ENAP, category 'produtividade'; (2) 'Happiness: Managing Happiness' from HarvardX, category 'educação'; (3) 'Comunicação não violenta' from Educaweb, category 'comunicação'; (4) 'Marketing de redes sociais – curso completo 10 em 1' from Udemy, category 'marketing'; (5) 'World Creativity Day' from World Creativity Organization, category 'criatividade'; (6) 'Relacionamento interpessoal' from Associação Brasileira de Educação a Distância, category 'comunicação'; (7) 'Marketing digital para o empreendedor' from SEBRAE, category 'marketing'; (8) 'Comunicação científica visual' from MIND, category 'comunicação'; (9) 'Avaliadora – Festival Marista de Robótica 2023' from PUCRS, category 'tecnologia'. No content hardcoded in the component.",
+        "New file: components/Certifications.tsx — a single 'use client' component. All sub-components defined inside this one file.",
+        "Section header: label 'CERTIFICATIONS' in DM Sans uppercase with wide letter-spacing (0.2em), heading 'Certificados & Formação' in Playfair Display with 'Formação' in italic, short description like 'Aprendizado contínuo em design, comunicação e estratégia.' in DM Sans --text-secondary.",
+        "Card layout: two-column grid on desktop (grid-cols-2), single column on mobile. Gap of 16px. Cards are NOT square — they are compact horizontal cards (auto height, no fixed aspect-ratio). Each card has: institution name in Playfair Display bold (font-size ~1rem) as the primary visual anchor, certificate title below in DM Sans regular (font-size 0.85rem, --text-secondary), and a small category pill/badge in the top-right corner (same badge-bg/badge-border tokens from the project: white background, subtle border, DM Sans 0.65rem uppercase). Cards have --bg-secondary (#FFFFFF) background with subtle border (--border: #D4CEC6), rounded-lg corners, padding 20-24px.",
+        "Institution emphasis: the institution name is the visual hero of each card because it conveys credibility (HarvardX, SEBRAE, ENAP, PUCRS). Use Playfair Display at readable size with --text-primary color. For long institution names (like 'Associação Brasileira de Educação a Distância'), ensure text wraps gracefully without breaking the card layout.",
+        "Category badges: each card shows its category as a small pill in the top-right. Categories use the existing badge styling (badge-bg + badge-border Tailwind tokens). Text is uppercase, 0.65rem, DM Sans. Categories are in Portuguese: 'Produtividade', 'Comunicação', 'Marketing', 'Criatividade', 'Educação', 'Tecnologia'.",
+        "Optional category filter: a row of small pill buttons above the grid (same style as the filter tabs in SocialPosts/US-016) that filter certificates by category. 'Todos' shows all 9. Since there are 6 categories for 9 items, the filter is optional — implement it only if it looks good with the layout. If implemented, active state is dark (#1A1A1A) background with cream text (not burgundy — this section uses the main site palette, not the social media burgundy). If skipped, add a code comment noting it can be added later.",
+        "Hover effect on cards: subtle border color darkening (border goes from #D4CEC6 to #1A1A1A at 0.3 opacity) and a very slight translateY(-2px) lift. Transition 0.3s ease. Keep it understated — this section should feel calm and professional, not flashy.",
+        "Framer Motion animations: cards stagger in with fade-up (staggerChildren 0.06s). Section heading fades up on viewport entry. All animations use viewport={{ once: true }}, ease [0.25, 0.1, 0.25, 1.0] as const, duration 0.5s. Respect useReducedMotion — when active, simple opacity fade only.",
+        "Accessibility: section element with id='certifications' and aria-label='Certificados e Formação'. h2 for section heading. Each card is an article element. Institution name in h3. All filter buttons (if implemented) keyboard accessible.",
+        "Integration: import and render <Certifications /> in app/page.tsx — this is the ONLY modification to an existing file. Position: immediately after the Experience section (<Experience /> then <Certifications />). Single import line + single JSX line.",
+        "DO NOT modify: any existing component file (Navbar, Footer, Hero, About, Process, Projects, SocialPosts, Skills, Experience, Pricing, FAQ, Contact, SectionHeading, ProjectCard, SkillBadge, ExperienceEntry).",
+        "DO NOT modify: any existing data file (hero.json, trustedBy.json, about.json, process.json, projects.json, socialPosts.json, skills.json, experience.json, pricing.json, faq.json).",
+        "DO NOT modify: globals.css, tailwind.config.ts, next.config.mjs, or layout.tsx.",
+        "DO NOT add new npm dependencies.",
+        "Extensibility: adding a new certificate only requires appending an object to the items array in certifications.json. No component changes needed. If a new category is added, it automatically appears in the filter (if implemented) and as a badge. Add a code comment at the top of the component documenting this."
+      ]
+    },
+    {
+      "id": "US-018",
+      "title": "Integrate Formspree contact form",
+      "passes": true,
+      "description": "Implement Formspree in the Contact section so visitors can submit the portfolio form and Bianca receives the message by email without requiring a custom backend. The integration must preserve the current warm editorial design, keep client-side validation, and provide clear success/error feedback inline.",
+      "acceptanceCriteria": [
+        "Replace the current static or mock contact form submit behavior with a real Formspree integration.",
+        "Use Bianca's Formspree endpoint as the form action target, with method='POST'.",
+        "Keep the existing Contact section layout, visual style, spacing, and warm neutral theme unchanged unless a small adjustment is required for form usability.",
+        "Preserve the existing form fields: Name, Email, Message.",
+        "All form field labels, placeholders, and button text remain editable inside the Contact component and are not hardcoded in multiple places.",
+        "Client-side validation remains active before submit: all fields required, email must have valid format, message must not be empty.",
+        "If validation fails, inline error messages are shown near the affected field(s) in an accessible way.",
+        "On successful submit, show an inline success state inside the Contact section instead of a browser default page redirect.",
+        "The success message must be visually consistent with the site's editorial aesthetic and clearly communicate that the message was sent successfully.",
+        "If Formspree returns an error or the request fails, show an inline error message with clear recovery guidance (for example: 'Please try again in a moment').",
+        "The submit button enters a loading/submitting state while the request is in flight, preventing duplicate submissions.",
+        "While submitting, the button is disabled and its label changes to reflect progress (for example: 'Sending...').",
+        "After a successful submit, the form fields are cleared.",
+        "Spam protection is implemented using at least one lightweight mechanism compatible with Formspree, such as a honeypot field.",
+        "The honeypot field must not be visible to normal users and must not disturb layout, keyboard navigation, or accessibility.",
+        "The integration must not introduce any custom backend route, API route, server action, database, or third-party email SDK.",
+        "The solution must work in a statically exported Next.js app.",
+        "Use fetch-based submission or Formspree's recommended React-friendly approach so the user stays on the same page and receives inline feedback.",
+        "Accessibility is preserved: inputs remain properly labeled, error states are announced or associated with fields, and the success/error feedback is readable by assistive technologies.",
+        "The form continues to be fully responsive across mobile, tablet, and desktop.",
+        "Do not modify unrelated sections or components outside the Contact flow, except for minimal integration wiring if strictly necessary.",
+        "Document the required environment/setup step in progress.txt or README-style notes: where to place the Formspree form ID/endpoint and how to change it later.",
+        "If the Formspree endpoint is not yet available, implement the integration using a clear placeholder value and mark the exact location that must be replaced.",
+        "No new heavy dependencies are added for this story. Prefer native fetch and existing project utilities.",
+        "All existing hover, focus, and transition behaviors in the Contact section remain intact or are improved without changing the overall visual language."
+      ]
+    },
+    {
+      "id": "US-019",
+      "title": "Performance audit and optimization sweep",
+      "passes": true,
+      "description": "Execute a full performance sweep across the portfolio app to identify and improve rendering, animation, image loading, bundle size, hydration cost, and interaction responsiveness. The goal is to preserve the editorial aesthetic and motion quality while making the site feel lighter, faster, and more stable across desktop and mobile devices.",
+      "acceptanceCriteria": [
+        "Run a full performance audit of the application covering: initial page load, scroll performance, animation smoothness, image loading, hydration cost, bundle size, layout stability, and responsiveness across mobile/tablet/desktop breakpoints.",
+        "Document findings in progress.txt under a new block named 'Performance Audit (US-018)' including: issue found, affected section/component, likely cause, severity (low/medium/high), and chosen fix.",
+        "Audit all major sections individually: Navbar, Hero, TrustedBy, About, Process, Projects, SocialPosts, Skills, Experience, Certifications, Pricing, FAQ, Contact, and Footer.",
+        "Check for unnecessary client-side rendering. Any component that does not need interactivity, local state, browser APIs, or Framer Motion hooks should remain or be converted to a Server Component where possible.",
+        "Review all existing 'use client' boundaries and reduce them where safe, without breaking current interactions or animations.",
+        "Audit Framer Motion usage throughout the app and remove wasteful motion wrappers, duplicated animation configs, or unnecessary re-renders caused by animated parent/child nesting.",
+        "Ensure scroll-driven and entrance animations use performant properties only: transform and opacity. No animation should trigger layout recalculation through width, height, top, left, margin, or other layout-affecting properties.",
+        "Review whileInView, useScroll, useTransform, and stagger usage to ensure animations are not over-triggering, not running offscreen unnecessarily, and not producing jank on mid-range mobile devices.",
+        "Confirm all animations respect prefers-reduced-motion and simplify any remaining heavy transitions for reduced-motion users.",
+        "Audit image usage across the entire site. Ensure all images use Next.js Image correctly with meaningful alt text, appropriate sizing, and no oversized assets being loaded for small containers.",
+        "Add or improve sizes attributes for responsive images where missing or inaccurate, especially in Hero, About grid, Process, and Projects sections.",
+        "Ensure above-the-fold imagery is prioritized correctly and below-the-fold imagery is lazy-loaded appropriately.",
+        "Check for layout shift risks caused by images, dynamic content, counters, accordions, or late-loading fonts. Fix any CLS-prone elements by stabilizing dimensions and spacing.",
+        "Audit font loading strategy for Playfair Display and DM Sans via next/font. Ensure only needed subsets/weights/styles are loaded and eliminate unnecessary font payload.",
+        "Review global CSS and component-level class usage for redundancy, excessive utility duplication, and any styles that may cause paint or compositing inefficiencies.",
+        "Audit JavaScript bundle size and identify heavy client-side sections or logic that can be reduced, split, memoized, or deferred.",
+        "Review SocialPosts carousel specifically for performance: verify translateX-based movement, swipe handling efficiency, slide calculation stability, arrow/dot interaction responsiveness, and absence of unnecessary state churn.",
+        "Review Skills stats counting animation to ensure it triggers once, does not rerun on incidental re-renders, and does not block the main thread.",
+        "Review FAQ accordion for unnecessary re-renders and ensure expand/collapse transitions remain smooth without causing measurable layout thrash.",
+        "Check navbar scroll behavior, backdrop blur usage, and mobile menu animation for paint/compositing cost. Optimize if blur or transparency causes scroll slowdown on weaker devices.",
+        "Audit the page for unnecessary re-renders caused by unstable arrays, inline object literals, inline animation configs, or recalculated derived values inside render paths. Memoize or hoist constants where it provides measurable benefit and does not overcomplicate the codebase.",
+        "Ensure no section introduces hydration mismatch warnings or client/server rendering inconsistencies.",
+        "Validate that semantic structure and accessibility are preserved after all optimizations. Performance improvements must not remove aria labels, keyboard support, focus states, or heading structure.",
+        "Run Lighthouse-style optimization pass targeting desktop performance >= 95 and mobile performance >= 85 without degrading visual polish.",
+        "Run a manual smoothness audit on scrolling through the single-page experience. Section transitions should feel continuous, responsive, and free of visible stutter.",
+        "Preserve the current visual identity, spacing rhythm, editorial typography, and interaction design. This story is optimization-only, not a redesign.",
+        "Produce a concise before/after performance log in progress.txt listing: metric or issue, previous state, optimization applied, and expected impact.",
+        "Only make code changes that directly support measurable or strongly justified performance improvements. Avoid speculative refactors with no clear benefit."
+      ]
+    }
   ],
   "functionalRequirements": [
     "FR-1: Built with Next.js (App Router) and TypeScript",

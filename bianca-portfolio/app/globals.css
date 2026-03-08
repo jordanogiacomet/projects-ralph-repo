@@ -36,3 +36,25 @@ em {
   font-weight: 400 !important;
   font-style: normal !important;
 }
+
+/* Carousel and button hover styles — replaces JS onMouseEnter/Leave handlers */
+.carousel-arrow {
+  background-color: #1A1A1A;
+}
+.carousel-arrow:hover {
+  background-color: #6B1A1A;
+}
+.carousel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+.carousel-dot:hover {
+  transform: scale(1.3);
+}
+.btn-dark-burgundy {
+  background-color: #1A1A1A;
+  color: #F5F0EB;
+}
+.btn-dark-burgundy:hover {
+  background-color: #6B1A1A;
+}

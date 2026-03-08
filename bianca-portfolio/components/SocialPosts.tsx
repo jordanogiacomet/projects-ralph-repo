@@ -97,6 +97,13 @@ function useCardsPerView() {
 }
 
 // ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const posts = socialPostsData.posts as Post[];
+const GAP = 20; // px
+
+// ---------------------------------------------------------------------------
 // Main component
 // ---------------------------------------------------------------------------
 
@@ -107,7 +114,6 @@ export default function SocialPosts() {
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
   const cardsPerView = useCardsPerView();
-  const posts = socialPostsData.posts as Post[];
 
   const totalSlides = Math.max(1, Math.ceil(posts.length / cardsPerView));
 
@@ -158,7 +164,6 @@ export default function SocialPosts() {
     [goNext, goPrev]
   );
 
-  const gap = 20; // px
   const transitionDuration = prefersReducedMotion ? "0.15s" : "0.5s";
 
   const isFirst = currentSlide === 0;
@@ -224,18 +229,7 @@ export default function SocialPosts() {
               <button
                 onClick={goPrev}
                 aria-label="Anterior"
-                className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  backgroundColor: "#1A1A1A",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#6B1A1A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A1A1A";
-                }}
+                className="carousel-arrow hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200 w-10 h-10"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M10 12L6 8L10 4" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -248,18 +242,7 @@ export default function SocialPosts() {
               <button
                 onClick={goNext}
                 aria-label="Próximo"
-                className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  backgroundColor: "#1A1A1A",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#6B1A1A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A1A1A";
-                }}
+                className="carousel-arrow hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 items-center justify-center rounded-full transition-colors duration-200 w-10 h-10"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M6 4L10 8L6 12" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -275,8 +258,8 @@ export default function SocialPosts() {
                 aria-roledescription="slide"
                 className="flex touch-pan-y"
                 style={{
-                  gap: `${gap}px`,
-                  transform: `translateX(calc(-${currentSlide * 100}% - ${currentSlide * gap}px))`,
+                  gap: `${GAP}px`,
+                  transform: `translateX(calc(-${currentSlide * 100}% - ${currentSlide * GAP}px))`,
                   transition: `transform ${transitionDuration} cubic-bezier(0.25, 0.1, 0.25, 1)`,
                 }}
                 onPointerDown={handlePointerDown}
@@ -285,18 +268,10 @@ export default function SocialPosts() {
                 {posts.map((post) => (
                   <div
                     key={post.id}
-                    className="flex-shrink-0 transition-all duration-[400ms]"
+                    className="carousel-card flex-shrink-0 transition-all duration-[400ms]"
                     style={{
-                      width: `calc((100% - ${(cardsPerView - 1) * gap}px) / ${cardsPerView})`,
+                      width: `calc((100% - ${(cardsPerView - 1) * GAP}px) / ${cardsPerView})`,
                       transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
                     }}
                   >
                     <PostImageCard post={post} />
@@ -311,18 +286,7 @@ export default function SocialPosts() {
                 onClick={goPrev}
                 aria-label="Anterior"
                 disabled={isFirst}
-                className="flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  backgroundColor: "#1A1A1A",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isFirst) e.currentTarget.style.backgroundColor = "#6B1A1A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A1A1A";
-                }}
+                className="carousel-arrow flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30 w-8 h-8"
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M10 12L6 8L10 4" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -332,18 +296,7 @@ export default function SocialPosts() {
                 onClick={goNext}
                 aria-label="Próximo"
                 disabled={isLast}
-                className="flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  backgroundColor: "#1A1A1A",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isLast) e.currentTarget.style.backgroundColor = "#6B1A1A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A1A1A";
-                }}
+                className="carousel-arrow flex items-center justify-center rounded-full transition-colors duration-200 disabled:opacity-30 w-8 h-8"
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M6 4L10 8L6 12" stroke="#F5F0EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -362,18 +315,11 @@ export default function SocialPosts() {
                     aria-label={`Ir para slide ${i + 1}`}
                     role="tab"
                     aria-selected={isActive}
-                    className="rounded-full transition-all duration-200"
+                    className="carousel-dot rounded-full transition-all duration-200"
                     style={{
                       width: isActive ? "10px" : "8px",
                       height: isActive ? "10px" : "8px",
                       backgroundColor: isActive ? "#6B1A1A" : "#D4CEC6",
-                      transform: "scale(1)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "scale(1.3)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "scale(1)";
                     }}
                   />
                 );
@@ -405,17 +351,7 @@ export default function SocialPosts() {
             href="https://instagram.com/psicologamarinahiga"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-sm px-5 py-2 rounded-full transition-colors duration-200"
-            style={{
-              backgroundColor: "#1A1A1A",
-              color: "#F5F0EB",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#6B1A1A";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#1A1A1A";
-            }}
+            className="btn-dark-burgundy font-body text-sm px-5 py-2 rounded-full transition-colors duration-200"
           >
             Ver no Instagram
           </a>
