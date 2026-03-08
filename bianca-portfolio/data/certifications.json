@@ -1,0 +1,62 @@
+{
+  "sectionLabel": "Certifications",
+  "heading": "Certificados & Formação",
+  "headingItalic": "Formação",
+  "description": "Aprendizado contínuo em design, comunicação e estratégia.",
+  "items": [
+    {
+      "id": 1,
+      "title": "Estratégia de produtividade: clareza, propósito e priorização de tarefas",
+      "institution": "ENAP",
+      "category": "produtividade"
+    },
+    {
+      "id": 2,
+      "title": "Happiness: Managing Happiness",
+      "institution": "HarvardX",
+      "category": "educação"
+    },
+    {
+      "id": 3,
+      "title": "Comunicação não violenta",
+      "institution": "Educaweb",
+      "category": "comunicação"
+    },
+    {
+      "id": 4,
+      "title": "Marketing de redes sociais – curso completo 10 em 1",
+      "institution": "Udemy",
+      "category": "marketing"
+    },
+    {
+      "id": 5,
+      "title": "World Creativity Day",
+      "institution": "World Creativity Organization",
+      "category": "criatividade"
+    },
+    {
+      "id": 6,
+      "title": "Relacionamento interpessoal",
+      "institution": "Associação Brasileira de Educação a Distância",
+      "category": "comunicação"
+    },
+    {
+      "id": 7,
+      "title": "Marketing digital para o empreendedor",
+      "institution": "SEBRAE",
+      "category": "marketing"
+    },
+    {
+      "id": 8,
+      "title": "Comunicação científica visual",
+      "institution": "MIND",
+      "category": "comunicação"
+    },
+    {
+      "id": 9,
+      "title": "Avaliadora – Festival Marista de Robótica 2023",
+      "institution": "PUCRS",
+      "category": "tecnologia"
+    }
+  ]
+}

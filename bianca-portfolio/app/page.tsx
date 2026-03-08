@@ -5,6 +5,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import SocialPosts from "@/components/SocialPosts";
 import Experience from "@/components/Experience";
+import Certifications from "@/components/Certifications";
 
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
@@ -19,6 +20,7 @@ export default function Home() {
       <Projects />
       <SocialPosts />
       <Experience />
+      <Certifications />
       <FAQ />
       <Contact />
     </>
