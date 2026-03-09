@@ -284,3 +284,29 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - The `/sobre` page currently sources CMS content from `pages` hero fields and `layout` blocks (`richContentBlock`, `ctaBlock`, `serviceCardsBlock`) with deterministic fallback copy.
 ---
+## 2026-03-09 21:16 UTC - US-008
+- What was implemented
+- Finalized the `/solucoes` hub page against acceptance criteria by adjusting responsive card breakpoints to `1/2/4` (`mobile/tablet/desktop`) and preserving bold emphasis for the hero phrase "solução completa".
+- Confirmed the page remains Payload-backed (`solucoes` + category relations), keeps client-side filtering with counters, AnimatePresence transitions, inline contact form, and the "Fique em contato" section.
+- Marked `US-008` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/components/SolutionGrid.tsx
+- src/components/SolutionsHubPage.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile behavior for filters and card layout).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Reusable list grids should set desktop columns at `lg` when acceptance criteria reference standard desktop breakpoints, not only `xl`.
+  - Gotchas encountered
+  - This repository still lacks `npm run typecheck` and `npm run test`, so equivalent checks must be logged explicitly each run.
+  - Useful context
+  - Hero copy with emphasized phrases can be kept CMS-flexible by rendering string content and applying targeted inline emphasis for required wording.
+---

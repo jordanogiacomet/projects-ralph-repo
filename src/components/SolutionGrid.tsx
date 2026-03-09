@@ -18,7 +18,7 @@ type SolutionGridProps = {
 
 export function SolutionGrid({ items }: SolutionGridProps) {
   return (
-    <motion.div layout className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <motion.div layout className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <AnimatePresence mode="popLayout">
         {items.map((item) => (
           <motion.article

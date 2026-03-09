@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { ContatoForm } from './ContatoForm'
 import { SolutionFilterTabs, type SolutionFilter } from './SolutionFilterTabs'
 import { SolutionGrid, type SolutionItem } from './SolutionGrid'
@@ -15,6 +15,27 @@ type SolutionsHubPageProps = {
   heroDescription: string
   filters: SolutionFilter[]
   solutions: SolutionWithFilters[]
+}
+
+const highlightedHeroPhrase = 'solução completa'
+
+function renderHeroTitle(title: string): ReactNode {
+  const lowerTitle = title.toLocaleLowerCase('pt-BR')
+  const startIndex = lowerTitle.indexOf(highlightedHeroPhrase)
+
+  if (startIndex === -1) {
+    return title
+  }
+
+  const endIndex = startIndex + highlightedHeroPhrase.length
+
+  return (
+    <>
+      {title.slice(0, startIndex)}
+      <strong>{title.slice(startIndex, endIndex)}</strong>
+      {title.slice(endIndex)}
+    </>
+  )
 }
 
 export function SolutionsHubPage({ heroTitle, heroDescription, filters, solutions }: SolutionsHubPageProps) {
@@ -37,7 +58,7 @@ export function SolutionsHubPage({ heroTitle, heroDescription, filters, solution
           aria-hidden
         />
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 text-center text-text-on-dark sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold leading-tight sm:text-5xl">{heroTitle}</h1>
+          <h1 className="text-3xl font-bold leading-tight sm:text-5xl">{renderHeroTitle(heroTitle)}</h1>
           <p className="mx-auto mt-5 max-w-3xl text-base text-white/85 sm:text-lg">{heroDescription}</p>
         </div>
       </section>
