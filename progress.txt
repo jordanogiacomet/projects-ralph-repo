@@ -14,6 +14,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Access control helpers at `src/access/index.ts` — use `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
 - Slug auto-generation hook at `src/hooks/formatSlug.ts` — use `formatSlugHook` in field `hooks.beforeValidate`
 - Collection slugs use kebab-case (e.g., `solucao-categories`, `cliente-segmentos`)
+- Block definitions live in `src/blocks/`, exported via `src/blocks/index.ts`
+- BlockRenderer component at `src/components/BlockRenderer.tsx` maps blockType to React components
+- Import all blocks from `@/blocks` barrel export when registering in collections
 
 ---
 
@@ -47,4 +50,17 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Payload `hasMany: true` on text fields creates tag-like arrays
   - Payload blocks field on Pages has empty blocks array — will be populated when blocks are created in US-003
   - FormSubmissions uses `json` type field for flexible form data storage
+---
+
+## 2026-03-09 - US-003
+- Created 11 Payload block definitions in src/blocks/: HeroBlock, RichContentBlock, ServiceCardsBlock, CTABlock, AccordionBlock, StatsBlock, ContactFormBlock, ImageTextBlock, ClientLogosBlock, VideoBlock, DownloadBlock
+- Created barrel export at src/blocks/index.ts
+- Created BlockRenderer component at src/components/BlockRenderer.tsx with placeholder renderers for each block type
+- Registered all 11 blocks in Pages collection layout field
+- Files changed: src/blocks/* (12 new files), src/components/BlockRenderer.tsx, src/collections/Pages.ts
+- **Learnings for future iterations:**
+  - Block slugs use camelCase (e.g., `heroBlock`, `richContentBlock`) — Payload convention
+  - BlockRenderer uses `data-block-type` attribute for easy debugging/styling
+  - Placeholder block components use `Record<string, unknown>` props — will need proper typing when implementing frontend rendering
+  - `void props` pattern used to suppress unused variable warnings in placeholder components
 ---

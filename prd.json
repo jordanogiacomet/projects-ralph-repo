@@ -385,7 +385,7 @@
     {
       "id": "US-003",
       "title": "Blocos de layout (Payload Blocks)",
-      "passes": false,
+      "passes": true,
       "description": "Criar todos os blocos reutilizáveis de conteúdo que serão usados no campo layout das Pages e em outras collections.",
       "acceptanceCriteria": [
         "HeroBlock criado com campos: title (richText), subtitle (text), backgroundImage (upload), ctaLabel (text), ctaLink (text), overlayOpacity (number)",
