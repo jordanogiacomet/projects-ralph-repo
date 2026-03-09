@@ -238,3 +238,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Gotchas encountered: In this environment, `npm run build` may fail with intermittent `/_document` resolution errors while `next build --debug` succeeds and produces valid output
   - Useful context: `npx tsc --noEmit` depends on generated `.next/types` includes in this repo, so run it after a successful Next build path when those files are absent
 ---
+## 2026-03-09 21:05 UTC - US-006
+- What was implemented
+- Validated the existing homepage implementation against US-006 acceptance criteria (fullscreen hero with overlay + animated scroll indicator, 3 service cards with fade-in, partner CTA section, about section with media/video fallback, and responsive behavior) and confirmed Payload-backed content wiring for hero/layout-driven sections.
+- Marked US-006 as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated the homepage route (`/`) successfully.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile hero readability, card animations, and parallax behavior).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a validation pass when implementation already exists; in that case, acceptance mapping + full checks are still required before flipping `passes`.
+  - Gotchas encountered
+  - This repo still uses `npx tsc --noEmit` as the practical typecheck gate because there is no `npm run typecheck` script.
+  - Useful context
+  - Homepage content is driven by `pages` (`slug: home`) plus `layout` blocks (`serviceCardsBlock`, `ctaBlock`, `videoBlock`, `imageTextBlock`) with deterministic fallbacks when Payload data is unavailable.
+---

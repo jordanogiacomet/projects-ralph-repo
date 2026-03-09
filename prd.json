@@ -468,7 +468,7 @@
     {
       "id": "US-007",
       "title": "Página Sobre",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Conheça a história da **Apollo Gestão**'",
@@ -485,7 +485,7 @@
     {
       "id": "US-008",
       "title": "Página Hub de Soluções",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag.",
       "acceptanceCriteria": [
         "Hero com título: 'Nós temos a **solução completa** para o gerenciamento de ativos'",
@@ -504,7 +504,7 @@
     {
       "id": "US-009",
       "title": "Página Hub de Categoria — Controle Patrimonial",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",
@@ -518,7 +518,7 @@
     {
       "id": "US-010",
       "title": "Página Hub de Categoria — Consultoria e Tecnologia",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Consultoria e Tecnologia",
@@ -532,7 +532,7 @@
     {
       "id": "US-011",
       "title": "Página Hub de Categoria — Avaliação Patrimonial",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Avaliação Patrimonial",
@@ -546,7 +546,7 @@
     {
       "id": "US-012",
       "title": "Subpágina de Solução — Organização Patrimonial",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
       "acceptanceCriteria": [
         "Hero banner com título 'Organização Patrimonial'",
@@ -562,7 +562,7 @@
     {
       "id": "US-013",
       "title": "Subpágina de Solução — Controle e Inventário de Estoques",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/controle-patrimonial/controle-e-inventario-de-estoques/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Controle e Inventário de Estoques'",
@@ -576,7 +576,7 @@
     {
       "id": "US-014",
       "title": "Subpágina de Solução — Processamento Patrimonial",
-      "passes": true,
+      "passes": false,
       "description": "Criar a página /solucoes/controle-patrimonial/processamento-patrimonial/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Processamento Patrimonial'",
@@ -922,6 +922,25 @@
         "Configuração de domínio personalizado documentada",
         "Guia básico de uso do Payload admin para editores (como criar post, editar página, adicionar cliente)",
         "Backup strategy documentada (PostgreSQL dump + media files)"
+      ]
+    },
+        {
+      "id": "US-037",
+      "title": "Revisar backlog e direção visual com reasoning xhigh",
+      "passes": false,
+      "description": "Executar uma revisão completa das user stories restantes e da direção visual do site usando GPT-5.3-Codex com reasoning effort xhigh. A revisão deve validar ordem, dependências, clareza, critérios de aceite e consistência do backlog, além de avaliar se as histórias preservam o estilo atual do site da Apollo Gestão enquanto modernizam hierarquia visual, espaçamento, tipografia, animações e experiência geral.",
+      "acceptanceCriteria": [
+        "Revisar todas as user stories com passes=true no prd.json",
+        "Identificar dependências implícitas, lacunas de escopo, histórias duplicadas, ambiguidades e ordem inadequada de execução",
+        "Validar se cada story possui acceptance criteria objetivos, verificáveis e implementáveis",
+        "Apontar histórias que dependem de infraestrutura, assets, conteúdo, banco, imagens ou setup ainda não resolvidos",
+        "Revisar se o backlog preserva a identidade visual atual da Apollo Gestão, sem descaracterizar o site existente",
+        "Apontar onde o backlog deve exigir uma modernização visual mais clara, incluindo tipografia, espaçamento, grid, ritmo, animações, hierarquia e acabamento premium",
+        "Sugerir ajustes nas stories para deixar explícito que a evolução visual deve respeitar o estilo atual, mas com execução mais moderna e refinada",
+        "Registrar em progress.txt um relatório resumido com problemas encontrados, recomendações de reordenação e observações visuais",
+        "Se necessário, atualizar o prd.json para corrigir títulos, descrições ou acceptance criteria das stories revisadas",
+        "Não implementar features de produto nesta story; apenas revisar e refinar backlog e direção visual",
+        "Executar esta revisão usando GPT-5.3-Codex com reasoning effort xhigh"
       ]
     }
   ],
