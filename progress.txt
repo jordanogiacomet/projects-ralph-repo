@@ -356,3 +356,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - In this repository, `npm run typecheck` and `npm run test` are not defined; the practical quality gate remains `npx tsc --noEmit` plus `npm run lint` and `npm run build`.
 ---
+## 2026-03-09 21:30 UTC - US-011
+- What was implemented
+- Validated the existing `/solucoes/avaliacao-patrimonial/` hub implementation against all US-011 acceptance criteria (hero, required 4-card grid, contact section with form, Payload-backed data + deterministic fallbacks, and responsive grid behavior).
+- Updated `prd.json` to mark `US-011` as complete (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial` successfully.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, 4-card grid, and contact form flow).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Category hub pages remain consistent by fetching `solucao-categories` by slug, filtering `solucoes` by category, and rendering in a fixed slug order with deterministic fallback content.
+  - Gotchas encountered
+  - Story status in `prd.json` can be out of sync with existing implemented routes, so each run still needs acceptance validation plus full checks before flipping `passes`.
+  - Useful context
+  - This repository continues to rely on `npx tsc --noEmit` for type validation because `npm run typecheck` is not defined.
+---

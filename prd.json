@@ -532,7 +532,7 @@
     {
       "id": "US-011",
       "title": "Página Hub de Categoria — Avaliação Patrimonial",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Avaliação Patrimonial",
