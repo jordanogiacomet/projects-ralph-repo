@@ -114,3 +114,15 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Payload fetch resilience pattern (`try/catch` + deterministic fallback content) keeps static generation stable when DB access is unavailable
   - In this sandbox, `next build` can be flaky across runs; `next build --debug` provides clearer diagnostics and may complete successfully where plain build fails
 ---
+## 2026-03-09 18:13 UTC - US-008
+- Implemented `/solucoes` hub page with hero, descriptive copy, client-side filtering with counters, animated solution grid, inline contact form, and a "Fique em contato" CTA section above the global footer
+- Wired data source to Payload collections (`solucoes`, `solucao-categories`) and page doc (`pages` with `slug: solucoes`), with deterministic 14-solution fallback content for build-time DB unavailability
+- Added reusable components for this flow: filter tabs (`SolutionFilterTabs`), card grid (`SolutionGrid`), light inline contact form (`ContatoForm`), and client orchestrator (`SolutionsHubPage`)
+- Files changed: src/app/(frontend)/solucoes/page.tsx, src/components/ContatoForm.tsx, src/components/SolutionFilterTabs.tsx, src/components/SolutionGrid.tsx, src/components/SolutionsHubPage.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run build` remained unstable in this sandbox with intermittent `Next.js build worker exited with code: 1`; `npx next build --debug` passed and generated `/solucoes` (with expected sandbox DB log `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` unavailable (missing script); `npm run test` unavailable (missing script); `npx tsc --noEmit` passed
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile and filter interactions)
+- **Learnings for future iterations:**
+  - For the soluções hub, derive UI filters from normalized `filterKeys` on each solution item to keep client-side filtering fast and deterministic
+  - In this sandbox, `next build --debug` can complete when plain `npm run build` intermittently fails with worker-exit noise; keep both results logged for traceability
+  - Keeping a static fallback list of canonical soluções preserves acceptance behavior when Payload/Postgres is unreachable during builds
+---

@@ -485,7 +485,7 @@
     {
       "id": "US-008",
       "title": "Página Hub de Soluções",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag.",
       "acceptanceCriteria": [
         "Hero com título: 'Nós temos a **solução completa** para o gerenciamento de ativos'",
