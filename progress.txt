@@ -21,6 +21,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Payload upload relations may be string IDs or objects — always check `typeof field === 'object'` before accessing `.url`
 - Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
 - Use framer-motion AnimatePresence for enter/exit animations on conditional renders
+- Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
 
 ---
 
@@ -212,4 +213,17 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Patterns discovered: For block stories, verify schema definitions in `src/blocks/*`, `src/blocks/index.ts` export wiring, and `Pages.layout` registration together to avoid partial completion
   - Gotchas encountered: `npm run typecheck` and `npm run test` are not defined in this repository, so equivalent validation must be recorded explicitly
   - Useful context: Payload admin block preview depends on block registration plus labels/field configs, so schema-level verification is a prerequisite before visual QA
+---
+## 2026-03-09 20:42 UTC - US-004
+- Implemented and finalized the global Navbar story by adding resilient Header fallbacks (required nav structure, CTA, social links) and enabling transparent-over-hero behavior on the fullscreen hero routes currently in the frontend app
+- Files changed: src/components/Navbar.tsx, src/components/NavbarServer.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` initially failed with intermittent Next.js page-resolution errors in this sandbox (`Cannot find module for page`), then passed on retry and generated all current frontend routes; `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile, including mega menu, mobile accordion, and transparent-to-solid navbar transition)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Keep layout-level fallbacks for globals (`header`, `footer`, `site-settings`) so acceptance behavior remains testable when Payload/Postgres is unavailable during builds
+  - Gotchas encountered
+  - In this sandbox, `next build` can intermittently fail during page-data collection with transient module resolution errors; rerunning build may succeed without code changes
+  - Useful context
+  - Transparent navbar behavior can be route-driven in the client component (`usePathname`) while still supporting explicit page-level overrides via `isHeroPage`
 ---

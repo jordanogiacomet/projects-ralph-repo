@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { MegaMenu } from './MegaMenu'
 import { MobileMenu } from './MobileMenu'
@@ -52,6 +53,24 @@ type NavbarProps = {
   isHeroPage?: boolean
 }
 
+const HERO_TRANSPARENT_ROUTES = new Set([
+  '/',
+  '/sobre',
+  '/solucoes',
+  '/solucoes/controle-patrimonial',
+  '/solucoes/consultoria-e-tecnologia',
+  '/solucoes/avaliacao-patrimonial',
+])
+
+function normalizePathname(pathname: string | null): string {
+  if (!pathname) return ''
+  if (pathname !== '/' && pathname.endsWith('/')) {
+    return pathname.slice(0, -1)
+  }
+
+  return pathname
+}
+
 export function Navbar({
   logo,
   logoNegativo,
@@ -60,6 +79,7 @@ export function Navbar({
   socialLinks,
   isHeroPage = false,
 }: NavbarProps) {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -80,7 +100,10 @@ export function Navbar({
     setActiveDropdown(null)
   }, [])
 
-  const isTransparent = isHeroPage && !scrolled && !megaMenuOpen
+  const normalizedPath = normalizePathname(pathname)
+  const isHeroRoute = HERO_TRANSPARENT_ROUTES.has(normalizedPath)
+  const usesTransparentNavbar = isHeroPage || isHeroRoute
+  const isTransparent = usesTransparentNavbar && !scrolled && !megaMenuOpen
 
   const currentLogo = isTransparent ? logoNegativo || logo : logo
   const textColor = isTransparent ? 'text-text-on-dark' : 'text-text-primary'
@@ -315,7 +338,7 @@ export function Navbar({
       </header>
 
       {/* Spacer to prevent content from going under fixed navbar */}
-      {!isHeroPage && (
+      {!usesTransparentNavbar && (
         <div className="h-16 lg:h-20" aria-hidden="true">
           {socialLinks && socialLinks.length > 0 && (
             <div className="hidden lg:block h-[33px]" />
