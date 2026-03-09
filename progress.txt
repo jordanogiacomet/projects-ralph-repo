@@ -19,6 +19,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Import all blocks from `@/blocks` barrel export when registering in collections
 - Server/client split for interactive layout components: FooServer.tsx (async, fetches data) + Foo.tsx ('use client', handles state/events)
 - Payload upload relations may be string IDs or objects — always check `typeof field === 'object'` before accessing `.url`
+- When route slugs change, keep a backward-compatible route file that re-exports the canonical page (`export { default, generateMetadata } from '../canonical/page'`)
 - Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
 - Use framer-motion AnimatePresence for enter/exit animations on conditional renders
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
@@ -523,4 +524,29 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Existing fallback links in older stories may still reference prior slug variants, so route compatibility prevents regressions without widening story scope.
   - Useful context
   - In this repository, `npm run typecheck` and `npm run test` remain undefined; practical quality gating continues to be `npm run lint`, `npx tsc --noEmit`, and `npm run build`.
+---
+## 2026-03-09 22:11 UTC - US-019
+- What was implemented
+- Implemented `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/` using the established solution-detail template with hero banner, breadcrumb trail, Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy for Arrendamento Mercantil (CPC 06 / IFRS 16).
+- Added legacy-route compatibility by creating `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16/` as a re-export to the new canonical route.
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts` only).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated both `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil` and `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16`.
+- `npm run typecheck` not available (missing script).
+- `npm run test` not available (missing script).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For solution-detail routes, keeping a canonical slug page plus a legacy re-export route avoids link regressions while CMS slugs and fallback links are being normalized.
+  - Gotchas encountered
+  - Breadcrumb acceptance may differ from hero-title acceptance; treat breadcrumb `title` and hero `heroTitle` as separate outputs when implementing CPC/IFRS-qualified solution pages.
+  - Useful context
+  - Build output now includes both canonical and legacy arrendamento routes, which keeps existing internal links valid until pending stories update category-hub references.
 ---
