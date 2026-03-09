@@ -203,3 +203,13 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this repository, `npx tsc --noEmit` can depend on generated `.next/types`; run it after a successful Next build path when those files are absent
   - Build-time Postgres connection errors may appear in this sandbox while `next build` still exits successfully, so check completion by exit code and generated routes
 ---
+## 2026-03-09 20:30 UTC - US-003
+- Validated and completed the Payload blocks story by confirming all 11 required blocks exist with the expected field models, `BlockRenderer` covers every block `blockType`, and all blocks are registered in `Pages.layout` for admin usage/preview
+- Files changed: prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed; `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual admin/browser verification still required
+- **Learnings for future iterations:**
+  - Patterns discovered: For block stories, verify schema definitions in `src/blocks/*`, `src/blocks/index.ts` export wiring, and `Pages.layout` registration together to avoid partial completion
+  - Gotchas encountered: `npm run typecheck` and `npm run test` are not defined in this repository, so equivalent validation must be recorded explicitly
+  - Useful context: Payload admin block preview depends on block registration plus labels/field configs, so schema-level verification is a prerequisite before visual QA
+---
