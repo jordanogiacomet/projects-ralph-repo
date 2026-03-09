@@ -91,3 +91,14 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `next build` can complete even when Payload cannot reach Postgres during static generation in this sandbox; treat DB connectivity logs separately from build exit status
   - Footer/social/whatsapp/cookie data flow depends on `footer` and `site-settings` globals, so those globals must be seeded/configured before visual QA
 ---
+## 2026-03-09 10:46 UTC - US-006
+- Implemented homepage with 100vh hero (dark overlay + animated scroll indicator), subtle parallax, 3 animated service cards, partner CTA section, and "Quem é a Apollo" section with optional embedded video/image and `/sobre` link
+- Wired homepage content to Payload `pages` document (`slug: home`) using `hero*` fields plus `layout` blocks (`serviceCardsBlock`, `ctaBlock`, `videoBlock`, `imageTextBlock`) with safe defaults when CMS/DB is unavailable
+- Files changed: src/app/(frontend)/page.tsx, src/components/HomePage.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed; `npm run build` passed (with sandbox DB connectivity log during static generation: `connect EPERM 127.0.0.1:5432`); `npm run typecheck` not available (validated with `npx tsc --noEmit`, passed); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop + mobile)
+- **Learnings for future iterations:**
+  - Homepage can be CMS-driven without schema changes by composing existing `Pages` `hero*` fields with `layout` blocks and deterministic block selection
+  - When `next build` exits with worker code `1` but no visible error, running `npx tsc --noEmit` surfaces strict TypeScript issues immediately
+  - Keep frontend resilience by wrapping Payload fetches in `try/catch` and supplying fallback content for static builds without DB access
+---

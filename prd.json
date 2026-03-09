@@ -450,7 +450,7 @@
     {
       "id": "US-006",
       "title": "Homepage",
-      "passes": false,
+      "passes": true,
       "description": "Criar a homepage replicando a estrutura do site atual: hero fullscreen com título e CTA, 3 cards de serviço (Avaliações, Controle, Consultoria), seção 'Seu parceiro em Gestão Patrimonial', seção 'Quem é a Apollo' com vídeo/imagem e link para Sobre.",
       "acceptanceCriteria": [
         "Hero fullscreen (100vh) com imagem de fundo, overlay escuro e scroll-down indicator",
