@@ -1,0 +1,50 @@
+# Ralph Progress Log
+Started: Mon Mar  9 09:19:04 PDT 2026
+---
+
+## Codebase Patterns
+- Payload CMS 3.x is integrated into Next.js (not standalone) — config at `src/payload.config.ts`
+- Frontend routes live in `src/app/(frontend)/`, Payload admin/API in `src/app/(payload)/`
+- Use `@payload-config` path alias to import payload config
+- Use `@/*` path alias for src imports
+- Tailwind design tokens: accent (#0056A6), bg-dark-section (#1A1A2E), cta-green (#28A745)
+- Collections go in `src/collections/`, globals in `src/globals/`, blocks in `src/blocks/`
+- Use `--legacy-peer-deps` for npm install due to Payload/Next.js peer dep conflicts
+- Next.js version must match Payload peer requirements (currently 15.4.x)
+- Access control helpers at `src/access/index.ts` — use `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
+- Slug auto-generation hook at `src/hooks/formatSlug.ts` — use `formatSlugHook` in field `hooks.beforeValidate`
+- Collection slugs use kebab-case (e.g., `solucao-categories`, `cliente-segmentos`)
+
+---
+
+## 2026-03-09 - US-001
+- Setup Next.js 15.4 + Payload CMS 3.79 + PostgreSQL project
+- Tailwind CSS 3.x with PRD color tokens configured
+- TypeScript strict mode, ESLint (next/core-web-vitals), Prettier
+- Folder structure created per PRD specification
+- Users, Media, Pages collections; seed script placeholder
+- Files changed: package.json, tsconfig.json, next.config.mjs, tailwind.config.ts, postcss.config.mjs, eslint.config.mjs, .prettierrc, .gitignore, .env.example, src/payload.config.ts, src/collections/*, src/lib/*, src/app/*, src/seed.mjs
+- **Learnings for future iterations:**
+  - `create-payload-app` CLI doesn't work without TTY — build project manually instead
+  - Payload 3.79 requires Next.js >=15.2.9 <15.3.0 || >=15.3.9 <15.4.0 || >=15.4.11 <15.5.0
+  - The `@payloadcms/storage-local` package doesn't exist — just use Media collection `upload.staticDir`
+  - Payload admin layout needs `importMap.js` in admin folder and `ServerFunctionClient` in layout
+  - `sharp` must be dynamically imported in payload config: `sharp: (await import('sharp')).default`
+---
+
+## 2026-03-09 - US-002
+- Created all Payload CMS collections: Posts, Solucoes, SolucaoCategories, Clientes, ClienteSegmentos, Conteudos, FormSubmissions, NewsletterSubscribers
+- Updated existing collections: Users (name, role fields + access control), Media (caption field), Pages (hero fields, layout blocks, parent, meta, showContactForm)
+- Created all globals: Header (logo, navItems nested, ctaButton, socialLinks), Footer (unidades, copyrightText, socialLinks), SiteSettings (whatsapp, cookie, defaultMeta, analytics, maintenanceMode)
+- Created slug auto-generation hook at src/hooks/formatSlug.ts (normalizes accented chars, generates URL-safe slugs)
+- Created access control helpers at src/access/index.ts (isAdmin, isAdminOrEditor, isLoggedIn, isAdminOrSelf, anyone)
+- Updated payload.config.ts to register all 11 collections and 3 globals
+- Files changed: src/payload.config.ts, src/collections/*, src/globals/*, src/hooks/formatSlug.ts, src/access/index.ts
+- **Learnings for future iterations:**
+  - Access control: use `@/access` helpers — `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
+  - Slug hook: use `formatSlugHook` from `@/hooks/formatSlug` on slug fields with `hooks.beforeValidate`
+  - Collection slugs use kebab-case (e.g., `solucao-categories`, `cliente-segmentos`, `form-submissions`)
+  - Payload `hasMany: true` on text fields creates tag-like arrays
+  - Payload blocks field on Pages has empty blocks array — will be populated when blocks are created in US-003
+  - FormSubmissions uses `json` type field for flexible form data storage
+---

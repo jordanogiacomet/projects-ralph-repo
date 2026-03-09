@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { anyone, isAdminOrEditor } from '@/access'
 import { formatSlugHook } from '@/hooks/formatSlug'
 
-export const Pages: CollectionConfig = {
-  slug: 'pages',
+export const Solucoes: CollectionConfig = {
+  slug: 'solucoes',
   admin: {
     useAsTitle: 'title',
   },
@@ -32,50 +32,36 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'heroType',
-      type: 'select',
-      defaultValue: 'fullscreen',
-      options: [
-        { label: 'Fullscreen', value: 'fullscreen' },
-        { label: 'Small', value: 'small' },
-        { label: 'None', value: 'none' },
-      ],
-    },
-    {
-      name: 'heroTitle',
-      type: 'richText',
-    },
-    {
-      name: 'heroSubtitle',
-      type: 'text',
-    },
-    {
-      name: 'heroImage',
+      name: 'icon',
       type: 'upload',
       relationTo: 'media',
     },
     {
-      name: 'heroCTALabel',
-      type: 'text',
+      name: 'shortDescription',
+      type: 'textarea',
     },
     {
-      name: 'heroCTALink',
-      type: 'text',
+      name: 'content',
+      type: 'richText',
     },
     {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [],
-    },
-    {
-      name: 'parent',
+      name: 'category',
       type: 'relationship',
-      relationTo: 'pages',
+      relationTo: 'solucao-categories',
+      required: true,
     },
     {
-      name: 'showContactForm',
-      type: 'checkbox',
-      defaultValue: false,
+      name: 'tags',
+      type: 'text',
+      hasMany: true,
+    },
+    {
+      name: 'order',
+      type: 'number',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       type: 'group',

@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { anyone, isAdminOrEditor } from '@/access'
 import { formatSlugHook } from '@/hooks/formatSlug'
 
-export const Pages: CollectionConfig = {
-  slug: 'pages',
+export const Conteudos: CollectionConfig = {
+  slug: 'conteudos',
   admin: {
     useAsTitle: 'title',
   },
@@ -32,50 +32,27 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'heroType',
-      type: 'select',
-      defaultValue: 'fullscreen',
-      options: [
-        { label: 'Fullscreen', value: 'fullscreen' },
-        { label: 'Small', value: 'small' },
-        { label: 'None', value: 'none' },
-      ],
+      name: 'description',
+      type: 'textarea',
     },
     {
-      name: 'heroTitle',
-      type: 'richText',
-    },
-    {
-      name: 'heroSubtitle',
-      type: 'text',
-    },
-    {
-      name: 'heroImage',
+      name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
     },
     {
-      name: 'heroCTALabel',
-      type: 'text',
+      name: 'downloadFile',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
-      name: 'heroCTALink',
-      type: 'text',
-    },
-    {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [],
-    },
-    {
-      name: 'parent',
-      type: 'relationship',
-      relationTo: 'pages',
-    },
-    {
-      name: 'showContactForm',
+      name: 'requiresEmail',
       type: 'checkbox',
       defaultValue: false,
+    },
+    {
+      name: 'content',
+      type: 'richText',
     },
     {
       type: 'group',

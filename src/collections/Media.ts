@@ -1,9 +1,13 @@
 import type { CollectionConfig } from 'payload'
+import { anyone, isLoggedIn } from '@/access'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true,
+    read: anyone,
+    create: isLoggedIn,
+    update: isLoggedIn,
+    delete: isLoggedIn,
   },
   upload: {
     staticDir: 'media',
@@ -14,6 +18,10 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'caption',
+      type: 'text',
     },
   ],
 }

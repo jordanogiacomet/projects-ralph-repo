@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { anyone, isAdminOrEditor } from '@/access'
 import { formatSlugHook } from '@/hooks/formatSlug'
 
-export const Pages: CollectionConfig = {
-  slug: 'pages',
+export const Posts: CollectionConfig = {
+  slug: 'posts',
   admin: {
     useAsTitle: 'title',
   },
@@ -32,50 +32,46 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'heroType',
-      type: 'select',
-      defaultValue: 'fullscreen',
-      options: [
-        { label: 'Fullscreen', value: 'fullscreen' },
-        { label: 'Small', value: 'small' },
-        { label: 'None', value: 'none' },
-      ],
+      name: 'excerpt',
+      type: 'textarea',
     },
     {
-      name: 'heroTitle',
-      type: 'richText',
-    },
-    {
-      name: 'heroSubtitle',
-      type: 'text',
-    },
-    {
-      name: 'heroImage',
+      name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
     },
     {
-      name: 'heroCTALabel',
+      name: 'content',
+      type: 'richText',
+    },
+    {
+      name: 'categories',
       type: 'text',
+      hasMany: true,
     },
     {
-      name: 'heroCTALink',
-      type: 'text',
-    },
-    {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [],
-    },
-    {
-      name: 'parent',
+      name: 'author',
       type: 'relationship',
-      relationTo: 'pages',
+      relationTo: 'users',
     },
     {
-      name: 'showContactForm',
-      type: 'checkbox',
-      defaultValue: false,
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'draft',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       type: 'group',

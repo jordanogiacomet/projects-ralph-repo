@@ -1,0 +1,966 @@
+{
+  "projectName": "apollo-gestao-website",
+  "branchName": "main",
+  "description": "Recriação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações e controle patrimonial. Migração de WordPress para Payload CMS 3.x integrado ao Next.js 14+ (App Router). O objetivo é replicar fielmente a estrutura, navegação e conteúdo do site atual como base, permitindo personalização posterior. Site multi-página com hero fullscreen, mega menu de soluções, grid de clientes com filtro por segmento, blog/news, formulários de contato e cotação, e footer com dados de 3 unidades (RS, SC, SP).",
+  "techStack": [
+    "Next.js 14+ (App Router)",
+    "TypeScript",
+    "Payload CMS 3.x",
+    "PostgreSQL",
+    "Tailwind CSS 3.x",
+    "React Hook Form",
+    "Framer Motion"
+  ],
+  "designDirection": {
+    "aesthetic": "Corporativo moderno — visual profissional e sóbrio, inspirado no site atual da Apollo Gestão. Fundo claro, tipografia hierárquica, blocos de conteúdo com ícones ilustrativos, seções com hero fullscreen em fundo escuro com overlay. Tons predominantes de azul escuro e branco.",
+    "colorPalette": {
+      "--bg-primary": "#FFFFFF",
+      "--bg-secondary": "#F5F7FA",
+      "--bg-dark-section": "#1A1A2E",
+      "--bg-hero-overlay": "rgba(0,0,0,0.55)",
+      "--text-primary": "#1A1A1A",
+      "--text-secondary": "#555555",
+      "--text-on-dark": "#FFFFFF",
+      "--accent": "#0056A6",
+      "--accent-hover": "#003D7A",
+      "--accent-light": "#E8F0FE",
+      "--border": "#E0E0E0",
+      "--cta-green": "#28A745",
+      "--cta-green-hover": "#1E7E34"
+    },
+    "typography": {
+      "display": "Font similar ao site atual — sans-serif bold para títulos hero com palavras destacadas em bold/italic (ex: 'Gerenciamento **inteligente** dos ativos')",
+      "body": "Sans-serif clean (Inter, Open Sans ou similar) para corpo de texto, navegação e labels",
+      "accent": "Variante italic do display font para destaques dentro de títulos"
+    },
+    "designPrinciples": [
+      "Corporativo e confiável — visual que transmite seriedade e expertise no segmento patrimonial",
+      "Hero fullscreen com imagem de fundo e overlay escuro em cada página principal",
+      "Mega menu dropdown organizado por 3 categorias de soluções com subcategorias",
+      "Grid de cards com ícones ilustrativos para listar serviços e soluções",
+      "Formulário de contato presente no footer de todas as páginas",
+      "Dados das 3 unidades (RS, SC, SP) sempre visíveis no footer",
+      "Barra de redes sociais (Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X) no header e footer",
+      "Botão flutuante do WhatsApp para contato rápido",
+      "Cookie consent banner",
+      "SEO-friendly com meta tags e slugs descritivos em português",
+      "Scroll-to-top button",
+      "Busca global no site"
+    ]
+  },
+  "folderStructure": {
+    "src/app/(frontend)/": [
+      "layout.tsx — Layout principal com Navbar, Footer, WhatsApp float, CookieConsent",
+      "page.tsx — Homepage",
+      "sobre/page.tsx — Página Sobre",
+      "solucoes/page.tsx — Hub de Soluções com grid filtrado",
+      "solucoes/[categorySlug]/page.tsx — Hub de categoria (Controle, Consultoria, Avaliação)",
+      "solucoes/[categorySlug]/[solutionSlug]/page.tsx — Página individual de solução",
+      "clientes/page.tsx — Grid de clientes com filtro por segmento",
+      "contato/page.tsx — Página de contato geral",
+      "contato/cotacao/page.tsx — Formulário de cotação avançado",
+      "contato/representante/page.tsx — Formulário para representantes",
+      "conteudos/page.tsx — Hub de conteúdos (e-books, planilhas)",
+      "conteudos/[slug]/page.tsx — Página individual de conteúdo/download",
+      "news/page.tsx — Listagem de posts do blog",
+      "news/[slug]/page.tsx — Post individual do blog"
+    ],
+    "src/app/(payload)/": [
+      "admin/[[...segments]]/page.tsx — Painel admin do Payload",
+      "api/[...slug]/route.ts — API routes do Payload"
+    ],
+    "src/collections/": [
+      "Pages.ts",
+      "Posts.ts",
+      "Solucoes.ts",
+      "SolucaoCategories.ts",
+      "Clientes.ts",
+      "ClienteSegmentos.ts",
+      "Conteudos.ts",
+      "Media.ts",
+      "Users.ts",
+      "FormSubmissions.ts",
+      "NewsletterSubscribers.ts"
+    ],
+    "src/globals/": [
+      "Header.ts — Logo, nav links, social links, CTA button",
+      "Footer.ts — Dados das 3 unidades, redes sociais, copyright",
+      "SiteSettings.ts — WhatsApp number, cookie text, analytics ID, SEO defaults"
+    ],
+    "src/blocks/": [
+      "HeroBlock.ts — Hero fullscreen com título, subtítulo e imagem de fundo",
+      "RichContentBlock.ts — Bloco de conteúdo rico (rich text editor)",
+      "ServiceCardsBlock.ts — Grid de cards de serviço com ícone + título + link",
+      "CTABlock.ts — Bloco de call-to-action com botão",
+      "AccordionBlock.ts — Bloco de FAQ/acordeão expansível",
+      "TestimonialsBlock.ts — Bloco de depoimentos (futuro)",
+      "StatsBlock.ts — Bloco de números/estatísticas",
+      "ContactFormBlock.ts — Formulário de contato embutido",
+      "ImageTextBlock.ts — Imagem + texto lado a lado",
+      "ClientLogosBlock.ts — Grid de logos de clientes",
+      "VideoBlock.ts — Embed de vídeo do YouTube",
+      "DownloadBlock.ts — Bloco de download de material (e-book, planilha)"
+    ],
+    "src/components/": [
+      "Navbar.tsx",
+      "MegaMenu.tsx",
+      "MobileMenu.tsx",
+      "Footer.tsx",
+      "FooterContactForm.tsx",
+      "FooterUnidades.tsx",
+      "HeroSection.tsx",
+      "ServiceCard.tsx",
+      "ClientGrid.tsx",
+      "ClientFilterTabs.tsx",
+      "PostCard.tsx",
+      "PostList.tsx",
+      "Pagination.tsx",
+      "Breadcrumbs.tsx",
+      "SearchOverlay.tsx",
+      "WhatsAppFloat.tsx",
+      "CookieConsent.tsx",
+      "ScrollToTop.tsx",
+      "NewsletterForm.tsx",
+      "SolutionGrid.tsx",
+      "SolutionFilterTabs.tsx",
+      "CotacaoForm.tsx",
+      "RepresentanteForm.tsx",
+      "ContatoForm.tsx",
+      "SocialLinks.tsx",
+      "MissaoVisaoValores.tsx",
+      "SEOHead.tsx",
+      "RichTextRenderer.tsx",
+      "BlockRenderer.tsx"
+    ],
+    "src/lib/": [
+      "payload.ts — Payload client config",
+      "queries.ts — Funções de fetch para collections e globals",
+      "utils.ts — Helpers gerais",
+      "constants.ts — Constantes do projeto (social links, unidades, etc.)"
+    ],
+    "public/": [
+      "images/ — Imagens estáticas (logos, ícones de soluções)",
+      "fonts/ — Fontes locais se necessário"
+    ]
+  },
+  "payloadCollections": {
+    "Pages": {
+      "description": "Páginas estáticas e dinâmicas do site (Home, Sobre, Contato, etc.)",
+      "fields": {
+        "title": "text (required) — Título da página",
+        "slug": "text (unique, auto-generated) — Slug da URL",
+        "heroType": "select [fullscreen, banner, none] — Tipo de hero da página",
+        "heroTitle": "richText — Título do hero com suporte a bold/destaque",
+        "heroSubtitle": "text — Subtítulo do hero",
+        "heroImage": "upload (Media) — Imagem de fundo do hero",
+        "heroCTALabel": "text — Texto do botão CTA no hero",
+        "heroCTALink": "text — Link do botão CTA",
+        "layout": "blocks[] — Array de blocos de conteúdo (layout builder)",
+        "parent": "relationship (Pages) — Página pai para URLs aninhadas",
+        "showContactForm": "checkbox — Exibir formulário de contato na seção do footer",
+        "meta": "group { title: text, description: textarea, image: upload } — SEO"
+      }
+    },
+    "Posts": {
+      "description": "Artigos do blog/news. Estrutura vazia inicial, sem migração do WordPress.",
+      "fields": {
+        "title": "text (required) — Título do post",
+        "slug": "text (unique) — Slug para URL",
+        "excerpt": "textarea — Resumo para listagem e SEO",
+        "featuredImage": "upload (Media) — Imagem destacada",
+        "content": "richText — Conteúdo completo do artigo (Lexical editor)",
+        "categories": "relationship[] (PostCategories) — Categorias",
+        "author": "text — Nome do autor",
+        "publishedAt": "date — Data de publicação",
+        "status": "select [draft, published] — Status de publicação",
+        "meta": "group { title, description, image } — SEO"
+      }
+    },
+    "Solucoes": {
+      "description": "Serviços/soluções oferecidos pela Apollo Gestão. Total de 14 serviços em 3 categorias.",
+      "fields": {
+        "title": "text (required) — Nome da solução",
+        "slug": "text (unique) — Slug para URL",
+        "icon": "upload (Media) — Ícone ilustrativo (PNG/SVG)",
+        "shortDescription": "textarea — Descrição curta para cards no grid",
+        "content": "richText/blocks — Conteúdo completo da página de solução",
+        "category": "relationship (SolucaoCategories) — Categoria pai",
+        "tags": "relationship[] (SolucaoTags) — Tags para filtro no grid de soluções",
+        "order": "number — Ordem de exibição no grid",
+        "meta": "group { title, description, image } — SEO"
+      }
+    },
+    "SolucaoCategories": {
+      "description": "Categorias de soluções: Controle Patrimonial, Consultoria e Tecnologia, Avaliação Patrimonial",
+      "fields": {
+        "title": "text (required)",
+        "slug": "text (unique)",
+        "description": "textarea",
+        "heroTitle": "richText",
+        "heroImage": "upload (Media)",
+        "order": "number"
+      }
+    },
+    "Clientes": {
+      "description": "Logos e dados dos clientes da Apollo. Atualmente ~130+ clientes no site.",
+      "fields": {
+        "name": "text (required) — Nome do cliente",
+        "logo": "upload (Media) — Logo do cliente",
+        "segmento": "relationship (ClienteSegmentos) — Segmento de atuação",
+        "website": "text — URL do site do cliente (opcional)",
+        "order": "number — Ordem de exibição"
+      }
+    },
+    "ClienteSegmentos": {
+      "description": "Segmentos de atuação dos clientes para filtro (Agrícola, Alimentação, Tecnologia, etc.)",
+      "fields": {
+        "title": "text (required) — Nome do segmento",
+        "slug": "text (unique)"
+      },
+      "seedData": [
+        "Agência",
+        "Agrícola",
+        "Alimentação",
+        "Armas e Acessórios",
+        "Autopeças",
+        "Cerâmica",
+        "Combustível",
+        "Construção",
+        "Educação",
+        "Eletrodomésticos",
+        "Eletrônicos",
+        "Energia",
+        "Esportes",
+        "Eventos",
+        "Governo",
+        "Hotel",
+        "Implementos Agrícolas",
+        "Logística",
+        "Metalurgia",
+        "Móveis",
+        "Papel e Celulose",
+        "Polímeros",
+        "Químicos",
+        "Rodovias",
+        "Saúde",
+        "Serviços Financeiros",
+        "Tecnologia",
+        "Transporte",
+        "Utensílios Domésticos",
+        "Varejo",
+        "Vestuário",
+        "Vidros"
+      ]
+    },
+    "Conteudos": {
+      "description": "Materiais para download (e-books, planilhas, guias).",
+      "fields": {
+        "title": "text (required)",
+        "slug": "text (unique)",
+        "description": "textarea",
+        "featuredImage": "upload (Media)",
+        "downloadFile": "upload (Media) — Arquivo para download (PDF, XLSX)",
+        "requiresEmail": "checkbox — Exigir e-mail para download (lead capture)",
+        "content": "richText — Descrição completa / landing page do material",
+        "meta": "group { title, description, image } — SEO"
+      },
+      "initialItems": [
+        {
+          "title": "[EBOOK Gratuito] Guia da Identificação Patrimonial",
+          "slug": "ebook-identificacao-patrimonial"
+        },
+        {
+          "title": "Planilha de Cálculo da Vida Útil de Imobilizado – CPC 27",
+          "slug": "planilha-de-calculo-da-vida-util-de-imobilizado-cpc-27"
+        }
+      ]
+    },
+    "Media": {
+      "description": "Uploads de imagens e arquivos para todo o site.",
+      "fields": {
+        "alt": "text — Texto alternativo para acessibilidade",
+        "caption": "text — Legenda opcional"
+      }
+    },
+    "Users": {
+      "description": "Usuários do painel admin do Payload.",
+      "fields": {
+        "email": "email (required)",
+        "name": "text",
+        "role": "select [admin, editor]"
+      }
+    },
+    "FormSubmissions": {
+      "description": "Registros de envios de formulários (contato, cotação, representante). Abordagem de envio a definir posteriormente.",
+      "fields": {
+        "formType": "select [contato, cotacao, representante, newsletter]",
+        "data": "json — Dados do formulário",
+        "submittedAt": "date",
+        "status": "select [new, read, replied]"
+      }
+    },
+    "NewsletterSubscribers": {
+      "description": "E-mails cadastrados na newsletter (seção News).",
+      "fields": {
+        "email": "email (required, unique)",
+        "subscribedAt": "date"
+      }
+    }
+  },
+  "payloadGlobals": {
+    "Header": {
+      "fields": {
+        "logo": "upload (Media) — Logo principal (colorido)",
+        "logoNegativo": "upload (Media) — Logo negativo (para hero escuro)",
+        "navItems": "array [{ label: text, link: text, children: array [{ label, link, children }] }]",
+        "ctaButton": "group { label: text, link: text }",
+        "socialLinks": "array [{ platform: select, url: text }]"
+      }
+    },
+    "Footer": {
+      "fields": {
+        "unidades": "array [{ name: text, phone: text, email: email, address: richText }]",
+        "copyrightText": "text",
+        "socialLinks": "array [{ platform: select, url: text }]"
+      }
+    },
+    "SiteSettings": {
+      "fields": {
+        "whatsappNumber": "text — Número do WhatsApp com DDI",
+        "whatsappMessage": "text — Mensagem padrão do WhatsApp",
+        "cookieConsentText": "richText — Texto do banner de cookies",
+        "defaultMeta": "group { title, description, image } — SEO padrão",
+        "analyticsId": "text — ID do Google Analytics ou similar",
+        "maintenanceMode": "checkbox"
+      }
+    }
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Setup do projeto Next.js + Payload CMS",
+      "passes": true,
+      "description": "Configurar o projeto base com Next.js 14+ (App Router), Payload CMS 3.x integrado, TypeScript, Tailwind CSS, PostgreSQL e estrutura de diretórios.",
+      "acceptanceCriteria": [
+        "Projeto criado com create-payload-app usando template Next.js",
+        "Next.js 14+ com App Router configurado e rodando",
+        "Payload CMS 3.x integrado ao Next.js (não standalone)",
+        "PostgreSQL configurado como database adapter via @payloadcms/db-postgres",
+        "TypeScript strict mode habilitado",
+        "Tailwind CSS 3.x instalado e configurado com tokens de cor do design direction (--bg-primary, --accent, etc.)",
+        "Estrutura de pastas criada conforme folderStructure do PRD",
+        "Painel admin do Payload acessível em /admin",
+        "Variáveis de ambiente configuradas: DATABASE_URI, PAYLOAD_SECRET, NEXT_PUBLIC_SERVER_URL",
+        "ESLint e Prettier configurados",
+        "Git inicializado com .gitignore adequado (node_modules, .env, .next, media/)",
+        "Script de seed básico criado (vazio, para uso futuro)",
+        "Build rodando sem erros: npm run build && npm run dev"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Collections e Globals do Payload CMS",
+      "passes": true,
+      "description": "Criar todas as collections (Pages, Posts, Solucoes, SolucaoCategories, Clientes, ClienteSegmentos, Conteudos, Media, Users, FormSubmissions, NewsletterSubscribers) e globals (Header, Footer, SiteSettings) conforme modelagem do PRD.",
+      "acceptanceCriteria": [
+        "Collection Pages criada com todos os campos: title, slug (auto-generated), heroType, heroTitle (richText), heroSubtitle, heroImage, heroCTALabel, heroCTALink, layout (blocks), parent, showContactForm, meta group",
+        "Collection Posts criada com: title, slug, excerpt, featuredImage, content (Lexical richText), categories, author, publishedAt, status (draft/published), meta group",
+        "Collection Solucoes criada com: title, slug, icon, shortDescription, content, category (relationship), tags, order, meta group",
+        "Collection SolucaoCategories criada com: title, slug, description, heroTitle, heroImage, order",
+        "Collection Clientes criada com: name, logo, segmento (relationship), website, order",
+        "Collection ClienteSegmentos criada com: title, slug. Seed data com os 32 segmentos listados no PRD",
+        "Collection Conteudos criada com: title, slug, description, featuredImage, downloadFile, requiresEmail, content, meta group",
+        "Collection Media com campos alt e caption, configurada para uploads de imagem e arquivo",
+        "Collection Users com auth habilitada, campos email, name, role (admin/editor)",
+        "Collection FormSubmissions com: formType, data (json), submittedAt, status",
+        "Collection NewsletterSubscribers com: email (unique), subscribedAt",
+        "Global Header com: logo, logoNegativo, navItems (nested array), ctaButton, socialLinks",
+        "Global Footer com: unidades (array), copyrightText, socialLinks",
+        "Global SiteSettings com: whatsappNumber, whatsappMessage, cookieConsentText, defaultMeta, analyticsId, maintenanceMode",
+        "Todas as collections acessíveis e funcionais no painel admin /admin",
+        "Access control básico: admin full access, editor pode criar/editar Posts e Solucoes",
+        "Hooks de auto-generate slug a partir do title em Pages, Posts, Solucoes, Conteudos"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Blocos de layout (Payload Blocks)",
+      "passes": false,
+      "description": "Criar todos os blocos reutilizáveis de conteúdo que serão usados no campo layout das Pages e em outras collections.",
+      "acceptanceCriteria": [
+        "HeroBlock criado com campos: title (richText), subtitle (text), backgroundImage (upload), ctaLabel (text), ctaLink (text), overlayOpacity (number)",
+        "RichContentBlock criado com: content (richText Lexical)",
+        "ServiceCardsBlock criado com: heading (text), cards (array [{ icon: upload, title: text, description: textarea, link: text }])",
+        "CTABlock criado com: heading (text), description (text), buttonLabel (text), buttonLink (text), variant (select: primary/secondary/outline)",
+        "AccordionBlock criado com: heading (text), items (array [{ question: text, answer: richText }])",
+        "StatsBlock criado com: items (array [{ value: text, label: text }])",
+        "ContactFormBlock criado com: heading (text), description (text), formType (select: contato/cotacao)",
+        "ImageTextBlock criado com: image (upload), content (richText), imagePosition (select: left/right)",
+        "ClientLogosBlock criado com: heading (text), maxItems (number), filterable (checkbox)",
+        "VideoBlock criado com: url (text), caption (text)",
+        "DownloadBlock criado com: heading (text), description (text), file (upload), requiresEmail (checkbox)",
+        "BlockRenderer component criado em src/components/ que renderiza cada bloco por blockType",
+        "Todos os blocos disponíveis no campo layout da collection Pages",
+        "Preview funcional de cada bloco no admin do Payload (Live Preview se possível)"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "Layout global: Navbar com Mega Menu",
+      "passes": false,
+      "description": "Criar o layout principal do site com Navbar fixa, mega menu dropdown de soluções, busca, redes sociais, menu mobile hamburger e versão transparente sobre hero.",
+      "acceptanceCriteria": [
+        "Navbar fixa no topo com z-index alto, ocupando largura total",
+        "Logo Apollo Gestão à esquerda (versão colorida por padrão, versão negativa quando sobre hero escuro)",
+        "Itens de navegação: Cotação (CTA destaque), Soluções (com mega menu), Clientes, Contato (com sub-itens), Sobre, Conteúdos, News, Home",
+        "Mega menu de Soluções com 3 colunas: Controle Patrimonial (4 sub-itens), Consultoria e Tecnologia (6 sub-itens), Avaliação Patrimonial (4 sub-itens)",
+        "Mega menu abre em hover no desktop e em tap no mobile",
+        "Sub-menu de Contato com: Cotação e Representante",
+        "Ícone de busca que abre overlay de pesquisa fullscreen",
+        "Barra de redes sociais (Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X) abaixo ou ao lado da nav",
+        "Navbar transparente com texto branco quando sobre hero fullscreen",
+        "Navbar com fundo branco e backdrop-blur quando rola para baixo (scroll > 50px)",
+        "Menu mobile hamburger com animação de abertura, lista completa de itens com acordeão para sub-menus",
+        "Dados de navegação vindos do Global Header do Payload",
+        "Componentes: Navbar.tsx, MegaMenu.tsx, MobileMenu.tsx, SocialLinks.tsx, SearchOverlay.tsx",
+        "Acessibilidade: aria-labels, keyboard navigation, focus trap no menu mobile",
+        "Responsivo: desktop (mega menu), tablet (dropdown simplificado), mobile (hamburger)"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "Layout global: Footer com formulário e unidades",
+      "passes": false,
+      "description": "Criar o footer global presente em todas as páginas com formulário de contato, dados das 3 unidades (RS, SC, SP), redes sociais, copyright, scroll-to-top e cookie consent.",
+      "acceptanceCriteria": [
+        "Footer dividido em duas grandes áreas: formulário de contato à esquerda e dados das unidades à direita",
+        "Seção 'Entre em contato' com formulário inline: Nome, E-Mail, Assunto, Mensagem — todos required",
+        "Imagem ilustrativa ao lado do formulário (como no site atual)",
+        "3 blocos de unidade: UNIDADE RS (Caxias do Sul), UNIDADE SC (Joinville), UNIDADE SP (São Paulo) — cada um com telefone, e-mail e endereço completo",
+        "Barra de copyright: '© Copyright - Apollo Gestão Empreendedora - [ano dinâmico]'",
+        "Ícones de redes sociais no footer: Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X",
+        "Botão Scroll-to-top fixo no canto inferior direito, aparece após scroll > 300px",
+        "Cookie consent banner na primeira visita: texto sobre cookies com botões Aceitar/Ocultar/Configurações",
+        "Botão flutuante do WhatsApp (canto inferior direito, acima do scroll-to-top)",
+        "Todos os dados vindos dos Globals Footer e SiteSettings do Payload",
+        "Componentes: Footer.tsx, FooterContactForm.tsx, FooterUnidades.tsx, ScrollToTop.tsx, CookieConsent.tsx, WhatsAppFloat.tsx",
+        "Responsivo: unidades empilham verticalmente no mobile, formulário full-width"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "Homepage",
+      "passes": false,
+      "description": "Criar a homepage replicando a estrutura do site atual: hero fullscreen com título e CTA, 3 cards de serviço (Avaliações, Controle, Consultoria), seção 'Seu parceiro em Gestão Patrimonial', seção 'Quem é a Apollo' com vídeo/imagem e link para Sobre.",
+      "acceptanceCriteria": [
+        "Hero fullscreen (100vh) com imagem de fundo, overlay escuro e scroll-down indicator",
+        "Título do hero com destaque em bold: 'Gerenciamento **inteligente** dos ativos da sua empresa. **Avaliações e Controle Patrimonial** de verdade'",
+        "Subtítulo: 'Daqui para frente **conte** com a **Apollo Gestão**'",
+        "Scroll-down chevron animado na base do hero",
+        "Seção com 3 cards de serviço abaixo do hero: Avaliações Patrimoniais, Controle Patrimonial, Consultoria e Tecnologia — cada um com ícone/imagem, descrição curta e link 'Detalhes'",
+        "Seção 'Seu parceiro em Gestão Patrimonial' com texto descritivo e botão 'Quero um orçamento' linkando para /contato/cotacao",
+        "Seção 'Quem é a Apollo? O que nós fazemos?' com texto descritivo e botão 'Saiba mais...' linkando para /sobre",
+        "Todo conteúdo gerenciável via Payload (Page com layout blocks ou campos específicos de homepage)",
+        "Framer Motion: fade-in nos cards, parallax sutil no hero background",
+        "Responsive: cards empilham no mobile, hero mantém proporção legível"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "Página Sobre",
+      "passes": false,
+      "description": "Criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores.",
+      "acceptanceCriteria": [
+        "Hero fullscreen com título: 'Conheça a história da **Apollo Gestão**'",
+        "Subtítulo: 'Se quiser ir rápido, vá sozinho, **se quiser ir longe, vá acompanhado**'",
+        "Seção 'Origem…' com texto sobre a inspiração no Deus Apollo e a expressão GE (Gestão Empreendedora)",
+        "Bloco de citação estilizado com referência à mitologia de Apollo",
+        "Seção 'História…' com texto sobre o propósito e diferencial da empresa",
+        "Slider/Carousel com 3 slides: Missão, Visão, Valores — cada um com título, texto descritivo e imagem de fundo. Navegação por setas e indicadores (dots)",
+        "Seção 'Fique em contato' com botão linkando para /contato",
+        "Conteúdo gerenciável via Payload (Page ou campos dedicados)",
+        "Responsive: slider em fullwidth no mobile com swipe"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "Página Hub de Soluções",
+      "passes": false,
+      "description": "Criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag.",
+      "acceptanceCriteria": [
+        "Hero com título: 'Nós temos a **solução completa** para o gerenciamento de ativos'",
+        "Texto descritivo sobre as soluções da Apollo Gestão",
+        "Grid de 14 cards de solução com: ícone ilustrativo, título e link para a página individual",
+        "Barra de filtros horizontais por tags: Todos (14), Avaliação Patrimonial (4), Controle Patrimonial (4), Consultoria e IFRS (4), Tecnologia (2), etc. — com contadores",
+        "Filtro client-side via React state (sem reload de página)",
+        "Animação de fade ao filtrar (Framer Motion AnimatePresence)",
+        "Cards linkam para /solucoes/[categorySlug]/[solutionSlug]",
+        "Formulário de contato inline abaixo do grid",
+        "Seção 'Fique em contato' acima do footer",
+        "Dados vindos da collection Solucoes do Payload",
+        "Responsive: grid 4 cols desktop, 2 cols tablet, 1 col mobile"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "Página Hub de Categoria — Controle Patrimonial",
+      "passes": false,
+      "description": "Criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
+      "acceptanceCriteria": [
+        "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",
+        "Subtítulo sobre oferecer as melhores soluções de forma completa",
+        "Grid de 4 cards: Identificação Patrimonial, Inventário de Estoques, Organização Patrimonial, Processamento Patrimonial — cada um com ícone e link",
+        "Seção 'Fique em contato' com texto sobre Controle Patrimonial e formulário",
+        "Dados vindos da collection SolucaoCategories + Solucoes filtradas",
+        "Responsive: grid 2 cols tablet, 1 col mobile"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "Página Hub de Categoria — Consultoria e Tecnologia",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria.",
+      "acceptanceCriteria": [
+        "Hero fullscreen com título específico de Consultoria e Tecnologia",
+        "Grid de 6 cards: Teste de Impairment, Revisão da Vida Útil, Ativos Inteligentes RFID/RTLS, Arrendamento Mercantil, Combinação de Negócios, Softwares",
+        "Cada card com ícone ilustrativo, título e link para página individual",
+        "Seção de contato e formulário inline",
+        "Dados do Payload filtrados por categoria",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-011",
+      "title": "Página Hub de Categoria — Avaliação Patrimonial",
+      "passes": false,
+      "description": "Criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
+      "acceptanceCriteria": [
+        "Hero fullscreen com título específico de Avaliação Patrimonial",
+        "Grid de 4 cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas",
+        "Cada card com ícone, título e link",
+        "Seção de contato e formulário",
+        "Dados do Payload",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-012",
+      "title": "Subpágina de Solução — Organização Patrimonial",
+      "passes": false,
+      "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Organização Patrimonial'",
+        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Organização Patrimonial",
+        "Conteúdo rico gerenciável via Payload (richText blocks)",
+        "CTA para cotação: botão 'Solicitar Cotação' linkando para /contato/cotacao",
+        "Links para outras soluções da mesma categoria (navegação lateral ou cards 'Veja também')",
+        "Formulário de contato no footer",
+        "SEO meta tags específicas da solução",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-013",
+      "title": "Subpágina de Solução — Controle e Inventário de Estoques",
+      "passes": false,
+      "description": "Criar a página /solucoes/controle-patrimonial/controle-e-inventario-de-estoques/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Controle e Inventário de Estoques'",
+        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Controle e Inventário de Estoques",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-014",
+      "title": "Subpágina de Solução — Processamento Patrimonial",
+      "passes": false,
+      "description": "Criar a página /solucoes/controle-patrimonial/processamento-patrimonial/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Processamento Patrimonial'",
+        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Processamento Patrimonial",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-015",
+      "title": "Subpágina de Solução — Etiquetas Patrimoniais Inteligentes",
+      "passes": false,
+      "description": "Criar a página /solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Etiquetas Patrimoniais Inteligentes'",
+        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Etiquetas Patrimoniais Inteligentes",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-016",
+      "title": "Subpágina de Solução — Teste de Impairment",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/teste-de-impairment/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Teste de Impairment'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Teste de Impairment",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-017",
+      "title": "Subpágina de Solução — Revisão da Vida Útil",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/revisao-da-vida-util/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Revisão da Vida Útil'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Revisão da Vida Útil",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-018",
+      "title": "Subpágina de Solução — Ativos Inteligentes RFID e RTLS",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Ativos Inteligentes RFID e RTLS'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Ativos Inteligentes RFID e RTLS",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-019",
+      "title": "Subpágina de Solução — Arrendamento Mercantil (CPC 06 / IFRS 16)",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/arrendamento-mercantil/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Arrendamento Mercantil – CPC 06 (IFRS 16)'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Arrendamento Mercantil",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-020",
+      "title": "Subpágina de Solução — Combinação de Negócios (PPA) – CPC 15",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Combinação de Negócios (PPA) – CPC 15'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Combinação de Negócios",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-021",
+      "title": "Subpágina de Solução — Softwares",
+      "passes": false,
+      "description": "Criar a página /solucoes/consultoria-e-tecnologia/softwares/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Softwares'",
+        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Softwares",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-022",
+      "title": "Subpágina de Solução — Avaliação de Ativos",
+      "passes": false,
+      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Avaliação de Ativos'",
+        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-023",
+      "title": "Subpágina de Solução — Avaliação de Ativos Biológicos",
+      "passes": false,
+      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Avaliação de Ativos Biológicos'",
+        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos Biológicos",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-024",
+      "title": "Subpágina de Solução — Avaliação de Imóveis Urbanos e Rurais",
+      "passes": false,
+      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Avaliação de Imóveis Urbanos e Rurais'",
+        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Imóveis Urbanos e Rurais",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-025",
+      "title": "Subpágina de Solução — Avaliação de Máquinas",
+      "passes": false,
+      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/ seguindo o template de solução.",
+      "acceptanceCriteria": [
+        "Hero banner com título 'Avaliação de Máquinas'",
+        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Máquinas",
+        "Conteúdo rico via Payload",
+        "CTA para cotação",
+        "Links para soluções relacionadas",
+        "SEO e responsive"
+      ]
+    },
+    {
+      "id": "US-026",
+      "title": "Página de Clientes com filtro por segmento",
+      "passes": false,
+      "description": "Criar a página /clientes com grid de logos de clientes e filtro horizontal por segmento de atuação (~32 categorias, ~130+ clientes).",
+      "acceptanceCriteria": [
+        "Hero com título: 'Conheça alguns dos nossos **Principais Clientes**'",
+        "Texto descritivo sobre projetos realizados",
+        "Barra de filtros horizontal com scroll: Todos + 32 segmentos (Agência, Agrícola, Alimentação, etc.)",
+        "Filtro 'Todos' selecionado por padrão, exibindo todos os clientes",
+        "Grid de logos: imagem do logo centralizada em card com fundo branco",
+        "Filtro client-side com React state, animação de fade ao filtrar (Framer Motion)",
+        "Lazy loading das imagens dos logos",
+        "Seção inferior com texto descritivo e formulário de contato inline",
+        "Dados vindos das collections Clientes e ClienteSegmentos do Payload",
+        "Responsive: grid 6 cols desktop, 4 cols tablet, 2 cols mobile. Filtros com scroll horizontal no mobile"
+      ]
+    },
+    {
+      "id": "US-027",
+      "title": "Página de Contato",
+      "passes": false,
+      "description": "Criar a página /contato com formulário principal, dados das unidades e mapa (opcional).",
+      "acceptanceCriteria": [
+        "Hero com título sobre contato",
+        "Formulário de contato: Nome, E-Mail, Assunto, Mensagem — todos required",
+        "Validação client-side com React Hook Form",
+        "Submit behavior: a definir posteriormente (placeholder com estado de sucesso/erro inline)",
+        "Dados das 3 unidades (RS, SC, SP) exibidos ao lado do formulário",
+        "Links para sub-páginas: Cotação e Representante",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-028",
+      "title": "Formulário de Cotação avançado",
+      "passes": false,
+      "description": "Criar a página /contato/cotacao com formulário multi-step de orçamento, similar ao do site atual com seleção de serviço, upload de arquivo e dados de contato.",
+      "acceptanceCriteria": [
+        "Hero com título: '**Orçamento**'",
+        "Subtítulo explicativo pedindo para descrever a demanda",
+        "Seção de seleção de serviço organizada em 3 grupos com checkboxes: Avaliações Patrimoniais (4 opções), Controle Patrimonial (4 opções), Consultoria e IFRS (4 opções)",
+        "Campos adicionais: 'Qual a finalidade?' (textarea com dicas), 'Quantos ativos?' (textarea com dicas), 'Onde será realizado o trabalho?' (textarea)",
+        "Campo de upload de arquivo (texto, excel, word, pdf) com drag-and-drop",
+        "Campos de contato: Nome e E-mail (required)",
+        "Validação client-side completa",
+        "Submit behavior: a definir posteriormente",
+        "Responsive: campos empilham no mobile"
+      ]
+    },
+    {
+      "id": "US-029",
+      "title": "Formulário de Representante",
+      "passes": false,
+      "description": "Criar a página /contato/representante com formulário para representantes comerciais.",
+      "acceptanceCriteria": [
+        "Hero com título sobre se tornar representante",
+        "Formulário com campos relevantes para cadastro de representante",
+        "Validação client-side",
+        "Submit behavior: a definir posteriormente",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-030",
+      "title": "Página de Conteúdos (materiais para download)",
+      "passes": false,
+      "description": "Criar a página /conteudos como hub de materiais gratuitos (e-books, planilhas) e as páginas individuais de cada conteúdo.",
+      "acceptanceCriteria": [
+        "Página /conteudos com listagem de materiais disponíveis: cards com imagem, título e link",
+        "Páginas individuais /conteudos/[slug] com: descrição do material, imagem de capa e botão/formulário de download",
+        "Se requiresEmail estiver ativo no Payload, exibir campo de e-mail antes do download (lead capture)",
+        "2 conteúdos iniciais: E-book de Identificação Patrimonial e Planilha de Vida Útil CPC 27",
+        "Dados vindos da collection Conteudos do Payload",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-031",
+      "title": "Blog/News — listagem e post individual",
+      "passes": false,
+      "description": "Criar a página /news com listagem de posts do blog com paginação, sidebar com busca e link para e-book, e as páginas individuais de cada post.",
+      "acceptanceCriteria": [
+        "Página /news com hero: 'Fique bem informado: **Nossas recentes publicações**'",
+        "Listagem de posts em cards: imagem destacada, título, data, autor e trecho",
+        "Paginação ou botão 'Carregar mais' (load more)",
+        "Sidebar (desktop): campo de busca e banner com link para download do e-book de Identificação Patrimonial",
+        "Seção inferior: formulário de newsletter com campo de e-mail e CTA 'Inscreva-se'",
+        "Páginas individuais /news/[slug]: título, data, autor, imagem, conteúdo rico, compartilhar em redes sociais",
+        "Estrutura vazia inicial (sem posts migrados do WordPress)",
+        "Dados vindos da collection Posts do Payload",
+        "Responsive: sidebar some no mobile, cards empilham"
+      ]
+    },
+    {
+      "id": "US-032",
+      "title": "SEO, meta tags e sitemap",
+      "passes": false,
+      "description": "Configurar SEO completo com meta tags dinâmicas, Open Graph, sitemap.xml e robots.txt.",
+      "acceptanceCriteria": [
+        "Meta tags dinâmicas por página: title, description vindos do campo meta de cada collection",
+        "Fallback para meta tags padrão do Global SiteSettings quando não definidas na página",
+        "Open Graph tags: og:title, og:description, og:image, og:url, og:type",
+        "Twitter Card tags: twitter:card, twitter:title, twitter:description, twitter:image",
+        "Canonical URL em todas as páginas",
+        "Sitemap.xml dinâmico gerado automaticamente com todas as rotas públicas (pages, posts, soluções, conteúdos)",
+        "robots.txt configurado para permitir crawlers e referenciar sitemap",
+        "JSON-LD structured data: Organization, LocalBusiness (3 unidades), BreadcrumbList, Article (posts)",
+        "Hreflang tag pt-BR",
+        "Favicon e apple-touch-icon configurados"
+      ]
+    },
+    {
+      "id": "US-033",
+      "title": "Busca global do site",
+      "passes": false,
+      "description": "Implementar funcionalidade de busca que pesquisa em Pages, Posts, Soluções e Conteúdos.",
+      "acceptanceCriteria": [
+        "Overlay de busca fullscreen ativado pelo ícone de busca na Navbar",
+        "Campo de texto com auto-focus ao abrir",
+        "Busca em tempo real (debounce 300ms) nas collections: Pages, Posts, Solucoes, Conteudos",
+        "Resultados agrupados por tipo com link para a página correspondente",
+        "Estado de loading durante a busca",
+        "Mensagem quando nenhum resultado encontrado",
+        "Fechar com Escape ou clique fora",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "US-034",
+      "title": "Seed de dados iniciais",
+      "passes": false,
+      "description": "Criar script de seed para popular o Payload CMS com os dados iniciais do site: categorias de soluções, soluções, segmentos de clientes, globals e páginas base.",
+      "acceptanceCriteria": [
+        "Script seed.ts executável via npm run seed",
+        "Seed das 3 SolucaoCategories: Controle Patrimonial, Consultoria e Tecnologia, Avaliação Patrimonial",
+        "Seed das 14 Solucoes com título, slug, shortDescription e category corretos",
+        "Seed dos 32 ClienteSegmentos",
+        "Seed do Global Header com navegação completa e redes sociais",
+        "Seed do Global Footer com dados das 3 unidades",
+        "Seed do Global SiteSettings com WhatsApp, cookie text e SEO defaults",
+        "Seed das Pages básicas: Home, Sobre, Contato, Cotação, Representante, Conteúdos",
+        "Seed dos 2 Conteudos iniciais (e-book e planilha)",
+        "Script idempotente (verifica se dados já existem antes de inserir)",
+        "Documentado no README como executar"
+      ]
+    },
+    {
+      "id": "US-035",
+      "title": "Performance, acessibilidade e otimização",
+      "passes": false,
+      "description": "Auditoria e otimização de performance, acessibilidade e boas práticas.",
+      "acceptanceCriteria": [
+        "Todas as imagens usando next/image com alt text, sizes e prioridade correta",
+        "Lazy loading em imagens abaixo do fold",
+        "Fontes carregadas via next/font com display swap",
+        "Lighthouse Performance >= 90 desktop, >= 80 mobile",
+        "Lighthouse Accessibility >= 95",
+        "Lighthouse SEO >= 95",
+        "Semantic HTML em todas as páginas: header, nav, main, section, article, footer",
+        "ARIA labels em todos os elementos interativos",
+        "Keyboard navigation funcional em menus, formulários e overlays",
+        "Focus trap no menu mobile e overlay de busca",
+        "Animações Framer Motion respeitam prefers-reduced-motion",
+        "Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1",
+        "Ausência de hydration mismatches"
+      ]
+    },
+    {
+      "id": "US-036",
+      "title": "Deploy e documentação",
+      "passes": false,
+      "description": "Preparar o projeto para deploy e documentar setup, arquitetura e manutenção.",
+      "acceptanceCriteria": [
+        "README.md completo com: visão geral, stack, como rodar local, variáveis de ambiente, como executar seed, como fazer deploy",
+        "Dockerfile para deploy containerizado (opcional, se não for Vercel)",
+        "Configuração de deploy para Vercel com variáveis de ambiente documentadas",
+        "Variáveis de produção: DATABASE_URI, PAYLOAD_SECRET, NEXT_PUBLIC_SERVER_URL, S3 credentials (se usar)",
+        "Configuração de domínio personalizado documentada",
+        "Guia básico de uso do Payload admin para editores (como criar post, editar página, adicionar cliente)",
+        "Backup strategy documentada (PostgreSQL dump + media files)"
+      ]
+    }
+  ],
+  "functionalRequirements": [
+    "FR-01: Next.js 14+ com App Router e React Server Components",
+    "FR-02: Payload CMS 3.x integrado ao Next.js (não standalone, single deploy)",
+    "FR-03: PostgreSQL como banco de dados via @payloadcms/db-postgres",
+    "FR-04: TypeScript strict em todo o projeto",
+    "FR-05: Tailwind CSS 3.x para estilização com tokens de design customizados",
+    "FR-06: Todo conteúdo do site gerenciável via painel admin do Payload em /admin",
+    "FR-07: Layout builder com blocos reutilizáveis para Pages",
+    "FR-08: Mega menu dropdown com 3 categorias de soluções e sub-itens",
+    "FR-09: Formulários de contato, cotação e representante com validação client-side",
+    "FR-10: Grid de clientes com filtro por segmento (~130+ clientes, ~32 segmentos)",
+    "FR-11: Grid de soluções com filtro por tag/categoria (14 soluções)",
+    "FR-12: Blog/news com listagem paginada, busca e newsletter",
+    "FR-13: Busca global em Pages, Posts, Soluções e Conteúdos",
+    "FR-14: SEO dinâmico: meta tags, OG, sitemap.xml, robots.txt, JSON-LD",
+    "FR-15: Responsivo em desktop, tablet e mobile",
+    "FR-16: Framer Motion para animações de entrada e parallax; CSS transitions para hover/micro-interações",
+    "FR-17: Cookie consent banner",
+    "FR-18: Botão flutuante do WhatsApp",
+    "FR-19: Scroll-to-top button",
+    "FR-20: Breadcrumbs nas páginas de soluções e posts",
+    "FR-21: Conteúdos para download com opção de lead capture (e-mail)",
+    "FR-22: Upload de mídia via Payload (local ou S3/R2)",
+    "FR-23: Acessibilidade WCAG 2.1 AA: semantic HTML, ARIA, keyboard nav, focus management, prefers-reduced-motion"
+  ],
+  "nonGoals": [
+    "Migração automática de conteúdo do WordPress atual — o site será recriado do zero com estrutura idêntica",
+    "Migração dos posts existentes do blog — a collection Posts começa vazia",
+    "E-commerce ou processamento de pagamentos",
+    "Área restrita / autenticação de clientes no frontend",
+    "Integração com ERP ou sistemas internos da Apollo",
+    "App mobile nativo",
+    "Multi-idioma / internacionalização (apenas pt-BR)",
+    "Chat ao vivo (além do WhatsApp float)",
+    "A/B testing",
+    "Definição da solução de envio de formulários — será decidida posteriormente pelo responsável do projeto",
+    "Dark mode / toggle de tema"
+  ]
+}
