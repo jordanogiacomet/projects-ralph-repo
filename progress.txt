@@ -192,3 +192,14 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this repository, `npx tsc --noEmit` may depend on generated `.next/types`; run it after a successful Next build path when those files are missing
   - In this sandbox, `next build --debug` can succeed and emit the target route even when plain `npm run build` intermittently exits with worker code `1`
 ---
+## 2026-03-09 19:25 UTC - US-015
+- Implemented `/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/` using the established solution detail template with hero banner, breadcrumb trail (`Home > Soluções > Controle Patrimonial > Etiquetas Patrimoniais Inteligentes`), Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy
+- Added route-level SEO metadata via `generateMetadata` with canonical/Open Graph values sourced from Payload when available and deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after `npm run build`; `npm run build` passed and generated `/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes` (with expected sandbox DB connectivity logs: `getaddrinfo EAI_AGAIN host.docker.internal` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - The solution-detail page template remains reusable across `controle-patrimonial` subpages by changing only route slug, fallback content, and related links
+  - In this repository, `npx tsc --noEmit` can depend on generated `.next/types`; run it after a successful Next build path when those files are absent
+  - Build-time Postgres connection errors may appear in this sandbox while `next build` still exits successfully, so check completion by exit code and generated routes
+---

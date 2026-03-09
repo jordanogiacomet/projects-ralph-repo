@@ -590,7 +590,7 @@
     {
       "id": "US-015",
       "title": "Subpágina de Solução — Etiquetas Patrimoniais Inteligentes",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Etiquetas Patrimoniais Inteligentes'",
