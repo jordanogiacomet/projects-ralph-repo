@@ -702,7 +702,7 @@
     {
       "id": "US-023",
       "title": "Subpágina de Solução — Avaliação de Ativos Biológicos",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Avaliação de Ativos Biológicos'",
