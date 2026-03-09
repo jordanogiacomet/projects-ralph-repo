@@ -632,7 +632,7 @@
     {
       "id": "US-018",
       "title": "Subpágina de Solução — Ativos Inteligentes RFID e RTLS",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Ativos Inteligentes RFID e RTLS'",
