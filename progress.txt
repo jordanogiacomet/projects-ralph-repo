@@ -24,6 +24,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Use framer-motion AnimatePresence for enter/exit animations on conditional renders
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
 - Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
+- Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
 
 ---
 
@@ -731,6 +732,33 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - For contact surfaces, keep form handling in a client component and data fetching/fallback logic in the server route to preserve static-build resilience and interactive validation
   - Gotchas encountered
   - `pages.heroTitle` rich text requires explicit plain-text extraction before rendering in standard hero headings
+- Useful context
+- Reusing footer global `unidades` with fallback merge logic keeps location/contact content consistent across global/footer and dedicated contact page experiences
+---
+## 2026-03-09 23:17 UTC - US-028
+- What was implemented
+- Created `/contato/cotacao` with a hero titled `Orçamento` and explanatory subtitle requesting detailed demand context.
+- Added a new multi-step `CotacaoForm` client component with: 3 grouped service selectors (4 options each), required project-context textareas (`Qual a finalidade?`, `Quantos ativos?`, `Onde será realizado o trabalho?`), drag-and-drop upload field for TXT/XLS/XLSX/DOC/DOCX/PDF, required contact fields (`Nome`, `E-mail`), and inline success/error submit feedback.
+- Implemented client-side validation across steps with React Hook Form and file-type/size checks; form submit posts to `/api/form-submissions` as `formType: 'cotacao'` including validated attachment metadata while full upload handling remains deferred per story scope.
+- Updated `prd.json` to mark `US-028` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/contato/cotacao/page.tsx
+- src/components/CotacaoForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/contato/cotacao`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for step navigation, checkbox validation, drag-and-drop upload, and submit feedback states).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Multi-step forms can remain resilient in this codebase by keeping route-level layout/hero in a server page and interaction-heavy validation in a dedicated client component.
+  - Gotchas encountered
+  - Native file uploads to Payload are out of scope for current form-submission JSON storage; validating file inputs client-side and persisting metadata avoids blocking delivery while preserving user intent.
   - Useful context
-  - Reusing footer global `unidades` with fallback merge logic keeps location/contact content consistent across global/footer and dedicated contact page experiences
+  - Step-gated validation with `trigger([...fields])` in React Hook Form works well for required multi-step flows without introducing extra state libraries.
 ---

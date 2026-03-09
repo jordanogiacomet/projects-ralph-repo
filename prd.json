@@ -777,7 +777,7 @@
     {
       "id": "US-028",
       "title": "Formulário de Cotação avançado",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /contato/cotacao com formulário multi-step de orçamento, similar ao do site atual com seleção de serviço, upload de arquivo e dados de contato.",
       "acceptanceCriteria": [
         "Hero com título: '**Orçamento**'",
