@@ -716,7 +716,7 @@
     {
       "id": "US-024",
       "title": "Subpágina de Solução — Avaliação de Imóveis Urbanos e Rurais",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Avaliação de Imóveis Urbanos e Rurais'",
