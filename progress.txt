@@ -126,3 +126,14 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this sandbox, `next build --debug` can complete when plain `npm run build` intermittently fails with worker-exit noise; keep both results logged for traceability
   - Keeping a static fallback list of canonical soluções preserves acceptance behavior when Payload/Postgres is unreachable during builds
 ---
+## 2026-03-09 18:37 UTC - US-011
+- Implemented `/solucoes/avaliacao-patrimonial/` with fullscreen hero, category-driven content from `solucao-categories`, ordered 4-solution grid from `solucoes`, and inline contact section using `ContatoForm`
+- Added deterministic fallback hero copy and fallback solutions for the four required cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas
+- Files changed: src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/avaliacao-patrimonial` (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages remain stable by combining Payload fetches with deterministic fallback datasets keyed by expected solution slugs
+  - Running `npx tsc --noEmit` before `next build` can fail if `.next/types` artifacts are stale/missing; rerun after `next build` for accurate type validation in this setup
+  - Reusing `SolutionGrid` and `ContatoForm` keeps category hub implementations consistent and scope-focused
+---
