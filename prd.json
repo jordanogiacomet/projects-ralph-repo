@@ -762,7 +762,7 @@
     {
       "id": "US-027",
       "title": "Página de Contato",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /contato com formulário principal, dados das unidades e mapa (opcional).",
       "acceptanceCriteria": [
         "Hero com título sobre contato",

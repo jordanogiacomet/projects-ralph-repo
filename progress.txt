@@ -708,3 +708,29 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Horizontal filter chips with `overflow-x-auto` and an `inline-flex` row preserve usability when segment counts grow (e.g., 30+ categories) without introducing extra JS scrolling logic.
 ---
+## 2026-03-09 23:05 UTC - US-027
+- What was implemented
+- Created `/contato` route with hero section, responsive two-column layout, main contact form, units panel, and explicit links to `/contato/cotacao` and `/contato/representante`
+- Added `ContatoPageForm` client component using React Hook Form with required fields (`Nome`, `E-Mail`, `Assunto`, `Mensagem`), client-side validation, and inline submit success/error feedback
+- Wired server-side data fetch for `pages` (`slug: contato`) and `footer` global, with deterministic fallbacks to keep page rendering stable when Payload/Postgres is unavailable
+- Files changed
+- src/app/(frontend)/contato/page.tsx
+- src/components/ContatoPageForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive)
+- `npx tsc --noEmit` passed
+- `npm run build` passed and generated `/contato` successfully
+- `npm run typecheck` not available (missing script)
+- `npm run test` not available (missing script)
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile form validation states, submission feedback, and layout of unidades + links)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For contact surfaces, keep form handling in a client component and data fetching/fallback logic in the server route to preserve static-build resilience and interactive validation
+  - Gotchas encountered
+  - `pages.heroTitle` rich text requires explicit plain-text extraction before rendering in standard hero headings
+  - Useful context
+  - Reusing footer global `unidades` with fallback merge logic keeps location/contact content consistent across global/footer and dedicated contact page experiences
+---
