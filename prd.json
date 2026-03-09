@@ -604,7 +604,7 @@
     {
       "id": "US-016",
       "title": "Subpágina de Solução — Teste de Impairment",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/teste-de-impairment/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Teste de Impairment'",
