@@ -261,3 +261,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Homepage content is driven by `pages` (`slug: home`) plus `layout` blocks (`serviceCardsBlock`, `ctaBlock`, `videoBlock`, `imageTextBlock`) with deterministic fallbacks when Payload data is unavailable.
 ---
+## 2026-03-09 21:10 UTC - US-007
+- What was implemented
+- Validated the existing `/sobre` implementation against US-007 acceptance criteria (fullscreen hero with required title/subtitle, origem + citação + história sections, Missão/Visão/Valores carousel with arrows/dots/swipe, and `Fique em contato` CTA to `/contato`) and confirmed CMS-manageable content via `pages` (`slug: sobre`) + `layout` blocks.
+- Marked US-007 as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` failed before build due to missing `.next/types` artifacts, then passed after build.
+- `npm run build` passed and generated `/sobre` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile, including slider swipe).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a verification pass when the implementation is already present, as long as acceptance mapping and required checks are fully recorded before flipping `passes`.
+  - Gotchas encountered
+  - In this repository, `npx tsc --noEmit` may fail before a build when `.next/types` entries are absent; rerun type checking after a successful Next build path.
+  - Useful context
+  - The `/sobre` page currently sources CMS content from `pages` hero fields and `layout` blocks (`richContentBlock`, `ctaBlock`, `serviceCardsBlock`) with deterministic fallback copy.
+---
