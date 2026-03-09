@@ -430,7 +430,7 @@
     {
       "id": "US-005",
       "title": "Layout global: Footer com formulário e unidades",
-      "passes": false,
+      "passes": true,
       "description": "Criar o footer global presente em todas as páginas com formulário de contato, dados das 3 unidades (RS, SC, SP), redes sociais, copyright, scroll-to-top e cookie consent.",
       "acceptanceCriteria": [
         "Footer dividido em duas grandes áreas: formulário de contato à esquerda e dados das unidades à direita",

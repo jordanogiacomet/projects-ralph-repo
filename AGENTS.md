@@ -45,3 +45,5 @@ npm run dev
 - Memory persists via git history, `progress.txt`, and `prd.json`
 - Stories should be small enough to complete in one context window
 - Always update AGENTS.md with discovered patterns for future iterations
+- For global UI fed by Payload (e.g., footer/site settings), prefer async server wrapper components for data fetch and small client-only subcomponents for browser APIs (scroll/localStorage/form state)
+- `npm run build` can log non-fatal Postgres connection errors during prerender in sandboxed environments; record this in progress logs, but treat build as passing when exit code is `0`

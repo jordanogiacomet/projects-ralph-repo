@@ -82,3 +82,24 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Focus trap in MobileMenu uses querySelectorAll for focusable elements and Tab key handling
   - Social link SVG icons are inline (no icon library dependency) — platform icons defined in SocialLinks.tsx
 ---
+## 2026-03-09 17:14 UTC - US-005
+- Implemented global footer layout with two main areas: contact form (left) and units/social/copyright (right/bottom), integrated in frontend layout so it appears on all pages
+- Built required components: `Footer.tsx`, `FooterContactForm.tsx`, `FooterUnidades.tsx`, `ScrollToTop.tsx`, `CookieConsent.tsx`, `WhatsAppFloat.tsx`
+- Footer contact form includes required fields (Nome, E-Mail, Assunto, Mensagem) and submits to Payload REST endpoint `/api/form-submissions` as `formType: contato`
+- Added illustrative SVG panel beside the form on desktop to satisfy the visual/image requirement
+- Footer reads `unidades`, `socialLinks`, and `copyrightText` from Footer global; reads `whatsappNumber`, `whatsappMessage`, and `cookieConsentText` from SiteSettings global
+- Added floating WhatsApp CTA (fixed, bottom-right) and scroll-to-top button (appears after `scrollY > 300`), with WhatsApp positioned above scroll-to-top
+- Cookie consent banner implemented for first visit with buttons `Aceitar`, `Ocultar`, and `Configurações`, persisted in `localStorage`
+- Updated AGENTS.md with reusable patterns discovered in this iteration
+- Files changed: `src/app/(frontend)/layout.tsx`, `src/components/Footer.tsx`, `src/components/FooterContactForm.tsx`, `src/components/FooterUnidades.tsx`, `src/components/ScrollToTop.tsx`, `src/components/CookieConsent.tsx`, `src/components/WhatsAppFloat.tsx`, `AGENTS.md`, `prd.json`, `progress.txt`
+- Quality checks run and results:
+  - `npm run lint` ✅ pass (no warnings/errors)
+  - `npx tsc --noEmit` ✅ pass
+  - `npm run build` ✅ pass (exit code 0; sandbox emitted non-fatal Postgres `EPERM 127.0.0.1:5432` log during prerender)
+- Browser/manual verification status:
+  - Manual browser verification not executed in this run
+- **Learnings for future iterations:**
+  - Keep Payload global fetching in async server components and isolate browser-only behavior (`window`, `localStorage`, scroll listeners) in client components
+  - Footer form submissions can reuse the existing Payload REST route (`/api/form-submissions`) without creating a custom API route
+  - In this environment, Next build may print transient DB connection errors even when the build succeeds; rely on process exit code plus lint/type checks
+---
