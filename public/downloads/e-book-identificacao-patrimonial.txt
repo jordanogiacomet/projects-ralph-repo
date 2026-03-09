@@ -1,0 +1,10 @@
+E-book de Identificacao Patrimonial
+Apollo Gestao
+
+Este arquivo e um placeholder de download para o fluxo inicial da pagina /conteudos.
+Substitua por um e-book final no Payload CMS (collection Conteudos > downloadFile) quando o material oficial estiver disponivel.
+
+Resumo:
+- Boas praticas para organizacao de ativos
+- Padronizacao de identificacao e rastreabilidade
+- Apoio a inventarios e conformidade contabil

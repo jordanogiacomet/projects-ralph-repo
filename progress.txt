@@ -25,6 +25,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
 - Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
 - Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
+- Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` and extra context fields in `data` (for example `origem`, `conteudoSlug`) before releasing protected files
 
 ---
 
@@ -788,4 +789,38 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Repository scripts still omit `typecheck` and `test`, so completion reporting must explicitly log them as unavailable while using `npx tsc --noEmit` for type validation.
   - Useful context
   - Posting representative data to `/api/form-submissions` with `formType: 'representante'` aligns directly with existing `FormSubmissions` collection options and requires no schema changes.
+---
+## 2026-03-09 23:34 UTC - US-030
+- What was implemented
+- Implemented `/conteudos` as a CMS-driven materials hub with responsive cards (cover image, title, description, link) sourced from `conteudos` and deterministic fallback items when Payload/DB is unavailable.
+- Implemented dynamic detail pages at `/conteudos/[slug]` with breadcrumb, description, cover image, metadata, and download area.
+- Added email-gated download behavior: when `requiresEmail` is true, a client form captures lead data before releasing the file; when false, direct download is shown.
+- Added the 2 initial fallback materials required by the story: `E-book de Identificacao Patrimonial` and `Planilha de Vida Util CPC 27`, including fallback cover/download assets.
+- Files changed
+- src/app/(frontend)/conteudos/page.tsx
+- src/app/(frontend)/conteudos/[slug]/page.tsx
+- src/components/ContentDownloadPanel.tsx
+- src/lib/conteudos.ts
+- public/images/conteudos/default-cover.svg
+- public/images/conteudos/ebook-identificacao-patrimonial.svg
+- public/images/conteudos/planilha-vida-util-cpc-27.svg
+- public/downloads/e-book-identificacao-patrimonial.txt
+- public/downloads/planilha-vida-util-cpc-27.csv
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/conteudos` and `/conteudos/[slug]` (with existing lint warning only).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile cards, detail layout, and `requiresEmail` gating flow).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Lead-gated asset downloads can reuse `/api/form-submissions` by storing context fields in `data` (e.g., `origem`, `conteudoSlug`) while keeping existing collection structure.
+  - Gotchas encountered
+  - Dynamic content routes should keep deterministic fallback materials to satisfy acceptance behavior when Payload/Postgres is unreachable during static builds.
+  - Useful context
+  - For `conteudos`, `downloadFile` and `featuredImage` are upload relations; treat them as ID-or-object relations and safely read `.url` only when populated.
 ---

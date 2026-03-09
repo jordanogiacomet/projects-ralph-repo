@@ -807,7 +807,7 @@
     {
       "id": "US-030",
       "title": "Página de Conteúdos (materiais para download)",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /conteudos como hub de materiais gratuitos (e-books, planilhas) e as páginas individuais de cada conteúdo.",
       "acceptanceCriteria": [
         "Página /conteudos com listagem de materiais disponíveis: cards com imagem, título e link",
