@@ -674,7 +674,7 @@
     {
       "id": "US-021",
       "title": "Subpágina de Solução — Softwares",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/softwares/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Softwares'",
