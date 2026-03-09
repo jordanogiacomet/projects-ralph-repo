@@ -407,7 +407,7 @@
     {
       "id": "US-004",
       "title": "Layout global: Navbar com Mega Menu",
-      "passes": false,
+      "passes": true,
       "description": "Criar o layout principal do site com Navbar fixa, mega menu dropdown de soluções, busca, redes sociais, menu mobile hamburger e versão transparente sobre hero.",
       "acceptanceCriteria": [
         "Navbar fixa no topo com z-index alto, ocupando largura total",

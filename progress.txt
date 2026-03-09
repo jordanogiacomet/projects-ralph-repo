@@ -17,6 +17,10 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Block definitions live in `src/blocks/`, exported via `src/blocks/index.ts`
 - BlockRenderer component at `src/components/BlockRenderer.tsx` maps blockType to React components
 - Import all blocks from `@/blocks` barrel export when registering in collections
+- Server/client split for interactive layout components: FooServer.tsx (async, fetches data) + Foo.tsx ('use client', handles state/events)
+- Payload upload relations may be string IDs or objects — always check `typeof field === 'object'` before accessing `.url`
+- Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
+- Use framer-motion AnimatePresence for enter/exit animations on conditional renders
 
 ---
 
@@ -63,4 +67,18 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - BlockRenderer uses `data-block-type` attribute for easy debugging/styling
   - Placeholder block components use `Record<string, unknown>` props — will need proper typing when implementing frontend rendering
   - `void props` pattern used to suppress unused variable warnings in placeholder components
+---
+
+## 2026-03-09 - US-004
+- Created Navbar with fixed positioning, scroll-based transparency/solid toggle, mega menu, mobile hamburger, search overlay, and social links bar
+- Components: Navbar.tsx (main client component), NavbarServer.tsx (server wrapper fetching Header global), MegaMenu.tsx (animated 3-column dropdown), MobileMenu.tsx (slide-in with accordion sub-menus and focus trap), SocialLinks.tsx (reusable social icon links), SearchOverlay.tsx (fullscreen search with framer-motion)
+- Updated frontend layout.tsx to include NavbarServer
+- Files changed: src/components/Navbar.tsx, src/components/NavbarServer.tsx, src/components/MegaMenu.tsx, src/components/MobileMenu.tsx, src/components/SocialLinks.tsx, src/components/SearchOverlay.tsx, src/app/(frontend)/layout.tsx
+- **Learnings for future iterations:**
+  - Server/client component split: NavbarServer.tsx (server) fetches Payload globals, Navbar.tsx (client) handles interactivity — use this pattern for other layout components
+  - Payload global fields may return string IDs or full objects for `upload` relations — always check `typeof field === 'object'` before accessing `.url`
+  - `isHeroPage` prop controls transparent navbar behavior — pass from page-level to NavbarServer when page has fullscreen hero
+  - Framer Motion AnimatePresence requires immediate children to have `key` props for exit animations
+  - Focus trap in MobileMenu uses querySelectorAll for focusable elements and Tab key handling
+  - Social link SVG icons are inline (no icon library dependency) — platform icons defined in SocialLinks.tsx
 ---
