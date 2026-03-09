@@ -126,6 +126,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this sandbox, `next build --debug` can complete when plain `npm run build` intermittently fails with worker-exit noise; keep both results logged for traceability
   - Keeping a static fallback list of canonical soluções preserves acceptance behavior when Payload/Postgres is unreachable during builds
 ---
+## 2026-03-09 18:28 UTC - US-009
+- Implemented `/solucoes/controle-patrimonial/` with fullscreen hero, CMS-backed category data (`solucao-categories`), filtered 4-solution grid (`solucoes`), and inline contact section with formulário via `ContatoForm`
+- Added deterministic fallback content/order for the four Controle Patrimonial solutions when Payload/DB is unavailable at build time, preserving required links and labels
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` passed; `npm run build` passed (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages can safely combine `solucao-categories` (hero/title/description/image) with `solucoes` filtered by category ID and still stay resilient using ordered fallback slugs
+  - For category card order stability, map fetched docs into a slug-keyed structure and render from a fixed slug sequence rather than relying only on backend sorting
+  - In this sandbox, build-time Postgres connection errors may be logged during static generation even when `next build` exits successfully
+---
+## 2026-03-09 18:32 UTC - US-010
+- Implemented `/solucoes/consultoria-e-tecnologia/` with fullscreen hero, category-driven content from `solucao-categories`, ordered 6-solution grid from `solucoes`, and inline contact section using `ContatoForm`
+- Added deterministic fallback hero copy and fallback solutions for the six required cards: Teste de Impairment, Revisão da Vida Útil, Ativos Inteligentes RFID/RTLS, Arrendamento Mercantil, Combinação de Negócios, Softwares
+- Files changed: src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia` (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages can reuse the same resilient pattern: fetch category by slug, fetch `solucoes` by category ID, then render in fixed slug order to preserve acceptance criteria
+  - Keep explicit fallback datasets for each category hub so static builds remain deterministic when Payload/Postgres is unavailable
+  - Existing `SolutionGrid` and `ContatoForm` components support category hubs without additional schema or component changes
+---
 ## 2026-03-09 18:37 UTC - US-011
 - Implemented `/solucoes/avaliacao-patrimonial/` with fullscreen hero, category-driven content from `solucao-categories`, ordered 4-solution grid from `solucoes`, and inline contact section using `ContatoForm`
 - Added deterministic fallback hero copy and fallback solutions for the four required cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas
@@ -136,4 +158,15 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Category hub pages remain stable by combining Payload fetches with deterministic fallback datasets keyed by expected solution slugs
   - Running `npx tsc --noEmit` before `next build` can fail if `.next/types` artifacts are stale/missing; rerun after `next build` for accurate type validation in this setup
   - Reusing `SolutionGrid` and `ContatoForm` keeps category hub implementations consistent and scope-focused
+---
+## 2026-03-09 18:44 UTC - US-012
+- Implemented `/solucoes/controle-patrimonial/organizacao-patrimonial/` with hero banner, breadcrumb trail, Payload-driven rich content rendering, CTA button (`Solicitar Cotação` -> `/contato/cotacao`), and related-solution links for the same category (`Veja também`)
+- Added solution-specific SEO metadata via `generateMetadata` using Payload `meta` fields with deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/controle-patrimonial/organizacao-patrimonial` (with expected sandbox DB connectivity logs: `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Individual solution pages can safely reuse the resilient Payload fetch pattern (`try/catch` + deterministic fallback content) to keep static builds stable when Postgres is unreachable in sandbox
+  - A lightweight Lexical JSON renderer embedded in the route can satisfy rich-content acceptance criteria without introducing global renderer refactors
+  - `generateMetadata` can be sourced directly from `solucoes.meta` with structured fallbacks for title/description consistency
 ---

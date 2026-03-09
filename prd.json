@@ -504,7 +504,7 @@
     {
       "id": "US-009",
       "title": "Página Hub de Categoria — Controle Patrimonial",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",
@@ -518,7 +518,7 @@
     {
       "id": "US-010",
       "title": "Página Hub de Categoria — Consultoria e Tecnologia",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Consultoria e Tecnologia",
@@ -546,7 +546,7 @@
     {
       "id": "US-012",
       "title": "Subpágina de Solução — Organização Patrimonial",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
       "acceptanceCriteria": [
         "Hero banner com título 'Organização Patrimonial'",
