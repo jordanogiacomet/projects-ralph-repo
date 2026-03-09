@@ -762,3 +762,30 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Step-gated validation with `trigger([...fields])` in React Hook Form works well for required multi-step flows without introducing extra state libraries.
 ---
+## 2026-03-09 23:24 UTC - US-029
+- What was implemented
+- Added `/contato/representante` with a dedicated hero section and responsive page layout following the existing contact/cotação page pattern.
+- Created `RepresentanteForm` as a client component with React Hook Form validation, relevant representative-registration fields, and inline success/error submit feedback.
+- Wired form submission to `/api/form-submissions` using `formType: 'representante'` and trimmed payload values.
+- Updated `prd.json` to mark `US-029` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/contato/representante/page.tsx
+- src/components/RepresentanteForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/contato/representante`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for field validation states, submit feedback, and layout responsiveness).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Form stories in this codebase should keep interactive validation/submission logic in a dedicated client component while the route handles page structure and hero presentation.
+  - Gotchas encountered
+  - Repository scripts still omit `typecheck` and `test`, so completion reporting must explicitly log them as unavailable while using `npx tsc --noEmit` for type validation.
+  - Useful context
+  - Posting representative data to `/api/form-submissions` with `formType: 'representante'` aligns directly with existing `FormSubmissions` collection options and requires no schema changes.
+---

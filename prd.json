@@ -794,7 +794,7 @@
     {
       "id": "US-029",
       "title": "Formulário de Representante",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /contato/representante com formulário para representantes comerciais.",
       "acceptanceCriteria": [
         "Hero com título sobre se tornar representante",
