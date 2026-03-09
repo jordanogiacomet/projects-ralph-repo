@@ -518,7 +518,7 @@
     {
       "id": "US-010",
       "title": "Página Hub de Categoria — Consultoria e Tecnologia",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Consultoria e Tecnologia",
@@ -924,7 +924,7 @@
         "Backup strategy documentada (PostgreSQL dump + media files)"
       ]
     },
-        {
+    {
       "id": "US-037",
       "title": "Revisar backlog e direção visual com reasoning xhigh",
       "passes": false,
