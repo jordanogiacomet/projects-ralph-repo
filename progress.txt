@@ -472,3 +472,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Category hub ordering already includes `teste-de-impairment`, so adding this detail route immediately enables the expected hub-to-detail navigation path.
 ---
+## 2026-03-09 21:56 UTC - US-017
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/` using the established template pattern: hero banner with title `Revisão da Vida Útil`, breadcrumb trail (`Home > Soluções > Consultoria e Tecnologia > Revisão da Vida Útil`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solutions links, and route-level metadata via `generateMetadata`.
+- Updated fallback copy to be specific to vida útil/depreciação context and ensured fallback related links do not include the current page.
+- Marked `US-017` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumbs, CTA, related links, and content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The solution-detail route template remains reusable for consultoria subpages by changing slug constants, fallback copy, and related-link defaults while preserving fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; these must be logged as unavailable while using `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - `next build` now includes the new static route `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util`, confirming App Router path registration and generation.
+---

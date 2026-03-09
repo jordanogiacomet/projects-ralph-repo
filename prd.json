@@ -618,7 +618,7 @@
     {
       "id": "US-017",
       "title": "Subpágina de Solução — Revisão da Vida Útil",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/revisao-da-vida-util/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Revisão da Vida Útil'",
