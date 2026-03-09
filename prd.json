@@ -504,7 +504,7 @@
     {
       "id": "US-009",
       "title": "Página Hub de Categoria — Controle Patrimonial",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",

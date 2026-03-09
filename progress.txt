@@ -310,3 +310,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Hero copy with emphasized phrases can be kept CMS-flexible by rendering string content and applying targeted inline emphasis for required wording.
 ---
+## 2026-03-09 21:21 UTC - US-009
+- What was implemented
+- Finalized the `/solucoes/controle-patrimonial/` hub story by validating the existing implementation against all acceptance criteria (fullscreen hero with required emphasis, subtitle, 4-solution grid, contact section with form, and Payload-backed category/solution sourcing with deterministic fallback ordering).
+- Marked `US-009` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/controle-patrimonial/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated `/solucoes/controle-patrimonial` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, 4-card grid, and contact form section).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Category hub pages can remain deterministic by mapping fetched solutions by slug and rendering in a fixed acceptance-order slug array.
+  - Gotchas encountered
+  - Story completion may rely on local untracked route files; ensure the selected story's route file is included in the commit when finalizing `passes`.
+  - Useful context
+  - The `/solucoes/controle-patrimonial` implementation already follows the resilient Payload pattern (`try/catch` + fallback content) used across other solution/category routes.
+---
