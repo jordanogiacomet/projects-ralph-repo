@@ -562,7 +562,7 @@
     {
       "id": "US-013",
       "title": "Subpágina de Solução — Controle e Inventário de Estoques",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/controle-e-inventario-de-estoques/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Controle e Inventário de Estoques'",
