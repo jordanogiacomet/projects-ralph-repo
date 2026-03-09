@@ -468,7 +468,7 @@
     {
       "id": "US-007",
       "title": "Página Sobre",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Conheça a história da **Apollo Gestão**'",
