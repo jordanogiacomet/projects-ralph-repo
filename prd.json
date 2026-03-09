@@ -730,7 +730,7 @@
     {
       "id": "US-025",
       "title": "Subpágina de Solução — Avaliação de Máquinas",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Avaliação de Máquinas'",

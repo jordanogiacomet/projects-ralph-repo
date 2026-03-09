@@ -658,3 +658,27 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Gotchas encountered: Keep fallback related links pointed to routes that already exist or are scheduled next in backlog to avoid dead-end navigation during incremental delivery
   - Useful context: Route-level `generateMetadata` and breadcrumb rendering are already coupled to `categorySlug`/`solutionSlug`, so new solution pages can stay minimal when following this template
 ---
+## 2026-03-09 22:51 UTC - US-025
+- What was implemented
+- Added the solution detail route `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/` using the established template with hero banner (`Avaliação de Máquinas`), breadcrumb trail (`Home > Soluções > Avaliação Patrimonial > Avaliação de Máquinas`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solution links, and route-level SEO metadata via `generateMetadata`.
+- Updated `prd.json` to mark `US-025` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The `avaliacao-patrimonial` solution-detail route template remains reusable for additional subpages by changing only slug constants, fallback copy, and related-link defaults while preserving the same fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; both must be logged as unavailable while using `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - `npm run build` output confirms static route registration for new App Router pages, making it a reliable completion signal alongside lint and TypeScript checks.
+---
