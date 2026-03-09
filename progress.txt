@@ -22,6 +22,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
 - Use framer-motion AnimatePresence for enter/exit animations on conditional renders
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
+- Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
 
 ---
 
@@ -226,4 +227,14 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this sandbox, `next build` can intermittently fail during page-data collection with transient module resolution errors; rerunning build may succeed without code changes
   - Useful context
   - Transparent navbar behavior can be route-driven in the client component (`usePathname`) while still supporting explicit page-level overrides via `isHeroPage`
+---
+## 2026-03-09 20:55 UTC - US-005
+- Implemented resilient global footer data handling by merging Payload `footer`/`site-settings` globals with deterministic fallback defaults (3 unidades RS/SC/SP, social links, copyright base text, cookie text, WhatsApp number/message), ensuring the footer experience remains complete when CMS data or DB access is unavailable
+- Files changed: src/components/Footer.tsx, src/lib/constants.ts, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npm run build` intermittently failed in this sandbox with `PageNotFoundError: Cannot find module for page: /_document`; `npm run build -- --debug` passed and generated routes successfully; `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after successful build generation
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for footer, cookie banner, WhatsApp float, and scroll-to-top)
+- **Learnings for future iterations:**
+  - Patterns discovered: For global UI sections backed by Payload globals, initialize with deterministic constants and then merge CMS values field-by-field to avoid empty UI states
+  - Gotchas encountered: In this environment, `npm run build` may fail with intermittent `/_document` resolution errors while `next build --debug` succeeds and produces valid output
+  - Useful context: `npx tsc --noEmit` depends on generated `.next/types` includes in this repo, so run it after a successful Next build path when those files are absent
 ---
