@@ -744,7 +744,7 @@
     {
       "id": "US-026",
       "title": "Página de Clientes com filtro por segmento",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /clientes com grid de logos de clientes e filtro horizontal por segmento de atuação (~32 categorias, ~130+ clientes).",
       "acceptanceCriteria": [
         "Hero com título: 'Conheça alguns dos nossos **Principais Clientes**'",
