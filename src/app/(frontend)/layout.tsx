@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { NavbarServer } from '@/components/NavbarServer'
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function FrontendLayout({
   return (
     <html lang="pt-BR">
       <body className="font-sans text-text-primary bg-bg-primary">
-        {/* Navbar will be added in US-004 */}
+        <NavbarServer />
         <main>{children}</main>
         {/* Footer will be added in US-005 */}
       </body>
