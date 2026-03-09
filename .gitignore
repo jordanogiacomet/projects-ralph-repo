@@ -1,13 +1,34 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+
+# Media uploads
+media/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
 # Ralph working files (generated during runs)
 prd.json
 progress.txt
 .last-branch
-
-# Archive is optional to commit
-# archive/
-
-# OS files
-.DS_Store
-
-#Claude
-.claude/
