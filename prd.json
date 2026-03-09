@@ -660,7 +660,7 @@
     {
       "id": "US-020",
       "title": "Subpágina de Solução — Combinação de Negócios (PPA) – CPC 15",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/ seguindo o template de solução.",
       "acceptanceCriteria": [
         "Hero banner com título 'Combinação de Negócios (PPA) – CPC 15'",
