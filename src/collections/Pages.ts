@@ -1,6 +1,19 @@
 import type { CollectionConfig } from 'payload'
 import { anyone, isAdminOrEditor } from '@/access'
 import { formatSlugHook } from '@/hooks/formatSlug'
+import {
+  HeroBlock,
+  RichContentBlock,
+  ServiceCardsBlock,
+  CTABlock,
+  AccordionBlock,
+  StatsBlock,
+  ContactFormBlock,
+  ImageTextBlock,
+  ClientLogosBlock,
+  VideoBlock,
+  DownloadBlock,
+} from '@/blocks'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -65,7 +78,19 @@ export const Pages: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [],
+      blocks: [
+        HeroBlock,
+        RichContentBlock,
+        ServiceCardsBlock,
+        CTABlock,
+        AccordionBlock,
+        StatsBlock,
+        ContactFormBlock,
+        ImageTextBlock,
+        ClientLogosBlock,
+        VideoBlock,
+        DownloadBlock,
+      ],
     },
     {
       name: 'parent',
