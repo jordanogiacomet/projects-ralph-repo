@@ -821,7 +821,7 @@
     {
       "id": "US-031",
       "title": "Blog/News — listagem e post individual",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /news com listagem de posts do blog com paginação, sidebar com busca e link para e-book, e as páginas individuais de cada post.",
       "acceptanceCriteria": [
         "Página /news com hero: 'Fique bem informado: **Nossas recentes publicações**'",

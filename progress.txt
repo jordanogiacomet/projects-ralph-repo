@@ -26,6 +26,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
 - Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
 - Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` and extra context fields in `data` (for example `origem`, `conteudoSlug`) before releasing protected files
+- Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'` before reading `name`/`email`
 
 ---
 
@@ -820,7 +821,39 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Patterns discovered
   - Lead-gated asset downloads can reuse `/api/form-submissions` by storing context fields in `data` (e.g., `origem`, `conteudoSlug`) while keeping existing collection structure.
   - Gotchas encountered
-  - Dynamic content routes should keep deterministic fallback materials to satisfy acceptance behavior when Payload/Postgres is unreachable during static builds.
+- Dynamic content routes should keep deterministic fallback materials to satisfy acceptance behavior when Payload/Postgres is unreachable during static builds.
+- Useful context
+- For `conteudos`, `downloadFile` and `featuredImage` are upload relations; treat them as ID-or-object relations and safely read `.url` only when populated.
+---
+## 2026-03-09 23:45 UTC - US-031
+- What was implemented
+- Implemented `/news` with hero (`Fique bem informado: Nossas recentes publicações`), Payload-backed published-post listing from `posts`, responsive stacked cards (featured image, title, date, author, excerpt), desktop-only sidebar search, e-book banner link to `/conteudos/e-book-identificacao-patrimonial`, and client-side `Carregar mais` pagination.
+- Added newsletter section at the bottom of `/news` with `NewsletterForm` (`E-mail` + CTA `Inscreva-se`) posting directly to `/api/newsletter-subscribers` with success/duplicate/error feedback.
+- Implemented `/news/[slug]` with breadcrumb, post metadata (title/date/author), featured image, rich-content rendering for Lexical content, and social share actions (WhatsApp, LinkedIn, X, Facebook); all post data is sourced from the `posts` collection.
+- Preserved empty-state behavior for initial delivery with no migrated WordPress posts by rendering informative placeholders when no published posts exist.
+- Updated `prd.json` to mark `US-031` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/news/page.tsx
+- src/app/(frontend)/news/[slug]/page.tsx
+- src/components/PostCard.tsx
+- src/components/PostList.tsx
+- src/components/Pagination.tsx
+- src/components/NewsletterForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/news` and `/news/[slug]`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile listing behavior, sidebar visibility, load-more interaction, newsletter submission states, and post-detail share links).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - News/blog pages can follow the server-fetch + client-list interaction split: server route normalizes Payload docs, client component owns search and incremental pagination.
+  - Gotchas encountered
+  - `posts.author` must be treated as relation ID-or-object; rendering author names without object guards can cause runtime errors.
   - Useful context
-  - For `conteudos`, `downloadFile` and `featuredImage` are upload relations; treat them as ID-or-object relations and safely read `.url` only when populated.
+  - Newsletter signups can post directly to `/api/newsletter-subscribers` because public create access is already enabled in the `NewsletterSubscribers` collection.
 ---
