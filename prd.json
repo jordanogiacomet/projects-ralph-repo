@@ -546,7 +546,7 @@
     {
       "id": "US-012",
       "title": "Subpágina de Solução — Organização Patrimonial",
-      "passes": false,
+      "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
       "acceptanceCriteria": [
         "Hero banner com título 'Organização Patrimonial'",
