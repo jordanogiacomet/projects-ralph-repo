@@ -1257,7 +1257,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Revisão de spacing e rhythm de layout",
-      "passes": false,
+      "passes": true,
       "description": "Auditar e harmonizar spacing entre seções, grids e componentes em todo o site.",
       "acceptanceCriteria": [
         "Espaçamento vertical consistente entre seções principais",

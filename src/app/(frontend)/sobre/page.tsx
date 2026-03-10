@@ -194,7 +194,7 @@ export default async function SobrePage() {
         </div>
       </section>
 
-      <section className="bg-bg-secondary py-16 sm:py-20">
+      <section className="bg-bg-secondary section-space">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
           <article className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
             <h2 className="font-display text-heading-2xl font-bold tracking-tight">Origem da Apollo Gestão</h2>
@@ -210,7 +210,7 @@ export default async function SobrePage() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="section-space">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-heading-2xl font-bold tracking-tight">História e propósito</h2>
           <p className="mt-5 leading-relaxed text-text-secondary">{historyText}</p>
@@ -219,7 +219,7 @@ export default async function SobrePage() {
 
       <MissaoVisaoValores heading={serviceCardsBlock?.heading || 'Missão, Visão e Valores'} slides={slides} />
 
-      <section className="bg-bg-secondary py-16 sm:py-20">
+      <section className="bg-bg-secondary section-space">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-display text-heading-2xl font-bold tracking-tight">{contactHeading}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-secondary">{contactDescription}</p>

@@ -134,7 +134,7 @@ export async function Footer() {
       <footer className="relative overflow-hidden bg-[#08111e] text-text-on-dark">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,86,166,0.18),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(217,232,248,0.1),transparent_28%)]" />
 
-        <Container size="wide" className="relative py-16 sm:py-20 lg:py-24">
+        <Container size="wide" className="relative section-space-loose">
           <div className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-end">
             <div className="max-w-3xl">
               <Badge tone="accent" className="bg-white/10 text-white">

@@ -508,7 +508,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
     <div className="bg-bg-primary text-text-primary">
       <JsonLd id={`solution-breadcrumb-${config.solutionSlug}`} data={breadcrumbJsonLd} />
 
-      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-24 sm:pb-28 sm:pt-28 lg:pb-32 lg:pt-32">
+      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36">
         {data.heroImage ? (
           <div
             className="absolute inset-0 scale-[1.03] bg-cover bg-center opacity-30"
@@ -649,7 +649,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
         </Container>
       </section>
 
-      <section className="relative z-10 -mt-10 pb-24 sm:-mt-14 sm:pb-28">
+      <section className="relative z-10 -mt-12 pb-[var(--space-section-loose)] sm:-mt-16">
         <Container>
           <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
             <article className="overflow-hidden rounded-[1.75rem] border border-border bg-white shadow-strong">
@@ -801,7 +801,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
       </section>
 
       {data.relatedSolutions.length > 0 ? (
-        <section className="pb-24 sm:pb-28">
+        <section className="pb-[var(--space-section-loose)]">
           <Container>
             <div className="overflow-hidden rounded-[2rem] border border-border bg-surface-secondary/72 px-6 py-8 shadow-soft sm:px-8 sm:py-10 lg:px-10 lg:py-12">
               <SectionHeading

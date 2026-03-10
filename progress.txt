@@ -32,6 +32,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'`
 - Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang`, Open Graph, Twitter Card, and icon tags consistent
 - Public site origin resolution should prefer `NEXT_PUBLIC_SERVER_URL` and fall back to `NEXT_PUBLIC_SITE_URL`
+- Section spacing uses three tiers from `src/styles/tokens.css`: `section-space-tight` (3rem→4rem), `section-space` (4rem→5rem), `section-space-loose` (5rem→7.5rem) — use utility classes from `utilities.css` instead of hardcoded py-* values
+- Hero sections use consistent asymmetric padding: `pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`
+- Overlap sections (floating cards that sit between hero and content) use `-mt-12 sm:-mt-16` with `pb-[var(--space-section-loose)]`
 - Structured data scripts are emitted with `JsonLd` in `src/components/JsonLd.tsx` and schema builders in `src/lib/seo.ts`
 - Search discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`
 - Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep grouped responses by collection type (`pages`, `posts`, `solucoes`, `conteudos`)
@@ -507,4 +510,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `npx tsc --noEmit`: passed
   - `npm run build`: passed (all 35 static pages generated successfully)
 - **Browser verification:** Browser tooling unavailable; manual QA required to confirm visual consistency across all pages.
+---
+
+## US-049C — Revisão de spacing e rhythm de layout (2026-03-10)
+- **Status:** COMPLETE
+- **Scope:** Audited and harmonized section spacing across all page templates to use design system tokens and utility classes instead of hardcoded Tailwind values.
+- **Inconsistencies corrected:**
+  - `src/app/(frontend)/sobre/page.tsx` — 3 sections: `py-16 sm:py-20` → `section-space`
+  - `src/components/SolutionsHubPage.tsx` — line 311: `py-16 sm:py-20` → `section-space`; line 341: `py-16 sm:py-20 lg:py-24` → `section-space-loose`
+  - `src/components/SolutionCategoryHubPage.tsx` — 3 content sections: `py-20 sm:py-24` → `section-space-loose`; overlap section: `pb-20 sm:pb-24` → `pb-[var(--space-section-loose)]`
+  - `src/components/Footer.tsx` — `py-16 sm:py-20 lg:py-24` → `section-space-loose`
+  - `src/components/SolutionDetailPage.tsx` — hero padding standardized to match other heroes (`pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`); overlap section: `-mt-10 sm:-mt-14 pb-24 sm:pb-28` → `-mt-12 sm:-mt-16 pb-[var(--space-section-loose)]`; related section: `pb-24 sm:pb-28` → `pb-[var(--space-section-loose)]`
+- **Patterns now consistent:**
+  - All content sections use `section-space` (4rem → 5rem) or `section-space-loose` (5rem → 7.5rem) utility classes
+  - Hero sections use consistent asymmetric padding across all templates: `pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`
+  - Overlap sections standardized to `-mt-12 sm:-mt-16` with `pb-[var(--space-section-loose)]`
+  - Grid/card gaps remain consistent (gap-3, gap-4, gap-6, gap-8)
+  - Container horizontal padding aligned across all templates via Container.tsx
+- **Quality checks:**
+  - `npm run lint`: passed
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser verification:** Browser tooling unavailable; manual QA required.
 ---

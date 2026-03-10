@@ -308,7 +308,7 @@ export function SolutionsHubPage({ heroTitle, heroDescription, filters, solution
         </Container>
       </section>
 
-      <section className="bg-bg-secondary py-16 sm:py-20">
+      <section className="bg-bg-secondary section-space">
         <Container>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
@@ -338,7 +338,7 @@ export function SolutionsHubPage({ heroTitle, heroDescription, filters, solution
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20 lg:py-24">
+      <section className="section-space-loose">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
           <div>
             <SectionHeading

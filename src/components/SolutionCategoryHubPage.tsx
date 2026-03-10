@@ -168,7 +168,7 @@ export function SolutionCategoryHubPage({
         </Container>
       </section>
 
-      <section className="relative z-10 -mt-12 pb-20 sm:-mt-16 sm:pb-24">
+      <section className="relative z-10 -mt-12 pb-[var(--space-section-loose)] sm:-mt-16">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
@@ -216,7 +216,7 @@ export function SolutionCategoryHubPage({
         </Container>
       </section>
 
-      <section id="solucoes-grid" className="bg-bg-secondary py-20 sm:py-24">
+      <section id="solucoes-grid" className="bg-bg-secondary section-space-loose">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
@@ -293,7 +293,7 @@ export function SolutionCategoryHubPage({
         </Container>
       </section>
 
-      <section className="relative overflow-hidden bg-bg-dark-section py-20 sm:py-24">
+      <section className="relative overflow-hidden bg-bg-dark-section section-space-loose">
         <div
           className="absolute inset-0"
           style={{
@@ -397,7 +397,7 @@ export function SolutionCategoryHubPage({
         </Container>
       </section>
 
-      <section className="py-20 sm:py-24">
+      <section className="section-space-loose">
         <Container>
           <SectionHeading
             align="center"
