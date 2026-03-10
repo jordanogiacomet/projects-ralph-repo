@@ -747,3 +747,30 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - A specialized rail component can safely serve both filter and navigation use cases when the visual language stays constant and semantics switch between `aria-pressed` and `aria-current`
   - Extracting the card into a standalone primitive makes future solution-hub and solution-detail stories less likely to drift, because listing polish now has a single reusable surface instead of duplicated JSX
 ---
+## 2026-03-10 18:33 UTC - US-046C
+- **Story:** Padronizacao visual dos cards e filtros de solucao
+- **What was implemented:**
+  - Refined the shared `SolutionCard` and `SolutionFilterTabs` primitives so keyboard focus now mirrors the stronger hover language already used by the solution cards and filter rail
+  - Revalidated the existing `US-046C` architecture in the current repository state, confirming the shared card/filter system is the same one applied on `/solucoes` and the category hubs
+- **Files changed:**
+  - `src/components/SolutionCard.tsx` — aligned focus-visible card chrome, overlay, and CTA states with the established hover treatment
+  - `src/components/SolutionFilterTabs.tsx` — aligned focus-visible rail movement, border treatment, indicator, label, and count states with hover/active behavior
+  - `prd.json` — marked the selected `US-046C` story as complete in the active PRD
+  - `progress.txt` — appended the current delivery log for this run
+- **Visual rationale:**
+  - The shared solution primitives were already structurally in place, but keyboard focus was still visually weaker than hover in the card and filter surfaces
+  - This pass closes that gap so the reusable listing language feels intentional and consistent regardless of whether the user is navigating with pointer or keyboard
+- **Affected shared components:** `SolutionCard` and `SolutionFilterTabs`
+- **Responsive impact:** No layout change; the existing card density and rail behavior remain intact across desktop/tablet/mobile while focus treatment now reads consistently at every breakpoint
+- **Accessibility impact:** Improved keyboard focus parity for reusable solution cards and filter/navigation rail items without changing existing `aria-pressed`, `aria-current`, or reduced-motion behavior
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` and the category hubs across desktop/tablet/mobile, especially keyboard focus treatment, hover/focus parity, and mobile rail scrolling
+- **Learnings for future iterations:**
+  - When story logs and `prd.json` drift, story selection and completion state still need to be driven by the active PRD, then revalidated against the current codebase
+  - Reusable listing primitives should treat keyboard focus as part of the premium interaction language, not as an afterthought to hover-only styling
+---
