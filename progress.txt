@@ -1593,3 +1593,32 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Contact-form redesign work can stay within phase-2 scope by pairing route-level composition changes with shared UI form primitives instead of reopening CMS modeling
   - On contact pages, absent hero media should degrade to layered gradients rather than a broken placeholder image path
 ---
+## 2026-03-10 17:00 UTC - US-044B
+- **Story:** Repaginação do fluxo de cotação
+- **What was implemented:**
+  - Redesigned `/contato/cotacao` into a phase-2 consultive route with a stronger dark hero, intake-preparation guidance, clearer CTA hierarchy, and a premium bridge between the page opening and the actual multi-step form
+  - Rebuilt `CotacaoForm` around shared UI primitives with a clearer three-step flow, upgraded service-selection cards, more mature upload handling, a live summary rail, and stronger submit/success/error treatment
+  - Kept the existing submission contract (`formType: 'cotacao'` to `/api/form-submissions`) while improving grouping, validation clarity, and responsive behavior without reopening CMS modeling
+- **Files changed:**
+  - `src/app/(frontend)/contato/cotacao/page.tsx` — redesigned hero, intake guidance, CTA structure, and route-level framing around the cotação flow
+  - `src/components/CotacaoForm.tsx` — rebuilt the multi-step form UI, service-selection groups, upload surface, progress stepper, live summary sidebar, and submit feedback states
+  - `prd.json` — marked the selected `US-044B` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous cotação route was functional but still behaved like a phase-1 utility form with limited hierarchy between stepper, field groups, upload, and contact confirmation
+  - This pass reframes the page as a consultive intake flow with a stronger narrative: prepare the briefing, structure the demand, attach supporting material, and confirm the return contact
+  - The redesign aligns the route with the phase-2 contact page and shell language by using darker hero framing, more intentional surfaces, better spacing rhythm, and more premium selection/upload states
+- **Affected shared components:** `CotacaoForm` now consistently reuses shared `Badge`, `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives instead of standalone raw control styling
+- **Responsive impact:** The route shifts from a single centered form to a stacked mobile flow with a desktop two-column composition, the stepper remains readable across breakpoints, and the summary rail becomes sticky only on larger screens
+- **Accessibility impact:** Preserved semantic heading hierarchy, exposed the active step with `aria-current`, kept explicit field labels and inline validation, maintained keyboard-accessible action buttons, and exposed submit feedback with `role="status"` / `role="alert"`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/contato/cotacao`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/contato/cotacao` across desktop/tablet/mobile, including step transitions, upload states, sticky summary behavior, and submit feedback
+- **Learnings for future iterations:**
+  - Multi-step public intake flows can be upgraded to the phase-2 language by separating route-level briefing composition from the client-side form state component, rather than changing the submission API or CMS model
+  - When `progress.txt` sync notes drift from the active PRD, story selection still needs to follow the actual `prd.json` story order and dependency state
+---

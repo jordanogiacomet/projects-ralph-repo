@@ -1127,7 +1127,7 @@
       "phase": "phase-2-redesign",
       "stream": "contact",
       "title": "Repaginação do fluxo de cotação",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar o formulário de cotação para parecer fluxo consultivo de alto nível.",
       "acceptanceCriteria": [
         "Inputs, labels, validações e agrupamentos visuais alinhados ao design system",
