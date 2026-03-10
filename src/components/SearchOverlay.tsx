@@ -254,7 +254,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                   <div className="flex items-start justify-between gap-4">
                     <div className="max-w-3xl">
                       <Badge tone="accent">Busca no site</Badge>
-                      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-text-primary sm:text-[2.45rem]">
+                      <h2 className="mt-4 font-display text-heading-2xl font-semibold tracking-tight text-text-primary">
                         Encontre páginas, soluções e conteúdos com uma leitura mais guiada
                       </h2>
                       <p className="mt-3 text-sm leading-6 text-text-secondary sm:text-base">
@@ -284,10 +284,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
                 <div className="relative grid lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
                   <aside className="border-b border-border/70 bg-[linear-gradient(180deg,rgba(248,250,252,0.92)_0%,rgba(255,255,255,0.94)_100%)] p-6 sm:p-8 lg:border-b-0 lg:border-r">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                       Busca guiada
                     </p>
-                    <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+                    <h3 className="mt-3 font-display text-heading-lg font-semibold tracking-tight text-text-primary">
                       Navegue por intenção
                     </h3>
                     <p className="mt-3 text-sm leading-6 text-text-secondary">
@@ -312,7 +312,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     </div>
 
                     <div className="mt-6">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                      <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                         Sugestões rápidas
                       </p>
                       <div className="mt-3 flex flex-wrap gap-2.5">
@@ -387,7 +387,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       {!hasQuery ? (
                         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
                           <div className="rounded-[28px] border border-border bg-surface-secondary/72 p-5">
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                            <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                               Comece pela intenção
                             </p>
                             <p className="mt-3 text-xl font-semibold tracking-[-0.03em] text-text-primary">
@@ -400,7 +400,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                           </div>
 
                           <div className="rounded-[28px] border border-border bg-white p-5 shadow-soft">
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                            <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                               Consultas sugeridas
                             </p>
                             <div className="mt-4 flex flex-wrap gap-2.5">
@@ -460,14 +460,14 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                             >
                               <div className="flex items-center justify-between gap-3">
                                 <div>
-                                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                                  <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                                     Grupo de resultados
                                   </p>
                                   <h3 className="mt-2 text-lg font-semibold tracking-[-0.03em] text-text-primary">
                                     {group.label}
                                   </h3>
                                 </div>
-                                <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-pill bg-white px-2.5 text-[11px] font-semibold text-text-muted shadow-sm">
+                                <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-pill bg-white px-2.5 text-label-sm font-semibold text-text-muted shadow-sm">
                                   {group.results.length}
                                 </span>
                               </div>

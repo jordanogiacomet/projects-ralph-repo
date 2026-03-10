@@ -102,7 +102,7 @@ export function Navbar({
   )
   const desktopLinkClass = (active: boolean) =>
     cn(
-      'rounded-pill px-4 py-2.5 text-[0.93rem] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+      'rounded-pill px-4 py-2.5 text-body-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
       isTransparent
         ? 'text-white/80 hover:bg-white/10 hover:text-white'
         : 'text-text-secondary hover:bg-white hover:text-text-primary',
@@ -118,7 +118,7 @@ export function Navbar({
       : 'border-border/70 bg-surface-secondary/80 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
   )
   const brandTagClass = cn(
-    'hidden xl:inline-flex items-center rounded-pill border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em]',
+    'hidden xl:inline-flex items-center rounded-pill border px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.22em]',
     isTransparent
       ? 'border-white/10 bg-white/[0.05] text-white/62'
       : 'border-border/70 bg-white/76 text-text-muted',

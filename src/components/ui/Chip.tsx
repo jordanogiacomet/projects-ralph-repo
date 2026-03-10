@@ -34,7 +34,7 @@ export function Chip({
       {count !== undefined ? (
         <span
           className={cn(
-            'inline-flex min-w-6 items-center justify-center rounded-full px-1.5 py-0.5 text-[11px] font-bold',
+            'inline-flex min-w-6 items-center justify-center rounded-full px-1.5 py-0.5 text-label-sm font-bold',
             active ? 'bg-white/18 text-white' : 'bg-surface-muted text-text-secondary',
           )}
         >

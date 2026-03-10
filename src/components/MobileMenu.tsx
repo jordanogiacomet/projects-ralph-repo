@@ -158,10 +158,10 @@ export function MobileMenu({
 
               <div className="relative flex items-start justify-between gap-4">
                 <div className="max-w-[16rem]">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                     Navegação
                   </p>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
+                  <h2 className="mt-3 font-display text-heading-2xl font-semibold tracking-tight text-white">
                     Explore a Apollo
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-white/68">
@@ -190,7 +190,7 @@ export function MobileMenu({
               <div className="relative mt-5 rounded-[24px] border border-white/10 bg-white/[0.06] p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/44">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-white/44">
                       Estrutura
                     </p>
                     <p className="mt-2 text-sm font-medium text-white/78">
@@ -262,7 +262,7 @@ export function MobileMenu({
                       <div className="p-3">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/40">
+                            <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-white/40">
                               {hasChildren ? 'Seção expansível' : 'Acesso direto'}
                             </p>
 
@@ -272,7 +272,7 @@ export function MobileMenu({
                                 onClick={onClose}
                                 aria-current={isActive ? 'page' : undefined}
                                 className={cn(
-                                  'mt-2 block rounded-[18px] px-4 py-3 text-[1rem] font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
+                                  'mt-2 block rounded-[18px] px-4 py-3 text-body-md font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
                                   isActive
                                     ? 'bg-white text-bg-dark-section shadow-soft'
                                     : 'bg-white/[0.02] text-white/86 hover:bg-white/[0.08] hover:text-white',
@@ -281,7 +281,7 @@ export function MobileMenu({
                                 {item.label}
                               </Link>
                             ) : (
-                              <span className="mt-2 block px-4 py-3 text-[1rem] font-semibold tracking-[-0.03em] text-white">
+                              <span className="mt-2 block px-4 py-3 text-body-md font-semibold tracking-[-0.03em] text-white">
                                 {item.label}
                               </span>
                             )}
@@ -356,7 +356,7 @@ export function MobileMenu({
                                   <div className="p-3.5">
                                     <div className="flex items-start justify-between gap-3">
                                       <div className="min-w-0 flex-1">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/38">
+                                        <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/38">
                                           Categoria
                                         </p>
 
@@ -386,7 +386,7 @@ export function MobileMenu({
                                         </p>
                                       </div>
 
-                                      <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.08]px-2.5 text-[11px] font-semibold text-white/82">
+                                      <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.08]px-2.5 text-label-sm font-semibold text-white/82">
                                         {child.children?.length ?? 0}
                                       </span>
                                     </div>
@@ -460,7 +460,7 @@ export function MobileMenu({
                                                     isGrandchildActive ? 'page' : undefined
                                                   }
                                                   className={cn(
-                                                    'flex items-center justify-between gap-3 rounded-[16px] border px-3.5 py-3 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
+                                                    'flex items-center justify-between gap-3 rounded-[16px] border px-3.5 py-3 text-meta-sm font-medium transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
                                                     isGrandchildActive
                                                       ? 'border-white/18 bg-white text-bg-dark-section shadow-soft'
                                                       : 'border-white/8 bg-white/[0.04] text-white/68 hover:bg-white/10 hover:text-white',
@@ -470,7 +470,7 @@ export function MobileMenu({
                                                   <span aria-hidden>&rarr;</span>
                                                 </Link>
                                               ) : (
-                                                <span className="block rounded-[16px] border border-white/8 bg-white/[0.04] px-3.5 py-3 text-[13px] font-medium text-white/60">
+                                                <span className="block rounded-[16px] border border-white/8 bg-white/[0.04] px-3.5 py-3 text-meta-sm font-medium text-white/60">
                                                   {grandchild.label}
                                                 </span>
                                               )}
@@ -496,7 +496,7 @@ export function MobileMenu({
               <div className="border-t border-white/10 bg-white/[0.04] px-5 py-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                       Redes
                     </p>
                     <p className="mt-2 text-sm text-white/62">

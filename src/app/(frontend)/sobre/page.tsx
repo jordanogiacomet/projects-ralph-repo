@@ -175,14 +175,14 @@ export default async function SobrePage() {
         />
         <div className="absolute inset-0 bg-black/60" aria-hidden />
         <div className="relative z-10 mx-auto max-w-5xl px-4 text-center text-text-on-dark sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-display-lg font-bold tracking-tight">
             {richTextToPlainText(pageData?.heroTitle) || (
               <>
                 Conheça a história da <strong>Apollo Gestão</strong>
               </>
             )}
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base text-white/90 sm:text-xl">
+          <p className="mx-auto mt-5 max-w-3xl text-body-lg text-white/90">
             {pageData?.heroSubtitle ? (
               pageData.heroSubtitle
             ) : (
@@ -197,7 +197,7 @@ export default async function SobrePage() {
       <section className="bg-bg-secondary py-16 sm:py-20">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
           <article className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-2xl font-bold sm:text-3xl">Origem da Apollo Gestão</h2>
+            <h2 className="font-display text-heading-2xl font-bold tracking-tight">Origem da Apollo Gestão</h2>
             <p className="mt-4 leading-relaxed text-text-secondary">{originText}</p>
           </article>
           <aside className="rounded-2xl border border-accent/20 bg-accent-light p-6 shadow-sm sm:p-8">
@@ -212,7 +212,7 @@ export default async function SobrePage() {
 
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold sm:text-3xl">História e propósito</h2>
+          <h2 className="font-display text-heading-2xl font-bold tracking-tight">História e propósito</h2>
           <p className="mt-5 leading-relaxed text-text-secondary">{historyText}</p>
         </div>
       </section>
@@ -221,7 +221,7 @@ export default async function SobrePage() {
 
       <section className="bg-bg-secondary py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold sm:text-3xl">{contactHeading}</h2>
+          <h2 className="font-display text-heading-2xl font-bold tracking-tight">{contactHeading}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-secondary">{contactDescription}</p>
           <Link
             href={contactButtonLink}

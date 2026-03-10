@@ -47,7 +47,7 @@ export function CookieConsent({ text }: CookieConsentProps) {
           </svg>
         </span>
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/45">
+          <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/45">
             Cookies
           </p>
           <p className="mt-2 text-sm leading-6 text-white/76">

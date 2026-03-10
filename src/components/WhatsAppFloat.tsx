@@ -28,7 +28,7 @@ export function WhatsAppFloat({ number, message }: WhatsAppFloatProps) {
         </svg>
       </span>
       <span className="hidden min-w-0 flex-col sm:flex">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
+        <span className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/45">
           WhatsApp
         </span>
         <span className="pr-0.5 text-sm font-semibold text-white">Fale com a Apollo</span>

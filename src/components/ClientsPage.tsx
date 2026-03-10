@@ -341,7 +341,7 @@ export function ClientsPage({
                         <Badge className="border border-accent/10 bg-accent-soft/70 text-accent-strong">
                           {segmentLabels[client.segmentKey] ?? 'Outros'}
                         </Badge>
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+                        <span className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
                           Logo
                         </span>
                       </div>

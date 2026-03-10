@@ -933,13 +933,13 @@ export function CotacaoForm() {
                       {selectedServices.slice(0, 4).map((service) => (
                         <span
                           key={service}
-                          className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-[11px] font-semibold text-white/82"
+                          className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-label-sm font-semibold text-white/82"
                         >
                           {service}
                         </span>
                       ))}
                       {selectedServices.length > 4 ? (
-                        <span className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-[11px] font-semibold text-white/82">
+                        <span className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-label-sm font-semibold text-white/82">
                           +{selectedServices.length - 4} adicionais
                         </span>
                       ) : null}

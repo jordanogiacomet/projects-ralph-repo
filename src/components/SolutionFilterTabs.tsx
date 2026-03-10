@@ -60,7 +60,7 @@ function renderFilterContent(filter: SolutionFilter, isActive: boolean) {
       {filter.count !== undefined ? (
         <span
           className={cn(
-            'relative inline-flex min-w-7 items-center justify-center rounded-full px-2 py-1 text-[11px] font-bold transition duration-200',
+            'relative inline-flex min-w-7 items-center justify-center rounded-full px-2 py-1 text-label-sm font-bold transition duration-200',
             isActive
               ? 'bg-accent text-white shadow-[0_10px_24px_rgba(0,86,166,0.18)]'
               : 'bg-surface-secondary text-text-muted group-hover:bg-accent-soft/70 group-hover:text-accent-strong group-focus-visible:bg-accent-soft/70 group-focus-visible:text-accent-strong',

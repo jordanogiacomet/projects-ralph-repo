@@ -65,15 +65,15 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
               <div className="p-6 sm:p-7 lg:p-8">
                 <div className="flex flex-wrap items-center gap-2.5">
                   <Badge tone="accent">Explorar</Badge>
-                  <span className="inline-flex rounded-pill border border-border bg-white/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+                  <span className="inline-flex rounded-pill border border-border bg-white/75 px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
                     {sectionCount} frentes
                   </span>
-                  <span className="inline-flex rounded-pill border border-border bg-white/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+                  <span className="inline-flex rounded-pill border border-border bg-white/75 px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
                     {routeCount} rotas
                   </span>
                 </div>
 
-                <h2 className="mt-5 max-w-2xl text-3xl font-semibold tracking-[-0.05em] text-text-primary">
+                <h2 className="mt-5 max-w-2xl font-display text-heading-2xl font-semibold tracking-tight text-text-primary">
                   {title || 'Navegação principal'}
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-text-secondary sm:text-base">
@@ -104,7 +104,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
               </div>
 
               <div className="border-t border-border/70 bg-[linear-gradient(160deg,rgba(234,242,251,0.72)_0%,rgba(255,255,255,0.92)_100%)] p-6 lg:border-l lg:border-t-0 lg:p-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                   Mapa desta área
                 </p>
                 <div className="mt-4 grid gap-3">
@@ -129,14 +129,14 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div>
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+                            <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
                               Categoria {index + 1}
                             </p>
                             <p className="mt-2 text-base font-semibold tracking-[-0.03em]">
                               {item.label}
                             </p>
                           </div>
-                          <span className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-pill bg-accent-light px-2.5 text-[11px] font-semibold text-accent-strong">
+                          <span className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-pill bg-accent-light px-2.5 text-label-sm font-semibold text-accent-strong">
                             {item.children?.length ?? 0}
                           </span>
                         </div>
@@ -150,7 +150,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
             <div className="relative p-5 sm:p-6 lg:p-6">
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
                     Categorias e subitens
                   </p>
                   <p className="mt-2 text-sm text-text-secondary">
@@ -211,7 +211,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                                   'Acesse a visão geral da categoria e seus caminhos de aprofundamento.'}
                               </p>
                             </div>
-                            <span className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-pill bg-white px-2.5 text-[11px] font-semibold text-text-muted shadow-sm">
+                            <span className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-pill bg-white px-2.5 text-label-sm font-semibold text-text-muted shadow-sm">
                               {category.children?.length ?? 0}
                             </span>
                           </div>

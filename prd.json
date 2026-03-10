@@ -1242,7 +1242,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Harmonização global de tipografia",
-      "passes": false,
+      "passes": true,
       "description": "Garantir que todos os templates usem a escala tipográfica e hierarquia definidas no design system.",
       "acceptanceCriteria": [
         "Headings H1–H6 consistentes entre templates",

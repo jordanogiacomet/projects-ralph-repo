@@ -62,7 +62,7 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_250px]">
         <div>
           <Badge tone="accent">Contato direto</Badge>
-          <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-text-primary sm:text-[2rem]">
+          <h3 className="mt-4 font-display text-heading-2xl font-semibold tracking-tight text-text-primary">
             {title}
           </h3>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-text-secondary sm:text-base">
@@ -137,7 +137,7 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
         </div>
 
         <aside className="hidden rounded-[28px] border border-border/80 bg-white/72 p-5 lg:block">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-text-muted">
+          <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-text-muted">
             Inclua na mensagem
           </p>
           <ul className="mt-5 space-y-3">

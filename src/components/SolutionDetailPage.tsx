@@ -227,7 +227,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
     if (tag === 'h4') {
       return (
-        <h4 key={key} className="mt-10 text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
+        <h4 key={key} className="mt-10 font-display text-heading-lg font-semibold tracking-tight text-text-primary">
           {renderInline(node.children, `${key}-h4`)}
         </h4>
       )
@@ -254,7 +254,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
           <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-accent/78">
             Callout tecnico
           </p>
-          <div className="mt-4 text-[1.02rem] italic leading-8 text-text-primary sm:text-[1.05rem]">
+          <div className="mt-4 text-body-md italic leading-8 text-text-primary">
             {renderInline(node.children, `${key}-quote`)}
           </div>
         </blockquote>
@@ -274,12 +274,12 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
             <Card padding="sm" className="border-border/80 bg-surface-secondary/88">
               <div className="flex items-start gap-4">
                 <span
-                  className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent/12 bg-accent-soft/70 text-[11px] font-bold uppercase tracking-[0.16em] text-accent-strong"
+                  className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent/12 bg-accent-soft/70 text-label-sm font-bold uppercase tracking-[0.16em] text-accent-strong"
                   aria-hidden
                 >
                   {isNumbered ? String(itemIndex + 1).padStart(2, '0') : '•'}
                 </span>
-                <div className="min-w-0 text-[1.02rem] leading-7 text-text-secondary sm:text-[1.05rem]">
+                <div className="min-w-0 text-body-md leading-7 text-text-secondary">
                   {renderInline(item.children, `${key}-item-${itemIndex}`)}
                 </div>
               </div>
@@ -292,7 +292,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
   if (node.type === 'paragraph') {
     return (
-      <p key={key} className="mt-7 text-[1.02rem] leading-8 text-text-secondary sm:text-[1.05rem]">
+      <p key={key} className="mt-7 text-body-md leading-8 text-text-secondary">
         {renderInline(node.children, `${key}-p`)}
       </p>
     )
@@ -300,7 +300,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
   if (Array.isArray(node.children) && node.children.length > 0) {
     return (
-      <p key={key} className="mt-7 text-[1.02rem] leading-8 text-text-secondary sm:text-[1.05rem]">
+      <p key={key} className="mt-7 text-body-md leading-8 text-text-secondary">
         {renderInline(node.children, `${key}-fallback`)}
       </p>
     )
@@ -313,7 +313,7 @@ function renderRichContent(value: unknown, fallbackText: string): ReactNode {
   const blocks = getRootChildren(value)
 
   if (blocks.length === 0) {
-    return <p className="text-[1.02rem] leading-8 text-text-secondary sm:text-[1.05rem]">{fallbackText}</p>
+    return <p className="text-body-md leading-8 text-text-secondary">{fallbackText}</p>
   }
 
   return blocks.map((block, index) => renderBlock(block, index))
@@ -633,7 +633,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                       className="flex gap-3 rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]"
                     >
                       <div className="min-w-0">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">
+                        <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/46">
                           {signal.label}
                         </p>
                         <p className="mt-2 text-sm leading-relaxed text-white/72">

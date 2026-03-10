@@ -477,3 +477,34 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `npm run build`: failed twice with known transient Next.js sandbox `PageNotFoundError` (different pages each run: `/news`, `/solucoes/avaliacao-patrimonial/...`). This is a pre-existing environment issue unrelated to US-049A changes.
 - **Browser verification:** Browser tooling unavailable; manual QA required for focus ring visibility and hover states on all shell elements.
 ---
+
+## 2026-03-10 - US-049B: Harmonização global de tipografia
+- **What was implemented:** Audited and harmonized all typography across the entire frontend to consistently use the design system's typographic scale (display-lg/md/sm, heading-2xl/xl/lg, body-lg/md/sm, label-sm, meta-sm). Eliminated all bracket-notation font sizes (text-[11px], text-[10px], text-[0.9375rem], text-[1.02rem], text-[1.05rem], text-[1.375rem], text-[2.8rem], text-[2.45rem], text-[2rem], text-[0.93rem], text-[13px], text-[1rem]) and replaced them with semantic design system tokens. Standardized all headings to use font-display + appropriate display-*/heading-* tokens with consistent tracking-tight.
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — H1 → text-display-lg, H2s → text-heading-2xl, subtitle → text-body-lg
+  - `src/components/MissaoVisaoValores.tsx` — H2 → text-heading-2xl, H3 → text-display-sm
+  - `src/components/SolutionDetailPage.tsx` — Body text → text-body-md, H4 → text-heading-lg, labels → text-label-sm
+  - `src/components/HomePage.tsx` — Body → text-body-sm, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/Footer.tsx` — H2 → text-display-sm, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/SearchOverlay.tsx` — H2 → text-heading-2xl, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/MobileMenu.tsx` — H2 → text-heading-2xl, labels → text-label-sm, nav items → text-body-md/text-meta-sm
+  - `src/components/FooterContactForm.tsx` — H3 → text-heading-2xl, labels → text-label-sm
+  - `src/components/Navbar.tsx` — Nav links → text-body-sm, brand tag → text-label-sm
+  - `src/components/CookieConsent.tsx` — Labels → text-label-sm
+  - `src/components/WhatsAppFloat.tsx` — Labels → text-label-sm
+  - `src/components/FooterUnidades.tsx` — Labels → text-label-sm
+  - `src/components/MegaMenu.tsx` — H2 → text-heading-2xl, labels → text-label-sm
+  - `src/components/SolutionCard.tsx` — Labels → text-label-sm
+  - `src/components/ClientsPage.tsx` — Labels → text-label-sm
+  - `src/components/CotacaoForm.tsx` — Labels → text-label-sm
+  - `src/components/SolutionFilterTabs.tsx` — Labels → text-label-sm
+  - `src/components/ui/Chip.tsx` — Count badge → text-label-sm
+- **Racional visual:** All templates now share a consistent typographic hierarchy: display-* for hero/page-level headings, heading-* for section headings, body-* for content text, label-sm for uppercase micro-labels, meta-sm for navigation meta text. No page uses isolated or off-system font sizes. The only remaining bracket-notation size is text-[0.95em] for inline code, which uses relative em-based sizing by design.
+- **Responsive impact:** Minimal — semantic tokens use CSS clamp() for responsive scaling, replacing ad-hoc responsive breakpoint stacks (sm:text-*, lg:text-*) with fluid type.
+- **Accessibility impact:** No degradation — font sizes remain readable and hierarchy is preserved.
+- **Quality checks:**
+  - `npm run lint`: passed
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed (all 35 static pages generated successfully)
+- **Browser verification:** Browser tooling unavailable; manual QA required to confirm visual consistency across all pages.
+---

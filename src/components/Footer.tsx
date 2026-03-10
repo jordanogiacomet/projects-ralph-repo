@@ -140,7 +140,7 @@ export async function Footer() {
               <Badge tone="accent" className="bg-white/10 text-white">
                 Atendimento e presença
               </Badge>
-              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white sm:text-[2.8rem]">
+              <h2 className="mt-4 font-display text-display-sm font-semibold tracking-tight text-white">
                 Contato, navegação e presença institucional com um fechamento mais leve e claro.
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">
@@ -155,7 +155,7 @@ export async function Footer() {
                   key={item.label}
                   className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 shadow-[0_16px_40px_rgba(5,10,21,0.14)]"
                 >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/42">
                     {item.label}
                   </p>
                   <p className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
@@ -174,10 +174,10 @@ export async function Footer() {
 
             <div className="grid gap-6">
               <section className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_18px_50px_rgba(2,12,27,0.18)] backdrop-blur-sm sm:p-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                   Presença nacional
                 </p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
+                <h3 className="mt-3 font-display text-heading-lg font-semibold tracking-tight text-white">
                   Nossas unidades
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-white/68">
@@ -190,7 +190,7 @@ export async function Footer() {
               </section>
 
               <section className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                   Canais institucionais
                 </p>
                 <p className="mt-3 text-base leading-7 text-white/72">
@@ -213,7 +213,7 @@ export async function Footer() {
           <div className="mt-10 rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_18px_50px_rgba(2,12,27,0.14)] sm:p-8">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
               <div className="max-w-md">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                   Apollo Gestão
                 </p>
                 <p className="mt-4 text-lg leading-8 text-white/74">
@@ -223,7 +223,7 @@ export async function Footer() {
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                   Navegação
                 </p>
                 <div className="mt-5 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">

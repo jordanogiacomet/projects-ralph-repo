@@ -82,7 +82,7 @@ export function SolutionCard({ item, index, variant = 'feature' }: SolutionCardP
                   {categoryLabel}
                 </span>
                 {previewIndex ? (
-                  <span className="rounded-pill border border-border bg-surface-secondary px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-text-muted">
+                  <span className="rounded-pill border border-border bg-surface-secondary px-2.5 py-1 text-label-sm font-bold uppercase tracking-[0.16em] text-text-muted">
                     {previewIndex}
                   </span>
                 ) : null}

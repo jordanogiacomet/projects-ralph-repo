@@ -221,7 +221,7 @@ export function HomePage({
           aria-label="Role para baixo"
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/40">
+            <span className="text-label-sm font-medium uppercase tracking-[0.2em] text-white/40">
               Explorar
             </span>
             <svg
@@ -277,7 +277,7 @@ export function HomePage({
               <h2 className="mt-5 font-display text-heading-xl font-extrabold tracking-tight sm:text-heading-2xl">
                 Uma operação consultiva que conecta estratégia, campo e governança contínua.
               </h2>
-              <p className="mt-4 max-w-lg text-[0.9375rem] leading-relaxed text-text-secondary sm:text-base">
+              <p className="mt-4 max-w-lg text-body-sm leading-relaxed text-text-secondary sm:text-base">
                 Da avaliação técnica à organização do inventário e à evolução tecnológica, a Apollo
                 conduz a jornada patrimonial com método, rastreabilidade e clareza executiva.
               </p>
@@ -289,7 +289,7 @@ export function HomePage({
                   key={service.id}
                   className="rounded-[1.35rem] border border-border/80 bg-white/80 p-4 shadow-[var(--shadow-soft)]"
                 >
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent/70">
+                  <span className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent/70">
                     {service.step}
                   </span>
                   <p className="mt-3 font-display text-base font-bold tracking-tight text-text-primary">
@@ -397,10 +397,10 @@ export function HomePage({
                   )}
                 </div>
 
-                <h3 className="font-display text-xl font-bold tracking-tight sm:text-[1.375rem]">
+                <h3 className="font-display text-heading-lg font-bold tracking-tight">
                   {card.title}
                 </h3>
-                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-text-secondary">
+                <p className="mt-3 flex-1 text-body-sm leading-relaxed text-text-secondary">
                   {card.description}
                 </p>
 

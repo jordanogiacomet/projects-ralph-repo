@@ -27,7 +27,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
           key={unidade.id || `${unidade.name || 'unidade'}-${index}`}
           className="rounded-[24px] border border-white/10 bg-[#0d1929]/72 p-5 shadow-[0_14px_30px_rgba(5,10,21,0.16)]"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/44">
+          <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-white/44">
             {unidade.state || 'Unidade'}
           </p>
           <h4 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-white">

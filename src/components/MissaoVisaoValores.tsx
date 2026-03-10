@@ -33,7 +33,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
     <section className="bg-bg-dark-section py-16 text-text-on-dark sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="text-2xl font-bold sm:text-3xl">{heading}</h2>
+          <h2 className="font-display text-heading-2xl font-bold tracking-tight">{heading}</h2>
           <div className="hidden items-center gap-2 sm:flex">
             <button
               type="button"
@@ -86,7 +86,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
               <div className="absolute inset-0 bg-black/55" aria-hidden />
               <div className="relative z-10 flex min-h-[22rem] items-end p-6 sm:p-10">
                 <div className="max-w-3xl">
-                  <h3 className="text-3xl font-bold sm:text-4xl">{currentSlide.title}</h3>
+                  <h3 className="font-display text-display-sm font-bold tracking-tight">{currentSlide.title}</h3>
                   <p className="mt-4 text-sm text-white/90 sm:text-base">{currentSlide.description}</p>
                 </div>
               </div>
