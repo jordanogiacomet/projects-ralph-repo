@@ -1319,7 +1319,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "QA responsivo completo",
-      "passes": false,
+      "passes": true,
       "description": "Revisão completa de comportamento responsivo em desktop, tablet e mobile.",
       "acceptanceCriteria": [
         "Desktop revisado para alinhamento, spacing e grids",

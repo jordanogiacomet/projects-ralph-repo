@@ -18,6 +18,18 @@ export function CookieConsent({ text }: CookieConsentProps) {
     setVisible(!value)
   }, [])
 
+  useEffect(() => {
+    if (visible) {
+      document.body.dataset.cookieConsentVisible = 'true'
+    } else {
+      delete document.body.dataset.cookieConsentVisible
+    }
+
+    return () => {
+      delete document.body.dataset.cookieConsentVisible
+    }
+  }, [visible])
+
   const handleChoice = (value: 'accepted' | 'hidden' | 'settings') => {
     window.localStorage.setItem(CONSENT_KEY, value)
     setVisible(false)

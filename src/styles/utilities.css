@@ -111,6 +111,12 @@ button {
   transform: scale(var(--motion-scale-media));
 }
 
+@media (max-width: 639px) {
+  body[data-cookie-consent-visible='true'] .apollo-scroll-to-top {
+    bottom: 10.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

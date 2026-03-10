@@ -664,3 +664,36 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - When a later polish story duplicates earlier acceptance criteria in `prd.json`, completion still needs a fresh current-state audit plus validation evidence before flipping the next pending entry
   - Shared motion utilities are only effective if shell and route-level outliers are migrated too; otherwise the primitives feel polished while navigation and key templates still read as phase-transition leftovers
 ---
+## 2026-03-10 20:50 UTC - US-049G
+- **Story:** QA responsivo completo
+- **Status:** Complete
+- **What was implemented:**
+  - Audited the current phase-2 templates against the active PRD and scoped the code changes to the remaining responsive outliers instead of reopening already-aligned routes
+  - Relaxed the densest mobile metric panels on `/news` and `/conteudos` so the hero-side editorial stats no longer force three cramped columns below the `sm` breakpoint
+  - Added a cookie-aware mobile offset for `ScrollToTop` so the floating control no longer shares the same vertical band as the cookie consent banner when that surface is visible
+- **Files changed:**
+  - `src/app/(frontend)/news/page.tsx` — changed the hero-side radar stats grid from a fixed three-column mobile layout to a stacked mobile / three-column `sm+` layout
+  - `src/app/(frontend)/conteudos/page.tsx` — changed the hero-side curation stats grid from a fixed three-column mobile layout to a stacked mobile / three-column `sm+` layout
+  - `src/components/CookieConsent.tsx` — exposed cookie-banner visibility on `document.body` for shared responsive shell coordination
+  - `src/components/ScrollToTop.tsx` — added a stable hook class for responsive cookie-aware positioning
+  - `src/styles/utilities.css` — added the mobile override that lifts `ScrollToTop` above the cookie banner while the banner is visible
+  - `prd.json` — marked `US-049G` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - Most primary templates were already visually aligned, but the audit still found a few places where mobile density and floating-shell ergonomics lagged behind the desktop/tablet polish
+  - These fixes keep the redesign incremental: improve the real breakpoint pressure points without introducing new product behavior or broad template churn
+- **Affected shared components:** `CookieConsent`, `ScrollToTop`, and the hero-side editorial stat panels on `news` and `conteudos`
+- **Responsive impact:** Desktop and tablet layouts remain unchanged where they were already balanced; mobile now gets more legible editorial stat cards on `/news` and `/conteudos`, plus clearer separation between the cookie banner and floating top action
+- **Accessibility impact:** Preserved semantic structure, focus behavior, and reduced-motion handling; the floating top action remains keyboard reachable while no longer competing with the cookie banner on smaller screens
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all 35 static pages
+- **Browser/manual verification status:** Attempted local Playwright-based browser verification, but the environment is missing the Chromium dependency `libnspr4.so`, so headless browser QA could not run here; manual responsive QA is still required for `/news`, `/conteudos`, and the mobile shell surfaces across desktop/tablet/mobile
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - Dense hero-side metric panels that feel balanced on desktop can still become too compressed on sub-`sm` screens; default to stacked mobile layouts unless the card content is genuinely short enough for multi-column mobile treatment
+  - Mobile floating shell actions need cookie-aware spacing instead of assuming they can permanently share the same bottom offset
+---

@@ -130,7 +130,7 @@ export default async function NewsPage() {
                   melhor valor percebido e um fluxo editorial mais consistente em desktop e mobile.
                 </p>
 
-                <div className="mt-6 grid grid-cols-3 gap-3">
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
                     <p className="font-display text-heading-lg font-bold text-white">
                       {posts.length}
