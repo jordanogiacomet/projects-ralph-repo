@@ -1119,3 +1119,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Useful context
 - Shared shell primitives now support cross-surface styling better: `Input` and `Textarea` accept `labelClassName`, and `SocialLinks` accepts per-item shell styling for light and dark contexts.
 ---
+## 2026-03-10 13:46 UTC - US-038
+- What was implemented
+- Validated the existing phase-2 design-system foundation against `US-038` acceptance criteria and finalized the story state. Confirmed the PRD already carries the Payload-inspired visual direction, typography hierarchy, spacing/rhythm guidance, and reusable surface/state tokens, while the codebase already exposes shared UI primitives in `src/components/ui/`, global token files in `src/styles/`, and frontend font/style wiring through the layout and Tailwind config.
+- Marked `US-038` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated all frontend/admin routes.
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls and pages that consume the phase-2 design-system primitives.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a validation pass when implementation already exists in the repo, but PRD status and progress history must be reconciled against the current code before flipping `passes`.
+  - Gotchas encountered
+  - `prd.json` can lag behind already-landed implementation work during phased redesign stories, so status should not be trusted without checking the actual style/token/component layers.
+  - Useful context
+  - The current design-system base is anchored by `src/styles/tokens.css`, `src/styles/utilities.css`, Tailwind theme aliases, and the primitives under `src/components/ui/`, with `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` already serving as live adopters.
+---
