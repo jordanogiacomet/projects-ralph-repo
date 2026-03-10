@@ -1167,3 +1167,31 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Showing the primary CTA in the mobile header only from `sm` upward preserves conversion visibility without overcrowding the smallest breakpoint.
 ---
+## 2026-03-10 14:18 UTC - US-039B
+- What was implemented
+- Redesigned the secondary navigation surfaces to match the new phase-2 shell language: `MegaMenu` now behaves like an editorial navigation panel with section metrics, quick links, clearer category cards, and active-path highlighting; `MobileMenu` now carries the same visual hierarchy with a richer drawer header, guided section cards, auto-expanded active branches, and an in-drawer search handoff; `SearchOverlay` now uses a two-column guided layout with suggestion chips, stronger grouping, and cleaner result presentation.
+- Preserved existing accessibility behavior while tightening it: reduced-motion handling remains in place, the mobile drawer and search overlay still trap focus and close on `Escape`, and the mega menu now also closes on `Escape`.
+- Marked `US-039B` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/MegaMenu.tsx`
+- `src/components/MobileMenu.tsx`
+- `src/components/Navbar.tsx`
+- `src/components/SearchOverlay.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile mega menu behavior, mobile drawer hierarchy, search overlay focus flow, and the mobile drawer -> search handoff.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Secondary shell surfaces should reuse the same route-matching helpers (`matchesPath`, `navItemMatchesPath`) as the primary header so active states stay aligned across desktop and mobile navigation layers.
+  - Gotchas encountered
+  - When one overlay launches another on mobile, close the first surface before opening the second so body-scroll locking and focus restoration do not conflict.
+  - Useful context
+  - Suggestion chips in the search overlay are a low-risk way to make the search surface feel more guided without changing the API contract of `/api/search`.
+---

@@ -129,9 +129,7 @@ export function Navbar({
   )
   const ctaClass = cn(
     'rounded-pill border px-5 shadow-[0_20px_40px_rgba(31,138,56,0.22)]',
-    isTransparent
-      ? 'border-white/10'
-      : 'border-cta-green/20',
+    isTransparent ? 'border-white/10' : 'border-cta-green/20',
   )
 
   return (
@@ -182,9 +180,7 @@ export function Navbar({
                       Apollo Gestão
                     </span>
                   )}
-                  <span className={brandTagClass}>
-                    Avaliações e Controle Patrimonial
-                  </span>
+                  <span className={brandTagClass}>Avaliações e Controle Patrimonial</span>
                 </Link>
 
                 <div className="hidden flex-1 justify-center px-4 lg:flex">
@@ -386,18 +382,13 @@ export function Navbar({
       </header>
 
       {!usesTransparentNavbar ? (
-        <div
-          className={cn(
-            'h-[96px]',
-            'lg:h-[120px]',
-          )}
-          aria-hidden="true"
-        />
+        <div className={cn('h-[96px]', 'lg:h-[120px]')} aria-hidden="true" />
       ) : null}
 
       <MobileMenu
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
+        onSearchOpen={() => setSearchOpen(true)}
         navItems={navItems}
         ctaButton={ctaButton}
         socialLinks={socialLinks}

@@ -1445,7 +1445,7 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do mega menu, menu mobile e overlay de busca",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar superfícies de navegação secundária para que o sistema inteiro pareça mais premium, editorial e coerente com a nova pegada inspirada no Payload.",
       "acceptanceCriteria": [
         "O mega menu deve evoluir de dropdown funcional para painel de navegação mais sofisticado",
