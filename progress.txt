@@ -1349,3 +1349,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - **Learnings for future iterations:**
   - When PRD is restructured (version bump), story passes flags may be reset even if implementation exists; always re-validate current code state
 ---
+
+## 2026-03-10 - US-040A
+- Redesigned homepage hero section for premium, Payload-inspired visual language
+- Key changes:
+  - Added institutional badge ("Especialistas em Gestão Patrimonial") with frosted glass pill styling matching shell language
+  - Upgraded headline to `text-display-lg` (clamp-based responsive) with tighter tracking for stronger hierarchy
+  - Refined multi-layer gradient overlays: primary 175deg directional gradient, radial brand accent glow, top-edge navbar integration gradient
+  - Replaced single blue CTA with dual CTA group: primary green (matching shell's CTA green) + secondary frosted outline ("Conheça a Apollo")
+  - CTA shadows use colored glow (`rgba(40,167,69,0.25)`) for premium depth
+  - Secondary CTA uses frosted glass treatment (`bg-white/[0.06]`, `backdrop-blur-sm`, `border-white/20`) consistent with shell surfaces
+  - Enhanced scroll indicator with "Explorar" label, subtler animation, reduced visual weight
+  - Improved vertical spacing: more breathing room between badge → headline → subtitle → CTAs
+  - Used `min-h-[100svh]` for better mobile viewport handling
+  - Background image scale increased to 1.08 for stronger parallax effect
+- Files changed: src/components/HomePage.tsx
+- Visual rationale: The previous hero was functional but lacked the premium sophistication established by the US-039A/B/C shell redesign. The new hero uses frosted glass surfaces, colored CTA shadows, multi-layer gradients, institutional badging, and clamp-based responsive typography to match the shell's Payload-inspired premium language while preserving Apollo's institutional tone.
+- Affected shared components: None — changes scoped to hero section within HomePage.tsx
+- Responsive impact: Dual CTAs stack vertically on mobile, side-by-side on sm+; clamp typography scales smoothly; `100svh` handles mobile browser chrome
+- Accessibility impact: All existing motion gating via `useReducedMotion()` preserved; badge uses semantic span with decorative dot; all aria attributes maintained
+- Quality checks:
+  - npm run lint: passed (only pre-existing payload-types warning)
+  - npx tsc --noEmit: passed
+  - npm run build: passed
+- Browser/manual verification status: Browser tooling unavailable; manual QA required for hero visual appearance, gradient rendering, CTA hover states, mobile stacking, and reduced-motion behavior
+---

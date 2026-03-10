@@ -1023,7 +1023,7 @@
       "phase": "phase-2-redesign",
       "stream": "homepage",
       "title": "Repaginação do hero da homepage",
-      "passes": false,
+      "passes": true,
       "description": "Transformar o hero da homepage em uma abertura institucional premium, mais próxima da força visual do Payload, adaptada ao posicionamento da Apollo.",
       "acceptanceCriteria": [
         "Hero redesenhado com melhor composição, headline e tratamento de imagem/fundo",
