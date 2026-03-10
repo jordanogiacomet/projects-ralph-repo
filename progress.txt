@@ -429,3 +429,30 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Shared detail templates are lower risk than continuing to evolve duplicated route files; future solution-detail stories can now refine one base surface instead of touching every canonical page independently
   - Breadcrumb, metadata, and CTA hierarchy can be standardized for solution pages entirely in the frontend layer while preserving the current Payload content model and existing compatibility routes
 ---
+## 2026-03-10 19:06 UTC - US-048B
+- **Story:** Repaginacao de elementos auxiliares das paginas de solucao
+- **What was implemented:**
+  - Refined the shared `SolutionDetailPage` rich-content renderer so headings, lists, inline emphasis, and quote blocks now read as higher-value auxiliary surfaces instead of plain phase-1 body markup
+  - Added a stronger dark auxiliary-callout layer around the reading surface so highlights, support notes, and CTA context feel intentionally composed with the rest of the solution-detail template
+  - Rebuilt the related-solutions area as a standalone `Veja tambem` recommendation section using the shared `SolutionCard` language, with richer supporting copy and related-solution metadata derived without reopening the CMS schema
+- **Files changed:**
+  - `src/components/SolutionDetailPage.tsx` — upgraded inline rich-text formatting, list/quote/callout treatments, supporting side surfaces, and the related recommendation section for canonical solution pages
+  - `prd.json` — marked the selected `US-048B` story as complete
+  - `progress.txt` — appended the current delivery log for this story
+- **Visual rationale:**
+  - The base detail template from `US-047A` established hierarchy, but auxiliary elements still felt transitional: lists behaved like default prose, quotes read as simple blocks, and related links still looked like utility navigation instead of editorial recommendation
+  - This pass pushes those secondary surfaces into the same Payload-inspired but Apollo-appropriate language already established in the shell and solution hubs, improving polish without adding new product features
+- **Affected shared components:** `SolutionDetailPage` now centralizes richer auxiliary-content treatment for all canonical solution pages, and the story reuses the shared `SolutionCard` primitive for related recommendations instead of one-off list styling
+- **Responsive impact:** Auxiliary callouts and related recommendations collapse from multi-column desktop compositions into stacked mobile cards while preserving reading width, CTA clarity, and touch-friendly spacing
+- **Accessibility impact:** Preserved semantic heading hierarchy, list semantics, keyboard-accessible recommendation links and CTA buttons, and kept strong contrast/focus treatment across the new dark/light supporting surfaces
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all canonical `/solucoes/...` detail routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the canonical solution detail pages and legacy aliases across desktop/tablet/mobile, especially list/callout readability, auxiliary-surface spacing, and the new `Veja tambem` recommendation cards
+- **Learnings for future iterations:**
+  - Once solution-detail pages share one template, auxiliary-content polish can be delivered safely in a single component without reopening route files or CMS modeling
+  - Related recommendation areas on solution pages can reuse the shared solution-card language if the template fills missing fallback descriptions from existing category/title context
+---

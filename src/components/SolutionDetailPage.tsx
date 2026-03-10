@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import { JsonLd } from '@/components/JsonLd'
+import { SolutionCard } from '@/components/SolutionCard'
 import { Badge, Button, Card, Container, SectionHeading } from '@/components/ui'
 import { getPayloadClient } from '@/lib/payload'
 import { buildBreadcrumbJsonLd, buildMetadata } from '@/lib/seo'
@@ -16,6 +17,9 @@ type RelatedSolution = {
   id: string
   title: string
   href: string
+  description?: string
+  iconUrl?: string
+  categoryLabel?: string
 }
 
 type LexicalNode = {
@@ -25,6 +29,7 @@ type LexicalNode = {
   tag?: string
   url?: string
   listType?: string
+  format?: number | string
   [key: string]: unknown
 }
 
@@ -97,6 +102,20 @@ function richTextToPlainText(value: unknown): string {
   return textParts.reverse().join(' ').replace(/\s+/g, ' ').trim()
 }
 
+function buildRelatedSolutionDescription(
+  title: string,
+  categoryTitle: string,
+  description?: string,
+): string {
+  const normalizedDescription = normalizeText(description)
+
+  if (normalizedDescription) {
+    return normalizedDescription
+  }
+
+  return `Leitura complementar em ${categoryTitle.toLowerCase()} para aprofundar ${title.toLowerCase()} com a mesma abordagem consultiva da Apollo.`
+}
+
 function getRootChildren(value: unknown): LexicalNode[] {
   if (!value || typeof value !== 'object') return []
 
@@ -109,6 +128,48 @@ function getRootChildren(value: unknown): LexicalNode[] {
   return children.filter(
     (child): child is LexicalNode => typeof child === 'object' && child !== null,
   )
+}
+
+function applyTextFormat(node: LexicalNode, content: ReactNode): ReactNode {
+  if (typeof node.format !== 'number' || !node.format) {
+    return content
+  }
+
+  let formatted = content
+
+  if (node.format & 16) {
+    formatted = (
+      <code className="rounded-md bg-surface-secondary px-1.5 py-0.5 font-mono text-[0.95em] text-text-primary">
+        {formatted}
+      </code>
+    )
+  }
+
+  if (node.format & 128) {
+    formatted = (
+      <span className="rounded-md bg-accent-soft/80 px-1.5 py-0.5 text-accent-strong">
+        {formatted}
+      </span>
+    )
+  }
+
+  if (node.format & 8) {
+    formatted = <span className="underline decoration-accent/35 underline-offset-4">{formatted}</span>
+  }
+
+  if (node.format & 4) {
+    formatted = <span className="line-through">{formatted}</span>
+  }
+
+  if (node.format & 2) {
+    formatted = <em className="italic">{formatted}</em>
+  }
+
+  if (node.format & 1) {
+    formatted = <strong className="font-semibold text-text-primary">{formatted}</strong>
+  }
+
+  return formatted
 }
 
 function renderInline(children: LexicalNode[] | undefined, keyPrefix: string): ReactNode {
@@ -136,7 +197,7 @@ function renderInline(children: LexicalNode[] | undefined, keyPrefix: string): R
     }
 
     if (typeof child.text === 'string') {
-      return <span key={key}>{child.text}</span>
+      return <span key={key}>{applyTextFormat(child, child.text)}</span>
     }
 
     if (Array.isArray(child.children)) {
@@ -155,63 +216,74 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
     if (tag === 'h3') {
       return (
-        <h3
-          key={key}
-          className="mt-12 font-display text-heading-xl font-semibold tracking-tight text-text-primary"
-        >
-          {renderInline(node.children, `${key}-h3`)}
-        </h3>
+        <div key={key} className="mt-12">
+          <div className="h-px w-14 bg-gradient-to-r from-accent/35 to-transparent" aria-hidden />
+          <h3 className="mt-4 font-display text-heading-xl font-semibold tracking-tight text-text-primary">
+            {renderInline(node.children, `${key}-h3`)}
+          </h3>
+        </div>
       )
     }
 
     if (tag === 'h4') {
       return (
-        <h4
-          key={key}
-          className="mt-10 text-lg font-semibold tracking-tight text-text-primary sm:text-xl"
-        >
+        <h4 key={key} className="mt-10 text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
           {renderInline(node.children, `${key}-h4`)}
         </h4>
       )
     }
 
     return (
-      <h2
-        key={key}
-        className="mt-14 font-display text-heading-2xl font-semibold tracking-tight text-text-primary"
-      >
-        {renderInline(node.children, `${key}-h2`)}
-      </h2>
+      <div key={key} className="mt-14">
+        <div className="h-px w-20 bg-gradient-to-r from-accent/45 to-transparent" aria-hidden />
+        <h2 className="mt-5 font-display text-heading-2xl font-semibold tracking-tight text-text-primary">
+          {renderInline(node.children, `${key}-h2`)}
+        </h2>
+      </div>
     )
   }
 
   if (node.type === 'quote') {
     return (
-      <blockquote
+      <Card
         key={key}
-        className="mt-8 rounded-[1.5rem] border border-accent/10 bg-accent-soft/45 px-6 py-5 text-base italic leading-8 text-text-primary sm:px-7"
+        padding="lg"
+        className="mt-8 overflow-hidden border-accent/10 bg-[linear-gradient(135deg,rgba(0,86,166,0.08)_0%,rgba(255,255,255,0.98)_42%,rgba(15,23,42,0.04)_100%)]"
       >
-        {renderInline(node.children, `${key}-quote`)}
-      </blockquote>
+        <blockquote>
+          <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-accent/78">
+            Callout tecnico
+          </p>
+          <div className="mt-4 text-[1.02rem] italic leading-8 text-text-primary sm:text-[1.05rem]">
+            {renderInline(node.children, `${key}-quote`)}
+          </div>
+        </blockquote>
+      </Card>
     )
   }
 
   if (node.type === 'list') {
     const listChildren = (node.children || []).filter((child) => child.type === 'listitem')
-    const ListTag = node.listType === 'number' ? 'ol' : 'ul'
+    const isNumbered = node.listType === 'number'
+    const ListTag = isNumbered ? 'ol' : 'ul'
 
     return (
-      <ListTag
-        key={key}
-        className={
-          node.listType === 'number'
-            ? 'mt-7 list-decimal space-y-3 pl-6 text-base leading-8 text-text-secondary marker:font-semibold marker:text-accent'
-            : 'mt-7 list-disc space-y-3 pl-6 text-base leading-8 text-text-secondary marker:text-accent'
-        }
-      >
+      <ListTag key={key} className="mt-8 space-y-3">
         {listChildren.map((item, itemIndex) => (
-          <li key={`${key}-item-${itemIndex}`}>
-            {renderInline(item.children, `${key}-item-${itemIndex}`)}
+          <li key={`${key}-item-${itemIndex}`} className="list-none">
+            <Card padding="sm" className="border-border/80 bg-surface-secondary/88">
+              <div className="flex items-start gap-4">
+                <span
+                  className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent/12 bg-accent-soft/70 text-[11px] font-bold uppercase tracking-[0.16em] text-accent-strong"
+                  aria-hidden
+                >
+                  {isNumbered ? String(itemIndex + 1).padStart(2, '0') : '•'}
+                </span>
+                <div className="min-w-0 text-[1.02rem] leading-7 text-text-secondary sm:text-[1.05rem]">
+                  {renderInline(item.children, `${key}-item-${itemIndex}`)}
+                </div>
+              </div>
+            </Card>
           </li>
         ))}
       </ListTag>
@@ -235,6 +307,16 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
   }
 
   return null
+}
+
+function renderRichContent(value: unknown, fallbackText: string): ReactNode {
+  const blocks = getRootChildren(value)
+
+  if (blocks.length === 0) {
+    return <p className="text-[1.02rem] leading-8 text-text-secondary sm:text-[1.05rem]">{fallbackText}</p>
+  }
+
+  return blocks.map((block, index) => renderBlock(block, index))
 }
 
 async function findSolutionBySlug(solutionSlug: string, legacySolutionSlug?: string) {
@@ -297,6 +379,13 @@ async function getSolutionPageData(config: SolutionDetailConfig): Promise<Soluti
           id: item.slug,
           title: item.title,
           href: `/solucoes/${category?.slug || config.categorySlug}/${item.slug}`,
+          description: buildRelatedSolutionDescription(
+            item.title,
+            category?.title || config.fallbackData.categoryTitle,
+            item.shortDescription || undefined,
+          ),
+          iconUrl: mediaUrl(item.icon),
+          categoryLabel: category?.title || config.fallbackData.categoryTitle,
         }))
 
       if (related.length > 0) {
@@ -354,7 +443,6 @@ export async function generateSolutionDetailMetadata(
 
 export async function SolutionDetailPage({ config }: { config: SolutionDetailConfig }) {
   const data = await getSolutionPageData(config)
-  const contentBlocks = getRootChildren(data.content)
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: 'Home', path: '/' },
     { name: 'Solucoes', path: '/solucoes' },
@@ -368,10 +456,41 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
     },
   ])
   const heroTags = (data.tags || []).slice(0, 3)
-  const summaryPoints = [
-    `Leitura tecnica conectada a ${data.categoryTitle.toLowerCase()} e aos objetivos operacionais da empresa.`,
-    'Escopo conduzido com criterio consultivo, clareza de entregaveis e respiro visual mais maduro.',
-    'Contato e navegacao organizados para reduzir friccao na etapa de briefing comercial.',
+  const deliverySignals = [
+    {
+      label: 'Aplicacao',
+      value: heroTags[0] || 'Escopo tecnico consultivo',
+    },
+    {
+      label: 'Categoria',
+      value: data.categoryTitle,
+    },
+    {
+      label: 'Trilha',
+      value:
+        data.relatedSolutions.length > 0
+          ? `${data.relatedSolutions.length} recomendacoes editoriais conectadas`
+          : 'Portfolio Apollo',
+    },
+  ]
+  const supportHighlights = [
+    {
+      title: 'Listas com leitura orientada',
+      description:
+        'Itens, etapas e comparacoes passam a funcionar como superficies de apoio em vez de texto corrido sem hierarquia.',
+    },
+    {
+      title: 'Callouts com mais contexto',
+      description:
+        'Blocos ricos e destaques agora reforcam observacoes tecnicas sem competir com o fio principal da pagina.',
+    },
+    {
+      title: 'Continuacao editorial mais clara',
+      description:
+        data.relatedSolutions.length > 0
+          ? `A recomendacao final conecta ${data.relatedSolutions.length} solucoes correlatas com o mesmo tom consultivo.`
+          : 'Os proximos passos comerciais seguem visiveis sem interromper a leitura tecnica.',
+    },
   ]
   const detailMeta = [
     { label: 'Categoria', value: data.categoryTitle },
@@ -484,20 +603,6 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                   Falar com especialista
                 </Button>
               </div>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {detailMeta.map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]"
-                  >
-                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-white">{item.value}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <aside className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-6 text-white shadow-[0_24px_65px_rgba(8,14,26,0.26)] backdrop-blur-sm sm:p-7">
@@ -511,27 +616,30 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
               />
               <div className="relative">
                 <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
-                  Briefing consultivo
+                  Radar da solucao
                 </p>
                 <h2 className="mt-4 font-display text-heading-xl font-semibold text-white">
-                  Estrutura para uma conversa tecnica mais clara.
+                  Leitura consultiva com contexto, profundidade e continuidade.
                 </h2>
                 <p className="mt-4 text-body-sm leading-relaxed text-white/72">
-                  Abertura, leitura da frente e CTA foram reorganizados para reforcar autoridade
-                  tecnica sem transformar a pagina em um catalogo mecanico.
+                  Hero, blocos auxiliares e recomendacoes foram reorganizados para reforcar
+                  autoridade tecnica sem transformar a pagina em um catalogo mecanico.
                 </p>
 
                 <div className="mt-6 space-y-3">
-                  {summaryPoints.map((point) => (
+                  {deliverySignals.map((signal) => (
                     <div
-                      key={point}
+                      key={signal.label}
                       className="flex gap-3 rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]"
                     >
-                      <span
-                        className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-cta-green"
-                        aria-hidden
-                      />
-                      <p className="text-sm leading-relaxed text-white/68">{point}</p>
+                      <div className="min-w-0">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">
+                          {signal.label}
+                        </p>
+                        <p className="mt-2 text-sm leading-relaxed text-white/72">
+                          {signal.value}
+                        </p>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -593,17 +701,47 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                     </div>
                   ))}
                 </div>
+
+                <Card
+                  tone="dark"
+                  padding="lg"
+                  className="mt-8 overflow-hidden border-white/8 bg-[linear-gradient(145deg,rgba(10,18,32,0.96)_0%,rgba(15,23,42,0.94)_46%,rgba(0,86,166,0.18)_100%)]"
+                >
+                  <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:items-start">
+                    <div>
+                      <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                        Blocos auxiliares
+                      </p>
+                      <h3 className="mt-4 font-display text-heading-xl font-semibold text-white">
+                        Listas, destaques e callouts agora sustentam a leitura principal.
+                      </h3>
+                      <p className="mt-4 text-body-sm leading-relaxed text-white/72">
+                        O corpo tecnico segue com largura controlada, mas ganhou superficies de
+                        apoio para comparacoes, observacoes e proximos passos sem perder o tom
+                        institucional.
+                      </p>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
+                      {supportHighlights.map((highlight) => (
+                        <div
+                          key={highlight.title}
+                          className="rounded-card border border-white/10 bg-white/[0.05] p-4 shadow-[0_16px_34px_rgba(8,14,26,0.2)]"
+                        >
+                          <p className="text-sm font-semibold text-white">{highlight.title}</p>
+                          <p className="mt-2 text-sm leading-relaxed text-white/68">
+                            {highlight.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
               </div>
 
               <div className="px-6 py-8 sm:px-10 sm:py-10">
                 <div className="mx-auto max-w-reading">
-                  {contentBlocks.length > 0 ? (
-                    contentBlocks.map((block, index) => renderBlock(block, index))
-                  ) : (
-                    <p className="text-[1.02rem] leading-8 text-text-secondary sm:text-[1.05rem]">
-                      {data.description}
-                    </p>
-                  )}
+                  {renderRichContent(data.content, data.description)}
                 </div>
               </div>
             </article>
@@ -631,41 +769,72 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                 </div>
               </Card>
 
-              <Card padding="lg" className="border-border bg-surface-secondary/90">
-                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
-                  Navegue pela frente
+              <Card padding="lg" tone="dark" className="overflow-hidden">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/58">
+                  Apoios da leitura
                 </p>
-                <h2 className="mt-4 font-display text-heading-lg font-semibold text-text-primary">
-                  Solucoes relacionadas
+                <h2 className="mt-4 font-display text-heading-lg font-semibold text-white">
+                  Superficies auxiliares com mais clareza editorial.
                 </h2>
-                <p className="mt-3 text-body-sm text-text-secondary">
-                  Mantivemos a navegacao lateral enxuta neste passo para que a base do template
-                  fique consistente antes do refinamento editorial dos elementos auxiliares.
+                <p className="mt-3 text-body-sm text-white/72">
+                  Os destaques da pagina foram separados em camadas claras para que conteudo,
+                  contexto e acao avancem no mesmo ritmo.
                 </p>
 
-                <ul className="mt-5 space-y-3">
-                  {data.relatedSolutions.map((solution) => (
-                    <li key={solution.id}>
-                      <Link
-                        href={solution.href}
-                        className="group flex items-center justify-between rounded-card border border-border bg-white px-4 py-3 text-sm font-semibold text-text-primary transition hover:border-accent/20 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
-                      >
-                        <span>{solution.title}</span>
-                        <span
-                          aria-hidden
-                          className="text-base text-text-muted transition group-hover:text-accent group-focus-visible:text-accent"
-                        >
-                          {'->'}
-                        </span>
-                      </Link>
-                    </li>
+                <div className="mt-5 space-y-3">
+                  {supportHighlights.map((highlight) => (
+                    <div
+                      key={highlight.title}
+                      className="rounded-card border border-white/10 bg-white/[0.05] p-4"
+                    >
+                      <p className="text-sm font-semibold text-white">{highlight.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-white/68">
+                        {highlight.description}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </Card>
             </div>
           </div>
         </Container>
       </section>
+
+      {data.relatedSolutions.length > 0 ? (
+        <section className="pb-24 sm:pb-28">
+          <Container>
+            <div className="overflow-hidden rounded-[2rem] border border-border bg-surface-secondary/72 px-6 py-8 shadow-soft sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+              <SectionHeading
+                eyebrow="Veja tambem"
+                title="Recomendacoes para aprofundar esta frente"
+                description="A area relacionada deixa de ser uma lista utilitaria e passa a orientar a proxima leitura com o mesmo acabamento editorial do restante da pagina."
+              />
+
+              <div className="mt-8 grid gap-5 lg:grid-cols-3">
+                {data.relatedSolutions.map((solution, index) => (
+                  <SolutionCard
+                    key={solution.id}
+                    index={index}
+                    variant="compact"
+                    item={{
+                      id: solution.id,
+                      title: solution.title,
+                      description: buildRelatedSolutionDescription(
+                        solution.title,
+                        solution.categoryLabel || data.categoryTitle,
+                        solution.description,
+                      ),
+                      href: solution.href,
+                      iconUrl: solution.iconUrl,
+                      categoryLabel: solution.categoryLabel || data.categoryTitle,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+      ) : null}
     </div>
   )
 }

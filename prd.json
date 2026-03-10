@@ -1212,7 +1212,7 @@
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação de elementos auxiliares das páginas de solução",
-      "passes": false,
+      "passes": true,
       "description": "Refinar blocos auxiliares e área de recomendação relacionada.",
       "acceptanceCriteria": [
         "Tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts",
