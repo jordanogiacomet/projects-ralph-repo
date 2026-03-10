@@ -30,6 +30,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang` (`pt-BR`), Open Graph, Twitter Card, and icon tags consistent with global fallbacks
 - Structured data scripts are emitted with `JsonLd` (`src/components/JsonLd.tsx`) and schema builders in `src/lib/seo.ts` (Organization, LocalBusiness, BreadcrumbList, Article)
 - Search engine discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`; include both static paths and CMS-driven slugs with safe fallbacks when Payload is unavailable
+- Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep the response grouped by collection type (`pages`, `posts`, `solucoes`, `conteudos`) so the UI can render typed sections without extra client-side joins
 
 ---
 
@@ -920,4 +921,18 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Bulk text-replacement commands can silently fail on import strings containing `@`; prefer narrower patches or escaped delimiters for safe batch edits.
   - Useful context
   - `sitemap.ts` can safely mix static and CMS-generated paths as long as route URLs are deduplicated and Payload failures degrade to static defaults.
+---
+## 2026-03-10 00:12 UTC - US-033
+- Implemented global search with a new API endpoint (`/api/search`) that queries `pages`, `posts` (published only), `solucoes`, and `conteudos`, returning grouped, typed results with route-aware hrefs
+- Upgraded `SearchOverlay` to real-time search with 300ms debounce, loading state, grouped result rendering by content type, empty-state messaging, outside-click close, Escape close, and maintained input auto-focus when opening
+- Files changed: src/app/api/search/route.ts, src/components/SearchOverlay.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` initially failed before build due missing `.next/types`, then passed after `npm run build`; `npm run build` passed and generated `/api/search`
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile, including debounce behavior and grouped results in search overlay)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The search overlay can stay lightweight by consuming a single grouped API response shape (`groups[]` with label/results), avoiding cross-collection client orchestration
+  - Gotchas encountered
+  - In this repository, `npx tsc --noEmit` may fail before a build because `tsconfig.json` includes `.next/types`; run typecheck after `next build` when those artifacts are missing
+  - Useful context
+  - Pages with non-root public paths (e.g., `cotacao`, `representante`) need explicit slug-to-route mapping in search results to avoid broken links
 ---

@@ -856,7 +856,7 @@
     {
       "id": "US-033",
       "title": "Busca global do site",
-      "passes": false,
+      "passes": true,
       "description": "Implementar funcionalidade de busca que pesquisa em Pages, Posts, Soluções e Conteúdos.",
       "acceptanceCriteria": [
         "Overlay de busca fullscreen ativado pelo ícone de busca na Navbar",
