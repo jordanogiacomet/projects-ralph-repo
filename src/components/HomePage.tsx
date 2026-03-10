@@ -185,41 +185,79 @@ export function HomePage({
         </motion.div>
       </section>
 
-      <section className="bg-bg-secondary py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-2xl font-bold sm:text-3xl">{servicesHeading}</h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+      {/* ── Services / 3 Pillars ── */}
+      <section className="section-space-loose bg-bg-primary">
+        <div className="mx-auto max-w-content px-6 sm:px-8 lg:px-12">
+          {/* Section header */}
+          <motion.div
+            className="mx-auto max-w-2xl text-center"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+              Soluções
+            </span>
+            <h2 className="font-display text-display-sm font-extrabold tracking-tight">
+              {servicesHeading}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-text-secondary sm:text-lg">
+              Metodologia comprovada e soluções especializadas para cada necessidade patrimonial.
+            </p>
+          </motion.div>
+
+          {/* Cards grid */}
+          <div className="mt-14 grid gap-6 sm:mt-16 lg:grid-cols-3 lg:gap-8">
             {services.slice(0, 3).map((card, index) => (
               <motion.article
                 key={card.id}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, delay: index * 0.12 }}
-                className="rounded-xl border border-border bg-white p-6 shadow-sm"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative flex flex-col overflow-hidden rounded-card border border-border bg-white p-8 shadow-[var(--shadow-soft)] transition-all duration-300 hover:border-accent/20 hover:shadow-[var(--shadow-medium)] sm:p-10"
               >
-                {card.iconUrl ? (
-                  <Image
-                    src={card.iconUrl}
-                    alt={card.title}
-                    width={48}
-                    height={48}
-                    loading="lazy"
-                    sizes="48px"
-                    className="h-12 w-12 rounded object-cover"
-                  />
-                ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded bg-accent-light text-accent">
-                    <span className="text-xl font-bold">{card.title.charAt(0)}</span>
-                  </div>
-                )}
-                <h3 className="mt-5 text-xl font-semibold">{card.title}</h3>
-                <p className="mt-3 text-sm text-text-secondary">{card.description}</p>
+                {/* Accent top bar */}
+                <div className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" aria-hidden />
+
+                {/* Icon */}
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft transition-colors duration-300 group-hover:bg-accent/10">
+                  {card.iconUrl ? (
+                    <Image
+                      src={card.iconUrl}
+                      alt=""
+                      width={32}
+                      height={32}
+                      loading="lazy"
+                      sizes="32px"
+                      className="h-8 w-8 object-contain"
+                    />
+                  ) : (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="text-accent" aria-hidden>
+                      {index === 0 && <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />}
+                      {index === 1 && <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-16 0H3m2 0v-4m14 4v-4M9 7h6M9 11h6M9 15h2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />}
+                      {index === 2 && <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />}
+                    </svg>
+                  )}
+                </div>
+
+                <h3 className="font-display text-xl font-bold tracking-tight sm:text-[1.375rem]">
+                  {card.title}
+                </h3>
+                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-text-secondary">
+                  {card.description}
+                </p>
+
+                {/* Link with arrow */}
                 <Link
                   href={card.link}
-                  className="mt-5 inline-flex text-sm font-semibold text-accent transition hover:text-accent-hover"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors duration-200 hover:text-accent-hover"
                 >
-                  Detalhes
+                  Saiba mais
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden>
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
               </motion.article>
             ))}
@@ -227,34 +265,124 @@ export function HomePage({
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold sm:text-3xl">{partnerSection.heading}</h2>
-          <p className="mt-4 text-text-secondary">{partnerSection.description}</p>
-          <Link
-            href={partnerSection.buttonLink}
-            className="mt-8 inline-flex rounded-md bg-cta-green px-6 py-3 font-semibold text-white transition hover:bg-cta-green-hover"
+      {/* ── Institutional Proof / Value ── */}
+      <section className="relative overflow-hidden bg-bg-dark-section section-space-loose">
+        {/* Subtle radial accent */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(0,86,166,0.10) 0%, transparent 70%)' }}
+          aria-hidden
+        />
+
+        <div className="relative z-10 mx-auto max-w-content px-6 sm:px-8 lg:px-12">
+          <motion.div
+            className="mx-auto max-w-3xl text-center"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {partnerSection.buttonLabel}
-          </Link>
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent/70">
+              Por que a Apollo
+            </span>
+            <h2 className="font-display text-display-sm font-extrabold tracking-tight text-text-on-dark">
+              {partnerSection.heading}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-white/60 sm:text-lg">
+              {partnerSection.description}
+            </p>
+          </motion.div>
+
+          {/* Stats / credentials row */}
+          <motion.div
+            className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-6 sm:mt-16 sm:gap-8 lg:grid-cols-4"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {[
+              { value: '20+', label: 'Anos de experiência' },
+              { value: '500+', label: 'Clientes atendidos' },
+              { value: '100%', label: 'Conformidade técnica' },
+              { value: '50+', label: 'Especialistas' },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="flex flex-col items-center rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-6 text-center backdrop-blur-sm sm:px-6 sm:py-8"
+              >
+                <span className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                  {stat.value}
+                </span>
+                <span className="mt-2 text-xs font-medium leading-snug text-white/50 sm:text-sm">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            className="mt-12 text-center sm:mt-14"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Link
+              href={partnerSection.buttonLink}
+              className="inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] transition-all duration-200 hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
+            >
+              {partnerSection.buttonLabel}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      <section className="bg-bg-secondary py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
-          <div className="order-2 md:order-1">
-            <h2 className="text-2xl font-bold sm:text-3xl">{aboutSection.heading}</h2>
-            <p className="mt-4 text-text-secondary">{aboutSection.description}</p>
+      {/* ── About / Institutional ── */}
+      <section className="section-space-loose bg-bg-primary">
+        <div className="mx-auto grid max-w-content items-center gap-12 px-6 sm:px-8 md:grid-cols-2 md:gap-16 lg:gap-20 lg:px-12">
+          {/* Text column */}
+          <motion.div
+            className="order-2 md:order-1"
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+              Sobre a Apollo
+            </span>
+            <h2 className="font-display text-display-sm font-extrabold tracking-tight">
+              {aboutSection.heading}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-text-secondary sm:text-lg">
+              {aboutSection.description}
+            </p>
             <Link
               href={aboutSection.buttonLink}
-              className="mt-8 inline-flex rounded-md border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent-light"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-accent px-7 py-3 text-sm font-semibold text-accent transition-all duration-200 hover:bg-accent hover:text-white sm:px-9 sm:py-3.5 sm:text-base"
             >
               {aboutSection.buttonLabel}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
-          </div>
-          <div className="order-1 md:order-2">
+          </motion.div>
+
+          {/* Media column */}
+          <motion.div
+            className="order-1 md:order-2"
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
             {aboutSection.videoUrl ? (
-              <div className="aspect-video overflow-hidden rounded-xl border border-border bg-black shadow-sm">
+              <div className="aspect-video overflow-hidden rounded-card border border-border bg-black shadow-[var(--shadow-medium)]">
                 <iframe
                   src={toEmbedUrl(aboutSection.videoUrl)}
                   title="Quem é a Apollo"
@@ -271,16 +399,23 @@ export function HomePage({
                 height={520}
                 loading="lazy"
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="h-full min-h-64 w-full rounded-xl border border-border object-cover shadow-sm"
+                className="h-full min-h-64 w-full rounded-card border border-border object-cover shadow-[var(--shadow-medium)]"
               />
             ) : (
-              <div className="flex min-h-64 items-center justify-center rounded-xl border border-border bg-white shadow-sm">
-                <span className="px-6 text-center text-sm text-text-secondary">
-                  Conteúdo visual da Apollo Gestão
-                </span>
+              <div className="flex min-h-72 items-center justify-center rounded-card border border-border bg-bg-secondary shadow-[var(--shadow-soft)]">
+                <div className="text-center">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent" aria-hidden>
+                      <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-medium text-text-muted">
+                    Conteúdo visual da Apollo Gestão
+                  </span>
+                </div>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

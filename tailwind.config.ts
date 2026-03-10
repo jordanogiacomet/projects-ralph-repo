@@ -70,6 +70,7 @@ const config: Config = {
       borderRadius: {
         button: 'var(--radius-button)',
         field: 'var(--radius-field)',
+        card: 'var(--radius-card)',
         panel: 'var(--radius-panel)',
         pill: 'var(--radius-pill)',
       },

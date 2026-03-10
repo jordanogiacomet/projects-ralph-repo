@@ -1416,3 +1416,32 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - **Learnings for future iterations:**
   - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
 ---
+
+## 2026-03-10 - US-040B
+- **Story:** Repaginação dos blocos centrais da homepage
+- **What was implemented:**
+  - Redesigned the 3-pillar services section with premium cards: accent top-bar on hover, larger icon area with contextual SVG fallbacks, better typography hierarchy (display-sm heading, kicker label), staggered entrance animations, arrow links with hover translation
+  - Redesigned the institutional proof/value section: dark-section background with radial accent overlay, kicker label, stats/credentials row (4 stat cards with glass-effect styling), green CTA button matching hero style
+  - Redesigned the about/institutional section: cleaner two-column layout with more generous spacing, kicker label, slide-in animations (x-axis), rounded-full outline-to-fill CTA button, better media placeholder with icon, design-token-driven shadows and radii
+  - Added `rounded-card` to Tailwind borderRadius config (mapping to `--radius-card` token)
+- **Files changed:**
+  - `src/components/HomePage.tsx` — all three post-hero sections rewritten
+  - `tailwind.config.ts` — added `card` borderRadius utility
+- **Visual rationale:**
+  - Sections now use consistent kicker labels, display-sm headings, and section-space-loose padding matching the hero's premium language
+  - Services cards gain micro-interactions (accent bar, icon bg transition, arrow translate) without spectacle
+  - Institutional proof section uses dark surface with stats row for institutional gravitas (numbers, credentials, differentials)
+  - About section gains generous breathing room and slide-in animations for media/text columns
+  - All sections use design tokens (shadow-soft/medium, radius-card, accent-soft, bg-dark-section) for system coherence
+- **Affected shared components:** None — changes are scoped to HomePage.tsx
+- **Responsive impact:** All sections remain responsive; grid breakpoints preserved (lg:grid-cols-3 for pillars, lg:grid-cols-4 for stats, md:grid-cols-2 for about)
+- **Accessibility impact:** Preserved aria-hidden on decorative elements, semantic heading hierarchy, link affordances, reduced-motion gating on all animations
+- **Quality checks:**
+  - `npm run lint`: passed (only pre-existing payload-types warning)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable; manual QA still required for hover interactions, dark section contrast, stats readability, responsive breakpoints
+- **Learnings for future iterations:**
+  - The `--radius-card` token was defined in tokens.css but not mapped in Tailwind config — always verify new token usage has a Tailwind mapping
+  - Hardcoded institutional stats (20+ anos, 500+ clientes, etc.) are appropriate for visual redesign without CMS schema changes per the redesign guardrails
+---

@@ -1039,7 +1039,7 @@
       "phase": "phase-2-redesign",
       "stream": "homepage",
       "title": "Repaginação dos blocos centrais da homepage",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar seções de serviços, prova institucional e bloco institucional da homepage.",
       "acceptanceCriteria": [
         "Seção dos 3 pilares com novo tratamento de cards, hierarquia e microinterações",
