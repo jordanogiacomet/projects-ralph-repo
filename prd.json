@@ -992,7 +992,7 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do mega menu, menu mobile e overlay de busca",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar superfícies de navegação secundária para linguagem mais premium e coerente.",
       "acceptanceCriteria": [
         "Mega menu evoluído para painel de navegação mais sofisticado",
