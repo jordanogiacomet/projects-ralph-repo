@@ -1008,7 +1008,7 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do footer, CTA flutuantes e elementos globais",
-      "passes": false,
+      "passes": true,
       "description": "Refinar footer, WhatsApp float, cookie consent e scroll-to-top para linguagem uniforme.",
       "acceptanceCriteria": [
         "Footer repaginado com menos peso visual e melhor hierarquia",

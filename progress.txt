@@ -62,8 +62,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - PRD v3.2 reordered phase-2 priorities: homepage (US-040A/B/C) → clientes/conteúdos/news (US-043A/B/C) → formulários (US-044A/B/C) → soluções (US-041A/B/C, US-042A/B).
 - Phase-2 completed stories: US-038, US-039A, US-039B, US-039C — all passes: true.
 - The older log entry `US-039` predates the split into US-039A/B/C; treat as historical context only.
-- Next story to execute: US-040A — first passes: false in the new priority order.
-- US-040A dependencies (US-038, US-039A) are satisfied.
+- US-039C re-validated and marked passes: true (code was intact from prior implementation).
+- Next story to execute: US-040B — first passes: false in the new priority order.
+- US-040B dependencies (US-038, US-039A) are satisfied.
 
 ## Current Delivery Status
 - Phase 1 functional foundation is implemented:
@@ -1392,6 +1393,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `npx tsc --noEmit`: passed
   - `npm run build`: passed
 - Browser/manual verification status: Browser tooling unavailable; manual QA still required for desktop/tablet/mobile mega menu, mobile drawer, and search overlay interactions
+- **Learnings for future iterations:**
+  - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
+---
+
+## 2026-03-10 - US-039C (re-validation)
+- What was implemented
+- US-039C was previously implemented (progress entry at 2026-03-10 14:36 UTC) and all code remains intact. The prd.json had been reverted to `passes: false`, so this run re-validated all acceptance criteria against the current codebase.
+- All acceptance criteria confirmed satisfied:
+  - Footer repaginado with tiered layout (highlight row, contact form + units grid, brand/navigation panel) — less visual weight, better hierarchy
+  - FooterContactForm uses light gradient card, guided copy, clean field treatment, guidance sidebar — lighter and more contemporary
+  - WhatsApp float, cookie consent, and scroll-to-top share unified dark translucent floating shell (bg-[#0e1a2d]/92, border-white/12, backdrop-blur, consistent rounding and shadows)
+  - Visual language consistent with Payload-inspired approach: clean surfaces, subtle gradients, premium shadows, consistent typography
+  - Responsive grids (sm/lg/xl breakpoints), aria-labels, prefers-reduced-motion in ScrollToTop — responsive and accessible
+- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
+- Files changed: prd.json, progress.txt (no component changes needed — prior implementation intact)
+- Quality checks:
+  - `npm run lint`: passed (only pre-existing payload-types warning)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- Browser/manual verification status: Browser tooling unavailable; manual QA still required for footer hierarchy, form usability, WhatsApp/cookie/scroll stacking, and keyboard interactions
 - **Learnings for future iterations:**
   - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
 ---
