@@ -65,6 +65,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - US-039C re-validated and marked passes: true (code was intact from prior implementation).
 - Next story to execute: US-040B — first passes: false in the new priority order.
 - US-040B dependencies (US-038, US-039A) are satisfied.
+- `progress-archive.txt` stores older historical entries and should only be consulted when older implementation context is needed.
 
 ## Current Delivery Status
 - Phase 1 functional foundation is implemented:
@@ -682,4 +683,36 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - **Learnings for future iterations:**
   - Shared listing components can absorb redesign scope safely when the new treatment is isolated behind an explicit variant instead of forcing unfinished templates onto the same visual step prematurely
   - In this repository, practical type validation may need to happen after a successful Next build refreshes `.next/types`, even when the TypeScript pass is listed earlier in the nominal command order
+---
+## 2026-03-10 17:59 UTC - US-046B
+- **Story:** Repaginacao dos hubs de categoria de solucoes
+- **What was implemented:**
+  - Rebuilt the three category hubs under `/solucoes` around a shared phase-2 template with a darker narrative hero, consultive summary panel, an overlapping introduction surface, a premium solution-grid frame, a stronger CTA bridge, and a cleaner contact handoff
+  - Consolidated category-hub data loading into `src/lib/solutionCategories.ts`, preserving resilient Payload-backed metadata and solution fetching while supplying deterministic category-specific fallback narratives, ordered solution lists, and new story copy for Avaliacao Patrimonial, Controle Patrimonial, and Consultoria e Tecnologia
+  - Added a backward-compatible route alias for `/solucoes/controle-patrimonial/identificacao-patrimonial` so legacy/internal links continue to resolve even though the seeded/canonical detail route uses `etiquetas-patrimoniais-inteligentes`
+- **Files changed:**
+  - `src/lib/solutionCategories.ts` — added the shared category-hub config, Payload metadata loader, resilient solution fetcher, and category-specific narrative copy/fallbacks
+  - `src/components/SolutionCategoryHubPage.tsx` — implemented the shared phase-2 category-hub layout spanning hero, intro, grid, CTA, and contact sections
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/identificacao-patrimonial/page.tsx` — added a compatibility re-export to the canonical `etiquetas-patrimoniais-inteligentes` route
+  - `prd.json` — marked the selected `US-046B` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The old category hubs still read like first-pass landing pages: fullscreen hero, immediate grid, and form. This pass gives each category a more consultive opening with stronger hierarchy between narrative framing, service map, CTA, and contact so the pages feel closer to the redesigned homepage and `/solucoes` hub
+  - The redesign keeps Apollo institutional, technical, and commercially direct, but moves the hubs away from generic “solucao completa” framing by using more deliberate storytelling, clearer surfaces, and shared premium layout rhythm across all three categories
+- **Affected shared components:** `SolutionCategoryHubPage` and `solutionCategories` now centralize the category-hub experience; existing `SolutionGrid` hub cards and `ContatoForm` were reused so the new pages stay aligned with the phase-2 solutions language without reopening CMS schema work
+- **Responsive impact:** All three hubs now collapse from split hero/CTA compositions into single-column tablet/mobile layouts while preserving readable card spacing, button stacking, and a cleaner vertical rhythm through intro, grid, and contact sections
+- **Accessibility impact:** Preserved semantic heading structure, keyboard-accessible CTA links, reduced-motion gating for animated reveals, sufficient contrast on dark surfaces, and `aria-hidden` treatment for decorative gradient/background layers
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, and the compatibility route `/solucoes/controle-patrimonial/identificacao-patrimonial`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the three category hubs across desktop/tablet/mobile, including hero readability over imagery, section-overlap spacing, CTA emphasis, and the compatibility link path
+- **Learnings for future iterations:**
+  - Shared narrative templates are a safer way to harmonize related redesign pages than advancing each category independently; the categories can still keep distinct copy while the layout rhythm stays consistent
+  - Seed/content slug drift can surface as routing regressions during redesign work, so category-hub refactors should verify seeded solution slugs and preserve compatibility routes when historical paths already exist in content or navigation
 ---

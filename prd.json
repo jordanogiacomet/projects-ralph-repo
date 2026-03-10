@@ -1169,7 +1169,7 @@
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação dos hubs de categoria de soluções",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar hubs de categoria para aberturas consultivas mais narrativas por domínio.",
       "acceptanceCriteria": [
         "Páginas de categoria com abertura mais narrativa e valor percebido",
