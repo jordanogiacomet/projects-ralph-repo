@@ -27,9 +27,12 @@ export function CookieConsent({ text }: CookieConsentProps) {
 
   return (
     <Card
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-reading"
+      className="fixed inset-x-4 bottom-[5.25rem] z-50 mx-auto max-w-reading rounded-[28px] border border-border/80 bg-white/96 shadow-[0_24px_56px_rgba(15,23,42,0.18)] backdrop-blur sm:inset-x-auto sm:bottom-5 sm:left-5 sm:mx-0 sm:max-w-[28rem]"
       padding="md"
     >
+      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
+        Cookies
+      </p>
       <p className="text-body-sm text-text-secondary">
         {text ||
           'Utilizamos cookies para melhorar sua experiência de navegação e analisar o tráfego do site.'}
@@ -38,18 +41,10 @@ export function CookieConsent({ text }: CookieConsentProps) {
         <Button size="sm" onClick={() => handleChoice('accepted')}>
           Aceitar
         </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => handleChoice('hidden')}
-        >
+        <Button size="sm" variant="outline" onClick={() => handleChoice('hidden')}>
           Ocultar
         </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => handleChoice('settings')}
-        >
+        <Button size="sm" variant="ghost" onClick={() => handleChoice('settings')}>
           Configurações
         </Button>
       </div>

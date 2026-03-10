@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { Badge, Card } from '@/components/ui'
 
 type SearchOverlayProps = {
   isOpen: boolean
@@ -33,6 +34,13 @@ const emptyResponse: SearchResponse = {
   groups: [],
   total: 0,
 }
+
+const searchTopics = [
+  'Páginas institucionais',
+  'Soluções especializadas',
+  'Conteúdos ricos',
+  'Notícias e artigos',
+]
 
 function normalizeText(value: unknown): string {
   if (typeof value !== 'string') return ''
@@ -194,7 +202,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-bg-dark-section/95"
+          className="fixed inset-0 z-[60] overflow-y-auto bg-[#07111e]/74 px-4 py-6 backdrop-blur-md sm:px-6 sm:py-10"
           role="dialog"
           aria-modal="true"
           aria-label="Busca no site"
@@ -204,102 +212,178 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             }
           }}
         >
-          <button
-            onClick={onClose}
-            className="absolute top-6 right-6 text-text-on-dark hover:text-accent-light transition-colors"
-            aria-label="Fechar busca"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8">
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start justify-center">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.98 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.22 }}
+              className="w-full"
+            >
+              <Card
+                className="overflow-hidden rounded-[32px] border border-white/70 bg-white/95 p-0 shadow-[0_32px_80px_rgba(15,23,42,0.26)] backdrop-blur-xl"
+                padding="none"
+              >
+                <div className="border-b border-border/70 bg-[linear-gradient(160deg,rgba(246,248,251,0.95)_0%,rgba(255,255,255,0.98)_56%,rgba(234,242,251,0.78)_100%)] p-6 sm:p-8">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="max-w-2xl">
+                      <Badge tone="accent">Busca no site</Badge>
+                      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-text-primary sm:text-[2.35rem]">
+                        Encontre páginas, soluções, notícias e conteúdos com mais rapidez
+                      </h2>
+                      <p className="mt-3 text-sm leading-6 text-text-secondary sm:text-base">
+                        Digite termos livres para pesquisar em toda a estrutura pública da Apollo.
+                      </p>
+                    </div>
 
-          <div className="w-full max-w-3xl px-6">
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="search-input" className="block text-text-on-dark text-lg mb-4 text-center">
-                O que você procura?
-              </label>
-              <div className="relative">
-                <input
-                  ref={inputRef}
-                  id="search-input"
-                  name="q"
-                  type="search"
-                  placeholder="Digite sua busca..."
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  className="w-full bg-transparent border-b-2 border-text-on-dark/30 focus:border-accent text-text-on-dark text-2xl py-4 px-2 outline-none placeholder:text-text-on-dark/40 transition-colors"
-                  autoComplete="off"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-text-on-dark hover:text-accent transition-colors"
-                  aria-label="Buscar"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-6 h-6">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-6 max-h-[58vh] overflow-y-auto pr-1">
-              {!hasQuery && (
-                <p className="text-center text-sm text-text-on-dark/70">
-                  Pesquise em páginas, notícias, soluções e conteúdos.
-                </p>
-              )}
-
-              {isLoading && (
-                <div className="flex items-center justify-center gap-3 py-8 text-text-on-dark/80">
-                  <span
-                    className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-text-on-dark/30 border-t-text-on-dark"
-                    aria-hidden
-                  />
-                  <span className="text-sm">Buscando resultados...</span>
-                </div>
-              )}
-
-              {shouldShowEmptyState && (
-                <p className="rounded-xl border border-text-on-dark/20 bg-text-on-dark/5 px-4 py-5 text-center text-sm text-text-on-dark/80">
-                  Nenhum resultado encontrado para &quot;{response.query || query.trim()}&quot;.
-                </p>
-              )}
-
-              {!isLoading && hasResults && (
-                <div className="space-y-5">
-                  {response.groups.map((group) => (
-                    <section
-                      key={group.key}
-                      className="rounded-2xl border border-text-on-dark/20 bg-text-on-dark/5 p-3 sm:p-4"
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border/80 bg-white/70 text-text-secondary transition hover:border-accent/20 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                      aria-label="Fechar busca"
                     >
-                      <h3 className="text-sm font-semibold uppercase tracking-wide text-text-on-dark/70">
-                        {group.label}
-                      </h3>
-                      <ul className="mt-3 space-y-2">
-                        {group.results.map((result) => (
-                          <li key={`${group.key}-${result.id}-${result.href}`}>
-                            <Link
-                              href={result.href}
-                              onClick={onClose}
-                              className="block rounded-xl border border-transparent px-3 py-2.5 transition hover:border-accent/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                            >
-                              <p className="text-base font-semibold text-text-on-dark">{result.title}</p>
-                              {result.description && (
-                                <p className="mt-1 line-clamp-2 text-sm text-text-on-dark/75">
-                                  {result.description}
-                                </p>
-                              )}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  ))}
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        className="h-5.5 w-5.5"
+                      >
+                        <path d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="mt-6">
+                    <label htmlFor="search-input" className="sr-only">
+                      O que você procura?
+                    </label>
+                    <div className="relative overflow-hidden rounded-[24px] border border-border bg-white shadow-[0_16px_32px_rgba(15,23,42,0.08)]">
+                      <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center text-text-muted">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          className="h-5.5 w-5.5"
+                        >
+                          <circle cx="11" cy="11" r="8" />
+                          <path d="m21 21-4.3-4.3" />
+                        </svg>
+                      </span>
+                      <input
+                        ref={inputRef}
+                        id="search-input"
+                        name="q"
+                        type="search"
+                        placeholder="Busque por temas, serviços, páginas ou conteúdos..."
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                        className="h-16 w-full bg-transparent pl-14 pr-16 text-base font-medium text-text-primary outline-none placeholder:text-text-muted sm:text-lg"
+                        autoComplete="off"
+                      />
+                      <button
+                        type="submit"
+                        className="absolute inset-y-2 right-2 inline-flex items-center justify-center rounded-full bg-accent px-4 text-sm font-semibold text-white transition hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                        aria-label="Buscar"
+                      >
+                        Ir
+                      </button>
+                    </div>
+                  </form>
+
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-text-muted">
+                    <span>Pesquise em páginas, notícias, soluções e conteúdos.</span>
+                    {hasQuery ? (
+                      <span>
+                        {isLoading
+                          ? 'Buscando resultados...'
+                          : hasResults
+                            ? `${response.total} resultado${response.total === 1 ? '' : 's'}`
+                            : 'Nenhum resultado'}
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
-              )}
-            </div>
+
+                <div className="max-h-[62vh] overflow-y-auto p-6 sm:p-8">
+                  {!hasQuery ? (
+                    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                      {searchTopics.map((topic) => (
+                        <div
+                          key={topic}
+                          className="rounded-[22px] border border-border bg-surface-secondary/80 px-4 py-4 text-sm font-medium text-text-secondary"
+                        >
+                          {topic}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {isLoading ? (
+                    <div className="flex items-center justify-center gap-3 py-10 text-text-secondary">
+                      <span
+                        className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-text-muted/30 border-t-text-secondary"
+                        aria-hidden
+                      />
+                      <span className="text-sm">Buscando resultados...</span>
+                    </div>
+                  ) : null}
+
+                  {shouldShowEmptyState ? (
+                    <div className="rounded-[24px] border border-border bg-surface-secondary/70 px-5 py-8 text-center">
+                      <p className="text-lg font-semibold tracking-[-0.02em] text-text-primary">
+                        Nenhum resultado encontrado
+                      </p>
+                      <p className="mt-2 text-sm text-text-secondary">
+                        Tente novos termos para buscar por &quot;{response.query || query.trim()}
+                        &quot;.
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {!isLoading && hasResults ? (
+                    <div className="space-y-5">
+                      {response.groups.map((group) => (
+                        <section
+                          key={group.key}
+                          className="rounded-[26px] border border-border bg-surface-secondary/70 p-4 sm:p-5"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
+                              {group.label}
+                            </h3>
+                            <span className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-pill bg-white px-2.5 text-[11px] font-semibold text-text-muted shadow-sm">
+                              {group.results.length}
+                            </span>
+                          </div>
+                          <ul className="mt-4 grid gap-3">
+                            {group.results.map((result) => (
+                              <li key={`${group.key}-${result.id}-${result.href}`}>
+                                <Link
+                                  href={result.href}
+                                  onClick={onClose}
+                                  className="block rounded-[22px] border border-border/70 bg-white px-4 py-4 transition hover:-translate-y-0.5 hover:border-accent/25 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                                >
+                                  <p className="text-base font-semibold tracking-[-0.02em] text-text-primary">
+                                    {result.title}
+                                  </p>
+                                  {result.description ? (
+                                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-text-secondary">
+                                      {result.description}
+                                    </p>
+                                  ) : null}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </Card>
+            </motion.div>
           </div>
         </motion.div>
       )}

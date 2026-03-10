@@ -1349,7 +1349,7 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do layout global e navegação",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar navbar, mega menu, menu mobile, overlay de busca, footer, CTA flutuantes e elementos globais para refletir uma linguagem visual mais premium, limpa e coesa.",
       "acceptanceCriteria": [
         "A navbar deve ganhar hierarquia visual mais refinada, melhor espaçamento, estados hover/focus mais elegantes e sensação de produto premium",

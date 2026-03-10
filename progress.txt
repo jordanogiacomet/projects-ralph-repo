@@ -1094,6 +1094,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Phase-2 design-system foundations now live in `src/styles/tokens.css` and `src/styles/utilities.css`, while Tailwind aliases expose the same tokens to JSX and `src/components/ui/` primitives.
   - Gotchas encountered
   - In this Next.js/Tailwind setup, CSS files imported by `src/app/globals.css` should use plain rules/classes; putting `@layer base` inside the imported file caused build-time PostCSS failures.
-  - Useful context
-  - Shared components such as `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` are low-risk first adopters for new primitives because they validate the system without starting template-level redesign stories early.
+- Useful context
+- Shared components such as `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` are low-risk first adopters for new primitives because they validate the system without starting template-level redesign stories early.
+---
+## 2026-03-10 12:45 UTC - US-039
+- What was implemented
+- Repaginated the full global shell for phase 2: navbar, mega menu, mobile menu, search overlay, footer, footer contact form, footer units, social icon treatments, cookie consent, WhatsApp float, and scroll-to-top now share a more premium and cohesive visual language.
+- Centralized header navigation normalization and fallback data in `src/lib/navigation.ts`, then reused that structure in both `NavbarServer` and `Footer` so footer navigation stays aligned with the editorial header global without new CMS schema work.
+- Files changed
+- `src/lib/navigation.ts`, `src/components/NavbarServer.tsx`, `src/components/Navbar.tsx`, `src/components/MegaMenu.tsx`, `src/components/MobileMenu.tsx`, `src/components/SearchOverlay.tsx`, `src/components/Footer.tsx`, `src/components/FooterContactForm.tsx`, `src/components/FooterUnidades.tsx`, `src/components/SocialLinks.tsx`, `src/components/WhatsAppFloat.tsx`, `src/components/ScrollToTop.tsx`, `src/components/CookieConsent.tsx`, `src/components/ui/Input.tsx`, `src/components/ui/Textarea.tsx`, `prd.json`, `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile navbar behavior, mega menu, mobile drawer, search overlay, footer hierarchy, cookie consent, WhatsApp float, and scroll-to-top.
+- **Learnings for future iterations:**
+- Patterns discovered
+- Global header navigation parsing/fallbacks now live in `src/lib/navigation.ts`, which should be reused anywhere shell navigation needs consistent CMS data or resilient fallback structure.
+- Gotchas encountered
+- Footer navigation should derive from the existing Header global rather than a separate hardcoded/footer-only schema source, otherwise global shell surfaces drift editorially.
+- Useful context
+- Shared shell primitives now support cross-surface styling better: `Input` and `Textarea` accept `labelClassName`, and `SocialLinks` accepts per-item shell styling for light and dark contexts.
 ---

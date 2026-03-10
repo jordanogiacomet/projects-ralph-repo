@@ -6,6 +6,7 @@ type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   description?: string
   error?: string
   label?: string
+  labelClassName?: string
   wrapperClassName?: string
 }
 
@@ -15,6 +16,7 @@ export function Textarea({
   error,
   id,
   label,
+  labelClassName,
   name,
   wrapperClassName,
   ...props
@@ -27,7 +29,10 @@ export function Textarea({
   return (
     <div className={cn('grid gap-2', wrapperClassName)}>
       {label ? (
-        <label htmlFor={textareaId} className="text-label-sm font-semibold text-text-primary">
+        <label
+          htmlFor={textareaId}
+          className={cn('text-label-sm font-semibold text-text-primary', labelClassName)}
+        >
           {label}
         </label>
       ) : null}
