@@ -1198,7 +1198,7 @@
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação do template base de páginas de solução",
-      "passes": false,
+      "passes": true,
       "description": "Refinar o template base das páginas individuais de solução.",
       "acceptanceCriteria": [
         "Hero/banner refinado com melhor composição, respiro e tipografia mais forte",

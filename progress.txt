@@ -40,6 +40,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Phase-2 design tokens and aliases live in `src/styles/tokens.css` and `src/styles/utilities.css`
 - Shared UI primitives live in `src/components/ui/` and should be preferred over one-off control styling when the same visual pattern appears in multiple templates
 - Shared shell navigation normalization lives in `src/lib/navigation.ts` and should be reused anywhere header/footer navigation needs the same resilient Payload + fallback structure
+- Canonical solution detail routes now use per-page config objects plus the shared `src/components/SolutionDetailPage.tsx` template/loader; preserve alias routes as re-exports when historical slugs still need to resolve
 - Redesign work should prefer front-end evolution over CMS schema changes unless there is clear editorial-governance value
 - Payload-inspired visual language must be translated to Apollo’s institutional context; do not drift into a literal SaaS clone of Payload
 - The header is functional but is not final merely because it works; current redesign backlog explicitly requires continued shell refinement
@@ -142,395 +143,6 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
 ---
 
-## 2026-03-10 11:17 UTC - US-037
-- What was implemented
-- Executed a full backlog audit across all stories with `passes=true` (US-001 to US-036), reviewing sequencing, dependency assumptions, acceptance-criteria quality, duplication, and visual-direction consistency against Apollo’s existing identity.
-- Recorded review conclusions: backlog preserves brand identity (palette, hero-first structure, corporate tone), but required clearer modernization guardrails for typography hierarchy, spacing rhythm, grid consistency, and measurable QA evidence.
-- Identified sequencing/dependency risks and captured recommended ordering adjustments for future planning: seed/content readiness should occur before most page/UI stories; performance KPIs require explicit measurement evidence and cannot rely only on implementation-level completion.
-- Refined ambiguous acceptance criteria directly in `prd.json` to make verification objective and implementable without changing product scope.
-- Backlog refinement updates applied in `prd.json`:
-- US-001 AC1 now allows CLI or manual scaffold outcome (instead of a single tooling path).
-- US-003 AC14 now makes Live Preview explicitly optional/non-blocking while requiring admin insert/edit coverage.
-- US-010 and US-011 responsive acceptance criteria now define concrete expected layout behavior.
-- US-027, US-028, and US-029 submit behavior criteria now explicitly require `/api/form-submissions` integration with inline feedback.
-- US-035 now requires documented Lighthouse/Core Web Vitals evidence context.
-- Marked `US-037` as complete (`"passes": true`).
-- Files changed
-- prd.json
-- progress.txt
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npm run build` initially failed with intermittent Next.js sandbox flakiness (`ENOENT` chunk + `PageNotFoundError: /_document`), then passed on retry and generated all frontend/admin routes.
-- `npx next build --debug` passed (used as fallback diagnostic validation during build flakiness).
-- `npx tsc --noEmit` passed.
-- Browser/manual verification status
-- No product/UI behavior was changed in this story; browser tooling remains unavailable in this environment, and prior visual/manual QA requirements remain unchanged.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - Backlog quality improves when acceptance criteria specify measurable outcomes (endpoint, feedback state, responsive target) rather than placeholders or generic labels.
-  - Gotchas encountered
-  - In this sandbox, `npm run build` can intermittently fail with transient Next.js page/chunk resolution errors even when equivalent `next build --debug` and subsequent retries pass.
-  - Useful context
-  - For visual-direction stories, explicit quality gates for typography scale, spacing rhythm, and evidence-based performance checks should be declared in acceptance criteria up front to avoid interpretation drift.
----
-## 2026-03-10 12:22 UTC - US-038
-- What was implemented
-- Consolidated the phase-2 design-system foundation by adding explicit visual tokens, typography scale, spacing/rhythm aliases, radius/shadow/surface states, and a new `designSystemBase` section in `prd.json`.
-- Added reusable primitives in `src/components/ui/` for buttons, inputs, textareas, selects, cards, chips, badges, headings, and containers, then validated the system by wiring `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` onto the new layer.
-- Updated frontend styling infrastructure with `Manrope` display typography, CSS-token files under `src/styles/`, and Tailwind aliases mapped to the new visual variables.
-- Files changed
-- `prd.json`, `src/app/(frontend)/layout.tsx`, `src/app/globals.css`, `tailwind.config.ts`, `src/styles/tokens.css`, `src/styles/utilities.css`, `src/components/ui/*`, `src/components/ContatoForm.tsx`, `src/components/CookieConsent.tsx`, `src/components/SolutionFilterTabs.tsx`, `progress.txt`
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npx tsc --noEmit` passed.
-- `npm run build` passed and generated all frontend/admin routes.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls that now use the new design-system primitives.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - Phase-2 design-system foundations now live in `src/styles/tokens.css` and `src/styles/utilities.css`, while Tailwind aliases expose the same tokens to JSX and `src/components/ui/` primitives.
-  - Gotchas encountered
-  - In this Next.js/Tailwind setup, CSS files imported by `src/app/globals.css` should use plain rules/classes; putting `@layer base` inside the imported file caused build-time PostCSS failures.
-- Useful context
-- Shared components such as `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` are low-risk first adopters for new primitives because they validate the system without starting template-level redesign stories early.
----
-## 2026-03-10 12:45 UTC - US-039
-- What was implemented
-- Repaginated the full global shell for phase 2: navbar, mega menu, mobile menu, search overlay, footer, footer contact form, footer units, social icon treatments, cookie consent, WhatsApp float, and scroll-to-top now share a more premium and cohesive visual language.
-- Centralized header navigation normalization and fallback data in `src/lib/navigation.ts`, then reused that structure in both `NavbarServer` and `Footer` so footer navigation stays aligned with the editorial header global without new CMS schema work.
-- Files changed
-- `src/lib/navigation.ts`, `src/components/NavbarServer.tsx`, `src/components/Navbar.tsx`, `src/components/MegaMenu.tsx`, `src/components/MobileMenu.tsx`, `src/components/SearchOverlay.tsx`, `src/components/Footer.tsx`, `src/components/FooterContactForm.tsx`, `src/components/FooterUnidades.tsx`, `src/components/SocialLinks.tsx`, `src/components/WhatsAppFloat.tsx`, `src/components/ScrollToTop.tsx`, `src/components/CookieConsent.tsx`, `src/components/ui/Input.tsx`, `src/components/ui/Textarea.tsx`, `prd.json`, `progress.txt`
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npx tsc --noEmit` passed.
-- `npm run build` passed and generated all frontend/admin routes.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile navbar behavior, mega menu, mobile drawer, search overlay, footer hierarchy, cookie consent, WhatsApp float, and scroll-to-top.
-- **Learnings for future iterations:**
-- Patterns discovered
-- Global header navigation parsing/fallbacks now live in `src/lib/navigation.ts`, which should be reused anywhere shell navigation needs consistent CMS data or resilient fallback structure.
-- Gotchas encountered
-- Footer navigation should derive from the existing Header global rather than a separate hardcoded/footer-only schema source, otherwise global shell surfaces drift editorially.
-- Useful context
-- Shared shell primitives now support cross-surface styling better: `Input` and `Textarea` accept `labelClassName`, and `SocialLinks` accepts per-item shell styling for light and dark contexts.
----
-## 2026-03-10 13:46 UTC - US-038
-- What was implemented
-- Validated the existing phase-2 design-system foundation against `US-038` acceptance criteria and finalized the story state. Confirmed the PRD already carries the Payload-inspired visual direction, typography hierarchy, spacing/rhythm guidance, and reusable surface/state tokens, while the codebase already exposes shared UI primitives in `src/components/ui/`, global token files in `src/styles/`, and frontend font/style wiring through the layout and Tailwind config.
-- Marked `US-038` as complete in `prd.json` (`"passes": true`).
-- Files changed
-- prd.json
-- progress.txt
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npm run build` passed and generated all frontend/admin routes.
-- `npx tsc --noEmit` passed.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls and pages that consume the phase-2 design-system primitives.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - Story completion can be a validation pass when implementation already exists in the repo, but PRD status and progress history must be reconciled against the current code before flipping `passes`.
-  - Gotchas encountered
-  - `prd.json` can lag behind already-landed implementation work during phased redesign stories, so status should not be trusted without checking the actual style/token/component layers.
-  - Useful context
-  - The current design-system base is anchored by `src/styles/tokens.css`, `src/styles/utilities.css`, Tailwind theme aliases, and the primitives under `src/components/ui/`, with `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` already serving as live adopters.
----
-## 2026-03-10 14:01 UTC - US-039A
-- What was implemented
-- Refined the global header and primary navigation in `src/components/Navbar.tsx` to reduce utility noise, remove the separate social strip, increase whitespace and shell polish, and rebalance the layout around logo, main nav, search, and a stronger CTA.
-- Kept existing behavior intact while improving hierarchy: transparent-on-hero handling, active nav states, desktop mega-menu triggers, search access, and mobile menu controls remain in place, with the CTA now also exposed in the small-screen header from `sm` upward.
-- Marked `US-039A` as complete in `prd.json` (`"passes": true`).
-- Files changed
-- `src/components/Navbar.tsx`
-- `prd.json`
-- `progress.txt`
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npm run build` passed and generated all frontend/admin routes after isolating a stale generated `.next` directory; initial attempts hit the repo's known intermittent `PageNotFoundError: /_document` during page-data collection.
-- `npx tsc --noEmit` passed.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile header behavior, CTA prominence, transparent hero state, and nav/search access.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - For the shell header, primary navigation reads more clearly when search and social affordances are grouped into a secondary utility capsule and the main CTA remains visually isolated.
-  - Gotchas encountered
-  - In this sandbox, transient `next build` failures for `/_document` can clear after moving an existing generated `.next` directory aside and rerunning the required build.
-  - Useful context
-  - Showing the primary CTA in the mobile header only from `sm` upward preserves conversion visibility without overcrowding the smallest breakpoint.
----
-## 2026-03-10 14:18 UTC - US-039B
-- What was implemented
-- Redesigned the secondary navigation surfaces to match the new phase-2 shell language: `MegaMenu` now behaves like an editorial navigation panel with section metrics, quick links, clearer category cards, and active-path highlighting; `MobileMenu` now carries the same visual hierarchy with a richer drawer header, guided section cards, auto-expanded active branches, and an in-drawer search handoff; `SearchOverlay` now uses a two-column guided layout with suggestion chips, stronger grouping, and cleaner result presentation.
-- Preserved existing accessibility behavior while tightening it: reduced-motion handling remains in place, the mobile drawer and search overlay still trap focus and close on `Escape`, and the mega menu now also closes on `Escape`.
-- Marked `US-039B` as complete in `prd.json` (`"passes": true`).
-- Files changed
-- `src/components/MegaMenu.tsx`
-- `src/components/MobileMenu.tsx`
-- `src/components/Navbar.tsx`
-- `src/components/SearchOverlay.tsx`
-- `prd.json`
-- `progress.txt`
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npx tsc --noEmit` passed.
-- `npm run build` passed and generated all frontend/admin routes.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile mega menu behavior, mobile drawer hierarchy, search overlay focus flow, and the mobile drawer -> search handoff.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - Secondary shell surfaces should reuse the same route-matching helpers (`matchesPath`, `navItemMatchesPath`) as the primary header so active states stay aligned across desktop and mobile navigation layers.
-  - Gotchas encountered
-  - When one overlay launches another on mobile, close the first surface before opening the second so body-scroll locking and focus restoration do not conflict.
-  - Useful context
-  - Suggestion chips in the search overlay are a low-risk way to make the search surface feel more guided without changing the API contract of `/api/search`.
----
-## 2026-03-10 14:36 UTC - US-039C
-- What was implemented
-- Reworked the footer into clearer tiers so the shell closes with less visual weight: an intro/highlight row, a lighter contact-form + units grid, and a separate brand/navigation panel while keeping the existing Payload/global data flow intact.
-- Restyled `FooterContactForm` into a brighter, more contemporary surface with guided copy and cleaner field treatment; refreshed `FooterUnidades` with clearer cards and direct phone/email links.
-- Unified `WhatsAppFloat`, `CookieConsent`, and `ScrollToTop` around the same dark translucent floating-shell treatment so these global controls no longer feel isolated from the redesigned footer.
-- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
-- Files changed
-- `src/components/Footer.tsx`
-- `src/components/FooterContactForm.tsx`
-- `src/components/FooterUnidades.tsx`
-- `src/components/WhatsAppFloat.tsx`
-- `src/components/CookieConsent.tsx`
-- `src/components/ScrollToTop.tsx`
-- `prd.json`
-- `progress.txt`
-- Quality checks run and results
-- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
-- `npm run typecheck` not available (missing script in `package.json`).
-- `npm run test` not available (missing script in `package.json`).
-- `npx tsc --noEmit` passed.
-- `npm run build` passed and generated all frontend/admin routes.
-- Browser/manual verification status
-- Browser tooling unavailable in this environment; manual QA is still required for desktop/tablet/mobile footer hierarchy, footer form usability, WhatsApp/cookie/scroll stacking, and keyboard interaction states.
-- **Learnings for future iterations:**
-  - Patterns discovered
-  - Global floating affordances feel materially more coherent when they share one backdrop/border/shadow language and deliberate vertical spacing instead of being styled independently.
-  - Gotchas encountered
-  - Public-facing shell copy should stay institutional and user-facing; avoid leaking internal redesign/system terminology into footer labels or CTA copy.
-  - Useful context
-  - Footer hierarchy reads lighter when contact, units, social, and navigation are split into distinct layers instead of one dense all-in-one panel.
----
-
-## 2026-03-10 - US-039A (re-validation)
-- What was implemented
-- US-039A was previously implemented (commit 6fd44e8) but prd.json was reset to passes: false during PRD v3.2 restructuring. Re-evaluated current codebase against acceptance criteria.
-- All 7 acceptance criteria verified as satisfied in the current code:
-  - Header critically revised: Full redesign in Navbar.tsx with sophisticated state management, backdrop blur, gradient surfaces
-  - Cleaner hierarchical composition: Four-zone layout (logo | nav | utilities | CTA) with clear visual separation
-  - More whitespace: Rounded pill containers, progressive spacing, gradient backgrounds
-  - CTA prominence: Green success variant with trailing icon, elevated shadow, separate positioning
-  - Payload-inspired visual language: Rounded modular design, color subtlety, micro-interactions adapted to Apollo institutional context
-  - Search/social isolation: Separate utilities container, social hidden until 2xl, search opens as overlay
-  - Responsive and accessible: Full breakpoint coverage, ARIA labels, keyboard nav, focus management, reduced-motion support
-- Files verified: Navbar.tsx, NavbarServer.tsx, MegaMenu.tsx, MobileMenu.tsx, SearchOverlay.tsx, SocialLinks.tsx, tokens.css, utilities.css, Button.tsx
-- Quality checks run and results
-  - npm run lint: passed (only warning: unused eslint-disable in payload-types.ts)
-  - npx tsc --noEmit: passed
-  - npm run build: passed
-- Browser/manual verification status
-  - Browser tooling unavailable; manual QA still required for transparent nav on hero, mega-menu keyboard nav, mobile menu transitions, search overlay tab trapping
-- **Learnings for future iterations:**
-  - When PRD is restructured (version bump), story passes flags may be reset even if implementation exists; always re-validate current code state
----
-
-## 2026-03-10 - US-040A
-- Redesigned homepage hero section for premium, Payload-inspired visual language
-- Key changes:
-  - Added institutional badge ("Especialistas em Gestão Patrimonial") with frosted glass pill styling matching shell language
-  - Upgraded headline to `text-display-lg` (clamp-based responsive) with tighter tracking for stronger hierarchy
-  - Refined multi-layer gradient overlays: primary 175deg directional gradient, radial brand accent glow, top-edge navbar integration gradient
-  - Replaced single blue CTA with dual CTA group: primary green (matching shell's CTA green) + secondary frosted outline ("Conheça a Apollo")
-  - CTA shadows use colored glow (`rgba(40,167,69,0.25)`) for premium depth
-  - Secondary CTA uses frosted glass treatment (`bg-white/[0.06]`, `backdrop-blur-sm`, `border-white/20`) consistent with shell surfaces
-  - Enhanced scroll indicator with "Explorar" label, subtler animation, reduced visual weight
-  - Improved vertical spacing: more breathing room between badge → headline → subtitle → CTAs
-  - Used `min-h-[100svh]` for better mobile viewport handling
-  - Background image scale increased to 1.08 for stronger parallax effect
-- Files changed: src/components/HomePage.tsx
-- Visual rationale: The previous hero was functional but lacked the premium sophistication established by the US-039A/B/C shell redesign. The new hero uses frosted glass surfaces, colored CTA shadows, multi-layer gradients, institutional badging, and clamp-based responsive typography to match the shell's Payload-inspired premium language while preserving Apollo's institutional tone.
-- Affected shared components: None — changes scoped to hero section within HomePage.tsx
-- Responsive impact: Dual CTAs stack vertically on mobile, side-by-side on sm+; clamp typography scales smoothly; `100svh` handles mobile browser chrome
-- Accessibility impact: All existing motion gating via `useReducedMotion()` preserved; badge uses semantic span with decorative dot; all aria attributes maintained
-- Quality checks:
-  - npm run lint: passed (only pre-existing payload-types warning)
-  - npx tsc --noEmit: passed
-  - npm run build: passed
-- Browser/manual verification status: Browser tooling unavailable; manual QA required for hero visual appearance, gradient rendering, CTA hover states, mobile stacking, and reduced-motion behavior
----
-
-## 2026-03-10 - US-039B (re-validation)
-- What was implemented
-- US-039B was previously implemented and the code remains intact in the repository. The prd.json had been reverted to `passes: false`, so this run re-validated all acceptance criteria against the current codebase.
-- All acceptance criteria confirmed satisfied:
-  - Mega menu evolved to sophisticated navigation panel with badges, quick links, category map, and expanded panel (MegaMenu.tsx)
-  - Better visual organization of categories and sub-items with numbered sections, child counts, and active-state highlighting
-  - Mobile menu as natural extension of header with dark drawer, expandable sections, search handoff, and social links (MobileMenu.tsx)
-  - Search overlay with cleaner editorial hierarchy, guided topics sidebar, suggestion chips, grouped results (SearchOverlay.tsx)
-  - Transitions, shadows, borders, and groupings use design system tokens and Framer Motion
-  - Accessible: keyboard navigation, focus trapping, Escape closes, reduced-motion gating, aria attributes
-- Marked `US-039B` as complete in `prd.json` (`"passes": true`).
-- Files changed: prd.json, progress.txt (no component changes needed — prior implementation intact)
-- Quality checks:
-  - `npm run lint`: passed (only pre-existing payload-types warning)
-  - `npx tsc --noEmit`: passed
-  - `npm run build`: passed
-- Browser/manual verification status: Browser tooling unavailable; manual QA still required for desktop/tablet/mobile mega menu, mobile drawer, and search overlay interactions
-- **Learnings for future iterations:**
-  - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
----
-
-## 2026-03-10 - US-039C (re-validation)
-- What was implemented
-- US-039C was previously implemented (progress entry at 2026-03-10 14:36 UTC) and all code remains intact. The prd.json had been reverted to `passes: false`, so this run re-validated all acceptance criteria against the current codebase.
-- All acceptance criteria confirmed satisfied:
-  - Footer repaginado with tiered layout (highlight row, contact form + units grid, brand/navigation panel) — less visual weight, better hierarchy
-  - FooterContactForm uses light gradient card, guided copy, clean field treatment, guidance sidebar — lighter and more contemporary
-  - WhatsApp float, cookie consent, and scroll-to-top share unified dark translucent floating shell (bg-[#0e1a2d]/92, border-white/12, backdrop-blur, consistent rounding and shadows)
-  - Visual language consistent with Payload-inspired approach: clean surfaces, subtle gradients, premium shadows, consistent typography
-  - Responsive grids (sm/lg/xl breakpoints), aria-labels, prefers-reduced-motion in ScrollToTop — responsive and accessible
-- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
-- Files changed: prd.json, progress.txt (no component changes needed — prior implementation intact)
-- Quality checks:
-  - `npm run lint`: passed (only pre-existing payload-types warning)
-  - `npx tsc --noEmit`: passed
-  - `npm run build`: passed
-- Browser/manual verification status: Browser tooling unavailable; manual QA still required for footer hierarchy, form usability, WhatsApp/cookie/scroll stacking, and keyboard interactions
-- **Learnings for future iterations:**
-  - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
----
-
-## 2026-03-10 - US-040B
-- **Story:** Repaginação dos blocos centrais da homepage
-- **What was implemented:**
-  - Redesigned the 3-pillar services section with premium cards: accent top-bar on hover, larger icon area with contextual SVG fallbacks, better typography hierarchy (display-sm heading, kicker label), staggered entrance animations, arrow links with hover translation
-  - Redesigned the institutional proof/value section: dark-section background with radial accent overlay, kicker label, stats/credentials row (4 stat cards with glass-effect styling), green CTA button matching hero style
-  - Redesigned the about/institutional section: cleaner two-column layout with more generous spacing, kicker label, slide-in animations (x-axis), rounded-full outline-to-fill CTA button, better media placeholder with icon, design-token-driven shadows and radii
-  - Added `rounded-card` to Tailwind borderRadius config (mapping to `--radius-card` token)
-- **Files changed:**
-  - `src/components/HomePage.tsx` — all three post-hero sections rewritten
-  - `tailwind.config.ts` — added `card` borderRadius utility
-- **Visual rationale:**
-  - Sections now use consistent kicker labels, display-sm headings, and section-space-loose padding matching the hero's premium language
-  - Services cards gain micro-interactions (accent bar, icon bg transition, arrow translate) without spectacle
-  - Institutional proof section uses dark surface with stats row for institutional gravitas (numbers, credentials, differentials)
-  - About section gains generous breathing room and slide-in animations for media/text columns
-  - All sections use design tokens (shadow-soft/medium, radius-card, accent-soft, bg-dark-section) for system coherence
-- **Affected shared components:** None — changes are scoped to HomePage.tsx
-- **Responsive impact:** All sections remain responsive; grid breakpoints preserved (lg:grid-cols-3 for pillars, lg:grid-cols-4 for stats, md:grid-cols-2 for about)
-- **Accessibility impact:** Preserved aria-hidden on decorative elements, semantic heading hierarchy, link affordances, reduced-motion gating on all animations
-- **Quality checks:**
-  - `npm run lint`: passed (only pre-existing payload-types warning)
-  - `npx tsc --noEmit`: passed
-  - `npm run build`: passed
-- **Browser/manual verification status:** Browser tooling unavailable; manual QA still required for hover interactions, dark section contrast, stats readability, responsive breakpoints
-- **Learnings for future iterations:**
-  - The `--radius-card` token was defined in tokens.css but not mapped in Tailwind config — always verify new token usage has a Tailwind mapping
-  - Hardcoded institutional stats (20+ anos, 500+ clientes, etc.) are appropriate for visual redesign without CMS schema changes per the redesign guardrails
----
-
-## 2026-03-10 15:47 UTC - US-040C
-- **Story:** Costura final da homepage e consistência de narrativa
-- **What was implemented:**
-  - Added a stitched transition panel between the hero and service pillars with an overlapping premium surface that reframes the homepage as a connected institutional journey instead of isolated stacked sections
-  - Tightened homepage rhythm by reducing dead space after the hero, using the new bridge panel to preview the three solution fronts, and rebalancing the services section spacing around that overlap
-  - Unified section transitions with subtle dividers, blend gradients, and carry-through accent treatments so the light services section, dark proof section, and institutional about section no longer feel visually disconnected
-  - Elevated the about section with trust-signal cards, ambient accent lighting, a framed media shell, and a closing operational note to keep the final section as polished as the hero and proof surfaces
-- **Files changed:**
-  - `src/components/HomePage.tsx` — homepage narrative pacing, transitions, and section finishing pass
-  - `prd.json` — marked `US-040C` as complete
-  - `progress.txt` — appended delivery log for this story
-- **Visual rationale:**
-  - US-040A and US-040B had already upgraded the hero and core blocks, but the homepage still read as discrete redesigned parts; this pass focuses on flow, density, and narrative continuity across the full page
-  - The overlapping bridge panel creates a more contemporary, Payload-inspired transition out of the hero while preserving Apollo’s institutional tone and commercial clarity
-  - The later sections now share stronger surface language and transition cues, which makes the homepage feel intentionally composed rather than inherited from the original structural reproduction
-- **Affected shared components:** None — changes are scoped to `HomePage.tsx`
-- **Responsive impact:** The overlap panel stacks cleanly on mobile and becomes a split narrative + preview surface on large screens; section spacing was tuned so the homepage remains readable without excessive vertical gaps across breakpoints
-- **Accessibility impact:** Existing reduced-motion gating remains intact, decorative layers stay `aria-hidden`, CTA/link semantics are unchanged, and the revised layout preserves readable hierarchy in light and dark sections
-- **Quality checks:**
-  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
-  - `npx tsc --noEmit`: passed
-  - `npm run build`: passed
-- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for homepage overlap spacing, section transitions, dark/light contrast balance, and mobile/tablet rhythm
-- **Learnings for future iterations:**
-  - Final homepage polish can be delivered safely without CMS schema changes by introducing transitional composition layers and narrative bridge surfaces within the existing Payload-driven structure
-  - When a redesign is split across multiple stories, the closing pass should explicitly address the seams between already-upgraded sections rather than treating each block in isolation
----
-## 2026-03-10 15:57 UTC - US-043A
-- **Story:** Repaginação da página de Clientes
-- **What was implemented:**
-  - Redesigned the `/clientes` hero into a premium split layout with darker layered gradients, stronger typographic hierarchy, dual CTAs, and a trust panel that reframes the page as institutional proof instead of a simple listing
-  - Reworked the segment filters into an elevated surface with clear section framing, active-state summary, and shared `Chip` treatment aligned with the phase-2 design system and header/homepage language
-  - Rebuilt the logo grid with fewer, larger columns, cleaner logo staging, segment badges, improved spacing/contrast, hover polish, and an explicit empty state so brand legibility is prioritized over raw density
-  - Upgraded the closing contact area into a darker consultive section so the page ends with the same premium tone established by the hero and proof surfaces
-- **Files changed:**
-  - `src/components/ClientsPage.tsx` — redesigned hero, filter surface, client-logo grid, and closing CTA section
-  - `prd.json` — marked `US-043A` as complete
-  - `progress.txt` — appended delivery log for this story
-- **Visual rationale:**
-  - The previous page worked functionally, but the hero and six-column logo wall still felt phase-1 in density and hierarchy
-  - This pass shifts `/clientes` toward the existing phase-2 language: deliberate surfaces, cleaner spacing, stronger display typography, clearer filters, and higher-value brand presentation
-  - The grid now optimizes for readability and perceived quality, which better supports the proof-social goal than compressing many logos into a tighter layout
-- **Affected shared components:** No shared primitives were modified; the page now reuses `Badge`, `Button`, `Chip`, `Container`, and `SectionHeading` for stronger design-system consistency
-- **Responsive impact:** Hero content stacks cleanly on mobile, filter chips still support horizontal overflow, and the logo grid scales from 1 to 4 columns without returning to the previous cramped desktop density
-- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible filter controls, reduced-motion gating on all new animation surfaces, and decorative layers remain `aria-hidden`
-- **Quality checks:**
-  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
-  - `npm run typecheck`: not available in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not available in `package.json`
-  - `npm run build`: passed
-- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/clientes` desktop/tablet/mobile layout, filter interactions, logo legibility, and dark/light section contrast
-- **Learnings for future iterations:**
-  - For proof-social pages, reducing card density and giving logos a framed presentation improves perceived quality more than maximizing logos per row
-  - Reusing shared filter primitives (`Chip`) keeps redesign pages visually aligned with the shell without reopening CMS/data-model work
----
-## 2026-03-10 16:12 UTC - US-043B
-- **Story:** Repaginação de Conteúdos e detail pages de material
-- **What was implemented:**
-  - Redesigned `/conteudos` into a premium library surface with a stronger dark hero, editorial framing, access-state stats, a featured material treatment, upgraded support cards, and a closing consultive CTA
-  - Rebuilt `/conteudos/[slug]` to balance image, metadata, reading surface, sticky conversion, and onward discovery with a richer material-detail layout instead of the previous thin hero + sidebar structure
-  - Restyled `ContentDownloadPanel` so gated and direct-download states follow the phase-2 design system while preserving the existing lead-capture behavior and `/api/form-submissions` integration
-- **Files changed:**
-  - `src/app/(frontend)/conteudos/page.tsx` — redesigned conteúdos hub hero, library framing, featured card, supporting card grid, and closing CTA
-  - `src/app/(frontend)/conteudos/[slug]/page.tsx` — redesigned material detail hero, metadata surfaces, rich-content rendering, sticky conversion column, and related-materials section
-  - `src/components/ContentDownloadPanel.tsx` — repaginated gated/direct download panel states with shared UI primitives
-  - `prd.json` — marked `US-043B` as complete
-  - `progress.txt` — appended delivery log for this story
-- **Visual rationale:**
-  - The phase-1 conteúdos pages were functional, but they still read like simple download listings rather than a premium material library
-  - This pass pushes the template toward the active phase-2 language: darker editorial hero, clearer metadata, stronger card hierarchy, more deliberate surfaces, and a better-resolved download CTA
-  - The detail page now treats conversion as part of the editorial composition instead of a detached utility box
-- **Affected shared components:** `ContentDownloadPanel` was upgraded and now reuses the shared `Badge`, `Button`, `Container`, `Input`, and `SectionHeading` primitives more consistently
-- **Responsive impact:** The hub now scales from stacked mobile cards to a featured-plus-grid library layout on larger screens, and the detail page keeps the conversion panel stacked on small screens before switching to a sticky sidebar on desktop
-- **Accessibility impact:** Preserved semantic headings, visible form labeling, keyboard-accessible links/buttons, readable contrast across dark/light sections, and decorative gradients remain `aria-hidden`
-- **Quality checks:**
-  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
-  - `npm run typecheck`: not available in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not available in `package.json`
-  - `npm run build`: passed
-- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/conteudos` and `/conteudos/[slug]` across desktop/tablet/mobile, including hero spacing, card density, sticky-sidebar behavior, and gated-download interaction
-- **Learnings for future iterations:**
-  - Material-library pages feel more premium when one item gets a featured treatment and the remaining assets shift into a lighter support grid instead of a flat repeated card wall
-  - Even without extra CMS fields, content detail pages can feel substantially more editorial by surfacing derived metadata (format/access/update state) alongside the existing image, description, and CTA
----
 ## 2026-03-10 16:32 UTC - US-043C
 - **Story:** Repaginação de News e post detail
 - **What was implemented:**
@@ -773,4 +385,47 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - **Learnings for future iterations:**
   - When story logs and `prd.json` drift, story selection and completion state still need to be driven by the active PRD, then revalidated against the current codebase
   - Reusable listing primitives should treat keyboard focus as part of the premium interaction language, not as an afterthought to hover-only styling
+---
+## 2026-03-10 18:51 UTC - US-047A
+- **Story:** Repaginacao do template base de paginas de solucao
+- **What was implemented:**
+  - Replaced the duplicated phase-1-style solution-detail markup with a shared `SolutionDetailPage` template that standardizes the hero composition, consultive summary card, CTA hierarchy, breadcrumb treatment, metadata surfaces, and controlled reading-width content area across all canonical solution detail routes
+  - Centralized solution-detail data loading and metadata generation so canonical pages now reuse the same Payload fallback logic, support existing legacy slug lookups where required, and emit breadcrumb JSON-LD without reopening the CMS schema
+  - Rewired every canonical solution detail route to lightweight per-page config files that keep local fallback copy intact while inheriting the same phase-2 template language already established in the redesigned shell and solution hubs
+- **Files changed:**
+  - `src/components/SolutionDetailPage.tsx` — added the shared solution-detail template, Payload-backed loader, rich-content renderer, breadcrumb JSON-LD, and metadata helper for canonical solution pages
+  - `src/app/(frontend)/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/processamento-patrimonial/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/softwares/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/teste-de-impairment/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `prd.json` — marked the selected `US-047A` story as complete
+  - `progress.txt` — appended the current delivery log for this story
+- **Visual rationale:**
+  - The prior solution detail pages were structurally correct but still behaved like first-pass utility templates: a simple dark banner, one CTA, and a wide body/aside split without the same compositional maturity already visible in the shell, homepage, and redesigned solution hubs
+  - This pass reframes the detail template as a consultive product surface with stronger hero hierarchy, more deliberate metadata framing, a separate CTA rail, tighter reading width, and more premium transitions between context, content, and onward navigation
+  - The redesign stays institutional and technical rather than blog-like or SaaS-like, translating the Payload-inspired language into Apollo's commercial tone instead of copying it literally
+- **Affected shared components:** `SolutionDetailPage` is the new shared primitive for canonical solution pages, and all canonical detail routes now inherit the same base template through per-page config objects instead of duplicated JSX/loaders
+- **Responsive impact:** The hero shifts from a desktop two-column composition into a single-column stack on tablet/mobile, and the article body plus CTA/related rail collapse into a vertical flow while preserving controlled reading width and readable spacing
+- **Accessibility impact:** Preserved semantic breadcrumb navigation and heading hierarchy, kept keyboard-accessible CTA and related-solution links with visible focus treatment, and improved structural clarity by separating hero, content, and side actions into clearer semantic regions
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed with the known transient Next.js page-resolution error (`PageNotFoundError: Cannot find module for page: /(frontend)/contato/cotacao/page` and `/contato/page`)
+  - Retried `npm run build` once as required: passed and generated all canonical solution detail routes plus the existing legacy alias routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the canonical solution detail pages and legacy aliases across desktop/tablet/mobile, especially hero readability, content-width comfort, CTA prominence, breadcrumb clarity, and related-solution navigation
+- **Learnings for future iterations:**
+  - Shared detail templates are lower risk than continuing to evolve duplicated route files; future solution-detail stories can now refine one base surface instead of touching every canonical page independently
+  - Breadcrumb, metadata, and CTA hierarchy can be standardized for solution pages entirely in the frontend layer while preserving the current Payload content model and existing compatibility routes
 ---
