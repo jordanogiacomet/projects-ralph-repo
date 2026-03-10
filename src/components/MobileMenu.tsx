@@ -172,7 +172,7 @@ export function MobileMenu({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white/76 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-pill border border-white/12 bg-white/[0.06] text-white/76 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
                   aria-label="Fechar menu"
                 >
                   <svg
@@ -212,7 +212,7 @@ export function MobileMenu({
                         onClose()
                         onSearchOpen()
                       }}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-pill border border-white/12 bg-white/8 px-5 text-sm font-semibold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-pill border border-white/12 bg-white/[0.08] px-5 text-sm font-semibold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
                     >
                       <svg
                         viewBox="0 0 24 24"
@@ -272,10 +272,10 @@ export function MobileMenu({
                                 onClick={onClose}
                                 aria-current={isActive ? 'page' : undefined}
                                 className={cn(
-                                  'mt-2 block rounded-[18px] px-4 py-3 text-[1rem] font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10',
+                                  'mt-2 block rounded-[18px] px-4 py-3 text-[1rem] font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
                                   isActive
                                     ? 'bg-white text-bg-dark-section shadow-soft'
-                                    : 'bg-white/[0.02] text-white/86 hover:bg-white/8 hover:text-white',
+                                    : 'bg-white/[0.02] text-white/86 hover:bg-white/[0.08] hover:text-white',
                                 )}
                               >
                                 {item.label}
@@ -304,7 +304,7 @@ export function MobileMenu({
                           <button
                             type="button"
                             onClick={() => toggleItem(key)}
-                            className="mt-3 inline-flex w-full items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white/82 transition hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+                            className="mt-3 inline-flex w-full items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white/82 transition hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
                             aria-expanded={isExpanded}
                             aria-label={`${isExpanded ? 'Fechar' : 'Abrir'} submenu de ${item.label}`}
                           >
@@ -366,7 +366,7 @@ export function MobileMenu({
                                             onClick={onClose}
                                             aria-current={isChildActive ? 'page' : undefined}
                                             className={cn(
-                                              'mt-2 block text-base font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10',
+                                              'mt-2 block text-base font-semibold tracking-[-0.03em] transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
                                               isChildActive
                                                 ? 'text-white'
                                                 : 'text-white/82 hover:text-white',
@@ -386,7 +386,7 @@ export function MobileMenu({
                                         </p>
                                       </div>
 
-                                      <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-[14px] border border-white/10 bg-white/8 px-2.5 text-[11px] font-semibold text-white/82">
+                                      <span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.08]px-2.5 text-[11px] font-semibold text-white/82">
                                         {child.children?.length ?? 0}
                                       </span>
                                     </div>
@@ -396,7 +396,7 @@ export function MobileMenu({
                                         <Link
                                           href={child.link}
                                           onClick={onClose}
-                                          className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/8 px-4 py-2 text-sm font-semibold text-white/82 transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+                                          className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/[0.08]px-4 py-2 text-sm font-semibold text-white/82 transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
                                         >
                                           <span>Ver categoria</span>
                                           <span aria-hidden>&rarr;</span>
@@ -407,7 +407,7 @@ export function MobileMenu({
                                         <button
                                           type="button"
                                           onClick={() => toggleItem(childKey)}
-                                          className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-transparent px-4 py-2 text-sm font-semibold text-white/72 transition hover:bg-white/8 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+                                          className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-transparent px-4 py-2 text-sm font-semibold text-white/72 transition hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
                                           aria-expanded={isChildExpanded}
                                           aria-label={`${isChildExpanded ? 'Fechar' : 'Abrir'} submenu de ${child.label}`}
                                         >
@@ -460,7 +460,7 @@ export function MobileMenu({
                                                     isGrandchildActive ? 'page' : undefined
                                                   }
                                                   className={cn(
-                                                    'flex items-center justify-between gap-3 rounded-[16px] border px-3.5 py-3 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10',
+                                                    'flex items-center justify-between gap-3 rounded-[16px] border px-3.5 py-3 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15',
                                                     isGrandchildActive
                                                       ? 'border-white/18 bg-white text-bg-dark-section shadow-soft'
                                                       : 'border-white/8 bg-white/[0.04] text-white/68 hover:bg-white/10 hover:text-white',
@@ -508,7 +508,7 @@ export function MobileMenu({
                   links={socialLinks}
                   size="sm"
                   className="mt-4 justify-start gap-2"
-                  itemClassName="border-white/10 bg-white/6 text-white/76 shadow-none hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  itemClassName="border-white/10 bg-white/[0.06] text-white/76 shadow-none hover:border-white/20 hover:bg-white/10 hover:text-white"
                 />
               </div>
             ) : null}

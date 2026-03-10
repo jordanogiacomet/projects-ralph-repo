@@ -456,3 +456,24 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Once solution-detail pages share one template, auxiliary-content polish can be delivered safely in a single component without reopening route files or CMS modeling
   - Related recommendation areas on solution pages can reuse the shared solution-card language if the template fills missing fallback descriptions from existing category/title context
 ---
+
+## US-049A — Revisão de consistência do shell global (navbar, footer e overlays)
+- **Date:** 2026-03-10
+- **Status:** Complete
+- **Summary:** Audited and harmonized all shell components for visual consistency with the phase-2 design system.
+- **Files changed:**
+  - `src/components/MobileMenu.tsx` — Replaced `rounded-full` with `rounded-pill` on close button; normalized arbitrary opacity values (`bg-white/6` → `bg-white/[0.06]`, `bg-white/8` → `bg-white/[0.08]`); unified focus ring to `focus-visible:ring-white/15` across all interactive elements
+  - `src/components/SearchOverlay.tsx` — Replaced `rounded-full` with `rounded-pill` on close button; added `hover:bg-white` for better hover feedback
+  - `src/components/Footer.tsx` — Added `focus-visible` states (underline decoration) to all footer navigation links; normalized `border-white/8` → `border-white/10` for consistency
+  - `src/components/FooterUnidades.tsx` — Added `focus-visible` states to phone/email links; normalized `border-white/8` → `border-white/10`
+  - `src/components/WhatsAppFloat.tsx` — Added `focus-visible:ring-4 focus-visible:ring-white/15` for keyboard accessibility
+  - `src/components/ScrollToTop.tsx` — Added `focus-visible:ring-4 focus-visible:ring-white/15` for keyboard accessibility
+  - `src/components/CookieConsent.tsx` — Normalized `bg-white/6` → `bg-white/[0.06]` and `bg-white/8` → `bg-white/[0.08]` for consistency
+- **Racional visual:** All shell components now use consistent focus-visible states, consistent border opacity tokens, and consistent `rounded-pill` instead of `rounded-full`. No component uses pre-phase-2 visual patterns.
+- **Responsive impact:** None — changes are state/token-level only, no layout changes.
+- **Quality checks:**
+  - `npm run lint`: passed (only unrelated `payload-types.ts` warning)
+  - `npx tsc --noEmit`: passed (only TS6053 missing `.next/types` — pre-build artifacts)
+  - `npm run build`: failed twice with known transient Next.js sandbox `PageNotFoundError` (different pages each run: `/news`, `/solucoes/avaliacao-patrimonial/...`). This is a pre-existing environment issue unrelated to US-049A changes.
+- **Browser verification:** Browser tooling unavailable; manual QA required for focus ring visibility and hover states on all shell elements.
+---

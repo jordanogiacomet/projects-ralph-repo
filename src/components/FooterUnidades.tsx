@@ -25,7 +25,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
       {unidades.map((unidade, index) => (
         <article
           key={unidade.id || `${unidade.name || 'unidade'}-${index}`}
-          className="rounded-[24px] border border-white/8 bg-[#0d1929]/72 p-5 shadow-[0_14px_30px_rgba(5,10,21,0.16)]"
+          className="rounded-[24px] border border-white/10 bg-[#0d1929]/72 p-5 shadow-[0_14px_30px_rgba(5,10,21,0.16)]"
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/44">
             {unidade.state || 'Unidade'}
@@ -42,7 +42,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
             {unidade.phone ? (
               <a
                 href={`tel:${unidade.phone.replace(/[^\d+]/g, '')}`}
-                className="block text-white/88 transition hover:text-white"
+                className="block text-white/88 transition hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/40 focus-visible:underline-offset-4"
               >
                 Tel: {unidade.phone}
               </a>
@@ -50,7 +50,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
             {unidade.email ? (
               <a
                 href={`mailto:${unidade.email}`}
-                className="block text-white/70 transition hover:text-white"
+                className="block text-white/70 transition hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/30 focus-visible:underline-offset-4"
               >
                 E-mail: {unidade.email}
               </a>

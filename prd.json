@@ -1225,7 +1225,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Revisão de consistência do shell global (navbar, footer e overlays)",
-      "passes": false,
+      "passes": true,
       "description": "Auditar e harmonizar o shell global do site para garantir consistência visual e comportamental com o novo design system.",
       "acceptanceCriteria": [
         "Navbar revisada para spacing, alinhamento, estados hover/focus e contraste",

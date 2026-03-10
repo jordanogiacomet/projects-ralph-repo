@@ -266,7 +266,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     <button
                       type="button"
                       onClick={onClose}
-                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border/80 bg-white/72 text-text-secondary transition hover:border-accent/20 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-pill border border-border/80 bg-white/72 text-text-secondary transition hover:border-accent/20 hover:bg-white hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                       aria-label="Fechar busca"
                     >
                       <svg

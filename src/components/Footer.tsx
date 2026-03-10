@@ -189,7 +189,7 @@ export async function Footer() {
                 </div>
               </section>
 
-              <section className="rounded-[28px] border border-white/8 bg-white/[0.03] p-6">
+              <section className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
                   Canais institucionais
                 </p>
@@ -232,7 +232,7 @@ export async function Footer() {
                       {item.link ? (
                         <Link
                           href={item.link}
-                          className="text-base font-semibold tracking-[-0.02em] text-white transition hover:text-white/78"
+                          className="text-base font-semibold tracking-[-0.02em] text-white transition hover:text-white/78 focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/40 focus-visible:underline-offset-4"
                         >
                           {item.label}
                         </Link>
@@ -249,7 +249,7 @@ export async function Footer() {
                               {child.link ? (
                                 <Link
                                   href={child.link}
-                                  className="text-sm leading-6 text-white/62 transition hover:text-white"
+                                  className="text-sm leading-6 text-white/62 transition hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/30 focus-visible:underline-offset-4"
                                 >
                                   {child.label}
                                 </Link>

@@ -31,7 +31,7 @@ export function CookieConsent({ text }: CookieConsentProps) {
       padding="md"
     >
       <div className="flex items-start gap-3">
-        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/6 text-white/82">
+        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.06] text-white/82">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -64,7 +64,7 @@ export function CookieConsent({ text }: CookieConsentProps) {
           size="sm"
           variant="outline"
           onClick={() => handleChoice('hidden')}
-          className="border-white/12 bg-white/6 text-white hover:border-white/18 hover:bg-white/10 hover:text-white"
+          className="border-white/12 bg-white/[0.06] text-white hover:border-white/18 hover:bg-white/10 hover:text-white"
         >
           Agora não
         </Button>
@@ -72,7 +72,7 @@ export function CookieConsent({ text }: CookieConsentProps) {
           size="sm"
           variant="ghost"
           onClick={() => handleChoice('settings')}
-          className="text-white/72 hover:bg-white/8 hover:text-white"
+          className="text-white/72 hover:bg-white/[0.08] hover:text-white"
         >
           Decidir depois
         </Button>
