@@ -266,7 +266,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     <button
                       type="button"
                       onClick={onClose}
-                      className="inline-flex h-12 w-12 items-center justify-center rounded-pill border border-border/80 bg-white/72 text-text-secondary transition hover:border-accent/20 hover:bg-white hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                      className="motion-transition motion-lift-subtle inline-flex h-12 w-12 items-center justify-center rounded-pill border border-border/80 bg-white/72 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                       aria-label="Fechar busca"
                     >
                       <svg
@@ -360,7 +360,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         />
                         <button
                           type="submit"
-                          className="absolute inset-y-2 right-2 inline-flex items-center justify-center rounded-pill bg-accent px-4 text-sm font-semibold text-white transition hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                          className="motion-transition motion-lift-subtle absolute inset-y-2 right-2 inline-flex items-center justify-center rounded-pill bg-accent px-4 text-sm font-semibold text-white hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                           aria-label="Buscar"
                         >
                           Ir
@@ -478,7 +478,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                     <Link
                                       href={result.href}
                                       onClick={onClose}
-                                      className="flex items-start justify-between gap-4 rounded-[22px] border border-border/70 bg-white px-4 py-4 transition hover:-translate-y-0.5 hover:border-accent/25 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                                      className="motion-transition motion-lift-subtle flex items-start justify-between gap-4 rounded-[22px] border border-border/70 bg-white px-4 py-4 hover:border-accent/25 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                                     >
                                       <div>
                                         <p className="text-base font-semibold tracking-[-0.02em] text-text-primary">
@@ -490,7 +490,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                           </p>
                                         ) : null}
                                       </div>
-                                      <span className="mt-1 text-text-muted" aria-hidden>
+                                      <span className="motion-transition mt-1 text-text-muted" aria-hidden>
                                         &rarr;
                                       </span>
                                     </Link>

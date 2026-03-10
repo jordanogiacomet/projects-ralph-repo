@@ -83,7 +83,7 @@ export function Navbar({
   }, [closeMegaMenu, normalizedPath])
 
   const navSurfaceClass = cn(
-    'relative overflow-hidden rounded-[34px] border backdrop-blur-2xl transition-all duration-300',
+    'motion-transition motion-transition-emphasis relative overflow-hidden rounded-[34px] border backdrop-blur-2xl',
     isTransparent
       ? 'border-white/12 bg-[linear-gradient(135deg,rgba(10,18,32,0.78)_0%,rgba(22,32,51,0.56)_100%)] shadow-[0_24px_60px_rgba(2,12,27,0.22)]'
       : 'border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(246,248,251,0.94)_100%)] shadow-[0_24px_60px_rgba(15,23,42,0.14)]',
@@ -102,7 +102,7 @@ export function Navbar({
   )
   const desktopLinkClass = (active: boolean) =>
     cn(
-      'rounded-pill px-4 py-2.5 text-body-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+      'motion-transition inline-flex items-center rounded-pill px-4 py-2.5 text-body-sm font-semibold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
       isTransparent
         ? 'text-white/80 hover:bg-white/10 hover:text-white'
         : 'text-text-secondary hover:bg-white hover:text-text-primary',
@@ -112,7 +112,7 @@ export function Navbar({
           : 'bg-white text-accent shadow-soft'),
     )
   const iconButtonClass = cn(
-    'inline-flex items-center justify-center rounded-pill border transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+    'motion-transition motion-lift-subtle inline-flex items-center justify-center rounded-pill border focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
     isTransparent
       ? 'border-white/10 bg-white/[0.06] text-white/82 hover:bg-white/12 hover:text-white'
       : 'border-border/70 bg-surface-secondary/80 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
@@ -138,7 +138,7 @@ export function Navbar({
         <Container
           size="wide"
           className={cn(
-            'transition-all duration-300',
+            'motion-transition motion-transition-emphasis',
             isTransparent ? 'pt-3.5 lg:pt-5' : 'pt-3.5 lg:pt-4',
           )}
         >
@@ -173,7 +173,7 @@ export function Navbar({
                   ) : (
                     <span
                       className={cn(
-                        'font-display text-lg font-bold tracking-[-0.03em] transition-colors sm:text-xl',
+                        'motion-transition font-display text-lg font-bold tracking-[-0.03em] sm:text-xl',
                         isTransparent ? 'text-text-on-dark' : 'text-accent',
                       )}
                     >
@@ -235,7 +235,7 @@ export function Navbar({
                                     stroke="currentColor"
                                     strokeWidth={2}
                                     className={cn(
-                                      'h-3.5 w-3.5 transition-transform',
+                                      'motion-transition h-3.5 w-3.5',
                                       activeDropdown === key && 'rotate-180',
                                     )}
                                   >

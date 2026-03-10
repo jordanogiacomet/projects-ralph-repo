@@ -303,7 +303,7 @@ export default async function ConteudosPage() {
                       src={featuredCard.imageUrl}
                       alt={featuredCard.title}
                       fill
-                      className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                      className="motion-media-scale object-cover"
                       sizes="(min-width: 1024px) 42vw, 100vw"
                     />
                     <div
@@ -382,10 +382,10 @@ export default async function ConteudosPage() {
                   {remainingCards.map((item) => (
                     <article
                       key={item.id}
-                      className="group relative overflow-hidden rounded-panel border border-border bg-white/95 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-strong sm:p-6"
+                      className="group motion-transition motion-lift-card relative overflow-hidden rounded-panel border border-border bg-white/95 p-5 shadow-soft hover:shadow-strong sm:p-6"
                     >
                       <div
-                        className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+                        className="motion-transition absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
                         style={{
                           background:
                             'linear-gradient(135deg, rgba(0,86,166,0.06) 0%, rgba(255,255,255,0) 48%, rgba(15,23,42,0.04) 100%)',
@@ -406,7 +406,7 @@ export default async function ConteudosPage() {
                               src={item.imageUrl}
                               alt={item.title}
                               fill
-                              className="object-cover"
+                              className="motion-media-scale object-cover"
                               sizes="80px"
                             />
                           </div>

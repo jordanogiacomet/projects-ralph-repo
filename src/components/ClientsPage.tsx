@@ -326,10 +326,10 @@ export function ClientsPage({
                             ease: [0.22, 1, 0.36, 1],
                           }
                     }
-                    className="group relative overflow-hidden rounded-card border border-border/80 bg-white/96 p-5 shadow-soft transition duration-200 hover:-translate-y-1 hover:shadow-medium"
+                    className="group motion-transition motion-lift-card relative overflow-hidden rounded-card border border-border/80 bg-white/96 p-5 shadow-soft hover:shadow-medium"
                   >
                     <div
-                      className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+                      className="motion-transition absolute inset-0 opacity-0 group-hover:opacity-100"
                       style={{
                         background:
                           'linear-gradient(145deg, rgba(0,86,166,0.05) 0%, rgba(255,255,255,0) 45%, rgba(15,23,42,0.06) 100%)',
@@ -355,7 +355,7 @@ export function ClientsPage({
                             height={96}
                             loading="lazy"
                             sizes="(max-width: 640px) 90vw, (max-width: 1280px) 42vw, 22vw"
-                            className="h-16 w-auto max-w-full object-contain opacity-95 transition duration-300 group-hover:scale-[1.02]"
+                            className="motion-media-scale h-16 w-auto max-w-full object-contain opacity-95"
                           />
                         ) : (
                           <div className="text-center">
@@ -372,7 +372,7 @@ export function ClientsPage({
                           {client.name}
                         </p>
                         <span
-                          className="mt-0.5 inline-flex min-h-9 min-w-9 items-center justify-center rounded-pill border border-border bg-surface-secondary text-text-muted transition duration-200 group-hover:border-accent/20 group-hover:text-accent"
+                          className="motion-transition mt-0.5 inline-flex min-h-9 min-w-9 items-center justify-center rounded-pill border border-border bg-surface-secondary text-text-muted group-hover:border-accent/20 group-hover:text-accent"
                           aria-hidden
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

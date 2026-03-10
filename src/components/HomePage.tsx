@@ -187,7 +187,7 @@ export function HomePage({
           >
             <Link
               href={hero.ctaLink}
-              className="inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] transition-all duration-200 hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
+              className="motion-transition motion-lift-subtle inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
             >
               {hero.ctaLabel}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -202,7 +202,7 @@ export function HomePage({
             </Link>
             <Link
               href="/sobre"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-7 py-3.5 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:border-white/30 hover:bg-white/[0.1] sm:px-9 sm:py-4 sm:text-base"
+              className="motion-transition motion-lift-subtle inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-7 py-3.5 text-sm font-medium text-white/90 backdrop-blur-sm hover:border-white/30 hover:bg-white/[0.1] sm:px-9 sm:py-4 sm:text-base"
             >
               Conheça a Apollo
             </Link>
@@ -337,16 +337,16 @@ export function HomePage({
                     ? { duration: 0 }
                     : { duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }
                 }
-                className="group relative flex flex-col overflow-hidden rounded-card border border-border bg-white p-8 shadow-[var(--shadow-soft)] transition-all duration-300 hover:border-accent/20 hover:shadow-[var(--shadow-medium)] sm:p-10"
+                className="group motion-transition motion-transition-emphasis motion-lift-card relative flex flex-col overflow-hidden rounded-card border border-border bg-white p-8 shadow-[var(--shadow-soft)] hover:border-accent/20 hover:shadow-[var(--shadow-medium)] sm:p-10"
               >
                 {/* Accent top bar */}
                 <div
-                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100"
+                  className="motion-transition motion-transition-emphasis absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-accent group-hover:scale-x-100 group-focus-within:scale-x-100"
                   aria-hidden
                 />
 
                 {/* Icon */}
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft transition-colors duration-300 group-hover:bg-accent/10">
+                <div className="motion-transition motion-transition-emphasis mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft group-hover:bg-accent/10 group-focus-within:bg-accent/10">
                   {card.iconUrl ? (
                     <Image
                       src={card.iconUrl}
@@ -407,7 +407,7 @@ export function HomePage({
                 {/* Link with arrow */}
                 <Link
                   href={card.link}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors duration-200 hover:text-accent-hover"
+                  className="motion-transition mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                 >
                   Saiba mais
                   <svg
@@ -415,7 +415,7 @@ export function HomePage({
                     height="16"
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="transition-transform duration-200 group-hover:translate-x-1"
+                    className="motion-transition group-hover:translate-x-1 group-focus-within:translate-x-1"
                     aria-hidden
                   >
                     <path
@@ -523,7 +523,7 @@ export function HomePage({
           >
             <Link
               href={partnerSection.buttonLink}
-              className="inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] transition-all duration-200 hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
+              className="motion-transition motion-lift-subtle inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
             >
               {partnerSection.buttonLabel}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -603,7 +603,7 @@ export function HomePage({
 
               <Link
                 href={aboutSection.buttonLink}
-                className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-accent px-7 py-3 text-sm font-semibold text-accent transition-all duration-200 hover:bg-accent hover:text-white sm:px-9 sm:py-3.5 sm:text-base"
+                className="motion-transition motion-lift-subtle mt-8 inline-flex items-center gap-2 rounded-full border-2 border-accent px-7 py-3 text-sm font-semibold text-accent hover:bg-accent hover:text-white sm:px-9 sm:py-3.5 sm:text-base"
               >
                 {aboutSection.buttonLabel}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>

@@ -1287,7 +1287,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Harmonização de motion e microinterações",
-      "passes": false,
+      "passes": true,
       "description": "Revisar e padronizar animações e microinterações em todo o site.",
       "acceptanceCriteria": [
         "Transições consistentes entre templates",

@@ -93,7 +93,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                       key={item.id || item.label}
                       href={item.link!}
                       onClick={onClose}
-                      className="inline-flex items-center gap-2 rounded-pill border border-border bg-white/72 px-4 py-2 text-sm font-semibold text-text-secondary transition hover:border-accent/20 hover:bg-white hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                      className="motion-transition motion-lift-subtle inline-flex items-center gap-2 rounded-pill border border-border bg-white/72 px-4 py-2 text-sm font-semibold text-text-secondary hover:border-accent/20 hover:bg-white hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                       role="menuitem"
                     >
                       <span>{item.label}</span>
@@ -120,7 +120,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                         href={item.link || href || '#'}
                         onClick={onClose}
                         className={cn(
-                          'rounded-[22px] border px-4 py-4 transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+                          'motion-transition motion-lift-subtle rounded-[22px] border px-4 py-4 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
                           isItemActive
                             ? 'border-accent/20 bg-white text-text-primary shadow-soft'
                             : 'border-border/80 bg-white/68 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
@@ -171,10 +171,10 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                     <article
                       key={category.id || category.label}
                       className={cn(
-                        'group rounded-[28px] border p-5 transition duration-200',
+                        'group motion-transition motion-transition-emphasis motion-lift-card rounded-[28px] border p-5',
                         isCategoryActive
                           ? 'border-accent/20 bg-[linear-gradient(180deg,rgba(234,242,251,0.96)_0%,rgba(255,255,255,0.98)_100%)] shadow-[0_18px_40px_rgba(0,86,166,0.12)]'
-                          : 'border-border bg-[linear-gradient(180deg,rgba(248,250,252,0.92)_0%,rgba(255,255,255,0.98)_100%)] hover:-translate-y-0.5 hover:border-accent/20 hover:shadow-soft',
+                          : 'border-border bg-[linear-gradient(180deg,rgba(248,250,252,0.92)_0%,rgba(255,255,255,0.98)_100%)] hover:border-accent/20 hover:shadow-soft',
                       )}
                     >
                       <div className="flex items-start gap-4">
@@ -196,7 +196,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                                 <Link
                                   href={category.link}
                                   onClick={onClose}
-                                  className="text-lg font-semibold tracking-[-0.03em] text-text-primary transition-colors hover:text-accent"
+                                  className="motion-transition text-lg font-semibold tracking-[-0.03em] text-text-primary hover:text-accent"
                                   role="menuitem"
                                 >
                                   {category.label}
@@ -220,7 +220,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                             <Link
                               href={category.link}
                               onClick={onClose}
-                              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                              className="motion-transition motion-lift-subtle mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                               role="menuitem"
                             >
                               <span>Ver categoria</span>
@@ -242,7 +242,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                                     href={child.link}
                                     onClick={onClose}
                                     className={cn(
-                                      'flex items-center justify-between gap-3 rounded-[18px] border px-3.5 py-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+                                      'motion-transition motion-lift-subtle flex items-center justify-between gap-3 rounded-[18px] border px-3.5 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
                                       isChildActive
                                         ? 'border-accent/20 bg-white text-accent shadow-soft'
                                         : 'border-transparent text-text-secondary hover:border-accent/10 hover:bg-white hover:text-accent',
@@ -252,7 +252,7 @@ export function MegaMenu({ isOpen, title, href, items, onClose }: MegaMenuProps)
                                     <span>{child.label}</span>
                                     <span
                                       className={cn(
-                                        'transition',
+                                        'motion-transition',
                                         isChildActive ? 'text-accent' : 'text-text-muted',
                                       )}
                                     >

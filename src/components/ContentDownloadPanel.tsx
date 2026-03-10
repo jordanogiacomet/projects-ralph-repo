@@ -140,7 +140,7 @@ export function ContentDownloadPanel({
 
           <a
             href={downloadUrl}
-            className="mt-6 inline-flex min-h-14 items-center justify-center rounded-pill bg-accent px-6 text-base font-semibold text-white shadow-soft transition-all duration-200 hover:-translate-y-px hover:bg-accent-hover"
+            className="motion-transition motion-lift-subtle mt-6 inline-flex min-h-14 items-center justify-center rounded-pill bg-accent px-6 text-base font-semibold text-white shadow-soft hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
           >
             Baixar material
           </a>

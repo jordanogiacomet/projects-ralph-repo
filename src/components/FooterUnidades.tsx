@@ -42,7 +42,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
             {unidade.phone ? (
               <a
                 href={`tel:${unidade.phone.replace(/[^\d+]/g, '')}`}
-                className="block text-white/88 transition hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/40 focus-visible:underline-offset-4"
+                className="motion-transition block text-white/88 hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/40 focus-visible:underline-offset-4"
               >
                 Tel: {unidade.phone}
               </a>
@@ -50,7 +50,7 @@ export function FooterUnidades({ unidades }: FooterUnidadesProps) {
             {unidade.email ? (
               <a
                 href={`mailto:${unidade.email}`}
-                className="block text-white/70 transition hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/30 focus-visible:underline-offset-4"
+                className="motion-transition block text-white/70 hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:decoration-white/30 focus-visible:underline-offset-4"
               >
                 E-mail: {unidade.email}
               </a>

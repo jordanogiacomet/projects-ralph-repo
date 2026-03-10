@@ -20,14 +20,14 @@ type SolutionFilterTabsProps = {
 }
 
 const railItemClassName =
-  'group relative inline-flex min-h-[3.5rem] items-center gap-3 overflow-hidden rounded-[1.15rem] border px-4 py-3 text-left transition duration-200 focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15'
+  'group motion-transition motion-lift-subtle relative inline-flex min-h-[3.5rem] items-center gap-3 overflow-hidden rounded-[1.15rem] border px-4 py-3 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15'
 
 function renderFilterContent(filter: SolutionFilter, isActive: boolean) {
   return (
     <>
       <span
         className={cn(
-          'pointer-events-none absolute inset-0 opacity-0 transition duration-200',
+          'motion-transition pointer-events-none absolute inset-0 opacity-0',
           isActive ? 'opacity-100' : 'group-hover:opacity-100 group-focus-visible:opacity-100',
         )}
         style={{
@@ -39,7 +39,7 @@ function renderFilterContent(filter: SolutionFilter, isActive: boolean) {
       <span className="relative flex min-w-0 flex-1 items-center gap-3">
         <span
           className={cn(
-            'h-2.5 w-2.5 shrink-0 rounded-full transition duration-200',
+            'motion-transition h-2.5 w-2.5 shrink-0 rounded-full',
             isActive ? 'bg-accent' : 'bg-border group-hover:bg-accent/45 group-focus-visible:bg-accent/45',
           )}
           aria-hidden
@@ -60,7 +60,7 @@ function renderFilterContent(filter: SolutionFilter, isActive: boolean) {
       {filter.count !== undefined ? (
         <span
           className={cn(
-            'relative inline-flex min-w-7 items-center justify-center rounded-full px-2 py-1 text-label-sm font-bold transition duration-200',
+            'motion-transition relative inline-flex min-w-7 items-center justify-center rounded-full px-2 py-1 text-label-sm font-bold',
             isActive
               ? 'bg-accent text-white shadow-[0_10px_24px_rgba(0,86,166,0.18)]'
               : 'bg-surface-secondary text-text-muted group-hover:bg-accent-soft/70 group-hover:text-accent-strong group-focus-visible:bg-accent-soft/70 group-focus-visible:text-accent-strong',
@@ -96,7 +96,7 @@ export function SolutionFilterTabs({
             railItemClassName,
             isActive
               ? 'border-accent/18 bg-white text-text-primary shadow-[var(--shadow-soft)]'
-              : 'border-border/80 bg-surface-primary/95 text-text-secondary shadow-[0_12px_28px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:border-accent/20 focus-visible:border-accent/20',
+              : 'border-border/80 bg-surface-primary/95 text-text-secondary shadow-[0_12px_28px_rgba(15,23,42,0.06)] hover:border-accent/20 focus-visible:border-accent/20',
           )
 
           if (filter.href) {

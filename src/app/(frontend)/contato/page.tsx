@@ -363,7 +363,7 @@ export default async function ContatoPage() {
                   <Link
                     key={option.href}
                     href={option.href}
-                    className="group rounded-[1.3rem] border border-white/12 bg-white/[0.05] p-5 transition duration-200 hover:border-white/24 hover:bg-white/[0.09]"
+                    className="group motion-transition motion-lift-subtle rounded-[1.3rem] border border-white/12 bg-white/[0.05] p-5 hover:border-white/24 hover:bg-white/[0.09]"
                   >
                     <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/45">
                       {option.eyebrow}
@@ -377,7 +377,7 @@ export default async function ContatoPage() {
                       </div>
                       <span
                         aria-hidden
-                        className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.05] text-white/72 transition group-hover:border-white/20 group-hover:bg-white/[0.12]"
+                        className="motion-transition mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.05] text-white/72 group-hover:border-white/20 group-hover:bg-white/[0.12]"
                       >
                         →
                       </span>
@@ -493,7 +493,7 @@ export default async function ContatoPage() {
                         {hasString(unit.phone) ? (
                           <a
                             href={phoneHref(unit.phone)}
-                            className="inline-flex items-center gap-3 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                            className="motion-transition inline-flex items-center gap-3 text-sm font-medium text-accent hover:text-accent-hover"
                           >
                             <span
                               aria-hidden
@@ -516,7 +516,7 @@ export default async function ContatoPage() {
                         {hasString(unit.email) ? (
                           <a
                             href={`mailto:${unit.email}`}
-                            className="inline-flex items-center gap-3 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                            className="motion-transition inline-flex items-center gap-3 text-sm font-medium text-accent hover:text-accent-hover"
                           >
                             <span
                               aria-hidden

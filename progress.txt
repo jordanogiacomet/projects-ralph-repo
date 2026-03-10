@@ -622,3 +622,45 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Late-stage visual review can stay precise by correcting the last outlier template instead of forcing broad churn across pages that already satisfy the active phase-2 bar
   - The intermittent Next build failure for missing solution-route modules can clear on retry, so the required second build attempt remains necessary evidence before treating the issue as a hard blocker
 ---
+## 2026-03-10 20:36 UTC - US-049E
+- **Story:** Harmonizacao de motion e microinteracoes
+- **Status:** Complete
+- **What was implemented:**
+  - Closed the remaining high-traffic motion outliers after the earlier shared-primitive pass so shell navigation, overlays, homepage CTAs/cards, solution filters, content cards, and key contact/download/form surfaces now use the same shared motion rhythm instead of mixed `duration-*` and `hover:-translate-*` recipes
+  - Harmonized hover and keyboard-focus behavior on menu links, result cards, homepage solution cards, mobile navigation controls, and content tiles by preferring `motion-transition`, `motion-lift-subtle`, `motion-lift-card`, and `motion-media-scale`
+  - Revalidated the current repository state for the duplicate PRD motion story (`US-049E` after already-complete `US-049D`) and completed only the first remaining incomplete entry in `prd.json`
+- **Files changed:**
+  - `src/components/Navbar.tsx` — normalized shell-surface, nav-link, icon-button, and chevron transition behavior
+  - `src/components/MegaMenu.tsx` — aligned quick links, map cards, category cards, and child links to shared motion utilities
+  - `src/components/MobileMenu.tsx` — aligned close/search/toggle/link states and fixed malformed class-name spacing on child chips
+  - `src/components/SearchOverlay.tsx` — standardized close/search/result-card transitions
+  - `src/components/SolutionFilterTabs.tsx` — moved filter rail hover/focus behavior to shared motion utilities
+  - `src/components/HomePage.tsx` — harmonized CTA, service-card, accent-bar, and inline-link microinteractions
+  - `src/components/ClientsPage.tsx` — aligned client-card lift, overlay, and logo motion behavior
+  - `src/app/(frontend)/conteudos/page.tsx` — aligned featured/standard material-card image and card interactions
+  - `src/app/(frontend)/conteudos/[slug]/page.tsx` — aligned related-material card interactions
+  - `src/app/(frontend)/contato/page.tsx` — aligned route-card and unidade-link hover/focus states
+  - `src/components/ContentDownloadPanel.tsx` — aligned download CTA motion/focus treatment
+  - `src/components/CotacaoForm.tsx` — aligned progress-bar, service-selection, and upload-surface transitions
+  - `src/components/FooterUnidades.tsx` — aligned footer contact-link transitions
+  - `prd.json` — marked `US-049E` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - The first motion polish pass had already upgraded shared primitives and some high-traffic cards, but shell/navigation and a few route-level templates still felt slightly disconnected because they retained bespoke timing and lift rules
+  - This pass keeps Apollo’s tone calm and institutional while making interaction polish feel deliberate and consistent across the public site
+- **Affected shared components:** `Navbar`, `MegaMenu`, `MobileMenu`, `SearchOverlay`, `SolutionFilterTabs`, `FooterUnidades`, and route-level cards on homepage/conteudos/contato/cotacao now read from the same motion language as shared UI primitives
+- **Responsive impact:** The updated motion behavior stays lightweight across desktop, tablet, and mobile; interactive cards and controls now share the same subtle lift/transition cadence without introducing new breakpoint-specific behavior
+- **Accessibility impact:** Preserved reduced-motion handling through the shared motion utility layer, improved keyboard/focus parity on menu links and content/result cards, and retained existing semantic structure and focus rings
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js `PageNotFoundError` for `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos` and `/news/[slug]`
+  - Retried `npm run build` once as required: passed and generated all public routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for hover/focus/reduced-motion behavior across desktop/tablet/mobile, especially shell navigation, search overlay, homepage cards, content cards, and contact/cotacao interaction states
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - When a later polish story duplicates earlier acceptance criteria in `prd.json`, completion still needs a fresh current-state audit plus validation evidence before flipping the next pending entry
+  - Shared motion utilities are only effective if shell and route-level outliers are migrated too; otherwise the primitives feel polished while navigation and key templates still read as phase-transition leftovers
+---

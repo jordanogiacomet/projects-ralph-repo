@@ -404,7 +404,10 @@ export function CotacaoForm() {
             />
 
             <div className="mt-5 overflow-hidden rounded-pill bg-bg-tertiary" aria-hidden>
-              <div className="h-2 rounded-pill bg-accent transition-all duration-300" style={{ width: progressWidth }} />
+              <div
+                className="motion-transition motion-transition-emphasis h-2 rounded-pill bg-accent"
+                style={{ width: progressWidth }}
+              />
             </div>
 
             <ol className="mt-6 grid gap-3 lg:grid-cols-3" aria-label="Etapas do formulario de cotacao">
@@ -505,7 +508,7 @@ export function CotacaoForm() {
                               <label
                                 key={option}
                                 className={cn(
-                                  'group relative flex min-h-[112px] cursor-pointer flex-col justify-between rounded-[1.1rem] border bg-white p-4 transition duration-200',
+                                  'group motion-transition motion-lift-subtle relative flex min-h-[112px] cursor-pointer flex-col justify-between rounded-[1.1rem] border bg-white p-4',
                                   isSelected
                                     ? 'border-accent bg-accent-soft/75 shadow-soft'
                                     : 'border-border hover:border-accent/30 hover:bg-accent-light/35',
@@ -528,7 +531,7 @@ export function CotacaoForm() {
                                   </span>
                                   <span
                                     className={cn(
-                                      'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition',
+                                      'motion-transition inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border',
                                       isSelected
                                         ? 'border-accent bg-accent text-white'
                                         : 'border-border bg-white text-transparent group-hover:border-accent/30',
@@ -624,7 +627,7 @@ export function CotacaoForm() {
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
                     className={cn(
-                      'relative overflow-hidden border-2 border-dashed transition duration-200',
+                      'motion-transition relative overflow-hidden border-2 border-dashed',
                       isDragActive
                         ? 'border-accent bg-accent-soft/50 shadow-soft'
                         : 'border-border bg-white hover:border-accent/35',
