@@ -31,6 +31,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` and extra context fields in `data` (for example `origem`, `conteudoSlug`) before releasing protected files
 - Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'` before reading `name`/`email`
 - Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang` (`pt-BR`), Open Graph, Twitter Card, and icon tags consistent with global fallbacks
+- Public site origin resolution should prefer `NEXT_PUBLIC_SERVER_URL` and fallback to `NEXT_PUBLIC_SITE_URL` for backward compatibility across SEO/news rendering
 - Structured data scripts are emitted with `JsonLd` (`src/components/JsonLd.tsx`) and schema builders in `src/lib/seo.ts` (Organization, LocalBusiness, BreadcrumbList, Article)
 - Search engine discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`; include both static paths and CMS-driven slugs with safe fallbacks when Payload is unavailable
 - Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep the response grouped by collection type (`pages`, `posts`, `solucoes`, `conteudos`) so the UI can render typed sections without extra client-side joins
@@ -1007,4 +1008,37 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - This repository relies on generated `.next` artifacts for some type flows; keep `npx tsc --noEmit` and `next build` both in the validation loop for confidence.
   - Useful context
   - Font loading is now centralized at the frontend layout level via `next/font` variables, so typography-level performance changes should be made there first.
+---
+## 2026-03-10 00:47 UTC - US-036
+- What was implemented
+- Replaced the generic repository README with Apollo project documentation covering architecture, local setup, environment variables, seed execution, Vercel deploy, optional Docker deploy, custom domain setup, editor guide links, and backup strategy links.
+- Added deployment artifacts: `vercel.json` (explicit install/build commands), multi-stage `Dockerfile`, and `.dockerignore`.
+- Added operational docs for content/editor workflows and backup/restore runbook.
+- Fixed production URL env compatibility by preferring `NEXT_PUBLIC_SERVER_URL` with fallback to `NEXT_PUBLIC_SITE_URL` in SEO/news origin resolution.
+- Files changed
+- README.md
+- Dockerfile
+- .dockerignore
+- vercel.json
+- docs/payload-admin-guide.md
+- docs/backup-strategy.md
+- src/lib/seo.ts
+- src/app/(frontend)/news/[slug]/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- No UI behavior change in this story; browser/manual UI verification not required.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Keep deployment docs in-repo with runbooks (`docs/`) and link from README so operational knowledge evolves with code changes.
+  - Gotchas encountered
+  - Environment naming drift (`NEXT_PUBLIC_SITE_URL` vs `NEXT_PUBLIC_SERVER_URL`) can silently impact canonical URLs; keeping a compatibility fallback prevents regression during deploy transitions.
+  - Useful context
+  - Vercel installs should explicitly include `--legacy-peer-deps` for this repository to avoid peer resolution issues on fresh installs.
 ---

@@ -156,7 +156,7 @@ function mergeUnits(unidades?: FooterUnit[]): FooterUnit[] {
 }
 
 export function getSiteOrigin(): string {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL
+  const configured = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_SITE_URL
   if (!hasString(configured)) return defaultSiteOrigin
   return configured.replace(/\/+$/, '')
 }

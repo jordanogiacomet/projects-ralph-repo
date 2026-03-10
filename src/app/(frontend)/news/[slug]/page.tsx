@@ -49,7 +49,8 @@ type NewsPostPageData = {
 
 const fallbackExcerpt = 'Conteúdo técnico sobre gestão e controle patrimonial.'
 const siteOrigin =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '') || 'https://www.apollogestao.com.br'
+  (process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_SITE_URL)?.replace(/\/+$/, '') ||
+  'https://www.apollogestao.com.br'
 
 function normalizeText(value: unknown): string {
   if (typeof value !== 'string') return ''

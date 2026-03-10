@@ -912,7 +912,7 @@
     {
       "id": "US-036",
       "title": "Deploy e documentação",
-      "passes": false,
+      "passes": true,
       "description": "Preparar o projeto para deploy e documentar setup, arquitetura e manutenção.",
       "acceptanceCriteria": [
         "README.md completo com: visão geral, stack, como rodar local, variáveis de ambiente, como executar seed, como fazer deploy",
