@@ -1113,7 +1113,7 @@
       "phase": "phase-2-redesign",
       "stream": "contact",
       "title": "Repaginação da página de contato",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar a página principal de contato para parecer mais confiável, organizada e contemporânea.",
       "acceptanceCriteria": [
         "Layout refinado com melhor composição entre copy, unidades e formulário",

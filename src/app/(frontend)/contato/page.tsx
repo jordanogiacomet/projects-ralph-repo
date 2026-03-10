@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ContatoPageForm } from '@/components/ContatoPageForm'
+import { Badge, Button, Card, SectionHeading } from '@/components/ui'
 import { FOOTER_DEFAULT_UNIDADES } from '@/lib/constants'
 import { getPayloadClient } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
@@ -13,6 +14,8 @@ type PageDoc = {
   heroTitle?: unknown
   heroSubtitle?: string
   heroImage?: unknown
+  heroCTALabel?: string
+  heroCTALink?: string
   meta?: {
     title?: string
     description?: string
@@ -36,7 +39,43 @@ type FooterGlobalData = {
 const fallbackHeroTitle = 'Entre em contato com a Apollo Gestão'
 const fallbackHeroSubtitle =
   'Nossa equipe está pronta para apoiar sua empresa em projetos de avaliação, controle patrimonial e consultoria técnica.'
-const fallbackHeroImageUrl = '/images/contato-hero-placeholder.jpg'
+const fallbackHeroCtaLabel = 'Solicitar cotação'
+const fallbackHeroCtaLink = '/contato/cotacao'
+
+const contactRouteOptions = [
+  {
+    href: '/contato/cotacao',
+    eyebrow: 'Fluxo comercial',
+    title: 'Solicitar cotação',
+    description:
+      'Encaminhe escopo, volume estimado e prazo para receber uma proposta tecnica e comercial.',
+  },
+  {
+    href: '/contato/representante',
+    eyebrow: 'Parcerias',
+    title: 'Cadastro de representante',
+    description:
+      'Use o fluxo dedicado para relacionamento comercial e expansao regional da Apollo.',
+  },
+]
+
+const messageGuidance = [
+  {
+    title: 'Qual frente voce precisa acionar',
+    description:
+      'Conte se a demanda envolve avaliacao, controle patrimonial, inventario, consultoria ou tecnologia.',
+  },
+  {
+    title: 'Onde o projeto acontece',
+    description:
+      'Informe a cidade, unidade ou operacao impactada para orientarmos o atendimento regional.',
+  },
+  {
+    title: 'Qual decisao depende disso',
+    description:
+      'Compartilhe o objetivo do trabalho e qualquer prazo critico para priorizacao do retorno.',
+  },
+]
 
 const hasString = (value?: string): value is string =>
   typeof value === 'string' && value.trim().length > 0
@@ -152,7 +191,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ContatoPage() {
   let heroTitle = fallbackHeroTitle
   let heroSubtitle = fallbackHeroSubtitle
-  let heroImageUrl = fallbackHeroImageUrl
+  let heroImageUrl: string | undefined
+  let heroCtaLabel = fallbackHeroCtaLabel
+  let heroCtaLink = fallbackHeroCtaLink
   let unidades: Unidade[] = FOOTER_DEFAULT_UNIDADES
 
   try {
@@ -170,108 +211,336 @@ export default async function ContatoPage() {
     const footerData = footerGlobal as unknown as FooterGlobalData
 
     heroTitle = richTextToPlainText(pageData?.heroTitle) || fallbackHeroTitle
-    heroSubtitle = pageData?.heroSubtitle || fallbackHeroSubtitle
-    heroImageUrl = mediaUrl(pageData?.heroImage) || fallbackHeroImageUrl
+    heroSubtitle = normalizeText(pageData?.heroSubtitle) || fallbackHeroSubtitle
+    heroImageUrl = mediaUrl(pageData?.heroImage)
+    heroCtaLabel = normalizeText(pageData?.heroCTALabel) || fallbackHeroCtaLabel
+    heroCtaLink = normalizeText(pageData?.heroCTALink) || fallbackHeroCtaLink
     unidades = mergeUnits(footerData.unidades)
   } catch {
     // Payload can be unavailable during static build in sandboxed environments.
   }
 
+  const coverageStates = Array.from(
+    new Set(
+      unidades
+        .map((unit) => (hasString(unit.state) ? unit.state.trim() : ''))
+        .filter((state) => state.length > 0),
+    ),
+  )
+  const coverageLabel =
+    coverageStates.length > 0 ? coverageStates.join(' • ') : 'Atendimento nacional'
+  const heroHighlights = [
+    {
+      label: 'Atendimento consultivo',
+      description: 'Encaminhamento para demandas tecnicas, institucionais e comerciais.',
+    },
+    {
+      label: 'Presenca regional',
+      description: `Operacao coordenada com equipes em ${coverageStates.join(', ') || 'multiplas regioes'}.`,
+    },
+    {
+      label: 'Fluxos dedicados',
+      description: 'Contato geral, cotacao e representante com entradas claras para cada necessidade.',
+    },
+  ]
+
   return (
-    <div className="bg-bg-primary text-text-primary">
-      <section className="relative flex min-h-[56vh] items-center overflow-hidden bg-bg-dark-section">
+    <div className="bg-bg-secondary text-text-primary">
+      <section className="relative overflow-hidden bg-bg-dark-section text-text-on-dark">
+        {heroImageUrl ? (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-25"
+            style={{ backgroundImage: `url(${heroImageUrl})` }}
+            aria-hidden
+          />
+        ) : null}
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImageUrl})` }}
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(8,14,26,0.9) 0%, rgba(10,18,32,0.82) 44%, rgba(12,22,38,0.94) 100%)',
+          }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-black/60" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at 20% 20%, rgba(0, 86, 166, 0.36), transparent 42%), radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.14), transparent 35%)',
+              'radial-gradient(circle at 18% 20%, rgba(0,86,166,0.34), transparent 42%), radial-gradient(circle at 82% 18%, rgba(255,255,255,0.12), transparent 34%), linear-gradient(135deg, rgba(0,86,166,0.08) 0%, transparent 56%)',
           }}
           aria-hidden
         />
-        <div className="relative z-10 mx-auto max-w-5xl px-4 py-14 text-center text-text-on-dark sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold leading-tight sm:text-5xl">{heroTitle}</h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base text-white/90 sm:text-lg">{heroSubtitle}</p>
+        <div className="relative z-10 mx-auto grid max-w-content gap-12 px-6 pb-16 pt-28 sm:px-8 sm:pb-20 sm:pt-32 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:items-end lg:px-12 lg:pb-24">
+          <div className="max-w-3xl">
+            <Badge tone="dark" className="border border-white/10 bg-white/[0.07] text-white/80">
+              Contato Apollo
+            </Badge>
+            <h1 className="mt-6 font-display text-display-md font-extrabold tracking-[-0.04em] text-white sm:text-display-lg">
+              {heroTitle}
+            </h1>
+            <p className="mt-5 max-w-2xl text-body-md text-white/72 sm:text-body-lg">
+              {heroSubtitle}
+            </p>
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/58 sm:text-base">
+              Compartilhe o contexto do projeto, a localidade e o objetivo esperado. Nossa equipe
+              direciona o atendimento de forma consultiva e objetiva.
+            </p>
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <Button
+                href={heroCtaLink}
+                variant="success"
+                size="lg"
+                trailingIcon={
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                {heroCtaLabel}
+              </Button>
+              <Button
+                href="#formulario-contato"
+                variant="outline"
+                size="lg"
+                className="border-white/15 bg-white/[0.05] text-white hover:border-white/25 hover:bg-white/[0.1] hover:text-white"
+              >
+                Enviar mensagem
+              </Button>
+            </div>
+
+            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+              {heroHighlights.map((highlight) => (
+                <div
+                  key={highlight.label}
+                  className="rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm"
+                >
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/50">
+                    {highlight.label}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/72">
+                    {highlight.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Card
+            as="aside"
+            tone="dark"
+            padding="lg"
+            className="relative overflow-hidden border-white/10 bg-white/[0.06] backdrop-blur-sm"
+          >
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(160deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 42%, rgba(0,86,166,0.16) 100%)',
+              }}
+              aria-hidden
+            />
+            <div className="relative">
+              <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/55">
+                Encaminhamentos
+              </p>
+              <h2 className="mt-4 text-heading-xl font-semibold text-white">
+                Escolha o fluxo mais adequado para a sua necessidade.
+              </h2>
+              <p className="mt-3 max-w-xl text-body-sm text-white/68">
+                O contato principal funciona como porta de entrada geral. Para propostas comerciais
+                estruturadas ou relacionamento com representantes, use os atalhos abaixo.
+              </p>
+
+              <div className="mt-8 grid gap-3">
+                {contactRouteOptions.map((option) => (
+                  <Link
+                    key={option.href}
+                    href={option.href}
+                    className="group rounded-[1.3rem] border border-white/12 bg-white/[0.05] p-5 transition duration-200 hover:border-white/24 hover:bg-white/[0.09]"
+                  >
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/45">
+                      {option.eyebrow}
+                    </p>
+                    <div className="mt-3 flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-base font-semibold text-white">{option.title}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-white/68">
+                          {option.description}
+                        </p>
+                      </div>
+                      <span
+                        aria-hidden
+                        className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.05] text-white/72 transition group-hover:border-white/20 group-hover:bg-white/[0.12]"
+                      >
+                        →
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-2">
+                <div>
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/45">
+                    Cobertura
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/72">{coverageLabel}</p>
+                </div>
+                <div>
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/45">
+                    Direcionamento
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/72">
+                    Triagem clara para demandas tecnicas, institucionais e comerciais.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8">
+      <section className="relative -mt-8 pb-section-loose sm:-mt-10">
+        <div className="mx-auto grid max-w-content gap-8 px-6 sm:px-8 lg:grid-cols-[minmax(0,1.12fr)_minmax(19rem,0.88fr)] lg:px-12">
           <ContatoPageForm />
 
           <aside className="space-y-6">
-            <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-              <h2 className="text-2xl font-bold sm:text-3xl">Nossas unidades</h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-                Atendimento com equipes especializadas no Rio Grande do Sul, Santa Catarina e São
-                Paulo.
-              </p>
+            <Card as="section" padding="lg" className="relative overflow-hidden">
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(160deg, rgba(0,86,166,0.05) 0%, rgba(255,255,255,0) 55%, rgba(15,23,42,0.04) 100%)',
+                }}
+                aria-hidden
+              />
+              <div className="relative">
+                <SectionHeading
+                  eyebrow="Como agilizar o retorno"
+                  size="md"
+                  title="Envie informacoes que ajudem na triagem ja no primeiro contato."
+                  description="Alguns detalhes tornam o encaminhamento mais rapido e preciso, especialmente em demandas tecnicas ou com varias unidades envolvidas."
+                />
 
-              <div className="mt-6 grid gap-4">
-                {unidades.map((unit, index) => (
-                  <article key={unit.id || `${unit.state}-${index}`} className="rounded-xl border border-border p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <h3 className="text-base font-semibold text-text-primary">
-                        {unit.name || 'Apollo Gestão'}
-                      </h3>
-                      <span className="rounded-full bg-accent-light px-3 py-1 text-xs font-semibold text-accent">
-                        {unit.state || 'BR'}
-                      </span>
+                <div className="mt-8 space-y-3">
+                  {messageGuidance.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className="rounded-[1.25rem] border border-border bg-white/80 p-5"
+                    >
+                      <div className="flex items-start gap-4">
+                        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent-strong">
+                          0{index + 1}
+                        </span>
+                        <div>
+                          <h3 className="text-base font-semibold text-text-primary">{item.title}</h3>
+                          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    {hasString(unit.address) ? (
-                      <p className="mt-2 text-sm leading-relaxed text-text-secondary">{unit.address}</p>
-                    ) : null}
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-                      {hasString(unit.phone) ? (
-                        <a
-                          href={phoneHref(unit.phone)}
-                          className="font-medium text-accent transition-colors hover:text-accent-hover"
-                        >
-                          {unit.phone}
-                        </a>
-                      ) : null}
-                      {hasString(unit.email) ? (
-                        <a
-                          href={`mailto:${unit.email}`}
-                          className="font-medium text-accent transition-colors hover:text-accent-hover"
-                        >
-                          {unit.email}
-                        </a>
-                      ) : null}
-                    </div>
-                  </article>
-                ))}
+                  ))}
+                </div>
               </div>
-            </section>
+            </Card>
 
-            <section className="rounded-2xl border border-accent/20 bg-accent-light p-6 shadow-sm sm:p-8">
-              <h2 className="text-xl font-bold sm:text-2xl">Precisa de outro atendimento?</h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-                Acesse os formulários específicos para cotação comercial ou cadastro de
-                representante.
-              </p>
-              <div className="mt-4 grid gap-3">
-                <Link
-                  href="/contato/cotacao"
-                  className="inline-flex items-center justify-between rounded-md border border-accent/25 bg-white px-4 py-3 text-sm font-semibold text-accent transition hover:border-accent/40 hover:bg-accent/5"
-                >
-                  Ir para Cotação
-                  <span aria-hidden>→</span>
-                </Link>
-                <Link
-                  href="/contato/representante"
-                  className="inline-flex items-center justify-between rounded-md border border-accent/25 bg-white px-4 py-3 text-sm font-semibold text-accent transition hover:border-accent/40 hover:bg-accent/5"
-                >
-                  Ir para Representante
-                  <span aria-hidden>→</span>
-                </Link>
+            <Card as="section" padding="lg" className="relative overflow-hidden">
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(135deg, rgba(0,86,166,0.06) 0%, rgba(255,255,255,0) 52%, rgba(15,23,42,0.04) 100%)',
+                }}
+                aria-hidden
+              />
+              <div className="relative">
+                <SectionHeading
+                  eyebrow="Unidades Apollo"
+                  size="md"
+                  title="Atendimento regional com coordenacao integrada."
+                  description="Equipes especializadas no Rio Grande do Sul, Santa Catarina e Sao Paulo, com capacidade de encaminhar projetos de forma coordenada."
+                />
+
+                <div className="mt-8 grid gap-4">
+                  {unidades.map((unit, index) => (
+                    <article
+                      key={unit.id || `${unit.state}-${index}`}
+                      className="rounded-[1.3rem] border border-border bg-white/85 p-5 shadow-[var(--shadow-soft)]"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="text-base font-semibold text-text-primary">
+                            {unit.name || 'Apollo Gestão'}
+                          </h3>
+                          {hasString(unit.address) ? (
+                            <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                              {unit.address}
+                            </p>
+                          ) : null}
+                        </div>
+                        <Badge tone="accent">{unit.state || 'BR'}</Badge>
+                      </div>
+
+                      <div className="mt-4 grid gap-3">
+                        {hasString(unit.phone) ? (
+                          <a
+                            href={phoneHref(unit.phone)}
+                            className="inline-flex items-center gap-3 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                          >
+                            <span
+                              aria-hidden
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent-strong"
+                            >
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path
+                                  d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.33 1.77.62 2.62a2 2 0 01-.45 2.11L8.01 9.99a16 16 0 006 6l1.54-1.29a2 2 0 012.11-.45c.85.29 1.72.5 2.62.62A2 2 0 0122 16.92z"
+                                  stroke="currentColor"
+                                  strokeWidth="1.8"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </span>
+                            <span>{unit.phone}</span>
+                          </a>
+                        ) : null}
+
+                        {hasString(unit.email) ? (
+                          <a
+                            href={`mailto:${unit.email}`}
+                            className="inline-flex items-center gap-3 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                          >
+                            <span
+                              aria-hidden
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent-strong"
+                            >
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path
+                                  d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2zm0 2l8 5 8-5"
+                                  stroke="currentColor"
+                                  strokeWidth="1.8"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </span>
+                            <span className="break-all">{unit.email}</span>
+                          </a>
+                        ) : null}
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
-            </section>
+            </Card>
           </aside>
         </div>
       </section>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
 
 type ContactFormValues = {
   nome: string
@@ -11,6 +12,21 @@ type ContactFormValues = {
 }
 
 type SubmitState = 'idle' | 'success' | 'error'
+
+const intakeHighlights = [
+  {
+    title: 'Contexto do projeto',
+    description: 'Explique a frente de trabalho, a unidade ou o tipo de ativo envolvido.',
+  },
+  {
+    title: 'Objetivo esperado',
+    description: 'Compartilhe a decisao, entrega ou resultado que voce precisa viabilizar.',
+  },
+  {
+    title: 'Prazo e urgencia',
+    description: 'Se houver data critica ou demanda imediata, sinalize isso logo na primeira mensagem.',
+  },
+]
 
 export function ContatoPageForm() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
@@ -63,22 +79,51 @@ export function ContatoPageForm() {
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-      <h2 className="text-2xl font-bold sm:text-3xl">Fale com nossa equipe</h2>
-      <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-        Preencha o formulário abaixo e retornaremos o contato com a melhor solução para o seu cenário.
-      </p>
+    <Card as="section" padding="lg" className="relative overflow-hidden" id="formulario-contato">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(160deg, rgba(0,86,166,0.07) 0%, rgba(255,255,255,0) 48%, rgba(15,23,42,0.05) 100%)',
+        }}
+        aria-hidden
+      />
 
-      <form className="mt-6 grid gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div>
-          <label htmlFor="contato-nome" className="mb-1.5 block text-sm font-medium text-text-primary">
-            Nome
-          </label>
-          <input
-            id="contato-nome"
+      <div className="relative">
+        <SectionHeading
+          eyebrow="Contato principal"
+          size="lg"
+          title="Conte um pouco sobre a sua demanda"
+          description="Descreva o contexto, a urgencia e o objetivo do projeto. Nossa equipe encaminha sua solicitacao para o especialista mais aderente."
+        />
+
+        <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          {intakeHighlights.map((highlight) => (
+            <div
+              key={highlight.title}
+              className="rounded-[1.25rem] border border-accent/10 bg-accent-soft/55 p-4"
+            >
+              <p className="text-label-sm font-semibold uppercase tracking-[0.16em] text-accent-strong">
+                {highlight.title}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                {highlight.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <form
+          className="mt-8 grid gap-5 sm:grid-cols-2"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
+          <Input
             type="text"
             autoComplete="name"
-            aria-invalid={errors.nome ? 'true' : 'false'}
+            label="Nome"
+            error={errors.nome?.message}
+            placeholder="Seu nome completo"
             {...register('nome', {
               required: 'Informe seu nome.',
               minLength: {
@@ -86,50 +131,30 @@ export function ContatoPageForm() {
                 message: 'Digite ao menos 2 caracteres.',
               },
             })}
-            className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-            placeholder="Seu nome completo"
           />
-          {errors.nome ? (
-            <p className="mt-1 text-xs text-red-600" role="alert">
-              {errors.nome.message}
-            </p>
-          ) : null}
-        </div>
 
-        <div>
-          <label htmlFor="contato-email" className="mb-1.5 block text-sm font-medium text-text-primary">
-            E-Mail
-          </label>
-          <input
-            id="contato-email"
+          <Input
             type="email"
             autoComplete="email"
-            aria-invalid={errors.email ? 'true' : 'false'}
+            label="E-mail corporativo"
+            error={errors.email?.message}
+            placeholder="voce@empresa.com"
             {...register('email', {
-              required: 'Informe um e-mail válido.',
+              required: 'Informe um e-mail valido.',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Digite um e-mail válido.',
+                message: 'Digite um e-mail valido.',
               },
             })}
-            className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-            placeholder="voce@empresa.com"
           />
-          {errors.email ? (
-            <p className="mt-1 text-xs text-red-600" role="alert">
-              {errors.email.message}
-            </p>
-          ) : null}
-        </div>
 
-        <div>
-          <label htmlFor="contato-assunto" className="mb-1.5 block text-sm font-medium text-text-primary">
-            Assunto
-          </label>
-          <input
-            id="contato-assunto"
+          <Input
             type="text"
-            aria-invalid={errors.assunto ? 'true' : 'false'}
+            label="Assunto"
+            error={errors.assunto?.message}
+            wrapperClassName="sm:col-span-2"
+            description="Se houver area, unidade ou tipo de projeto, informe isso aqui."
+            placeholder="Ex: apoio para inventario patrimonial"
             {...register('assunto', {
               required: 'Informe o assunto da mensagem.',
               minLength: {
@@ -137,24 +162,15 @@ export function ContatoPageForm() {
                 message: 'Digite ao menos 3 caracteres.',
               },
             })}
-            className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-            placeholder="Ex: Dúvida sobre inventário patrimonial"
           />
-          {errors.assunto ? (
-            <p className="mt-1 text-xs text-red-600" role="alert">
-              {errors.assunto.message}
-            </p>
-          ) : null}
-        </div>
 
-        <div>
-          <label htmlFor="contato-mensagem" className="mb-1.5 block text-sm font-medium text-text-primary">
-            Mensagem
-          </label>
-          <textarea
-            id="contato-mensagem"
-            rows={5}
-            aria-invalid={errors.mensagem ? 'true' : 'false'}
+          <Textarea
+            rows={7}
+            label="Mensagem"
+            error={errors.mensagem?.message}
+            wrapperClassName="sm:col-span-2"
+            description="Inclua objetivo, volume estimado, localidade e qualquer prazo relevante."
+            placeholder="Conte-nos como podemos ajudar."
             {...register('mensagem', {
               required: 'Descreva sua necessidade.',
               minLength: {
@@ -162,31 +178,46 @@ export function ContatoPageForm() {
                 message: 'Digite ao menos 10 caracteres.',
               },
             })}
-            className="w-full resize-y rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-            placeholder="Conte-nos como podemos ajudar."
           />
-          {errors.mensagem ? (
-            <p className="mt-1 text-xs text-red-600" role="alert">
-              {errors.mensagem.message}
+
+          <div className="flex flex-col gap-4 border-t border-border pt-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-md text-meta-sm text-text-muted">
+              Ao enviar, sua mensagem segue para a equipe da Apollo responsavel por orientar o
+              proximo passo do atendimento.
+            </p>
+
+            <Button
+              type="submit"
+              size="lg"
+              disabled={isSubmitting}
+              trailingIcon={
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+            >
+              {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
+            </Button>
+          </div>
+
+          {submitState === 'success' ? (
+            <p className="text-sm text-emerald-600 sm:col-span-2" role="status" aria-live="polite">
+              Mensagem enviada com sucesso.
             </p>
           ) : null}
-        </div>
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex w-fit items-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
-        </button>
-
-        {submitState === 'success' ? (
-          <p className="text-sm text-emerald-600">Mensagem enviada com sucesso.</p>
-        ) : null}
-        {submitState === 'error' ? (
-          <p className="text-sm text-red-600">Não foi possível enviar agora. Tente novamente.</p>
-        ) : null}
-      </form>
-    </section>
+          {submitState === 'error' ? (
+            <p className="text-sm text-red-600 sm:col-span-2" role="alert">
+              Nao foi possivel enviar agora. Tente novamente.
+            </p>
+          ) : null}
+        </form>
+      </div>
+    </Card>
   )
 }

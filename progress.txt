@@ -1565,3 +1565,31 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Editorial/news surfaces can feel substantially more premium without CMS schema changes by deriving category chips, reading-time labels, and featured-story hierarchy from existing `posts` content and category fields
   - Current `prd.json` includes a later duplicate `US-043C` identifier under the polish stream; this run treated the first `US-043C` entry in story order as the selected story and left the later item untouched as future cleanup context
 ---
+## 2026-03-10 16:47 UTC - US-044A
+- **Story:** Repaginação da página de contato
+- **What was implemented:**
+  - Redesigned `/contato` into a phase-2 contact landing page with a stronger dark hero, clearer copy hierarchy, premium route cards for `cotacao` and `representante`, and a more intentional balance between copy, shortcuts, units, and the primary form
+  - Rebuilt `ContatoPageForm` on shared UI primitives so public-form styling, validation states, and submit affordances align with the newer design system already used across the redesigned frontend
+  - Reframed the right rail into two clearer supporting surfaces: message-guidance cards for faster triage and richer unidades cards with better hierarchy for regional contact details
+- **Files changed:**
+  - `src/app/(frontend)/contato/page.tsx` — redesigned hero, CTA hierarchy, supporting route cards, guidance/sidebar composition, and unidades presentation
+  - `src/components/ContatoPageForm.tsx` — restyled the main contact form with shared `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives
+  - `prd.json` — marked the selected `US-044A` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous contact page was structurally correct but still read like a phase-1 utility page; the redesign moves it closer to the homepage and shell language with a stronger opening composition, more deliberate surfaces, and clearer routing for different intent paths
+  - The page now treats copy, contact form, units, and alternate flows as one composed experience instead of separate stacked utility blocks
+- **Affected shared components:** `ContatoPageForm` now consistently reuses shared `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives, which is directly relevant for the remaining contact-form redesign stories
+- **Responsive impact:** Hero content collapses from a split layout into a single-column stack on smaller screens, form inputs collapse from two columns to one, and route/unit cards preserve readable spacing and touch targets on mobile
+- **Accessibility impact:** Preserved semantic headings and link structure, kept explicit field labels and inline validation, improved focus treatment through shared form primitives, and exposed submit feedback with `role="status"` / `role="alert"`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/contato`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/contato` across desktop/tablet/mobile, including hero spacing, form states, and unidade-card readability
+- **Learnings for future iterations:**
+  - Contact-form redesign work can stay within phase-2 scope by pairing route-level composition changes with shared UI form primitives instead of reopening CMS modeling
+  - On contact pages, absent hero media should degrade to layered gradients rather than a broken placeholder image path
+---
