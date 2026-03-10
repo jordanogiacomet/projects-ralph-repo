@@ -6,12 +6,14 @@ import { Badge, Button, Card, Container, SectionHeading } from '@/components/ui'
 import type { SolutionCategoryPageData } from '@/lib/solutionCategories'
 
 import { ContatoForm } from './ContatoForm'
+import { SolutionFilterTabs } from './SolutionFilterTabs'
 import { SolutionGrid } from './SolutionGrid'
 
 type SolutionCategoryHubPageProps = SolutionCategoryPageData
 
 export function SolutionCategoryHubPage({
   categoryLabel,
+  categoryFilters,
   ctaChecklist,
   ctaChecklistTitle,
   ctaDescription,
@@ -30,6 +32,7 @@ export function SolutionCategoryHubPage({
   introDescription,
   introPillars,
   introTitle,
+  slug,
   solutions,
 }: SolutionCategoryHubPageProps) {
   const shouldReduceMotion = useReducedMotion()
@@ -242,6 +245,36 @@ export function SolutionCategoryHubPage({
                 conversa com a Apollo sem perder clareza comercial.
               </p>
             </Card>
+          </motion.div>
+
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { duration: 0.48, delay: 0.04, ease: [0.22, 1, 0.36, 1] }
+            }
+            className="mt-8 rounded-panel border border-border/80 bg-white/92 p-5 shadow-[var(--shadow-soft)] sm:p-6"
+          >
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:items-center">
+              <div>
+                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                  Navegue entre frentes
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                  O mesmo sistema de filtros do hub principal agora organiza a troca entre
+                  categorias e o retorno ao portfolio completo.
+                </p>
+              </div>
+
+              <SolutionFilterTabs
+                filters={categoryFilters}
+                activeFilter={slug}
+                ariaLabel="Navegar entre frentes de solucao"
+              />
+            </div>
           </motion.div>
 
           <motion.div

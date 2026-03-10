@@ -1183,7 +1183,7 @@
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Padronização visual dos cards e filtros de solução",
-      "passes": false,
+      "passes": true,
       "description": "Criar linguagem consistente e premium para cards, filtros e superfícies de listagem.",
       "acceptanceCriteria": [
         "Cards e filtros de solução viram primitives visuais coerentes e reutilizáveis",

@@ -716,3 +716,34 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Shared narrative templates are a safer way to harmonize related redesign pages than advancing each category independently; the categories can still keep distinct copy while the layout rhythm stays consistent
   - Seed/content slug drift can surface as routing regressions during redesign work, so category-hub refactors should verify seeded solution slugs and preserve compatibility routes when historical paths already exist in content or navigation
 ---
+## 2026-03-10 18:11 UTC - US-046C
+- **Story:** Padronizacao visual dos cards e filtros de solucao
+- **What was implemented:**
+  - Extracted a dedicated `SolutionCard` component so the solution listing surface now lives in a reusable primitive instead of inline card markup inside `SolutionGrid`
+  - Rebuilt `SolutionFilterTabs` as a specialized solution rail that supports both interactive filters (`/solucoes`) and link-based category navigation (category hubs), with aligned hover, focus, active, density, and count treatments
+  - Applied the same filter language to the category hubs by adding a shared category rail above the solution grid, keeping navigation inside existing routes while making the solutions system feel coherent across `/solucoes` and all three category templates
+- **Files changed:**
+  - `src/components/SolutionCard.tsx` — added the reusable premium solution-card primitive
+  - `src/components/SolutionGrid.tsx` — replaced inline card rendering with the shared card component for both hub and compact grid variants
+  - `src/components/SolutionFilterTabs.tsx` — upgraded the filter control into a reusable rail that supports button and link modes
+  - `src/components/SolutionCategoryHubPage.tsx` — added the category-level rail so hubs reuse the same solutions navigation language as `/solucoes`
+  - `src/lib/solutionCategories.ts` — added serialized category-filter data for the shared hub rail
+  - `prd.json` — marked the selected `US-046C` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The prior solution cards already looked better than phase 1, but the visual system was still split between inline card markup and lightweight chips. This pass turns both surfaces into a clearer, more product-like listing language with stronger hierarchy, softer density, and more deliberate hover/focus behavior
+  - The category hubs previously shared the card treatment but not the filter/navigation language. Reusing the same rail across the hub and category templates makes the solutions area feel like one connected system instead of adjacent redesign passes
+- **Affected shared components:** `SolutionCard`, `SolutionGrid`, `SolutionFilterTabs`, `SolutionCategoryHubPage`, and `solutionCategories`
+- **Responsive impact:** The new card primitive preserves equal-height grid behavior across tablet/desktop and keeps compact density for smaller layouts, while the filter rail remains horizontally scrollable on narrow screens and wraps cleanly from tablet upward
+- **Accessibility impact:** Preserved keyboard access for filter buttons and category links, added visible focus treatment on the full card surface and filter rail items, kept `aria-current` for category navigation, preserved `aria-pressed` for active `/solucoes` filters, and retained reduced-motion gating in the animated grid sections
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` and the three category hubs across desktop/tablet/mobile, including card hover/focus states, horizontal rail behavior on mobile, and active category highlighting
+- **Learnings for future iterations:**
+  - A specialized rail component can safely serve both filter and navigation use cases when the visual language stays constant and semantics switch between `aria-pressed` and `aria-current`
+  - Extracting the card into a standalone primitive makes future solution-hub and solution-detail stories less likely to drift, because listing polish now has a single reusable surface instead of duplicated JSX
+---

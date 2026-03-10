@@ -35,6 +35,12 @@ type SolutionCategorySolution = {
   categoryLabel?: string
 }
 
+type SolutionCategoryFilterLink = {
+  key: string
+  label: string
+  href: string
+}
+
 type SolutionCategoryStory = {
   eyebrow: string
   heroTitle: string
@@ -72,6 +78,7 @@ export type SolutionCategorySlug =
 export type SolutionCategoryPageData = SolutionCategoryStory & {
   slug: SolutionCategorySlug
   categoryLabel: string
+  categoryFilters: SolutionCategoryFilterLink[]
   heroTitle: string
   heroDescription: string
   heroImage?: string
@@ -414,6 +421,24 @@ function withCategoryLabel(
   }))
 }
 
+function buildCategoryFilters(
+  activeSlug: SolutionCategorySlug,
+  activeLabel: string,
+): SolutionCategoryFilterLink[] {
+  return [
+    {
+      key: 'all',
+      label: 'Portfolio completo',
+      href: '/solucoes',
+    },
+    ...Object.values(solutionCategoryConfigs).map((config) => ({
+      key: config.slug,
+      label: config.slug === activeSlug ? activeLabel : config.fallbackCategoryTitle,
+      href: config.path,
+    })),
+  ]
+}
+
 export function getSolutionCategoryConfig(slug: SolutionCategorySlug) {
   return solutionCategoryConfigs[slug]
 }
@@ -546,6 +571,7 @@ export async function getSolutionCategoryPageData(
     ...config.story,
     slug,
     categoryLabel,
+    categoryFilters: buildCategoryFilters(slug, categoryLabel),
     heroTitle,
     heroDescription,
     heroImage,
