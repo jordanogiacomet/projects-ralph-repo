@@ -1142,3 +1142,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - The current design-system base is anchored by `src/styles/tokens.css`, `src/styles/utilities.css`, Tailwind theme aliases, and the primitives under `src/components/ui/`, with `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` already serving as live adopters.
 ---
+## 2026-03-10 14:01 UTC - US-039A
+- What was implemented
+- Refined the global header and primary navigation in `src/components/Navbar.tsx` to reduce utility noise, remove the separate social strip, increase whitespace and shell polish, and rebalance the layout around logo, main nav, search, and a stronger CTA.
+- Kept existing behavior intact while improving hierarchy: transparent-on-hero handling, active nav states, desktop mega-menu triggers, search access, and mobile menu controls remain in place, with the CTA now also exposed in the small-screen header from `sm` upward.
+- Marked `US-039A` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/Navbar.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated all frontend/admin routes after isolating a stale generated `.next` directory; initial attempts hit the repo's known intermittent `PageNotFoundError: /_document` during page-data collection.
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile header behavior, CTA prominence, transparent hero state, and nav/search access.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For the shell header, primary navigation reads more clearly when search and social affordances are grouped into a secondary utility capsule and the main CTA remains visually isolated.
+  - Gotchas encountered
+  - In this sandbox, transient `next build` failures for `/_document` can clear after moving an existing generated `.next` directory aside and rerunning the required build.
+  - Useful context
+  - Showing the primary CTA in the mobile header only from `sm` upward preserves conversion visibility without overcrowding the smallest breakpoint.
+---

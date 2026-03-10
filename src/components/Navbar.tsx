@@ -83,26 +83,28 @@ export function Navbar({
   }, [closeMegaMenu, normalizedPath])
 
   const navSurfaceClass = cn(
-    'rounded-[30px] border backdrop-blur-xl transition-all duration-300',
+    'relative overflow-hidden rounded-[34px] border backdrop-blur-2xl transition-all duration-300',
     isTransparent
-      ? 'border-white/12 bg-white/[0.08] shadow-[0_18px_48px_rgba(2,12,27,0.18)]'
-      : 'border-white/70 bg-white/92 shadow-[0_18px_52px_rgba(15,23,42,0.14)]',
+      ? 'border-white/12 bg-[linear-gradient(135deg,rgba(10,18,32,0.78)_0%,rgba(22,32,51,0.56)_100%)] shadow-[0_24px_60px_rgba(2,12,27,0.22)]'
+      : 'border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(246,248,251,0.94)_100%)] shadow-[0_24px_60px_rgba(15,23,42,0.14)]',
   )
-  const utilitySurfaceClass = cn(
-    'inline-flex items-center gap-3 rounded-pill border px-3 py-1.5 backdrop-blur-xl transition-all duration-300',
+  const desktopUtilityClass = cn(
+    'hidden items-center gap-2 rounded-pill border px-2 py-2 lg:flex',
     isTransparent
-      ? 'border-white/12 bg-white/[0.08] text-white/58'
-      : 'border-white/70 bg-white/78 text-text-muted shadow-soft',
+      ? 'border-white/10 bg-white/[0.06] text-white/62'
+      : 'border-border/70 bg-white/72 text-text-muted shadow-soft',
   )
   const desktopGroupClass = cn(
-    'hidden lg:flex items-center gap-1 rounded-pill border px-2 py-1.5',
-    isTransparent ? 'border-white/10 bg-white/[0.04]' : 'border-border/70 bg-surface-secondary/80',
+    'hidden items-center gap-1 rounded-pill border px-2.5 py-2 lg:inline-flex',
+    isTransparent
+      ? 'border-white/10 bg-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
+      : 'border-border/70 bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]',
   )
   const desktopLinkClass = (active: boolean) =>
     cn(
-      'rounded-pill px-4 py-2.5 text-[0.95rem] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+      'rounded-pill px-4 py-2.5 text-[0.93rem] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
       isTransparent
-        ? 'text-white/82 hover:bg-white/10 hover:text-white'
+        ? 'text-white/80 hover:bg-white/10 hover:text-white'
         : 'text-text-secondary hover:bg-white hover:text-text-primary',
       active &&
         (isTransparent
@@ -115,44 +117,49 @@ export function Navbar({
       ? 'border-white/10 bg-white/[0.06] text-white/82 hover:bg-white/12 hover:text-white'
       : 'border-border/70 bg-surface-secondary/80 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
   )
+  const brandTagClass = cn(
+    'hidden xl:inline-flex items-center rounded-pill border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em]',
+    isTransparent
+      ? 'border-white/10 bg-white/[0.05] text-white/62'
+      : 'border-border/70 bg-white/76 text-text-muted',
+  )
+  const utilityDividerClass = cn(
+    'hidden h-6 w-px 2xl:block',
+    isTransparent ? 'bg-white/10' : 'bg-border',
+  )
+  const ctaClass = cn(
+    'rounded-pill border px-5 shadow-[0_20px_40px_rgba(31,138,56,0.22)]',
+    isTransparent
+      ? 'border-white/10'
+      : 'border-cta-green/20',
+  )
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50">
         <Container
           size="wide"
-          className={cn('transition-all duration-300', isTransparent ? 'pt-3 lg:pt-4' : 'pt-3')}
+          className={cn(
+            'transition-all duration-300',
+            isTransparent ? 'pt-3.5 lg:pt-5' : 'pt-3.5 lg:pt-4',
+          )}
         >
-          {socialLinks && socialLinks.length > 0 ? (
-            <div className="hidden justify-end pb-2 lg:flex">
-              <div className={utilitySurfaceClass}>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em]">
-                  Acompanhe
-                </span>
-                <SocialLinks
-                  links={socialLinks}
-                  size="sm"
-                  className="gap-2"
-                  itemClassName={cn(
-                    'shadow-none',
-                    isTransparent
-                      ? 'border-white/10 bg-white/[0.03] text-white/72 hover:border-white/20 hover:bg-white/[0.1] hover:text-white'
-                      : 'border-border/70 bg-white text-text-muted hover:border-accent/20 hover:text-accent',
-                  )}
-                />
-              </div>
-            </div>
-          ) : null}
-
           <div className="relative">
             <div className={navSurfaceClass}>
+              <div
+                aria-hidden="true"
+                className={cn(
+                  'pointer-events-none absolute inset-x-0 top-0 h-px',
+                  isTransparent ? 'bg-white/20' : 'bg-white/90',
+                )}
+              />
               <nav
-                className="flex h-[66px] items-center justify-between gap-3 px-4 sm:px-5 lg:h-[80px] lg:px-7"
+                className="flex h-[70px] items-center justify-between gap-3 px-4 sm:px-5 lg:h-[88px] lg:px-7 xl:px-8"
                 aria-label="Navegação principal"
               >
                 <Link
                   href="/"
-                  className="flex min-w-0 items-center gap-3"
+                  className="flex min-w-0 items-center gap-3 xl:gap-4"
                   aria-label="Apollo Gestão - Página inicial"
                 >
                   {currentLogo?.url ? (
@@ -162,30 +169,25 @@ export function Navbar({
                       width={currentLogo.width || 190}
                       height={currentLogo.height || 44}
                       sizes="(min-width: 1280px) 190px, (min-width: 1024px) 168px, 144px"
-                      className="h-8 w-auto sm:h-9 lg:h-10"
+                      className="h-8 w-auto sm:h-9 lg:h-10 xl:h-11"
                       priority
                     />
                   ) : (
                     <span
                       className={cn(
-                        'text-lg font-bold tracking-[-0.03em] transition-colors sm:text-xl',
+                        'font-display text-lg font-bold tracking-[-0.03em] transition-colors sm:text-xl',
                         isTransparent ? 'text-text-on-dark' : 'text-accent',
                       )}
                     >
                       Apollo Gestão
                     </span>
                   )}
-                  <span
-                    className={cn(
-                      'hidden min-[1180px]:block text-[11px] font-semibold uppercase tracking-[0.22em]',
-                      isTransparent ? 'text-white/42' : 'text-text-muted',
-                    )}
-                  >
+                  <span className={brandTagClass}>
                     Avaliações e Controle Patrimonial
                   </span>
                 </Link>
 
-                <div className="hidden flex-1 justify-center lg:flex">
+                <div className="hidden flex-1 justify-center px-4 lg:flex">
                   <div className={desktopGroupClass}>
                     {navItems.map((item) => {
                       const key = item.id || item.label
@@ -253,31 +255,62 @@ export function Navbar({
                   </div>
                 </div>
 
-                <div className="hidden items-center gap-2 lg:flex">
-                  <button
-                    type="button"
-                    onClick={() => setSearchOpen(true)}
-                    className={cn(iconButtonClass, 'h-11 gap-2 px-3.5')}
-                    aria-label="Abrir busca"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      className="h-4.5 w-4.5"
+                <div className="hidden items-center gap-3 lg:flex">
+                  <div className={desktopUtilityClass}>
+                    <button
+                      type="button"
+                      onClick={() => setSearchOpen(true)}
+                      className={cn(iconButtonClass, 'h-10 gap-2 px-3.5')}
+                      aria-label="Abrir busca"
                     >
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="m21 21-4.3-4.3" />
-                    </svg>
-                    <span className="hidden text-sm font-semibold xl:inline">Buscar</span>
-                  </button>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        className="h-[1.125rem] w-[1.125rem]"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                      </svg>
+                      <span className="hidden text-sm font-semibold xl:inline">Buscar</span>
+                    </button>
+
+                    {socialLinks && socialLinks.length > 0 ? (
+                      <>
+                        <span aria-hidden="true" className={utilityDividerClass} />
+                        <SocialLinks
+                          links={socialLinks}
+                          size="sm"
+                          className="hidden 2xl:flex gap-1.5"
+                          itemClassName={cn(
+                            'h-8 w-8 shadow-none',
+                            isTransparent
+                              ? 'border-white/10 bg-white/[0.03] text-white/68 hover:border-white/20 hover:bg-white/[0.1] hover:text-white'
+                              : 'border-border/70 bg-white text-text-muted hover:border-accent/20 hover:text-accent',
+                          )}
+                        />
+                      </>
+                    ) : null}
+                  </div>
 
                   {ctaButton?.label && ctaButton?.link ? (
                     <Button
                       href={ctaButton.link}
                       variant="success"
-                      className="min-h-11 rounded-pill px-5 shadow-[0_18px_36px_rgba(31,138,56,0.24)]"
+                      trailingIcon={
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          className="h-4 w-4"
+                        >
+                          <path d="M5 12h14" />
+                          <path d="m13 5 7 7-7 7" />
+                        </svg>
+                      }
+                      className={cn('min-h-12', ctaClass)}
                     >
                       {ctaButton.label}
                     </Button>
@@ -285,6 +318,16 @@ export function Navbar({
                 </div>
 
                 <div className="flex items-center gap-2 lg:hidden">
+                  {ctaButton?.label && ctaButton?.link ? (
+                    <Button
+                      href={ctaButton.link}
+                      variant="success"
+                      size="sm"
+                      className="hidden rounded-pill px-4 shadow-[0_16px_30px_rgba(31,138,56,0.2)] sm:inline-flex"
+                    >
+                      {ctaButton.label}
+                    </Button>
+                  ) : null}
                   <button
                     type="button"
                     onClick={() => setSearchOpen(true)}
@@ -345,8 +388,8 @@ export function Navbar({
       {!usesTransparentNavbar ? (
         <div
           className={cn(
-            'h-[86px]',
-            socialLinks && socialLinks.length > 0 ? 'lg:h-[132px]' : 'lg:h-[106px]',
+            'h-[96px]',
+            'lg:h-[120px]',
           )}
           aria-hidden="true"
         />

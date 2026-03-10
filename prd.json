@@ -1,13 +1,13 @@
 {
   "projectName": "apollo-gestao-website",
   "branchName": "main",
-  "version": "2.0",
-  "status": "phase-1-complete-phase-2-redesign-planned",
-  "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
+  "version": "3.1",
+  "status": "phase-1-complete-phase-2-redesign-planned-v3-payload-inspired",
+  "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. Toda a camada pública do front deve carregar uma pegada visual inspirada no site do Payload CMS em termos de clareza, navegação, hero, CTAs, espaçamento, hierarquia tipográfica, polimento de interface e sensação de produto moderno — sem copiar literalmente sua IA, sua estrutura comercial ou sua identidade de marca. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
   "productVision": {
-    "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna e consultiva, sem perder a identidade séria e técnica da empresa.",
-    "positioning": "O site deve transmitir autoridade, clareza, confiança, organização e maturidade institucional.",
-    "experienceGoal": "A percepção do usuário deve ser a de uma empresa sólida, especializada e contemporânea, com navegação clara, conteúdo bem estruturado e acabamento visual superior.",
+    "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna, consultiva e claramente inspirada na linguagem visual do ecossistema Payload.",
+    "positioning": "O site deve transmitir autoridade, clareza, confiança, organização, maturidade institucional e acabamento de produto contemporâneo.",
+    "experienceGoal": "A percepção do usuário deve ser a de uma empresa sólida, especializada e contemporânea, com navegação clara, conteúdo bem estruturado, estética limpa e acabamento visual superior.",
     "editorialGoal": "O time da Apollo deve conseguir manter páginas, soluções, conteúdos, clientes e notícias via Payload sem depender de mudanças estruturais no front para operações rotineiras."
   },
   "projectStrategy": {
@@ -15,9 +15,12 @@
     "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos.",
     "phase3": "Hardening operacional posterior, incluindo automação de testes, CI/CD mais robusto, operação de formulários, observabilidade e evidências formais de performance/acessibilidade, quando entrar no backlog.",
     "visualPositioning": "Não perseguir clone visual do WordPress. Usar o site anterior apenas como referência de conteúdo, estrutura, hierarquia institucional e repertório comercial.",
+    "payloadInspirationRule": "Todo o site público deve assumir explicitamente uma pegada visual inspirada no site do Payload CMS. Essa inspiração deve aparecer em header, hero, grids, cards, filtros, CTAs, listagens, detalhes editoriais e fluxos de formulário, principalmente em clareza, composição, espaçamento, hierarquia e acabamento premium.",
     "implementationRule": "Stories já concluídas permanecem como base funcional entregue. O redesign deve acontecer por meio de novas histórias incrementais, sem apagar o histórico técnico da fase anterior.",
     "nonBreakingRule": "A fase 2 deve preferir evolução incremental da base existente. Alterações de modelagem CMS só devem ocorrer se houver ganho claro de governança editorial ou de qualidade visual impossível de atingir apenas no front.",
-    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global."
+    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global.",
+    "headerRedesignRule": "O header deve ser explicitamente revisto na fase 2. A versão atual não deve ser tratada como definitiva apenas por estar funcional. A navegação principal deve evoluir para uma linguagem mais premium, limpa e confiante, com inspiração no estilo do site do Payload em termos de clareza, espaçamento, hierarquia, CTA e acabamento visual — sem copiar sua arquitetura de informação literalmente.",
+    "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS."
   },
   "contentAndCMSStrategy": {
     "principle": "Reaproveitar a modelagem do Payload construída na fase 1 sempre que possível.",
@@ -36,7 +39,8 @@
     "business": [
       "O site deve transmitir percepção mais premium e confiável do que a versão anterior",
       "Fluxos de contato e cotação devem parecer mais claros, profissionais e orientados à conversão",
-      "As páginas de soluções devem comunicar melhor profundidade técnica e valor comercial"
+      "As páginas de soluções devem comunicar melhor profundidade técnica e valor comercial",
+      "A linguagem visual deve parecer mais próxima de produto moderno de alto nível do que de site institucional antigo"
     ],
     "editorial": [
       "O conteúdo continua gerenciável via Payload sem regressão operacional",
@@ -45,7 +49,8 @@
     "quality": [
       "A fase 2 deve elevar consistência visual entre homepage, hubs, detalhes, conteúdo editorial e formulários",
       "O projeto deve manter ou melhorar SEO, responsividade e acessibilidade já implementados na fase 1",
-      "O redesign não deve introduzir regressões visuais gritantes entre desktop, tablet e mobile"
+      "O redesign não deve introduzir regressões visuais gritantes entre desktop, tablet e mobile",
+      "A pegada Payload deve ser perceptível no sistema visual como um todo, não apenas no header"
     ]
   },
   "storyExecutionPlan": {
@@ -90,31 +95,131 @@
     ],
     "phase2RecommendedOrder": [
       "US-038",
-      "US-039",
-      "US-040",
-      "US-041",
-      "US-042",
-      "US-043",
-      "US-044",
+      "US-039A",
+      "US-039B",
+      "US-039C",
+      "US-040A",
+      "US-040B",
+      "US-040C",
+      "US-041A",
+      "US-041B",
+      "US-041C",
+      "US-042A",
+      "US-042B",
+      "US-043A",
+      "US-043B",
+      "US-043C",
+      "US-044A",
+      "US-044B",
+      "US-044C",
       "US-045"
     ],
-    "phase2Logic": "Primeiro consolidar design system e direção visual, depois shell global, depois homepage, depois templates principais, depois templates de conteúdo/formulários e por fim polish global."
+    "phase2Logic": "Primeiro consolidar design system e direção visual Payload-inspired, depois shell global, depois homepage, depois hubs e detalhes, depois templates editoriais e formulários, e por fim polish global."
   },
   "storyDependencies": {
-    "US-039": ["US-038"],
-    "US-040": ["US-038", "US-039"],
-    "US-041": ["US-038", "US-039"],
-    "US-042": ["US-038", "US-039", "US-041"],
-    "US-043": ["US-038", "US-039"],
-    "US-044": ["US-038", "US-039"],
-    "US-045": ["US-038", "US-039", "US-040", "US-041", "US-042", "US-043", "US-044"]
+    "US-039A": [
+      "US-038"
+    ],
+    "US-039B": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-039C": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-040A": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-040B": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-040C": [
+      "US-038",
+      "US-039A",
+      "US-040A",
+      "US-040B"
+    ],
+    "US-041A": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-041B": [
+      "US-038",
+      "US-039A",
+      "US-041A"
+    ],
+    "US-041C": [
+      "US-038",
+      "US-039A",
+      "US-041A"
+    ],
+    "US-042A": [
+      "US-038",
+      "US-039A",
+      "US-041A"
+    ],
+    "US-042B": [
+      "US-038",
+      "US-039A",
+      "US-042A"
+    ],
+    "US-043A": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-043B": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-043C": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-044A": [
+      "US-038",
+      "US-039A"
+    ],
+    "US-044B": [
+      "US-038",
+      "US-039A",
+      "US-044A"
+    ],
+    "US-044C": [
+      "US-038",
+      "US-039A",
+      "US-044A"
+    ],
+    "US-045": [
+      "US-038",
+      "US-039A",
+      "US-039B",
+      "US-039C",
+      "US-040A",
+      "US-040B",
+      "US-040C",
+      "US-041A",
+      "US-041B",
+      "US-041C",
+      "US-042A",
+      "US-042B",
+      "US-043A",
+      "US-043B",
+      "US-043C",
+      "US-044A",
+      "US-044B",
+      "US-044C"
+    ]
   },
   "qualityGates": {
     "globalRules": [
       "Nenhuma story de redesign deve degradar SEO já entregue na fase 1",
       "Nenhuma story de redesign deve quebrar conteúdo ou rotas existentes",
       "Acessibilidade, keyboard navigation e reduced motion devem ser preservados",
-      "Todas as alterações visuais relevantes devem ser verificadas em desktop, tablet e mobile"
+      "Todas as alterações visuais relevantes devem ser verificadas em desktop, tablet e mobile",
+      "Toda implementação de redesign deve ser avaliada contra a diretriz de pegada visual Payload-inspired"
     ],
     "perStoryEvidence": [
       "Lista de arquivos alterados",
@@ -134,7 +239,7 @@
     "Framer Motion"
   ],
   "designDirection": {
-    "aesthetic": "Corporativo premium contemporâneo — visual profissional, sóbrio, técnico e mais refinado que o site anterior. A nova interface deve transmitir autoridade, clareza, precisão e confiança, mantendo a identidade institucional da Apollo Gestão, mas com melhor uso de whitespace, tipografia mais forte, grids mais limpos, superfícies mais elegantes, motion discreto e acabamento visual superior.",
+    "aesthetic": "Corporativo premium contemporâneo com forte pegada visual inspirada no Payload CMS — visual profissional, sóbrio, técnico, limpo e mais refinado que o site anterior. A nova interface deve transmitir autoridade, clareza, precisão e confiança, mantendo a identidade institucional da Apollo Gestão, mas com melhor uso de whitespace, tipografia mais forte, grids mais limpos, superfícies mais elegantes, motion discreto e acabamento visual superior.",
     "visualGoal": "Modernizar sem descaracterizar. O site deve parecer uma evolução natural e mais madura da Apollo, e não uma ruptura estética gratuita.",
     "brandCharacter": [
       "confiável",
@@ -145,6 +250,26 @@
       "claro",
       "sóbrio"
     ],
+    "siteWidePayloadPegada": "Todo o front público deve carregar uma sensação visual próxima ao que o Payload comunica: clareza, produto maduro, interface limpa, conteúdo bem respirado, CTA forte, tipografia firme e navegação premium.",
+    "payloadInspiredLanguage": {
+      "primaryInspiration": "Payload official website",
+      "inspirationUse": "Usar como referência de linguagem visual para todo o site, especialmente header, hero, CTAs, grids, listagens, páginas editoriais, formulários e acabamento de componentes.",
+      "translateForApollo": [
+        "header mais limpo e sofisticado",
+        "hero mais forte e editorial",
+        "CTAs com presença mais clara",
+        "mais whitespace e composição premium",
+        "cards mais polidos e menos genéricos",
+        "navegação e overlays com sensação de produto maduro",
+        "detalhes editoriais e técnicos melhor organizados"
+      ],
+      "doNotCopy": [
+        "Não copiar literalmente a arquitetura de informação do Payload",
+        "Não transformar a Apollo em um site de SaaS puro",
+        "Não abandonar necessidades institucionais e comerciais específicas da Apollo",
+        "Não remover o mega menu de soluções se ele continuar cumprindo papel estratégico"
+      ]
+    },
     "doNotDo": [
       "Não transformar o site em uma landing page genérica de startup",
       "Não exagerar em gradientes, glassmorphism ou animações chamativas",
@@ -197,7 +322,21 @@
         "reading": "max-width ~ 760px",
         "wide": "max-width ~ 1360px"
       },
-      "spacingScale": [4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144],
+      "spacingScale": [
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        64,
+        80,
+        96,
+        120,
+        144
+      ],
       "sectionRhythm": "As páginas devem ter ritmo vertical claro entre blocos, com respiro superior ao site anterior. Evitar empilhamento apertado e seções visualmente equivalentes sem contraste de densidade ou fundo.",
       "gridPrinciples": [
         "Cards e colunas com alinhamento ótico consistente",
@@ -239,74 +378,6 @@
       "contentPages": "Devem ter caráter mais editorial e organizado, com boa relação entre imagem, texto, metadata e conversão.",
       "contactFlows": "Devem parecer fluxos profissionais e confiáveis, com visual claro e orientado à conclusão."
     },
-    "designSystemBase": {
-      "fonts": {
-        "display": "Manrope via next/font/google para headlines, heroes e headings institucionais.",
-        "body": "Inter via next/font/google para navegação, corpo de texto, formulários e labels.",
-        "support": "Open Sans permanece disponível apenas como apoio de compatibilidade para áreas legadas de texto corrido quando necessário."
-      },
-      "typographyScale": {
-        "display-xl": "clamp(2.75rem, 5vw, 4.75rem) / line-height 0.95 / tracking -0.05em",
-        "display-lg": "clamp(2.4rem, 4vw, 3.75rem) / line-height 0.98 / tracking -0.045em",
-        "display-md": "clamp(2rem, 3vw, 3rem) / line-height 1 / tracking -0.04em",
-        "heading-xl": "2.5rem max / line-height 1.1 / tracking -0.035em",
-        "heading-lg": "1.875rem / line-height 1.15 / tracking -0.03em",
-        "heading-md": "1.5rem / line-height 1.2 / tracking -0.025em",
-        "body-lg": "1.125rem / line-height 1.75",
-        "body-md": "1rem / line-height 1.7",
-        "body-sm": "0.9375rem / line-height 1.65",
-        "label-sm": "0.75rem / line-height 1.2 / tracking 0.08em",
-        "meta-sm": "0.8125rem / line-height 1.4"
-      },
-      "spacingAndRhythm": {
-        "coreScalePx": [4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144],
-        "sectionTight": "48px mobile / 64px desktop",
-        "sectionDefault": "64px mobile / 80px desktop",
-        "sectionLoose": "80px mobile / 120px desktop",
-        "cardPadding": "24px base, com expansão para 32px em cards mais editoriais ou formulários principais",
-        "formRhythm": "16px entre campos, 24px antes de CTAs e mensagens de estado"
-      },
-      "surfaceAndInteractionTokens": {
-        "surfaces": [
-          "surface-primary: painel branco principal",
-          "surface-secondary: painéis suaves em cinza-azulado",
-          "surface-muted: apoios, badges e fundos de destaque discreto",
-          "bg-dark-elevated: superfícies escuras premium para blocos institucionais"
-        ],
-        "borders": [
-          "border: separação leve padrão",
-          "border-strong: contornos de ênfase para controles e cards premium"
-        ],
-        "shadows": [
-          "shadow-soft: cards e painéis padrão",
-          "shadow-medium: camadas destacadas e overlays",
-          "shadow-strong: uso pontual em momentos de maior profundidade"
-        ],
-        "radii": [
-          "radius-button: 16px",
-          "radius-field: 16px",
-          "radius-panel: 24px",
-          "radius-pill: 999px"
-        ],
-        "interactiveStates": [
-          "Botões e cards elevam no hover de forma sutil, sem animações chamativas",
-          "Foco usa ring de baixa opacidade baseado no azul da marca",
-          "Chips, filtros e badges devem comunicar estado ativo por contraste de fundo, borda e texto"
-        ]
-      },
-      "componentPrimitives": [
-        "Button",
-        "Input",
-        "Textarea",
-        "Select",
-        "Card",
-        "Chip",
-        "Badge",
-        "SectionHeading",
-        "Container"
-      ],
-      "implementationRule": "Os primitives devem ser incrementais sobre a base existente. Histórias seguintes devem preferir compor esse sistema em vez de criar novas soluções isoladas por template."
-    },
     "designPrinciples": [
       "Modernizar sem descaracterizar a Apollo Gestão",
       "Preservar seriedade institucional com execução visual mais madura",
@@ -317,7 +388,8 @@
       "Manter caminhos de contato e conversão visíveis sem tornar todas as páginas pesadas",
       "Fazer o site parecer mais consultivo, técnico e contemporâneo",
       "Usar motion como acabamento de produto, não como distração",
-      "Garantir consistência entre homepage, hubs, páginas internas, formulários e conteúdo editorial"
+      "Garantir consistência entre homepage, hubs, páginas internas, formulários e conteúdo editorial",
+      "Garantir que a pegada visual inspirada no Payload seja perceptível em todo o site, e não apenas no header"
     ]
   },
   "folderStructure": {
@@ -413,13 +485,18 @@
       "Badge.tsx",
       "Card.tsx",
       "SectionHeading.tsx",
-      "Container.tsx"
+      "Container.tsx",
+      "Kicker.tsx",
+      "Metric.tsx",
+      "Surface.tsx"
     ],
     "src/components/layout/": [
       "PageHero.tsx",
       "SectionShell.tsx",
       "PageIntro.tsx",
-      "PreFooterCTA.tsx"
+      "PreFooterCTA.tsx",
+      "TopNav.tsx",
+      "MegaPanel.tsx"
     ],
     "src/components/sections/": [
       "HeroSection.tsx",
@@ -445,7 +522,8 @@
     ],
     "src/styles/": [
       "tokens.css — Tokens visuais e aliases de cor/spacing/shadow/radius",
-      "utilities.css — Classes utilitárias complementares do design system"
+      "utilities.css — Classes utilitárias complementares do design system",
+      "payload-inspired.css — regras globais de acabamento visual para o redesign"
     ],
     "public/": [
       "images/ — Imagens estáticas (logos, ícones de soluções)",
@@ -1331,114 +1409,257 @@
       "id": "US-038",
       "phase": "phase-2-redesign",
       "stream": "design-system",
-      "title": "Definir direção visual refinada e design system base",
+      "title": "Definir direção visual refinada, pegada Payload e design system base",
       "passes": true,
-      "description": "Consolidar a segunda fase do projeto com uma direção visual mais premium e contemporânea, traduzindo essa visão em tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
+      "description": "Consolidar a segunda fase do projeto com uma direção visual mais premium e contemporânea, explicitamente inspirada na linguagem visual do Payload CMS, traduzindo essa visão em tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
       "acceptanceCriteria": [
-        "A direção visual do projeto deve ser atualizada no PRD para explicitar que o objetivo não é mais copiar fielmente o WordPress, e sim evoluir sua identidade com acabamento mais moderno",
+        "A direção visual do projeto deve ser atualizada no PRD para explicitar que o objetivo não é mais copiar fielmente o WordPress, e sim evoluir sua identidade com acabamento mais moderno e com pegada visual inspirada no Payload",
         "Deve existir uma escala tipográfica clara para display, headings, body, small text, labels e metadata",
         "Deve existir uma escala explícita de spacing e rhythm vertical para seções, blocos, cards e formulários",
         "O projeto deve possuir tokens ou aliases visuais reutilizáveis para superfícies, bordas, sombras, radius e estados interativos",
         "Deve ser criada uma camada de componentes-base reutilizáveis em src/components/ui/ para botões, inputs, textareas, cards, chips, badges, headings e containers",
-        "Deve ser documentado no progress.txt o racional da nova direção visual e os princípios de consistência a serem seguidos nas próximas histórias",
+        "Deve ser criada ou ajustada uma camada de estilos globais para carregar a sensação visual Payload-inspired de forma transversal",
+        "Deve ser documentado no progress.txt o racional da nova direção visual, a tradução da referência do Payload para Apollo e os princípios de consistência a serem seguidos nas próximas histórias",
         "O redesign deve ser compatível com a base técnica existente e não deve exigir reconstrução do CMS, rotas ou modelagem já concluída"
       ]
     },
     {
-      "id": "US-039",
+      "id": "US-039A",
       "phase": "phase-2-redesign",
       "stream": "shell-global",
-      "title": "Repaginação do layout global e navegação",
+      "title": "Repaginação do header e navegação principal",
       "passes": true,
-      "description": "Redesenhar navbar, mega menu, menu mobile, overlay de busca, footer, CTA flutuantes e elementos globais para refletir uma linguagem visual mais premium, limpa e coesa.",
+      "description": "Redesenhar o header principal para que a Apollo adote uma navegação mais limpa, premium e claramente inspirada no estilo do Payload, sem perder as necessidades institucionais e comerciais do projeto.",
       "acceptanceCriteria": [
-        "A navbar deve ganhar hierarquia visual mais refinada, melhor espaçamento, estados hover/focus mais elegantes e sensação de produto premium",
-        "O mega menu deve evoluir de dropdown funcional para painel de navegação mais sofisticado, com melhor distribuição visual das categorias e subitens",
-        "A área de redes sociais do header deve ficar mais discreta e integrada, sem competir com a navegação principal",
-        "O overlay de busca deve parecer mais limpo, moderno e editorial, com melhor hierarquia entre campo, estados e resultados",
-        "O footer deve ser repaginado para reduzir peso visual, melhorar hierarquia entre contato, unidades e navegação, e elevar a percepção de acabamento",
+        "O header atual deve ser revisto criticamente e não pode ser mantido apenas por já estar funcional",
+        "A composição entre logo, navegação primária, CTA e utilitários deve ficar mais limpa e hierárquica",
+        "O topo deve ganhar mais whitespace, melhor distribuição horizontal e sensação de produto mais sofisticado",
+        "O CTA principal deve ganhar mais destaque e clareza visual",
+        "A pegada visual do header deve remeter à clareza e ao acabamento do Payload, mas traduzida ao universo institucional da Apollo",
+        "Busca, sociais e itens utilitários não devem competir com a navegação principal",
+        "A navegação deve continuar responsiva e acessível em desktop, tablet e mobile"
+      ]
+    },
+    {
+      "id": "US-039B",
+      "phase": "phase-2-redesign",
+      "stream": "shell-global",
+      "title": "Repaginação do mega menu, menu mobile e overlay de busca",
+      "passes": false,
+      "description": "Redesenhar superfícies de navegação secundária para que o sistema inteiro pareça mais premium, editorial e coerente com a nova pegada inspirada no Payload.",
+      "acceptanceCriteria": [
+        "O mega menu deve evoluir de dropdown funcional para painel de navegação mais sofisticado",
+        "O mega menu deve ter melhor organização visual das categorias e subitens, com leitura mais clara",
+        "O menu mobile deve parecer extensão natural do novo header, e não versão simplificada sem refinamento",
+        "O overlay de busca deve ganhar hierarquia mais limpa, moderna e editorial",
+        "Transições, sombras, bordas, fundos e agrupamentos devem refletir o novo design system",
+        "Todos os fluxos precisam continuar acessíveis, com navegação por teclado e foco gerenciado"
+      ]
+    },
+    {
+      "id": "US-039C",
+      "phase": "phase-2-redesign",
+      "stream": "shell-global",
+      "title": "Repaginação do footer, CTA flutuantes e elementos globais",
+      "passes": false,
+      "description": "Refinar footer, WhatsApp float, cookie consent e scroll-to-top para que o shell global inteiro carregue linguagem mais madura e uniforme.",
+      "acceptanceCriteria": [
+        "O footer deve ser repaginado para reduzir peso visual e melhorar hierarquia entre contato, unidades e navegação",
         "O formulário global de contato, caso permaneça no footer, deve ganhar aparência mais leve e contemporânea",
         "WhatsApp float, cookie consent e scroll-to-top devem ser visualmente integrados ao novo sistema e não parecer componentes isolados",
+        "A sensação visual global deve permanecer consistente com a pegada Payload-inspired definida em US-038",
         "A experiência precisa permanecer totalmente responsiva e acessível"
       ]
     },
     {
-      "id": "US-040",
+      "id": "US-040A",
       "phase": "phase-2-redesign",
       "stream": "homepage",
-      "title": "Repaginação da homepage",
+      "title": "Repaginação do hero da homepage",
       "passes": false,
-      "description": "Transformar a homepage em uma vitrine institucional mais forte, com hero premium, melhor narrativa de valor, grids mais elegantes e ritmo visual mais maduro.",
+      "description": "Transformar o hero da homepage em uma abertura institucional premium, mais próxima da força visual e da clareza de produto do Payload, adaptada ao posicionamento da Apollo.",
       "acceptanceCriteria": [
-        "A homepage deve deixar de parecer apenas uma reprodução estrutural do site anterior e passar a comunicar maior sofisticação visual",
-        "O hero principal deve ser redesenhado com melhor composição, melhor quebra de headline, CTA mais forte e tratamento de imagem/fundo mais refinado",
+        "O hero principal deve ser redesenhado com melhor composição, melhor quebra de headline e tratamento mais refinado de imagem/fundo",
+        "O hero deve transmitir clareza, autoridade e sofisticação visual imediatamente",
+        "Headline, subtítulo e CTA devem ter hierarquia mais forte e mais limpa",
+        "O resultado deve ter pegada moderna e premium perceptível em desktop e mobile",
+        "O hero deve parecer muito mais maduro que a versão de reconstrução da fase 1"
+      ]
+    },
+    {
+      "id": "US-040B",
+      "phase": "phase-2-redesign",
+      "stream": "homepage",
+      "title": "Repaginação dos blocos centrais da homepage",
+      "passes": false,
+      "description": "Redesenhar seções de serviços, prova institucional e bloco institucional da homepage para elevar ritmo, valor percebido e qualidade visual.",
+      "acceptanceCriteria": [
         "A seção dos 3 pilares de serviço deve ganhar novo tratamento de cards, hierarquia e microinterações",
         "Deve existir uma seção de valor/prova institucional com composição mais premium, podendo usar números, credenciais, segmentos ou diferenciais",
         "A seção institucional da Apollo deve ficar mais limpa, mais respirada e com leitura mais contemporânea",
-        "A ordem e densidade das seções devem ser revisadas para melhorar ritmo, contraste e fluidez da navegação",
-        "A homepage deve parecer mais moderna em desktop e mobile, sem perder clareza comercial"
+        "Os blocos devem refletir a nova pegada Payload-inspired em layout, espaçamento e clareza"
       ]
     },
     {
-      "id": "US-041",
+      "id": "US-040C",
+      "phase": "phase-2-redesign",
+      "stream": "homepage",
+      "title": "Costura final da homepage e consistência de narrativa",
+      "passes": false,
+      "description": "Revisar ordem, densidade, transições e coerência da homepage como uma vitrine institucional completa.",
+      "acceptanceCriteria": [
+        "A homepage deve deixar de parecer apenas uma reprodução estrutural do site anterior e passar a comunicar maior sofisticação visual",
+        "A ordem e densidade das seções devem ser revisadas para melhorar ritmo, contraste e fluidez da navegação",
+        "A homepage deve parecer moderna, premium e comercialmente clara em todos os breakpoints",
+        "A homepage deve refletir o design system e a inspiração no Payload como uma linguagem transversal, não apenas local"
+      ]
+    },
+    {
+      "id": "US-041A",
       "phase": "phase-2-redesign",
       "stream": "solutions",
-      "title": "Repaginação dos hubs de soluções e páginas de categoria",
+      "title": "Repaginação da página /solucoes",
       "passes": false,
-      "description": "Redesenhar a página /solucoes e os hubs de categoria para deixá-los menos mecânicos e mais consultivos, com filtros, grids e introduções mais bem resolvidos visualmente.",
+      "description": "Redesenhar a página hub de soluções para deixá-la menos mecânica e mais consultiva, com filtros, hero e grid mais bem resolvidos visualmente.",
       "acceptanceCriteria": [
         "A página /solucoes deve ganhar hero, introdução, filtros e grid com linguagem visual alinhada ao novo design system",
-        "Os filtros devem evoluir visualmente para chips/tabs mais modernos, com estados ativos e contadores mais legíveis",
+        "Os filtros devem evoluir visualmente para chips ou tabs mais modernos, com estados ativos e contadores mais legíveis",
         "Os cards de solução devem ter aparência mais premium, com melhor proporção, padding, título, descrição e hover",
-        "As páginas de categoria devem deixar de ser apenas hero + grid + formulário e passar a ter abertura mais narrativa e mais valor percebido",
-        "A hierarquia entre hero, introdução, grid, CTA e contato deve ser revista para reduzir a sensação de página seca ou repetitiva",
-        "A experiência visual precisa se manter consistente entre as três categorias e seus diferentes volumes de conteúdo"
+        "A página deve carregar com clareza a pegada visual inspirada no Payload"
       ]
     },
     {
-      "id": "US-042",
+      "id": "US-041B",
       "phase": "phase-2-redesign",
       "stream": "solutions",
-      "title": "Repaginação do template de páginas de solução",
+      "title": "Repaginação dos hubs de categoria de soluções",
       "passes": false,
-      "description": "Refinar o template das páginas individuais de solução para parecer mais técnico, mais premium e mais confortável para leitura e conversão.",
+      "description": "Redesenhar os hubs de categoria para que pareçam menos páginas repetitivas e mais aberturas consultivas por domínio de solução.",
       "acceptanceCriteria": [
-        "O hero/banner das páginas de solução deve ser refinado visualmente, com melhor composição, melhor respiro e tipografia mais forte",
+        "As páginas de categoria devem deixar de ser apenas hero + grid + formulário e passar a ter abertura mais narrativa e mais valor percebido",
+        "A hierarquia entre hero, introdução, grid, CTA e contato deve ser revista para reduzir a sensação de página seca ou repetitiva",
+        "A experiência visual precisa se manter consistente entre as três categorias e seus diferentes volumes de conteúdo",
+        "Os hubs devem conversar visualmente com a homepage e com a linguagem Payload-inspired"
+      ]
+    },
+    {
+      "id": "US-041C",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Padronização visual dos cards e filtros de solução",
+      "passes": false,
+      "description": "Criar uma linguagem consistente e premium para cards, filtros e superfícies de listagem de soluções.",
+      "acceptanceCriteria": [
+        "Cards e filtros de solução devem virar primitives visuais coerentes e reutilizáveis",
+        "Hover, foco, estados ativos e densidade do conteúdo devem ser harmonizados",
+        "O acabamento deve ficar mais próximo de produto premium e menos próximo de grid genérico institucional",
+        "A mesma linguagem deve poder ser aplicada em /solucoes e nos hubs de categoria"
+      ]
+    },
+    {
+      "id": "US-042A",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação do template base de páginas de solução",
+      "passes": false,
+      "description": "Refinar o template base das páginas individuais de solução para parecer mais técnico, premium e confortável para leitura.",
+      "acceptanceCriteria": [
+        "O hero ou banner das páginas de solução deve ser refinado visualmente, com melhor composição, melhor respiro e tipografia mais forte",
         "Breadcrumbs, metadata e CTA principal devem receber hierarquia mais elegante e menos utilitária",
         "A área de conteúdo rico deve adotar largura de leitura controlada, melhor espaçamento entre blocos e melhor estilo tipográfico",
-        "Devem existir tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts e seções auxiliares",
-        "A área de 'Veja também' deve ser redesenhada para parecer recomendação editorial ou comercial de alto nível, não apenas links utilitários",
         "O template deve melhorar a percepção de autoridade técnica sem ficar excessivamente denso ou pesado"
       ]
     },
     {
-      "id": "US-043",
+      "id": "US-042B",
       "phase": "phase-2-redesign",
-      "stream": "content-and-proof",
-      "title": "Repaginação de Clientes, Conteúdos e News",
+      "stream": "solutions",
+      "title": "Repaginação de elementos auxiliares das páginas de solução",
       "passes": false,
-      "description": "Atualizar os templates de listagem e detalhe ligados a prova social e conteúdo editorial para uma estética mais madura, com melhor grid, leitura e acabamento.",
+      "description": "Refinar blocos auxiliares, listas, destaques, callouts e área de recomendação relacionada nas páginas de solução.",
       "acceptanceCriteria": [
-        "A página de Clientes deve receber novo tratamento de hero, filtros e grid de logos, com sensação mais premium e melhor organização visual",
-        "A página de Conteúdos deve parecer uma biblioteca de materiais de valor, com cards mais fortes, capas melhor valorizadas e CTA de download mais bem resolvida",
-        "As páginas de News devem ganhar tratamento mais editorial, com cards, metadata, listagem e detalhe mais sofisticados",
-        "A sidebar de News, quando presente no desktop, deve parecer parte do sistema e não um bloco colado lateralmente",
-        "As telas de conteúdo devem equilibrar bem imagem, tipografia, metadata, conversão e navegação relacionada"
+        "Devem existir tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts e seções auxiliares",
+        "A área de 'Veja também' deve ser redesenhada para parecer recomendação editorial ou comercial de alto nível, não apenas links utilitários",
+        "A linguagem visual deve permanecer coerente com a inspiração Payload sem perder o tom institucional da Apollo"
       ]
     },
     {
-      "id": "US-044",
+      "id": "US-043A",
+      "phase": "phase-2-redesign",
+      "stream": "content-and-proof",
+      "title": "Repaginação da página de Clientes",
+      "passes": false,
+      "description": "Atualizar a página de Clientes para que prova social e filtros pareçam mais premium e organizados.",
+      "acceptanceCriteria": [
+        "A página de Clientes deve receber novo tratamento de hero, filtros e grid de logos, com sensação mais premium e melhor organização visual",
+        "Os filtros devem ficar mais claros, refinados e consistentes com os demais filtros do sistema",
+        "O grid de logos deve equilibrar limpeza visual, valor de marca e legibilidade"
+      ]
+    },
+    {
+      "id": "US-043B",
+      "phase": "phase-2-redesign",
+      "stream": "content-and-proof",
+      "title": "Repaginação de Conteúdos e detail pages de material",
+      "passes": false,
+      "description": "Atualizar hub de conteúdos e telas de material para parecerem uma biblioteca mais premium e bem organizada.",
+      "acceptanceCriteria": [
+        "A página de Conteúdos deve parecer uma biblioteca de materiais de valor, com cards mais fortes, capas melhor valorizadas e CTA de download mais bem resolvida",
+        "As páginas de detalhe de material devem equilibrar melhor imagem, tipografia, metadata e conversão",
+        "A linguagem visual deve refletir o design system Payload-inspired em cards, blocos e estados"
+      ]
+    },
+    {
+      "id": "US-043C",
+      "phase": "phase-2-redesign",
+      "stream": "content-and-proof",
+      "title": "Repaginação de News e post detail",
+      "passes": false,
+      "description": "Atualizar listagens e detalhes editoriais do blog/news para uma estética mais editorial, madura e premium.",
+      "acceptanceCriteria": [
+        "As páginas de News devem ganhar tratamento mais editorial, com cards, metadata, listagem e detalhe mais sofisticados",
+        "A sidebar de News, quando presente no desktop, deve parecer parte do sistema e não um bloco colado lateralmente",
+        "As telas de conteúdo devem equilibrar bem imagem, tipografia, metadata, conversão e navegação relacionada",
+        "A inspiração do Payload deve aparecer em clareza de hierarquia, respiro e polimento geral"
+      ]
+    },
+    {
+      "id": "US-044A",
       "phase": "phase-2-redesign",
       "stream": "contact",
-      "title": "Repaginação das páginas de contato e formulários",
+      "title": "Repaginação da página de contato",
       "passes": false,
-      "description": "Redesenhar contato, cotação e representante para que os fluxos de conversão pareçam mais confiáveis, modernos e organizados visualmente.",
+      "description": "Redesenhar a página principal de contato para que ela pareça mais confiável, organizada e contemporânea.",
       "acceptanceCriteria": [
         "A página /contato deve ganhar layout mais refinado, com melhor composição entre copy, unidades e formulário",
+        "A leitura, a hierarquia e a distribuição visual devem ficar mais claras em desktop e mobile",
+        "A linguagem do front deve refletir o padrão premium inspirado no Payload"
+      ]
+    },
+    {
+      "id": "US-044B",
+      "phase": "phase-2-redesign",
+      "stream": "contact",
+      "title": "Repaginação do fluxo de cotação",
+      "passes": false,
+      "description": "Redesenhar o formulário de cotação para que ele pareça um fluxo consultivo de alto nível, e não apenas uma sequência funcional de campos.",
+      "acceptanceCriteria": [
         "Os formulários devem adotar inputs, labels, validações e agrupamentos visuais alinhados ao novo design system",
         "A página de cotação deve parecer um fluxo consultivo e profissional, e não apenas uma sequência funcional de campos",
-        "Stepper, grupos de seleção, upload e estados de erro/sucesso devem ganhar tratamento visual mais maduro",
+        "Stepper, grupos de seleção, upload e estados de erro ou sucesso devem ganhar tratamento visual mais maduro",
+        "O fluxo deve continuar claro, responsivo e acessível"
+      ]
+    },
+    {
+      "id": "US-044C",
+      "phase": "phase-2-redesign",
+      "stream": "contact",
+      "title": "Repaginação do fluxo de representante e padronização de formulários",
+      "passes": false,
+      "description": "Redesenhar a página de representante e consolidar uma linguagem única para formulários do produto.",
+      "acceptanceCriteria": [
         "A página de representante deve seguir a mesma linguagem premium e consistente dos demais fluxos de contato",
+        "Todos os formulários públicos devem compartilhar linguagem visual clara, madura e coerente",
         "Todos os formulários devem permanecer responsivos, acessíveis e claros em mobile"
       ]
     },
@@ -1455,7 +1676,8 @@
         "Nenhuma página principal deve aparentar pertencer a uma linguagem visual antiga enquanto outras já estiverem no novo padrão",
         "Hover, focus, estados vazios, transições e detalhes de interação devem ser harmonizados entre templates",
         "O progress.txt deve registrar o que foi harmonizado, quais débitos visuais permaneceram e quais decisões de design system passaram a valer globalmente",
-        "O resultado final deve comunicar evolução clara em relação à fase inicial do projeto, sem quebrar a identidade institucional da Apollo"
+        "O resultado final deve comunicar evolução clara em relação à fase inicial do projeto, sem quebrar a identidade institucional da Apollo",
+        "A pegada visual inspirada no Payload deve ser perceptível em todo o site público, incluindo header, homepage, hubs, detalhes, conteúdo e formulários"
       ]
     }
   ],
@@ -1490,14 +1712,20 @@
     "FR-28: As páginas internas devem apresentar melhor hierarquia de leitura, largura de conteúdo controlada, rhythm vertical consistente e CTAs melhor posicionados.",
     "FR-29: A experiência visual precisa ser consistente entre desktop, tablet e mobile, com evidência de revisão de espaçamento, proporção, contraste e densidade de interface.",
     "FR-30: A evolução visual deve ser incremental sobre a base existente, sem invalidar a arquitetura CMS, rotas, SEO e conteúdo já implementados.",
-    "FR-31: O redesign deve priorizar percepção de marca, clareza comercial e acabamento premium antes de introduzir novas features funcionais."
+    "FR-31: O redesign deve priorizar percepção de marca, clareza comercial e acabamento premium antes de introduzir novas features funcionais.",
+    "FR-32: Todo o site público deve ter uma pegada visual inspirada no site do Payload CMS, aplicada de forma consistente em navegação, hero, CTAs, grids, cards, conteúdo editorial, overlays e formulários.",
+    "FR-33: O header deve ser explicitamente redesenhado com inspiração no estilo do Payload, pois a versão atual não é considerada satisfatória como solução final.",
+    "FR-34: A inspiração no Payload deve ser traduzida para o contexto institucional da Apollo sem descaracterizar sua identidade nem transformar o site em uma cópia literal de produto SaaS.",
+    "FR-35: O sistema visual do redesign deve tornar perceptível uma sensação de clareza de produto maduro, com whitespace, hierarquia e acabamento superiores aos da fase 1."
   ],
   "nonGoals": [
     "Clone visual pixel-perfect do WordPress atual",
+    "Clone visual pixel-perfect do site do Payload",
     "Migração automática do conteúdo do WordPress atual",
     "Migração dos posts existentes do blog — a collection Posts continua podendo começar vazia",
     "Rebranding completo da Apollo Gestão com mudança radical de identidade",
     "Interface de startup genérica ou visual excessivamente promocional",
+    "Transformar a Apollo em um produto SaaS no discurso visual e comercial",
     "E-commerce ou processamento de pagamentos",
     "Área restrita / autenticação de clientes no frontend",
     "Integração com ERP ou sistemas internos da Apollo",
@@ -1514,13 +1742,15 @@
       "Introduzir redesign sem design system suficiente e gerar inconsistência",
       "Reabrir modelagem CMS sem ganho claro e atrasar a execução",
       "Melhorar visualmente desktop e deixar mobile como adaptação tardia",
-      "Perder clareza comercial em nome de estética"
+      "Perder clareza comercial em nome de estética",
+      "Confundir inspiração no Payload com cópia literal e descaracterizar a Apollo"
     ],
     "constraints": [
       "O redesign deve respeitar a base técnica e editorial já construída",
       "As páginas públicas já existem e devem evoluir incrementalmente",
       "SEO e rotas já entregues não devem ser prejudicados",
-      "Nem toda melhoria visual justifica nova modelagem de conteúdo"
+      "Nem toda melhoria visual justifica nova modelagem de conteúdo",
+      "A linguagem Payload-inspired deve ser traduzida, não copiada"
     ]
   },
   "definitionOfDone": {
@@ -1536,7 +1766,8 @@
       "Navbar, footer, homepage, hubs, detalhes, conteúdo e formulários compartilham linguagem visual coerente",
       "Há evidência clara de evolução visual em relação à fase 1",
       "Não existem páginas principais com aparência claramente defasada em relação ao novo padrão",
-      "O produto preserva identidade institucional da Apollo enquanto eleva seu acabamento"
+      "O produto preserva identidade institucional da Apollo enquanto eleva seu acabamento",
+      "A pegada visual inspirada no Payload é perceptível de forma transversal em todo o site público"
     ]
   }
 }
