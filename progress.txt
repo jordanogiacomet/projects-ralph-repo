@@ -1473,3 +1473,32 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Final homepage polish can be delivered safely without CMS schema changes by introducing transitional composition layers and narrative bridge surfaces within the existing Payload-driven structure
   - When a redesign is split across multiple stories, the closing pass should explicitly address the seams between already-upgraded sections rather than treating each block in isolation
 ---
+## 2026-03-10 15:57 UTC - US-043A
+- **Story:** Repaginação da página de Clientes
+- **What was implemented:**
+  - Redesigned the `/clientes` hero into a premium split layout with darker layered gradients, stronger typographic hierarchy, dual CTAs, and a trust panel that reframes the page as institutional proof instead of a simple listing
+  - Reworked the segment filters into an elevated surface with clear section framing, active-state summary, and shared `Chip` treatment aligned with the phase-2 design system and header/homepage language
+  - Rebuilt the logo grid with fewer, larger columns, cleaner logo staging, segment badges, improved spacing/contrast, hover polish, and an explicit empty state so brand legibility is prioritized over raw density
+  - Upgraded the closing contact area into a darker consultive section so the page ends with the same premium tone established by the hero and proof surfaces
+- **Files changed:**
+  - `src/components/ClientsPage.tsx` — redesigned hero, filter surface, client-logo grid, and closing CTA section
+  - `prd.json` — marked `US-043A` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous page worked functionally, but the hero and six-column logo wall still felt phase-1 in density and hierarchy
+  - This pass shifts `/clientes` toward the existing phase-2 language: deliberate surfaces, cleaner spacing, stronger display typography, clearer filters, and higher-value brand presentation
+  - The grid now optimizes for readability and perceived quality, which better supports the proof-social goal than compressing many logos into a tighter layout
+- **Affected shared components:** No shared primitives were modified; the page now reuses `Badge`, `Button`, `Chip`, `Container`, and `SectionHeading` for stronger design-system consistency
+- **Responsive impact:** Hero content stacks cleanly on mobile, filter chips still support horizontal overflow, and the logo grid scales from 1 to 4 columns without returning to the previous cramped desktop density
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible filter controls, reduced-motion gating on all new animation surfaces, and decorative layers remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/clientes` desktop/tablet/mobile layout, filter interactions, logo legibility, and dark/light section contrast
+- **Learnings for future iterations:**
+  - For proof-social pages, reducing card density and giving logos a framed presentation improves perceived quality more than maximizing logos per row
+  - Reusing shared filter primitives (`Chip`) keeps redesign pages visually aligned with the shell without reopening CMS/data-model work
+---

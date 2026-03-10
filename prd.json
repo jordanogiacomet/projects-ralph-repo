@@ -1069,7 +1069,7 @@
       "phase": "phase-2-redesign",
       "stream": "content-and-proof",
       "title": "Repaginação da página de Clientes",
-      "passes": false,
+      "passes": true,
       "description": "Atualizar a página de Clientes para que prova social e filtros pareçam mais premium e organizados.",
       "acceptanceCriteria": [
         "Novo tratamento de hero, filtros e grid de logos com sensação mais premium",
