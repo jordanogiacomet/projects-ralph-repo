@@ -111,117 +111,169 @@ export async function Footer() {
   const currentYear = new Date().getFullYear()
   const baseCopyright = footerData.copyrightText || FOOTER_DEFAULT_COPYRIGHT
   const copyrightText = `${baseCopyright} - ${currentYear}`
+  const footerHighlights = [
+    {
+      label: 'Presença',
+      value: String(footerData.unidades?.length ?? 0),
+      detail: 'unidades físicas',
+    },
+    {
+      label: 'Contato',
+      value: 'Direto',
+      detail: 'com especialistas',
+    },
+    {
+      label: 'Cobertura',
+      value: 'Brasil',
+      detail: 'operações multissetoriais',
+    },
+  ]
 
   return (
     <>
       <footer className="relative overflow-hidden bg-[#08111e] text-text-on-dark">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,86,166,0.18),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(217,232,248,0.1),transparent_28%)]" />
 
-        <Container size="wide" className="relative py-16 sm:py-20">
-          <div className="grid gap-8 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] xl:items-start">
-            <div>
-              <div className="max-w-2xl">
-                <Badge tone="accent" className="bg-white/10 text-white">
-                  Fale com especialistas
-                </Badge>
-                <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white sm:text-[2.65rem]">
-                  Estruture ativos, avaliações e projetos com mais clareza, ritmo e governança.
-                </h2>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-white/68 sm:text-base">
-                  A Apollo combina profundidade técnica, visão consultiva e experiência operacional
-                  para apoiar decisões patrimoniais mais seguras.
-                </p>
-              </div>
-
-              <div className="mt-6">
-                <FooterContactForm title="Solicite um retorno da equipe Apollo" />
-              </div>
+        <Container size="wide" className="relative py-16 sm:py-20 lg:py-24">
+          <div className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-end">
+            <div className="max-w-3xl">
+              <Badge tone="accent" className="bg-white/10 text-white">
+                Atendimento e presença
+              </Badge>
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white sm:text-[2.8rem]">
+                Contato, navegação e presença institucional com um fechamento mais leve e claro.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">
+                Encerramos cada página com acesso claro às áreas principais, canais de contato e
+                cobertura nacional sem disputar atenção com o conteúdo principal.
+              </p>
             </div>
 
-            <div className="rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-[0_18px_50px_rgba(2,12,27,0.18)] backdrop-blur-sm sm:p-8">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
-                Presença nacional
-              </p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
-                Nossas unidades
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-white/68">
-                Atendemos com unidades físicas no Rio Grande do Sul, Santa Catarina e São Paulo,
-                apoiando operações em todo o Brasil.
-              </p>
-              <div className="mt-6">
-                <FooterUnidades unidades={footerData.unidades || []} />
-              </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {footerHighlights.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 shadow-[0_16px_40px_rgba(5,10,21,0.14)]"
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">
+                    {item.label}
+                  </p>
+                  <p className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
+                    {item.value}
+                  </p>
+                  <p className="mt-1 text-sm text-white/58">{item.detail}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-12 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <div className="max-w-md">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
-                Apollo Gestão
-              </p>
-              <p className="mt-4 text-lg leading-8 text-white/74">
-                Soluções em avaliação patrimonial, controle de ativos e consultoria técnica com foco
-                em confiança institucional e execução precisa.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="text-sm text-white/48">Acompanhe a Apollo</span>
-                <SocialLinks
-                  links={footerData.socialLinks || []}
-                  size="sm"
-                  className="gap-2"
-                  itemClassName="border-white/10 bg-white/6 text-white/76 shadow-none hover:border-white/20 hover:bg-white/10 hover:text-white"
-                />
-              </div>
+          <div className="mt-10 grid gap-8 xl:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.96fr)] xl:items-start">
+            <div>
+              <FooterContactForm title="Solicite um retorno da equipe Apollo" />
             </div>
 
-            <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
-              {headerNavItems.map((item) => (
-                <div key={item.id || item.label}>
-                  {item.link ? (
-                    <Link
-                      href={item.link}
-                      className="text-base font-semibold tracking-[-0.02em] text-white transition hover:text-white/78"
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <h4 className="text-base font-semibold tracking-[-0.02em] text-white">
-                      {item.label}
-                    </h4>
-                  )}
-
-                  {item.children && item.children.length > 0 ? (
-                    <ul className="mt-4 space-y-2">
-                      {item.children.map((child) => (
-                        <li key={child.id || child.label}>
-                          {child.link ? (
-                            <Link
-                              href={child.link}
-                              className="text-sm leading-6 text-white/62 transition hover:text-white"
-                            >
-                              {child.label}
-                            </Link>
-                          ) : (
-                            <span className="text-sm leading-6 text-white/52">{child.label}</span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="mt-3 text-sm leading-6 text-white/52">
-                      Navegação institucional principal da Apollo Gestão.
-                    </p>
-                  )}
+            <div className="grid gap-6">
+              <section className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_18px_50px_rgba(2,12,27,0.18)] backdrop-blur-sm sm:p-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  Presença nacional
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">
+                  Nossas unidades
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-white/68">
+                  Atendemos com unidades físicas no Rio Grande do Sul, Santa Catarina e São Paulo,
+                  apoiando operações em todo o Brasil.
+                </p>
+                <div className="mt-6">
+                  <FooterUnidades unidades={footerData.unidades || []} />
                 </div>
-              ))}
+              </section>
+
+              <section className="rounded-[28px] border border-white/8 bg-white/[0.03] p-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  Canais institucionais
+                </p>
+                <p className="mt-3 text-base leading-7 text-white/72">
+                  Continue acompanhando a Apollo e mantenha os canais de relacionamento sempre por
+                  perto.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <span className="text-sm text-white/48">Acompanhe a Apollo</span>
+                  <SocialLinks
+                    links={footerData.socialLinks || []}
+                    size="sm"
+                    className="gap-2"
+                    itemClassName="border-white/10 bg-white/6 text-white/76 shadow-none hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  />
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_18px_50px_rgba(2,12,27,0.14)] sm:p-8">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+              <div className="max-w-md">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  Apollo Gestão
+                </p>
+                <p className="mt-4 text-lg leading-8 text-white/74">
+                  Soluções em avaliação patrimonial, controle de ativos e consultoria técnica com
+                  foco em confiança institucional e execução precisa.
+                </p>
+              </div>
+
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+                  Navegação
+                </p>
+                <div className="mt-5 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+                  {headerNavItems.map((item) => (
+                    <div key={item.id || item.label}>
+                      {item.link ? (
+                        <Link
+                          href={item.link}
+                          className="text-base font-semibold tracking-[-0.02em] text-white transition hover:text-white/78"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <h4 className="text-base font-semibold tracking-[-0.02em] text-white">
+                          {item.label}
+                        </h4>
+                      )}
+
+                      {item.children && item.children.length > 0 ? (
+                        <ul className="mt-4 space-y-2.5">
+                          {item.children.map((child) => (
+                            <li key={child.id || child.label}>
+                              {child.link ? (
+                                <Link
+                                  href={child.link}
+                                  className="text-sm leading-6 text-white/62 transition hover:text-white"
+                                >
+                                  {child.label}
+                                </Link>
+                              ) : (
+                                <span className="text-sm leading-6 text-white/52">
+                                  {child.label}
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
             <p className="text-sm text-white/60">{copyrightText}</p>
             <p className="text-sm text-white/46">
-              Atendimento consultivo com cobertura nacional e operação multissetorial.
+              Atendimento consultivo com cobertura nacional e acesso contínuo às principais áreas da
+              Apollo.
             </p>
           </div>
         </Container>

@@ -1195,3 +1195,34 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Suggestion chips in the search overlay are a low-risk way to make the search surface feel more guided without changing the API contract of `/api/search`.
 ---
+## 2026-03-10 14:36 UTC - US-039C
+- What was implemented
+- Reworked the footer into clearer tiers so the shell closes with less visual weight: an intro/highlight row, a lighter contact-form + units grid, and a separate brand/navigation panel while keeping the existing Payload/global data flow intact.
+- Restyled `FooterContactForm` into a brighter, more contemporary surface with guided copy and cleaner field treatment; refreshed `FooterUnidades` with clearer cards and direct phone/email links.
+- Unified `WhatsAppFloat`, `CookieConsent`, and `ScrollToTop` around the same dark translucent floating-shell treatment so these global controls no longer feel isolated from the redesigned footer.
+- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/Footer.tsx`
+- `src/components/FooterContactForm.tsx`
+- `src/components/FooterUnidades.tsx`
+- `src/components/WhatsAppFloat.tsx`
+- `src/components/CookieConsent.tsx`
+- `src/components/ScrollToTop.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual QA is still required for desktop/tablet/mobile footer hierarchy, footer form usability, WhatsApp/cookie/scroll stacking, and keyboard interaction states.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Global floating affordances feel materially more coherent when they share one backdrop/border/shadow language and deliberate vertical spacing instead of being styled independently.
+  - Gotchas encountered
+  - Public-facing shell copy should stay institutional and user-facing; avoid leaking internal redesign/system terminology into footer labels or CTA copy.
+  - Useful context
+  - Footer hierarchy reads lighter when contact, units, social, and navigation are split into distinct layers instead of one dense all-in-one panel.
+---

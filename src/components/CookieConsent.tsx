@@ -27,25 +27,54 @@ export function CookieConsent({ text }: CookieConsentProps) {
 
   return (
     <Card
-      className="fixed inset-x-4 bottom-[5.25rem] z-50 mx-auto max-w-reading rounded-[28px] border border-border/80 bg-white/96 shadow-[0_24px_56px_rgba(15,23,42,0.18)] backdrop-blur sm:inset-x-auto sm:bottom-5 sm:left-5 sm:mx-0 sm:max-w-[28rem]"
+      className="fixed inset-x-4 bottom-[5.6rem] z-50 mx-auto max-w-reading rounded-[28px] border border-white/12 bg-[#0e1a2d]/94 text-white shadow-[0_28px_58px_rgba(7,12,23,0.28)] backdrop-blur sm:inset-x-auto sm:bottom-5 sm:left-5 sm:mx-0 sm:max-w-[30rem]"
       padding="md"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-text-muted">
-        Cookies
-      </p>
-      <p className="text-body-sm text-text-secondary">
-        {text ||
-          'Utilizamos cookies para melhorar sua experiência de navegação e analisar o tráfego do site.'}
-      </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Button size="sm" onClick={() => handleChoice('accepted')}>
+      <div className="flex items-start gap-3">
+        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/6 text-white/82">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            className="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path d="M12 3a4 4 0 0 0 4 4 4 4 0 0 1 4 4 5 5 0 0 1-5 5H8a5 5 0 0 1 0-10 3 3 0 0 0 3-3Z" />
+            <path d="M8.5 9.5h.01" />
+            <path d="M14.5 12.5h.01" />
+            <path d="M11.5 15.5h.01" />
+          </svg>
+        </span>
+        <div className="min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/45">
+            Cookies
+          </p>
+          <p className="mt-2 text-sm leading-6 text-white/76">
+            {text ||
+              'Utilizamos cookies para melhorar sua experiência de navegação e analisar o tráfego do site.'}
+          </p>
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button size="sm" onClick={() => handleChoice('accepted')} className="shadow-none">
           Aceitar
         </Button>
-        <Button size="sm" variant="outline" onClick={() => handleChoice('hidden')}>
-          Ocultar
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => handleChoice('hidden')}
+          className="border-white/12 bg-white/6 text-white hover:border-white/18 hover:bg-white/10 hover:text-white"
+        >
+          Agora não
         </Button>
-        <Button size="sm" variant="ghost" onClick={() => handleChoice('settings')}>
-          Configurações
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => handleChoice('settings')}
+          className="text-white/72 hover:bg-white/8 hover:text-white"
+        >
+          Decidir depois
         </Button>
       </div>
     </Card>

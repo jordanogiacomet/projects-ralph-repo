@@ -29,7 +29,7 @@ export function ScrollToTop() {
         })
       }}
       aria-label="Voltar ao topo"
-      className="fixed bottom-24 right-5 z-40 inline-flex h-12 w-12 items-center justify-center rounded-[18px] border border-white/70 bg-white/92 text-text-primary shadow-[0_16px_40px_rgba(15,23,42,0.18)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-accent/20 hover:text-accent"
+      className="group fixed bottom-[5.25rem] right-4 z-40 inline-flex items-center justify-center gap-2 rounded-[18px] border border-white/12 bg-[#0e1a2d]/88 px-3 py-3 text-white shadow-[0_20px_40px_rgba(7,12,23,0.24)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#12213a]/94 sm:bottom-[5.85rem] sm:right-5"
     >
       <svg
         viewBox="0 0 24 24"
@@ -42,6 +42,7 @@ export function ScrollToTop() {
         <path d="M12 19V5" />
         <path d="m6 11 6-6 6 6" />
       </svg>
+      <span className="hidden text-sm font-semibold lg:inline">Topo</span>
     </button>
   )
 }

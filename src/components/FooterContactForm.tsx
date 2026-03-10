@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import { Button, Card, Input, Textarea } from '@/components/ui'
+import { Badge, Button, Card, Input, Textarea } from '@/components/ui'
 
 type FooterContactFormProps = {
   title?: string
@@ -11,6 +11,11 @@ type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 
 export function FooterContactForm({ title = 'Entre em contato' }: FooterContactFormProps) {
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const guidanceItems = [
+    'Tipo de ativo, frente de trabalho ou demanda principal.',
+    'Região, unidade ou operação envolvida no projeto.',
+    'Prazo, contexto e objetivo esperado para o retorno.',
+  ]
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -51,24 +56,21 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
 
   return (
     <Card
-      tone="dark"
-      className="overflow-hidden rounded-[32px] border-white/10 bg-white/[0.05] backdrop-blur-sm"
+      className="overflow-hidden rounded-[32px] border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(241,245,249,0.95))] shadow-[0_28px_65px_rgba(3,9,19,0.24)]"
       padding="lg"
     >
-      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_220px]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_250px]">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/46">
-            Atendimento consultivo
-          </p>
-          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-text-on-dark sm:text-[2rem]">
+          <Badge tone="accent">Contato direto</Badge>
+          <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-text-primary sm:text-[2rem]">
             {title}
           </h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">
-            Compartilhe o contexto do seu projeto e a equipe Apollo retorna com o direcionamento
-            mais adequado.
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-text-secondary sm:text-base">
+            Compartilhe o contexto da demanda para que a equipe Apollo responda com orientação mais
+            precisa, técnica e objetiva.
           </p>
 
-          <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
+          <form className="mt-7 grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-4 md:grid-cols-2">
               <Input
                 name="nome"
@@ -76,8 +78,7 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
                 required
                 label="Nome"
                 placeholder="Seu nome"
-                labelClassName="text-white/82"
-                className="border-white/10 bg-white/6 text-white placeholder:text-white/38 shadow-none focus:border-white/20 focus:ring-white/10"
+                className="border-border/80 bg-white shadow-none focus:border-accent/35 focus:ring-accent/10"
               />
               <Input
                 name="email"
@@ -85,8 +86,7 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
                 required
                 label="E-mail"
                 placeholder="voce@empresa.com.br"
-                labelClassName="text-white/82"
-                className="border-white/10 bg-white/6 text-white placeholder:text-white/38 shadow-none focus:border-white/20 focus:ring-white/10"
+                className="border-border/80 bg-white shadow-none focus:border-accent/35 focus:ring-accent/10"
               />
             </div>
 
@@ -96,8 +96,7 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
               required
               label="Assunto"
               placeholder="Como podemos ajudar?"
-              labelClassName="text-white/82"
-              className="border-white/10 bg-white/6 text-white placeholder:text-white/38 shadow-none focus:border-white/20 focus:ring-white/10"
+              className="border-border/80 bg-white shadow-none focus:border-accent/35 focus:ring-accent/10"
             />
 
             <Textarea
@@ -106,84 +105,61 @@ export function FooterContactForm({ title = 'Entre em contato' }: FooterContactF
               rows={5}
               label="Mensagem"
               placeholder="Descreva objetivo, volume ou tipo de demanda."
-              labelClassName="text-white/82"
-              className="min-h-[156px] border-white/10 bg-white/6 text-white placeholder:text-white/38 shadow-none focus:border-white/20 focus:ring-white/10"
+              className="min-h-[156px] border-border/80 bg-white shadow-none focus:border-accent/35 focus:ring-accent/10"
             />
 
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-end sm:justify-between">
+              <div className="space-y-1">
+                <p className="text-xs leading-5 text-text-muted">
+                  Quanto mais contexto sobre escopo, unidade e prazo, mais assertivo tende a ser o
+                  primeiro retorno.
+                </p>
+                {submitState === 'success' ? (
+                  <p className="text-sm text-emerald-700">Mensagem enviada com sucesso.</p>
+                ) : null}
+                {submitState === 'error' ? (
+                  <p className="text-sm text-red-600">
+                    Não foi possível enviar agora. Tente novamente.
+                  </p>
+                ) : null}
+              </div>
+
               <Button
                 type="submit"
                 disabled={submitState === 'submitting'}
                 variant="primary"
-                className="rounded-pill px-6"
+                className="rounded-pill px-6 sm:shrink-0"
               >
                 {submitState === 'submitting' ? 'Enviando...' : 'Enviar mensagem'}
               </Button>
-
-              {submitState === 'success' ? (
-                <p className="text-sm text-emerald-300">Mensagem enviada com sucesso.</p>
-              ) : null}
-              {submitState === 'error' ? (
-                <p className="text-sm text-red-300">
-                  Não foi possível enviar agora. Tente novamente.
-                </p>
-              ) : null}
             </div>
           </form>
         </div>
 
-        <div className="hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08)_0%,rgba(0,86,166,0.2)_100%)] p-5 xl:block">
-          <div className="h-full w-full rounded-[22px] border border-white/10 bg-white/[0.05] p-4">
-            <svg viewBox="0 0 320 220" className="h-full w-full text-white/72" aria-hidden="true">
-              <rect
-                x="20"
-                y="30"
-                width="280"
-                height="160"
-                rx="20"
-                fill="currentColor"
-                opacity="0.1"
-              />
-              <rect
-                x="42"
-                y="55"
-                width="98"
-                height="18"
-                rx="5"
-                fill="currentColor"
-                opacity="0.38"
-              />
-              <rect
-                x="42"
-                y="86"
-                width="236"
-                height="10"
-                rx="5"
-                fill="currentColor"
-                opacity="0.2"
-              />
-              <rect
-                x="42"
-                y="104"
-                width="186"
-                height="10"
-                rx="5"
-                fill="currentColor"
-                opacity="0.2"
-              />
-              <rect
-                x="42"
-                y="132"
-                width="138"
-                height="34"
-                rx="10"
-                fill="currentColor"
-                opacity="0.4"
-              />
-              <circle cx="246" cy="144" r="28" fill="currentColor" opacity="0.28" />
-            </svg>
+        <aside className="hidden rounded-[28px] border border-border/80 bg-white/72 p-5 lg:block">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-text-muted">
+            Inclua na mensagem
+          </p>
+          <ul className="mt-5 space-y-3">
+            {guidanceItems.map((item, index) => (
+              <li key={item} className="flex gap-3 text-sm leading-6 text-text-secondary">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent-strong">
+                  {index + 1}
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 rounded-[22px] border border-accent/10 bg-accent-soft/55 p-4">
+            <p className="text-sm font-semibold text-text-primary">
+              Fluxo mais leve, resposta mais clara
+            </p>
+            <p className="mt-2 text-sm leading-6 text-text-secondary">
+              O formulário continua simples, mas agora orienta melhor o envio para reduzir ruído e
+              acelerar o direcionamento inicial.
+            </p>
           </div>
-        </div>
+        </aside>
       </div>
     </Card>
   )
