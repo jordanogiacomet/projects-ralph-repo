@@ -342,7 +342,7 @@
       "passes": true,
       "description": "Configurar o projeto base com Next.js 14+ (App Router), Payload CMS 3.x integrado, TypeScript, Tailwind CSS, PostgreSQL e estrutura de diretórios.",
       "acceptanceCriteria": [
-        "Projeto criado com create-payload-app usando template Next.js",
+        "Projeto base criado com scaffold compatível (CLI ou setup manual) para Next.js + Payload integrado",
         "Next.js 14+ com App Router configurado e rodando",
         "Payload CMS 3.x integrado ao Next.js (não standalone)",
         "PostgreSQL configurado como database adapter via @payloadcms/db-postgres",
@@ -401,7 +401,7 @@
         "DownloadBlock criado com: heading (text), description (text), file (upload), requiresEmail (checkbox)",
         "BlockRenderer component criado em src/components/ que renderiza cada bloco por blockType",
         "Todos os blocos disponíveis no campo layout da collection Pages",
-        "Preview funcional de cada bloco no admin do Payload (Live Preview se possível)"
+        "Cada bloco deve estar inserível/editável no admin do Payload; Live Preview é opcional e não bloqueante"
       ]
     },
     {
@@ -526,7 +526,7 @@
         "Cada card com ícone ilustrativo, título e link para página individual",
         "Seção de contato e formulário inline",
         "Dados do Payload filtrados por categoria",
-        "Responsive"
+        "Responsive: grid 3 cols desktop, 2 cols tablet, 1 col mobile com hero e formulário legíveis em todos os breakpoints"
       ]
     },
     {
@@ -540,7 +540,7 @@
         "Cada card com ícone, título e link",
         "Seção de contato e formulário",
         "Dados do Payload",
-        "Responsive"
+        "Responsive: grid 2 cols tablet, 1 col mobile com hero e formulário legíveis em todos os breakpoints"
       ]
     },
     {
@@ -768,7 +768,7 @@
         "Hero com título sobre contato",
         "Formulário de contato: Nome, E-Mail, Assunto, Mensagem — todos required",
         "Validação client-side com React Hook Form",
-        "Submit behavior: a definir posteriormente (placeholder com estado de sucesso/erro inline)",
+        "Submit envia para /api/form-submissions (formType: contato) com feedback inline de sucesso/erro",
         "Dados das 3 unidades (RS, SC, SP) exibidos ao lado do formulário",
         "Links para sub-páginas: Cotação e Representante",
         "Responsive"
@@ -787,7 +787,7 @@
         "Campo de upload de arquivo (texto, excel, word, pdf) com drag-and-drop",
         "Campos de contato: Nome e E-mail (required)",
         "Validação client-side completa",
-        "Submit behavior: a definir posteriormente",
+        "Submit envia para /api/form-submissions (formType: cotacao) com feedback inline de sucesso/erro e metadados de upload validados",
         "Responsive: campos empilham no mobile"
       ]
     },
@@ -800,7 +800,7 @@
         "Hero com título sobre se tornar representante",
         "Formulário com campos relevantes para cadastro de representante",
         "Validação client-side",
-        "Submit behavior: a definir posteriormente",
+        "Submit envia para /api/form-submissions (formType: representante) com feedback inline de sucesso/erro",
         "Responsive"
       ]
     },
@@ -906,7 +906,8 @@
         "Focus trap no menu mobile e overlay de busca",
         "Animações Framer Motion respeitam prefers-reduced-motion",
         "Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1",
-        "Ausência de hydration mismatches"
+        "Ausência de hydration mismatches",
+        "Medições de Lighthouse/Core Web Vitals devem ser registradas com evidência (ferramenta, data e contexto desktop/mobile)"
       ]
     },
     {
@@ -927,7 +928,7 @@
     {
       "id": "US-037",
       "title": "Revisar backlog e direção visual com reasoning xhigh",
-      "passes": false,
+      "passes": true,
       "description": "Executar uma revisão completa das user stories restantes e da direção visual do site usando GPT-5.3-Codex com reasoning effort xhigh. A revisão deve validar ordem, dependências, clareza, critérios de aceite e consistência do backlog, além de avaliar se as histórias preservam o estilo atual do site da Apollo Gestão enquanto modernizam hierarquia visual, espaçamento, tipografia, animações e experiência geral.",
       "acceptanceCriteria": [
         "Revisar todas as user stories com passes=true no prd.json",

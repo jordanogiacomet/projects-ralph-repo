@@ -1042,3 +1042,36 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Useful context
   - Vercel installs should explicitly include `--legacy-peer-deps` for this repository to avoid peer resolution issues on fresh installs.
 ---
+## 2026-03-10 11:17 UTC - US-037
+- What was implemented
+- Executed a full backlog audit across all stories with `passes=true` (US-001 to US-036), reviewing sequencing, dependency assumptions, acceptance-criteria quality, duplication, and visual-direction consistency against Apollo’s existing identity.
+- Recorded review conclusions: backlog preserves brand identity (palette, hero-first structure, corporate tone), but required clearer modernization guardrails for typography hierarchy, spacing rhythm, grid consistency, and measurable QA evidence.
+- Identified sequencing/dependency risks and captured recommended ordering adjustments for future planning: seed/content readiness should occur before most page/UI stories; performance KPIs require explicit measurement evidence and cannot rely only on implementation-level completion.
+- Refined ambiguous acceptance criteria directly in `prd.json` to make verification objective and implementable without changing product scope.
+- Backlog refinement updates applied in `prd.json`:
+- US-001 AC1 now allows CLI or manual scaffold outcome (instead of a single tooling path).
+- US-003 AC14 now makes Live Preview explicitly optional/non-blocking while requiring admin insert/edit coverage.
+- US-010 and US-011 responsive acceptance criteria now define concrete expected layout behavior.
+- US-027, US-028, and US-029 submit behavior criteria now explicitly require `/api/form-submissions` integration with inline feedback.
+- US-035 now requires documented Lighthouse/Core Web Vitals evidence context.
+- Marked `US-037` as complete (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` initially failed with intermittent Next.js sandbox flakiness (`ENOENT` chunk + `PageNotFoundError: /_document`), then passed on retry and generated all frontend/admin routes.
+- `npx next build --debug` passed (used as fallback diagnostic validation during build flakiness).
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- No product/UI behavior was changed in this story; browser tooling remains unavailable in this environment, and prior visual/manual QA requirements remain unchanged.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Backlog quality improves when acceptance criteria specify measurable outcomes (endpoint, feedback state, responsive target) rather than placeholders or generic labels.
+  - Gotchas encountered
+  - In this sandbox, `npm run build` can intermittently fail with transient Next.js page/chunk resolution errors even when equivalent `next build --debug` and subsequent retries pass.
+  - Useful context
+  - For visual-direction stories, explicit quality gates for typography scale, spacing rhythm, and evidence-based performance checks should be declared in acceptance criteria up front to avoid interpretation drift.
+---
