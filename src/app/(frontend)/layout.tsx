@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Inter, Open_Sans } from 'next/font/google'
+import { Inter, Manrope, Open_Sans } from 'next/font/google'
 
 import { JsonLd } from '@/components/JsonLd'
 import { Footer } from '@/components/Footer'
@@ -14,6 +14,12 @@ import '../globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
   display: 'swap',
 })
 
@@ -41,7 +47,9 @@ export default async function FrontendLayout({
 
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} ${openSans.variable} font-sans text-text-primary bg-bg-primary`}>
+      <body
+        className={`${inter.variable} ${manrope.variable} ${openSans.variable} bg-bg-primary font-sans text-text-primary antialiased`}
+      >
         <JsonLd id="organization-jsonld" data={organization} />
         {locations.map((location, index) => (
           <JsonLd

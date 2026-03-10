@@ -1,0 +1,79 @@
+html {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), var(--font-body), system-ui, sans-serif;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(0, 86, 166, 0.16);
+  color: var(--accent-strong);
+}
+
+.section-space-tight {
+  padding-block: var(--space-section-tight);
+}
+
+.section-space {
+  padding-block: var(--space-section);
+}
+
+.section-space-loose {
+  padding-block: var(--space-section-loose);
+}
+
+.surface-panel {
+  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-muted {
+  border: 1px solid var(--border);
+  background: var(--surface-secondary);
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-dark {
+  border: 1px solid var(--border-dark);
+  background: var(--surface-dark);
+  box-shadow: var(--shadow-medium);
+}
+
+.focus-ring {
+  box-shadow: var(--focus-ring);
+}
+
+.text-display-balance {
+  text-wrap: balance;
+}

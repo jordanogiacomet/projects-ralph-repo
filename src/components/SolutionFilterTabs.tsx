@@ -1,5 +1,7 @@
 'use client'
 
+import { Chip } from '@/components/ui'
+
 type SolutionFilter = {
   key: string
   label: string
@@ -19,18 +21,15 @@ export function SolutionFilterTabs({ filters, activeFilter, onChange }: Solution
         {filters.map((filter) => {
           const isActive = activeFilter === filter.key
           return (
-            <button
+            <Chip
               key={filter.key}
-              type="button"
+              active={isActive}
               onClick={() => onChange(filter.key)}
-              className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                isActive
-                  ? 'border-accent bg-accent text-white'
-                  : 'border-border bg-white text-text-primary hover:border-accent/40 hover:bg-accent-light'
-              }`}
+              className="whitespace-nowrap"
+              count={filter.count}
             >
-              {filter.label} ({filter.count})
-            </button>
+              {filter.label}
+            </Chip>
           )
         })}
       </div>

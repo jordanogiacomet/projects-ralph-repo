@@ -1,7 +1,129 @@
 {
   "projectName": "apollo-gestao-website",
   "branchName": "main",
-  "description": "Recriação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações e controle patrimonial. Migração de WordPress para Payload CMS 3.x integrado ao Next.js 14+ (App Router). O objetivo é replicar fielmente a estrutura, navegação e conteúdo do site atual como base, permitindo personalização posterior. Site multi-página com hero fullscreen, mega menu de soluções, grid de clientes com filtro por segmento, blog/news, formulários de contato e cotação, e footer com dados de 3 unidades (RS, SC, SP).",
+  "version": "2.0",
+  "status": "phase-1-complete-phase-2-redesign-planned",
+  "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
+  "productVision": {
+    "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna e consultiva, sem perder a identidade séria e técnica da empresa.",
+    "positioning": "O site deve transmitir autoridade, clareza, confiança, organização e maturidade institucional.",
+    "experienceGoal": "A percepção do usuário deve ser a de uma empresa sólida, especializada e contemporânea, com navegação clara, conteúdo bem estruturado e acabamento visual superior.",
+    "editorialGoal": "O time da Apollo deve conseguir manter páginas, soluções, conteúdos, clientes e notícias via Payload sem depender de mudanças estruturais no front para operações rotineiras."
+  },
+  "projectStrategy": {
+    "phase1": "Reconstrução funcional e estrutural baseada no site anterior, com CMS, rotas, conteúdo, SEO, formulários e arquitetura já implementados.",
+    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos.",
+    "phase3": "Hardening operacional posterior, incluindo automação de testes, CI/CD mais robusto, operação de formulários, observabilidade e evidências formais de performance/acessibilidade, quando entrar no backlog.",
+    "visualPositioning": "Não perseguir clone visual do WordPress. Usar o site anterior apenas como referência de conteúdo, estrutura, hierarquia institucional e repertório comercial.",
+    "implementationRule": "Stories já concluídas permanecem como base funcional entregue. O redesign deve acontecer por meio de novas histórias incrementais, sem apagar o histórico técnico da fase anterior.",
+    "nonBreakingRule": "A fase 2 deve preferir evolução incremental da base existente. Alterações de modelagem CMS só devem ocorrer se houver ganho claro de governança editorial ou de qualidade visual impossível de atingir apenas no front.",
+    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global."
+  },
+  "contentAndCMSStrategy": {
+    "principle": "Reaproveitar a modelagem do Payload construída na fase 1 sempre que possível.",
+    "allowedEvolution": [
+      "Adicionar campos não-breaking quando houver ganho editorial real",
+      "Aprimorar labels, descriptions e organização do admin",
+      "Criar novos componentes/layout primitives no front sem refatorar collections desnecessariamente"
+    ],
+    "avoid": [
+      "Reabrir toda a modelagem do CMS sem necessidade",
+      "Criar novos tipos de conteúdo apenas para resolver problemas puramente visuais",
+      "Acoplar decisões de design a hacks de conteúdo que compliquem o trabalho editorial"
+    ]
+  },
+  "successCriteria": {
+    "business": [
+      "O site deve transmitir percepção mais premium e confiável do que a versão anterior",
+      "Fluxos de contato e cotação devem parecer mais claros, profissionais e orientados à conversão",
+      "As páginas de soluções devem comunicar melhor profundidade técnica e valor comercial"
+    ],
+    "editorial": [
+      "O conteúdo continua gerenciável via Payload sem regressão operacional",
+      "O time editorial consegue atualizar páginas, posts, conteúdos e clientes sem depender de alterações de código para tarefas rotineiras"
+    ],
+    "quality": [
+      "A fase 2 deve elevar consistência visual entre homepage, hubs, detalhes, conteúdo editorial e formulários",
+      "O projeto deve manter ou melhorar SEO, responsividade e acessibilidade já implementados na fase 1",
+      "O redesign não deve introduzir regressões visuais gritantes entre desktop, tablet e mobile"
+    ]
+  },
+  "storyExecutionPlan": {
+    "phase1CompletedStories": [
+      "US-001",
+      "US-002",
+      "US-003",
+      "US-004",
+      "US-005",
+      "US-006",
+      "US-007",
+      "US-008",
+      "US-009",
+      "US-010",
+      "US-011",
+      "US-012",
+      "US-013",
+      "US-014",
+      "US-015",
+      "US-016",
+      "US-017",
+      "US-018",
+      "US-019",
+      "US-020",
+      "US-021",
+      "US-022",
+      "US-023",
+      "US-024",
+      "US-025",
+      "US-026",
+      "US-027",
+      "US-028",
+      "US-029",
+      "US-030",
+      "US-031",
+      "US-032",
+      "US-033",
+      "US-034",
+      "US-035",
+      "US-036",
+      "US-037"
+    ],
+    "phase2RecommendedOrder": [
+      "US-038",
+      "US-039",
+      "US-040",
+      "US-041",
+      "US-042",
+      "US-043",
+      "US-044",
+      "US-045"
+    ],
+    "phase2Logic": "Primeiro consolidar design system e direção visual, depois shell global, depois homepage, depois templates principais, depois templates de conteúdo/formulários e por fim polish global."
+  },
+  "storyDependencies": {
+    "US-039": ["US-038"],
+    "US-040": ["US-038", "US-039"],
+    "US-041": ["US-038", "US-039"],
+    "US-042": ["US-038", "US-039", "US-041"],
+    "US-043": ["US-038", "US-039"],
+    "US-044": ["US-038", "US-039"],
+    "US-045": ["US-038", "US-039", "US-040", "US-041", "US-042", "US-043", "US-044"]
+  },
+  "qualityGates": {
+    "globalRules": [
+      "Nenhuma story de redesign deve degradar SEO já entregue na fase 1",
+      "Nenhuma story de redesign deve quebrar conteúdo ou rotas existentes",
+      "Acessibilidade, keyboard navigation e reduced motion devem ser preservados",
+      "Todas as alterações visuais relevantes devem ser verificadas em desktop, tablet e mobile"
+    ],
+    "perStoryEvidence": [
+      "Lista de arquivos alterados",
+      "Racional visual resumido",
+      "Impactos em componentes compartilhados",
+      "Validação mínima com lint, typecheck prático e build quando aplicável",
+      "Observações de QA manual pendente quando browser tooling não estiver disponível"
+    ]
+  },
   "techStack": [
     "Next.js 14+ (App Router)",
     "TypeScript",
@@ -12,40 +134,190 @@
     "Framer Motion"
   ],
   "designDirection": {
-    "aesthetic": "Corporativo moderno — visual profissional e sóbrio, inspirado no site atual da Apollo Gestão. Fundo claro, tipografia hierárquica, blocos de conteúdo com ícones ilustrativos, seções com hero fullscreen em fundo escuro com overlay. Tons predominantes de azul escuro e branco.",
+    "aesthetic": "Corporativo premium contemporâneo — visual profissional, sóbrio, técnico e mais refinado que o site anterior. A nova interface deve transmitir autoridade, clareza, precisão e confiança, mantendo a identidade institucional da Apollo Gestão, mas com melhor uso de whitespace, tipografia mais forte, grids mais limpos, superfícies mais elegantes, motion discreto e acabamento visual superior.",
+    "visualGoal": "Modernizar sem descaracterizar. O site deve parecer uma evolução natural e mais madura da Apollo, e não uma ruptura estética gratuita.",
+    "brandCharacter": [
+      "confiável",
+      "técnico",
+      "consultivo",
+      "institucional",
+      "premium",
+      "claro",
+      "sóbrio"
+    ],
+    "doNotDo": [
+      "Não transformar o site em uma landing page genérica de startup",
+      "Não exagerar em gradientes, glassmorphism ou animações chamativas",
+      "Não usar excesso de dark sections sem propósito narrativo",
+      "Não depender de stock images fracas para compensar falta de hierarquia visual",
+      "Não poluir a interface com muitos elementos competindo ao mesmo tempo"
+    ],
     "colorPalette": {
       "--bg-primary": "#FFFFFF",
-      "--bg-secondary": "#F5F7FA",
-      "--bg-dark-section": "#1A1A2E",
-      "--bg-hero-overlay": "rgba(0,0,0,0.55)",
-      "--text-primary": "#1A1A1A",
-      "--text-secondary": "#555555",
+      "--bg-secondary": "#F6F8FB",
+      "--bg-tertiary": "#EEF2F7",
+      "--bg-dark-section": "#0F1724",
+      "--bg-dark-elevated": "#162033",
+      "--bg-hero-overlay": "rgba(10,18,32,0.58)",
+      "--surface-primary": "#FFFFFF",
+      "--surface-secondary": "#F8FAFC",
+      "--surface-muted": "#F1F5F9",
+      "--text-primary": "#0F172A",
+      "--text-secondary": "#475569",
+      "--text-muted": "#64748B",
       "--text-on-dark": "#FFFFFF",
       "--accent": "#0056A6",
-      "--accent-hover": "#003D7A",
-      "--accent-light": "#E8F0FE",
-      "--border": "#E0E0E0",
+      "--accent-hover": "#004785",
+      "--accent-soft": "#EAF2FB",
+      "--accent-strong": "#003D7A",
+      "--highlight": "#D9E8F8",
+      "--border": "#E2E8F0",
+      "--border-strong": "#CBD5E1",
       "--cta-green": "#28A745",
-      "--cta-green-hover": "#1E7E34"
+      "--cta-green-hover": "#1F8A38",
+      "--success-soft": "#EAF8EE",
+      "--shadow-soft": "0 10px 30px rgba(15, 23, 42, 0.08)",
+      "--shadow-medium": "0 18px 45px rgba(15, 23, 42, 0.12)"
     },
     "typography": {
-      "display": "Font similar ao site atual — sans-serif bold para títulos hero com palavras destacadas em bold/italic (ex: 'Gerenciamento **inteligente** dos ativos')",
-      "body": "Sans-serif clean (Inter, Open Sans ou similar) para corpo de texto, navegação e labels",
-      "accent": "Variante italic do display font para destaques dentro de títulos"
+      "display": "Tipografia de títulos mais sofisticada e contemporânea, preferencialmente sans-serif de personalidade forte e excelente legibilidade em grandes escalas (ex.: Manrope, Inter Tight, Plus Jakarta Sans ou equivalente). Deve sustentar headlines institucionais com alto impacto sem parecer publicitária demais.",
+      "heading": "Hierarquia clara para H1-H4, com contrastes perceptíveis de peso, tamanho e ritmo vertical.",
+      "body": "Sans-serif limpa e altamente legível para texto corrido, labels, navegação e formulários. Inter continua sendo uma base segura.",
+      "accent": "Ênfases em headlines podem usar peso, itálico controlado ou contraste de cor, mas com parcimônia. O destaque deve parecer intencional, não decorativo.",
+      "rules": [
+        "Headlines mais curtas, densas e com melhor quebra de linha",
+        "Corpo de texto com line-height confortável e largura de leitura controlada",
+        "Metadata, breadcrumbs e labels com escala menor e contraste suficiente",
+        "Evitar excesso de texto com o mesmo peso visual"
+      ]
+    },
+    "layoutSystem": {
+      "containerWidths": {
+        "content": "max-width ~ 1200px",
+        "reading": "max-width ~ 760px",
+        "wide": "max-width ~ 1360px"
+      },
+      "spacingScale": [4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144],
+      "sectionRhythm": "As páginas devem ter ritmo vertical claro entre blocos, com respiro superior ao site anterior. Evitar empilhamento apertado e seções visualmente equivalentes sem contraste de densidade ou fundo.",
+      "gridPrinciples": [
+        "Cards e colunas com alinhamento ótico consistente",
+        "Menos blocos competindo visualmente ao mesmo tempo",
+        "Alternância intencional entre superfícies claras, neutras e escuras",
+        "Hierarquia definida por espaçamento, peso tipográfico e contraste, não por excesso de bordas"
+      ]
+    },
+    "componentLanguage": {
+      "buttons": "Botões com geometria precisa, padding generoso, estados hover/focus refinados e contraste alto. O CTA principal deve ter presença visual forte, mas sem parecer agressivo.",
+      "cards": "Cards mais premium, com superfícies limpas, bordas sutis, sombra suave e hover discreto. Evitar aparência genérica de card branco quadrado com ícone.",
+      "forms": "Formulários mais elegantes, com campos espaçosos, labels claras, estados de foco fortes e agrupamento visual coerente.",
+      "navigation": "Navbar e mega menu devem parecer parte de um sistema premium, e não apenas uma camada funcional sobre o conteúdo.",
+      "filters": "Tabs e chips de filtro devem parecer controles modernos de interface, com estados ativo, hover e contagem bem resolvidos."
+    },
+    "motionLanguage": {
+      "principle": "Motion como refinamento e orientação, não como espetáculo.",
+      "style": "Animações suaves, curtas e discretas. Menos efeitos chamativos; mais sensação de precisão e acabamento.",
+      "rules": [
+        "Fade, translate e scale leves como padrão",
+        "Parallax apenas quando realmente agrega profundidade",
+        "Transitions coerentes entre overlays, menus, grids e cards",
+        "Sempre respeitar prefers-reduced-motion"
+      ]
+    },
+    "imageryDirection": {
+      "approach": "Misturar fotografia institucional, texturas discretas, fundos com profundidade e elementos gráficos técnicos com moderação.",
+      "rules": [
+        "Evitar visual datado de hero escuro genérico com stock image pesada",
+        "Usar imagens mais bem tratadas, com overlay e composição mais sofisticados",
+        "Ícones e ilustrações devem ter linguagem consistente",
+        "Quando não houver bom asset, preferir composição limpa e abstrata em vez de imagem fraca"
+      ]
+    },
+    "templateGuidelines": {
+      "homepage": "Deve parecer vitrine institucional premium, não apenas uma sequência de seções cumprindo requisito.",
+      "solutionHubs": "Devem equilibrar valor consultivo, filtros claros e grids premium, sem parecer catálogo seco.",
+      "solutionDetails": "Devem parecer páginas de autoridade técnica com boa leitura, CTAs claros e recomendação relacionada elegante.",
+      "contentPages": "Devem ter caráter mais editorial e organizado, com boa relação entre imagem, texto, metadata e conversão.",
+      "contactFlows": "Devem parecer fluxos profissionais e confiáveis, com visual claro e orientado à conclusão."
+    },
+    "designSystemBase": {
+      "fonts": {
+        "display": "Manrope via next/font/google para headlines, heroes e headings institucionais.",
+        "body": "Inter via next/font/google para navegação, corpo de texto, formulários e labels.",
+        "support": "Open Sans permanece disponível apenas como apoio de compatibilidade para áreas legadas de texto corrido quando necessário."
+      },
+      "typographyScale": {
+        "display-xl": "clamp(2.75rem, 5vw, 4.75rem) / line-height 0.95 / tracking -0.05em",
+        "display-lg": "clamp(2.4rem, 4vw, 3.75rem) / line-height 0.98 / tracking -0.045em",
+        "display-md": "clamp(2rem, 3vw, 3rem) / line-height 1 / tracking -0.04em",
+        "heading-xl": "2.5rem max / line-height 1.1 / tracking -0.035em",
+        "heading-lg": "1.875rem / line-height 1.15 / tracking -0.03em",
+        "heading-md": "1.5rem / line-height 1.2 / tracking -0.025em",
+        "body-lg": "1.125rem / line-height 1.75",
+        "body-md": "1rem / line-height 1.7",
+        "body-sm": "0.9375rem / line-height 1.65",
+        "label-sm": "0.75rem / line-height 1.2 / tracking 0.08em",
+        "meta-sm": "0.8125rem / line-height 1.4"
+      },
+      "spacingAndRhythm": {
+        "coreScalePx": [4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144],
+        "sectionTight": "48px mobile / 64px desktop",
+        "sectionDefault": "64px mobile / 80px desktop",
+        "sectionLoose": "80px mobile / 120px desktop",
+        "cardPadding": "24px base, com expansão para 32px em cards mais editoriais ou formulários principais",
+        "formRhythm": "16px entre campos, 24px antes de CTAs e mensagens de estado"
+      },
+      "surfaceAndInteractionTokens": {
+        "surfaces": [
+          "surface-primary: painel branco principal",
+          "surface-secondary: painéis suaves em cinza-azulado",
+          "surface-muted: apoios, badges e fundos de destaque discreto",
+          "bg-dark-elevated: superfícies escuras premium para blocos institucionais"
+        ],
+        "borders": [
+          "border: separação leve padrão",
+          "border-strong: contornos de ênfase para controles e cards premium"
+        ],
+        "shadows": [
+          "shadow-soft: cards e painéis padrão",
+          "shadow-medium: camadas destacadas e overlays",
+          "shadow-strong: uso pontual em momentos de maior profundidade"
+        ],
+        "radii": [
+          "radius-button: 16px",
+          "radius-field: 16px",
+          "radius-panel: 24px",
+          "radius-pill: 999px"
+        ],
+        "interactiveStates": [
+          "Botões e cards elevam no hover de forma sutil, sem animações chamativas",
+          "Foco usa ring de baixa opacidade baseado no azul da marca",
+          "Chips, filtros e badges devem comunicar estado ativo por contraste de fundo, borda e texto"
+        ]
+      },
+      "componentPrimitives": [
+        "Button",
+        "Input",
+        "Textarea",
+        "Select",
+        "Card",
+        "Chip",
+        "Badge",
+        "SectionHeading",
+        "Container"
+      ],
+      "implementationRule": "Os primitives devem ser incrementais sobre a base existente. Histórias seguintes devem preferir compor esse sistema em vez de criar novas soluções isoladas por template."
     },
     "designPrinciples": [
-      "Corporativo e confiável — visual que transmite seriedade e expertise no segmento patrimonial",
-      "Hero fullscreen com imagem de fundo e overlay escuro em cada página principal",
-      "Mega menu dropdown organizado por 3 categorias de soluções com subcategorias",
-      "Grid de cards com ícones ilustrativos para listar serviços e soluções",
-      "Formulário de contato presente no footer de todas as páginas",
-      "Dados das 3 unidades (RS, SC, SP) sempre visíveis no footer",
-      "Barra de redes sociais (Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X) no header e footer",
-      "Botão flutuante do WhatsApp para contato rápido",
-      "Cookie consent banner",
-      "SEO-friendly com meta tags e slugs descritivos em português",
-      "Scroll-to-top button",
-      "Busca global no site"
+      "Modernizar sem descaracterizar a Apollo Gestão",
+      "Preservar seriedade institucional com execução visual mais madura",
+      "Priorizar clareza, hierarquia e confiança",
+      "Aumentar whitespace e reduzir ruído visual",
+      "Transformar grids, cards e filtros em superfícies premium",
+      "Usar hero fullscreen apenas quando houver ganho real de impacto",
+      "Manter caminhos de contato e conversão visíveis sem tornar todas as páginas pesadas",
+      "Fazer o site parecer mais consultivo, técnico e contemporâneo",
+      "Usar motion como acabamento de produto, não como distração",
+      "Garantir consistência entre homepage, hubs, páginas internas, formulários e conteúdo editorial"
     ]
   },
   "folderStructure": {
@@ -132,11 +404,48 @@
       "RichTextRenderer.tsx",
       "BlockRenderer.tsx"
     ],
+    "src/components/ui/": [
+      "Button.tsx",
+      "Input.tsx",
+      "Textarea.tsx",
+      "Select.tsx",
+      "Chip.tsx",
+      "Badge.tsx",
+      "Card.tsx",
+      "SectionHeading.tsx",
+      "Container.tsx"
+    ],
+    "src/components/layout/": [
+      "PageHero.tsx",
+      "SectionShell.tsx",
+      "PageIntro.tsx",
+      "PreFooterCTA.tsx"
+    ],
+    "src/components/sections/": [
+      "HeroSection.tsx",
+      "ServicesSection.tsx",
+      "ProofSection.tsx",
+      "ClientsSection.tsx",
+      "NewsSection.tsx",
+      "ContactSection.tsx"
+    ],
+    "src/components/templates/": [
+      "HomeTemplate.tsx",
+      "SolutionHubTemplate.tsx",
+      "SolutionDetailTemplate.tsx",
+      "EditorialListTemplate.tsx",
+      "EditorialDetailTemplate.tsx",
+      "ContactTemplate.tsx"
+    ],
     "src/lib/": [
       "payload.ts — Payload client config",
       "queries.ts — Funções de fetch para collections e globals",
       "utils.ts — Helpers gerais",
       "constants.ts — Constantes do projeto (social links, unidades, etc.)"
+    ],
+    "src/styles/": [
+      "tokens.css — Tokens visuais e aliases de cor/spacing/shadow/radius",
+      "utilities.css — Classes utilitárias complementares do design system"
     ],
     "public/": [
       "images/ — Imagens estáticas (logos, ícones de soluções)",
@@ -338,6 +647,8 @@
   "userStories": [
     {
       "id": "US-001",
+      "phase": "phase-1-foundation",
+      "stream": "foundation",
       "title": "Setup do projeto Next.js + Payload CMS",
       "passes": true,
       "description": "Configurar o projeto base com Next.js 14+ (App Router), Payload CMS 3.x integrado, TypeScript, Tailwind CSS, PostgreSQL e estrutura de diretórios.",
@@ -359,6 +670,8 @@
     },
     {
       "id": "US-002",
+      "phase": "phase-1-foundation",
+      "stream": "cms-modeling",
       "title": "Collections e Globals do Payload CMS",
       "passes": true,
       "description": "Criar todas as collections (Pages, Posts, Solucoes, SolucaoCategories, Clientes, ClienteSegmentos, Conteudos, Media, Users, FormSubmissions, NewsletterSubscribers) e globals (Header, Footer, SiteSettings) conforme modelagem do PRD.",
@@ -384,6 +697,8 @@
     },
     {
       "id": "US-003",
+      "phase": "phase-1-foundation",
+      "stream": "cms-layout-builder",
       "title": "Blocos de layout (Payload Blocks)",
       "passes": true,
       "description": "Criar todos os blocos reutilizáveis de conteúdo que serão usados no campo layout das Pages e em outras collections.",
@@ -406,6 +721,8 @@
     },
     {
       "id": "US-004",
+      "phase": "phase-1-foundation",
+      "stream": "layout-global",
       "title": "Layout global: Navbar com Mega Menu",
       "passes": true,
       "description": "Criar o layout principal do site com Navbar fixa, mega menu dropdown de soluções, busca, redes sociais, menu mobile hamburger e versão transparente sobre hero.",
@@ -429,6 +746,8 @@
     },
     {
       "id": "US-005",
+      "phase": "phase-1-foundation",
+      "stream": "layout-global",
       "title": "Layout global: Footer com formulário e unidades",
       "passes": true,
       "description": "Criar o footer global presente em todas as páginas com formulário de contato, dados das 3 unidades (RS, SC, SP), redes sociais, copyright, scroll-to-top e cookie consent.",
@@ -449,9 +768,11 @@
     },
     {
       "id": "US-006",
+      "phase": "phase-1-foundation",
+      "stream": "public-pages",
       "title": "Homepage",
       "passes": true,
-      "description": "Criar a homepage replicando a estrutura do site atual: hero fullscreen com título e CTA, 3 cards de serviço (Avaliações, Controle, Consultoria), seção 'Seu parceiro em Gestão Patrimonial', seção 'Quem é a Apollo' com vídeo/imagem e link para Sobre.",
+      "description": "Na fase 1, criar a homepage replicando estruturalmente o site anterior: hero fullscreen com título e CTA, 3 cards de serviço (Avaliações, Controle, Consultoria), seção 'Seu parceiro em Gestão Patrimonial', seção 'Quem é a Apollo' com vídeo/imagem e link para Sobre. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero fullscreen (100vh) com imagem de fundo, overlay escuro e scroll-down indicator",
         "Título do hero com destaque em bold: 'Gerenciamento **inteligente** dos ativos da sua empresa. **Avaliações e Controle Patrimonial** de verdade'",
@@ -467,9 +788,11 @@
     },
     {
       "id": "US-007",
+      "phase": "phase-1-foundation",
+      "stream": "public-pages",
       "title": "Página Sobre",
       "passes": true,
-      "description": "Criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores.",
+      "description": "Na fase 1, criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Conheça a história da **Apollo Gestão**'",
         "Subtítulo: 'Se quiser ir rápido, vá sozinho, **se quiser ir longe, vá acompanhado**'",
@@ -484,9 +807,11 @@
     },
     {
       "id": "US-008",
+      "phase": "phase-1-foundation",
+      "stream": "solutions",
       "title": "Página Hub de Soluções",
       "passes": true,
-      "description": "Criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag.",
+      "description": "Na fase 1, criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero com título: 'Nós temos a **solução completa** para o gerenciamento de ativos'",
         "Texto descritivo sobre as soluções da Apollo Gestão",
@@ -503,9 +828,11 @@
     },
     {
       "id": "US-009",
+      "phase": "phase-1-foundation",
+      "stream": "solutions",
       "title": "Página Hub de Categoria — Controle Patrimonial",
       "passes": true,
-      "description": "Criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
+      "description": "Na fase 1, criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",
         "Subtítulo sobre oferecer as melhores soluções de forma completa",
@@ -517,9 +844,11 @@
     },
     {
       "id": "US-010",
+      "phase": "phase-1-foundation",
+      "stream": "solutions",
       "title": "Página Hub de Categoria — Consultoria e Tecnologia",
       "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria.",
+      "description": "Na fase 1, criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Consultoria e Tecnologia",
         "Grid de 6 cards: Teste de Impairment, Revisão da Vida Útil, Ativos Inteligentes RFID/RTLS, Arrendamento Mercantil, Combinação de Negócios, Softwares",
@@ -531,9 +860,11 @@
     },
     {
       "id": "US-011",
+      "phase": "phase-1-foundation",
+      "stream": "solutions",
       "title": "Página Hub de Categoria — Avaliação Patrimonial",
       "passes": true,
-      "description": "Criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria.",
+      "description": "Na fase 1, criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria. A fase 2 refina visualmente esse template.",
       "acceptanceCriteria": [
         "Hero fullscreen com título específico de Avaliação Patrimonial",
         "Grid de 4 cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas",
@@ -545,6 +876,8 @@
     },
     {
       "id": "US-012",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Organização Patrimonial",
       "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
@@ -561,6 +894,8 @@
     },
     {
       "id": "US-013",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Controle e Inventário de Estoques",
       "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/controle-e-inventario-de-estoques/ seguindo o template de solução.",
@@ -575,6 +910,8 @@
     },
     {
       "id": "US-014",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Processamento Patrimonial",
       "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/processamento-patrimonial/ seguindo o template de solução.",
@@ -589,6 +926,8 @@
     },
     {
       "id": "US-015",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Etiquetas Patrimoniais Inteligentes",
       "passes": true,
       "description": "Criar a página /solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/ seguindo o template de solução.",
@@ -603,6 +942,8 @@
     },
     {
       "id": "US-016",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Teste de Impairment",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/teste-de-impairment/ seguindo o template de solução.",
@@ -617,6 +958,8 @@
     },
     {
       "id": "US-017",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Revisão da Vida Útil",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/revisao-da-vida-util/ seguindo o template de solução.",
@@ -631,6 +974,8 @@
     },
     {
       "id": "US-018",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Ativos Inteligentes RFID e RTLS",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/ seguindo o template de solução.",
@@ -645,6 +990,8 @@
     },
     {
       "id": "US-019",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Arrendamento Mercantil (CPC 06 / IFRS 16)",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/arrendamento-mercantil/ seguindo o template de solução.",
@@ -659,6 +1006,8 @@
     },
     {
       "id": "US-020",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Combinação de Negócios (PPA) – CPC 15",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/ seguindo o template de solução.",
@@ -673,6 +1022,8 @@
     },
     {
       "id": "US-021",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Softwares",
       "passes": true,
       "description": "Criar a página /solucoes/consultoria-e-tecnologia/softwares/ seguindo o template de solução.",
@@ -687,6 +1038,8 @@
     },
     {
       "id": "US-022",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Ativos",
       "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos/ seguindo o template de solução.",
@@ -701,6 +1054,8 @@
     },
     {
       "id": "US-023",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Ativos Biológicos",
       "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/ seguindo o template de solução.",
@@ -715,6 +1070,8 @@
     },
     {
       "id": "US-024",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Imóveis Urbanos e Rurais",
       "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/ seguindo o template de solução.",
@@ -729,6 +1086,8 @@
     },
     {
       "id": "US-025",
+      "phase": "phase-1-foundation",
+      "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Máquinas",
       "passes": true,
       "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/ seguindo o template de solução.",
@@ -743,6 +1102,8 @@
     },
     {
       "id": "US-026",
+      "phase": "phase-1-foundation",
+      "stream": "proof-social",
       "title": "Página de Clientes com filtro por segmento",
       "passes": true,
       "description": "Criar a página /clientes com grid de logos de clientes e filtro horizontal por segmento de atuação (~32 categorias, ~130+ clientes).",
@@ -761,6 +1122,8 @@
     },
     {
       "id": "US-027",
+      "phase": "phase-1-foundation",
+      "stream": "contact",
       "title": "Página de Contato",
       "passes": true,
       "description": "Criar a página /contato com formulário principal, dados das unidades e mapa (opcional).",
@@ -776,6 +1139,8 @@
     },
     {
       "id": "US-028",
+      "phase": "phase-1-foundation",
+      "stream": "contact",
       "title": "Formulário de Cotação avançado",
       "passes": true,
       "description": "Criar a página /contato/cotacao com formulário multi-step de orçamento, similar ao do site atual com seleção de serviço, upload de arquivo e dados de contato.",
@@ -793,6 +1158,8 @@
     },
     {
       "id": "US-029",
+      "phase": "phase-1-foundation",
+      "stream": "contact",
       "title": "Formulário de Representante",
       "passes": true,
       "description": "Criar a página /contato/representante com formulário para representantes comerciais.",
@@ -806,6 +1173,8 @@
     },
     {
       "id": "US-030",
+      "phase": "phase-1-foundation",
+      "stream": "content",
       "title": "Página de Conteúdos (materiais para download)",
       "passes": true,
       "description": "Criar a página /conteudos como hub de materiais gratuitos (e-books, planilhas) e as páginas individuais de cada conteúdo.",
@@ -820,6 +1189,8 @@
     },
     {
       "id": "US-031",
+      "phase": "phase-1-foundation",
+      "stream": "content",
       "title": "Blog/News — listagem e post individual",
       "passes": true,
       "description": "Criar a página /news com listagem de posts do blog com paginação, sidebar com busca e link para e-book, e as páginas individuais de cada post.",
@@ -837,6 +1208,8 @@
     },
     {
       "id": "US-032",
+      "phase": "phase-1-foundation",
+      "stream": "seo",
       "title": "SEO, meta tags e sitemap",
       "passes": true,
       "description": "Configurar SEO completo com meta tags dinâmicas, Open Graph, sitemap.xml e robots.txt.",
@@ -855,6 +1228,8 @@
     },
     {
       "id": "US-033",
+      "phase": "phase-1-foundation",
+      "stream": "search",
       "title": "Busca global do site",
       "passes": true,
       "description": "Implementar funcionalidade de busca que pesquisa em Pages, Posts, Soluções e Conteúdos.",
@@ -871,6 +1246,8 @@
     },
     {
       "id": "US-034",
+      "phase": "phase-1-foundation",
+      "stream": "seed",
       "title": "Seed de dados iniciais",
       "passes": true,
       "description": "Criar script de seed para popular o Payload CMS com os dados iniciais do site: categorias de soluções, soluções, segmentos de clientes, globals e páginas base.",
@@ -890,6 +1267,8 @@
     },
     {
       "id": "US-035",
+      "phase": "phase-1-foundation",
+      "stream": "quality",
       "title": "Performance, acessibilidade e otimização",
       "passes": true,
       "description": "Auditoria e otimização de performance, acessibilidade e boas práticas.",
@@ -912,6 +1291,8 @@
     },
     {
       "id": "US-036",
+      "phase": "phase-1-foundation",
+      "stream": "operations",
       "title": "Deploy e documentação",
       "passes": true,
       "description": "Preparar o projeto para deploy e documentar setup, arquitetura e manutenção.",
@@ -927,9 +1308,11 @@
     },
     {
       "id": "US-037",
+      "phase": "phase-1-foundation",
+      "stream": "strategy",
       "title": "Revisar backlog e direção visual com reasoning xhigh",
       "passes": true,
-      "description": "Executar uma revisão completa das user stories restantes e da direção visual do site usando GPT-5.3-Codex com reasoning effort xhigh. A revisão deve validar ordem, dependências, clareza, critérios de aceite e consistência do backlog, além de avaliar se as histórias preservam o estilo atual do site da Apollo Gestão enquanto modernizam hierarquia visual, espaçamento, tipografia, animações e experiência geral.",
+      "description": "Executar uma revisão completa das user stories restantes e da direção visual do site usando GPT-5.3-Codex com reasoning effort xhigh. A revisão deve validar ordem, dependências, clareza, critérios de aceite e consistência do backlog, além de avaliar se as histórias preservam o estilo atual da Apollo Gestão enquanto modernizam hierarquia visual, espaçamento, tipografia, animações e experiência geral.",
       "acceptanceCriteria": [
         "Revisar todas as user stories com passes=true no prd.json",
         "Identificar dependências implícitas, lacunas de escopo, histórias duplicadas, ambiguidades e ordem inadequada de execução",
@@ -942,6 +1325,137 @@
         "Se necessário, atualizar o prd.json para corrigir títulos, descrições ou acceptance criteria das stories revisadas",
         "Não implementar features de produto nesta story; apenas revisar e refinar backlog e direção visual",
         "Executar esta revisão usando GPT-5.3-Codex com reasoning effort xhigh"
+      ]
+    },
+    {
+      "id": "US-038",
+      "phase": "phase-2-redesign",
+      "stream": "design-system",
+      "title": "Definir direção visual refinada e design system base",
+      "passes": true,
+      "description": "Consolidar a segunda fase do projeto com uma direção visual mais premium e contemporânea, traduzindo essa visão em tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
+      "acceptanceCriteria": [
+        "A direção visual do projeto deve ser atualizada no PRD para explicitar que o objetivo não é mais copiar fielmente o WordPress, e sim evoluir sua identidade com acabamento mais moderno",
+        "Deve existir uma escala tipográfica clara para display, headings, body, small text, labels e metadata",
+        "Deve existir uma escala explícita de spacing e rhythm vertical para seções, blocos, cards e formulários",
+        "O projeto deve possuir tokens ou aliases visuais reutilizáveis para superfícies, bordas, sombras, radius e estados interativos",
+        "Deve ser criada uma camada de componentes-base reutilizáveis em src/components/ui/ para botões, inputs, textareas, cards, chips, badges, headings e containers",
+        "Deve ser documentado no progress.txt o racional da nova direção visual e os princípios de consistência a serem seguidos nas próximas histórias",
+        "O redesign deve ser compatível com a base técnica existente e não deve exigir reconstrução do CMS, rotas ou modelagem já concluída"
+      ]
+    },
+    {
+      "id": "US-039",
+      "phase": "phase-2-redesign",
+      "stream": "shell-global",
+      "title": "Repaginação do layout global e navegação",
+      "passes": false,
+      "description": "Redesenhar navbar, mega menu, menu mobile, overlay de busca, footer, CTA flutuantes e elementos globais para refletir uma linguagem visual mais premium, limpa e coesa.",
+      "acceptanceCriteria": [
+        "A navbar deve ganhar hierarquia visual mais refinada, melhor espaçamento, estados hover/focus mais elegantes e sensação de produto premium",
+        "O mega menu deve evoluir de dropdown funcional para painel de navegação mais sofisticado, com melhor distribuição visual das categorias e subitens",
+        "A área de redes sociais do header deve ficar mais discreta e integrada, sem competir com a navegação principal",
+        "O overlay de busca deve parecer mais limpo, moderno e editorial, com melhor hierarquia entre campo, estados e resultados",
+        "O footer deve ser repaginado para reduzir peso visual, melhorar hierarquia entre contato, unidades e navegação, e elevar a percepção de acabamento",
+        "O formulário global de contato, caso permaneça no footer, deve ganhar aparência mais leve e contemporânea",
+        "WhatsApp float, cookie consent e scroll-to-top devem ser visualmente integrados ao novo sistema e não parecer componentes isolados",
+        "A experiência precisa permanecer totalmente responsiva e acessível"
+      ]
+    },
+    {
+      "id": "US-040",
+      "phase": "phase-2-redesign",
+      "stream": "homepage",
+      "title": "Repaginação da homepage",
+      "passes": false,
+      "description": "Transformar a homepage em uma vitrine institucional mais forte, com hero premium, melhor narrativa de valor, grids mais elegantes e ritmo visual mais maduro.",
+      "acceptanceCriteria": [
+        "A homepage deve deixar de parecer apenas uma reprodução estrutural do site anterior e passar a comunicar maior sofisticação visual",
+        "O hero principal deve ser redesenhado com melhor composição, melhor quebra de headline, CTA mais forte e tratamento de imagem/fundo mais refinado",
+        "A seção dos 3 pilares de serviço deve ganhar novo tratamento de cards, hierarquia e microinterações",
+        "Deve existir uma seção de valor/prova institucional com composição mais premium, podendo usar números, credenciais, segmentos ou diferenciais",
+        "A seção institucional da Apollo deve ficar mais limpa, mais respirada e com leitura mais contemporânea",
+        "A ordem e densidade das seções devem ser revisadas para melhorar ritmo, contraste e fluidez da navegação",
+        "A homepage deve parecer mais moderna em desktop e mobile, sem perder clareza comercial"
+      ]
+    },
+    {
+      "id": "US-041",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação dos hubs de soluções e páginas de categoria",
+      "passes": false,
+      "description": "Redesenhar a página /solucoes e os hubs de categoria para deixá-los menos mecânicos e mais consultivos, com filtros, grids e introduções mais bem resolvidos visualmente.",
+      "acceptanceCriteria": [
+        "A página /solucoes deve ganhar hero, introdução, filtros e grid com linguagem visual alinhada ao novo design system",
+        "Os filtros devem evoluir visualmente para chips/tabs mais modernos, com estados ativos e contadores mais legíveis",
+        "Os cards de solução devem ter aparência mais premium, com melhor proporção, padding, título, descrição e hover",
+        "As páginas de categoria devem deixar de ser apenas hero + grid + formulário e passar a ter abertura mais narrativa e mais valor percebido",
+        "A hierarquia entre hero, introdução, grid, CTA e contato deve ser revista para reduzir a sensação de página seca ou repetitiva",
+        "A experiência visual precisa se manter consistente entre as três categorias e seus diferentes volumes de conteúdo"
+      ]
+    },
+    {
+      "id": "US-042",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação do template de páginas de solução",
+      "passes": false,
+      "description": "Refinar o template das páginas individuais de solução para parecer mais técnico, mais premium e mais confortável para leitura e conversão.",
+      "acceptanceCriteria": [
+        "O hero/banner das páginas de solução deve ser refinado visualmente, com melhor composição, melhor respiro e tipografia mais forte",
+        "Breadcrumbs, metadata e CTA principal devem receber hierarquia mais elegante e menos utilitária",
+        "A área de conteúdo rico deve adotar largura de leitura controlada, melhor espaçamento entre blocos e melhor estilo tipográfico",
+        "Devem existir tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts e seções auxiliares",
+        "A área de 'Veja também' deve ser redesenhada para parecer recomendação editorial ou comercial de alto nível, não apenas links utilitários",
+        "O template deve melhorar a percepção de autoridade técnica sem ficar excessivamente denso ou pesado"
+      ]
+    },
+    {
+      "id": "US-043",
+      "phase": "phase-2-redesign",
+      "stream": "content-and-proof",
+      "title": "Repaginação de Clientes, Conteúdos e News",
+      "passes": false,
+      "description": "Atualizar os templates de listagem e detalhe ligados a prova social e conteúdo editorial para uma estética mais madura, com melhor grid, leitura e acabamento.",
+      "acceptanceCriteria": [
+        "A página de Clientes deve receber novo tratamento de hero, filtros e grid de logos, com sensação mais premium e melhor organização visual",
+        "A página de Conteúdos deve parecer uma biblioteca de materiais de valor, com cards mais fortes, capas melhor valorizadas e CTA de download mais bem resolvida",
+        "As páginas de News devem ganhar tratamento mais editorial, com cards, metadata, listagem e detalhe mais sofisticados",
+        "A sidebar de News, quando presente no desktop, deve parecer parte do sistema e não um bloco colado lateralmente",
+        "As telas de conteúdo devem equilibrar bem imagem, tipografia, metadata, conversão e navegação relacionada"
+      ]
+    },
+    {
+      "id": "US-044",
+      "phase": "phase-2-redesign",
+      "stream": "contact",
+      "title": "Repaginação das páginas de contato e formulários",
+      "passes": false,
+      "description": "Redesenhar contato, cotação e representante para que os fluxos de conversão pareçam mais confiáveis, modernos e organizados visualmente.",
+      "acceptanceCriteria": [
+        "A página /contato deve ganhar layout mais refinado, com melhor composição entre copy, unidades e formulário",
+        "Os formulários devem adotar inputs, labels, validações e agrupamentos visuais alinhados ao novo design system",
+        "A página de cotação deve parecer um fluxo consultivo e profissional, e não apenas uma sequência funcional de campos",
+        "Stepper, grupos de seleção, upload e estados de erro/sucesso devem ganhar tratamento visual mais maduro",
+        "A página de representante deve seguir a mesma linguagem premium e consistente dos demais fluxos de contato",
+        "Todos os formulários devem permanecer responsivos, acessíveis e claros em mobile"
+      ]
+    },
+    {
+      "id": "US-045",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Polish visual, consistência global e QA de redesign",
+      "passes": false,
+      "description": "Executar uma revisão final de consistência e acabamento para garantir que a repaginação tenha coerência real em todo o produto.",
+      "acceptanceCriteria": [
+        "Todas as principais páginas públicas devem ser revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",
+        "Deve haver revisão específica de desktop, tablet e mobile, com foco em densidade visual, alinhamento, contraste e clareza",
+        "Nenhuma página principal deve aparentar pertencer a uma linguagem visual antiga enquanto outras já estiverem no novo padrão",
+        "Hover, focus, estados vazios, transições e detalhes de interação devem ser harmonizados entre templates",
+        "O progress.txt deve registrar o que foi harmonizado, quais débitos visuais permaneceram e quais decisões de design system passaram a valer globalmente",
+        "O resultado final deve comunicar evolução clara em relação à fase inicial do projeto, sem quebrar a identidade institucional da Apollo"
       ]
     }
   ],
@@ -968,11 +1482,22 @@
     "FR-20: Breadcrumbs nas páginas de soluções e posts",
     "FR-21: Conteúdos para download com opção de lead capture (e-mail)",
     "FR-22: Upload de mídia via Payload (local ou S3/R2)",
-    "FR-23: Acessibilidade WCAG 2.1 AA: semantic HTML, ARIA, keyboard nav, focus management, prefers-reduced-motion"
+    "FR-23: Acessibilidade WCAG 2.1 AA: semantic HTML, ARIA, keyboard nav, focus management, prefers-reduced-motion",
+    "FR-24: O projeto deve possuir um design system explícito com tokens visuais, escalas tipográficas, espaçamento, sombras, raios e superfícies reutilizáveis.",
+    "FR-25: O site deve evoluir de uma recriação estrutural para uma execução visual premium e contemporânea, sem romper a identidade institucional da Apollo Gestão.",
+    "FR-26: Navbar, footer, overlays, cards, grids, filtros e formulários devem seguir uma linguagem visual unificada e mais sofisticada que a fase inicial do projeto.",
+    "FR-27: Hero sections não precisam ser fullscreen em todas as páginas; o uso deve ser decidido por valor de comunicação e impacto visual do template.",
+    "FR-28: As páginas internas devem apresentar melhor hierarquia de leitura, largura de conteúdo controlada, rhythm vertical consistente e CTAs melhor posicionados.",
+    "FR-29: A experiência visual precisa ser consistente entre desktop, tablet e mobile, com evidência de revisão de espaçamento, proporção, contraste e densidade de interface.",
+    "FR-30: A evolução visual deve ser incremental sobre a base existente, sem invalidar a arquitetura CMS, rotas, SEO e conteúdo já implementados.",
+    "FR-31: O redesign deve priorizar percepção de marca, clareza comercial e acabamento premium antes de introduzir novas features funcionais."
   ],
   "nonGoals": [
-    "Migração automática de conteúdo do WordPress atual — o site será recriado do zero com estrutura idêntica",
-    "Migração dos posts existentes do blog — a collection Posts começa vazia",
+    "Clone visual pixel-perfect do WordPress atual",
+    "Migração automática do conteúdo do WordPress atual",
+    "Migração dos posts existentes do blog — a collection Posts continua podendo começar vazia",
+    "Rebranding completo da Apollo Gestão com mudança radical de identidade",
+    "Interface de startup genérica ou visual excessivamente promocional",
     "E-commerce ou processamento de pagamentos",
     "Área restrita / autenticação de clientes no frontend",
     "Integração com ERP ou sistemas internos da Apollo",
@@ -980,7 +1505,38 @@
     "Multi-idioma / internacionalização (apenas pt-BR)",
     "Chat ao vivo (além do WhatsApp float)",
     "A/B testing",
-    "Definição da solução de envio de formulários — será decidida posteriormente pelo responsável do projeto",
-    "Dark mode / toggle de tema"
-  ]
+    "Definição da solução final de mensageria/entrega operacional dos formulários, exceto quando virar story própria",
+    "Dark mode / toggle de tema nesta fase"
+  ],
+  "risksAndConstraints": {
+    "mainRisks": [
+      "Misturar linguagem visual antiga e nova por tempo demais durante a fase 2",
+      "Introduzir redesign sem design system suficiente e gerar inconsistência",
+      "Reabrir modelagem CMS sem ganho claro e atrasar a execução",
+      "Melhorar visualmente desktop e deixar mobile como adaptação tardia",
+      "Perder clareza comercial em nome de estética"
+    ],
+    "constraints": [
+      "O redesign deve respeitar a base técnica e editorial já construída",
+      "As páginas públicas já existem e devem evoluir incrementalmente",
+      "SEO e rotas já entregues não devem ser prejudicados",
+      "Nem toda melhoria visual justifica nova modelagem de conteúdo"
+    ]
+  },
+  "definitionOfDone": {
+    "storyLevel": [
+      "Critérios de aceite atendidos",
+      "Arquivos alterados registrados",
+      "Racional da decisão documentado em progress.txt",
+      "Lint, validação de tipo prática e build executados quando aplicável",
+      "Impactos em acessibilidade e responsividade considerados",
+      "Débitos ou QA manual pendente explicitados"
+    ],
+    "phase2Completion": [
+      "Navbar, footer, homepage, hubs, detalhes, conteúdo e formulários compartilham linguagem visual coerente",
+      "Há evidência clara de evolução visual em relação à fase 1",
+      "Não existem páginas principais com aparência claramente defasada em relação ao novo padrão",
+      "O produto preserva identidade institucional da Apollo enquanto eleva seu acabamento"
+    ]
+  }
 }

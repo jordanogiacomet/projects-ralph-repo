@@ -1,7 +1,6 @@
 # Ralph Progress Log
 Started: Mon Mar  9 09:19:04 PDT 2026
 ---
-
 ## Codebase Patterns
 - Payload CMS 3.x is integrated into Next.js (not standalone) — config at `src/payload.config.ts`
 - Frontend routes live in `src/app/(frontend)/`, Payload admin/API in `src/app/(payload)/`
@@ -1074,4 +1073,27 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this sandbox, `npm run build` can intermittently fail with transient Next.js page/chunk resolution errors even when equivalent `next build --debug` and subsequent retries pass.
   - Useful context
   - For visual-direction stories, explicit quality gates for typography scale, spacing rhythm, and evidence-based performance checks should be declared in acceptance criteria up front to avoid interpretation drift.
+---
+## 2026-03-10 12:22 UTC - US-038
+- What was implemented
+- Consolidated the phase-2 design-system foundation by adding explicit visual tokens, typography scale, spacing/rhythm aliases, radius/shadow/surface states, and a new `designSystemBase` section in `prd.json`.
+- Added reusable primitives in `src/components/ui/` for buttons, inputs, textareas, selects, cards, chips, badges, headings, and containers, then validated the system by wiring `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` onto the new layer.
+- Updated frontend styling infrastructure with `Manrope` display typography, CSS-token files under `src/styles/`, and Tailwind aliases mapped to the new visual variables.
+- Files changed
+- `prd.json`, `src/app/(frontend)/layout.tsx`, `src/app/globals.css`, `tailwind.config.ts`, `src/styles/tokens.css`, `src/styles/utilities.css`, `src/components/ui/*`, `src/components/ContatoForm.tsx`, `src/components/CookieConsent.tsx`, `src/components/SolutionFilterTabs.tsx`, `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls that now use the new design-system primitives.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Phase-2 design-system foundations now live in `src/styles/tokens.css` and `src/styles/utilities.css`, while Tailwind aliases expose the same tokens to JSX and `src/components/ui/` primitives.
+  - Gotchas encountered
+  - In this Next.js/Tailwind setup, CSS files imported by `src/app/globals.css` should use plain rules/classes; putting `@layer base` inside the imported file caused build-time PostCSS failures.
+  - Useful context
+  - Shared components such as `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` are low-risk first adopters for new primitives because they validate the system without starting template-level redesign stories early.
 ---

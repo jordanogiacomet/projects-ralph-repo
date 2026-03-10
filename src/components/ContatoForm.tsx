@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 
+import { Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
+
 type ContatoFormProps = {
   title?: string
 }
@@ -47,55 +49,72 @@ export function ContatoForm({ title = 'Solicite um contato' }: ContatoFormProps)
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-      <h3 className="text-2xl font-bold text-text-primary">{title}</h3>
-      <p className="mt-2 text-sm text-text-secondary">
-        Envie sua mensagem e nossa equipe retorna com a melhor solução para o seu cenário.
-      </p>
+    <Card as="section" padding="lg">
+      <SectionHeading
+        size="sm"
+        title={title}
+        description="Envie sua mensagem e nossa equipe retorna com a melhor solução para o seu cenário."
+      />
 
-      <form className="mt-6 grid gap-3" onSubmit={handleSubmit}>
-        <input
+      <form className="mt-8 grid gap-4" onSubmit={handleSubmit}>
+        <Input
           name="nome"
           type="text"
           required
           placeholder="Nome"
-          className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
+          autoComplete="name"
         />
-        <input
+        <Input
           name="email"
           type="email"
           required
           placeholder="E-mail"
-          className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
+          autoComplete="email"
         />
-        <input
+        <Input
           name="assunto"
           type="text"
           required
           placeholder="Assunto"
-          className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
         />
-        <textarea
+        <Textarea
           name="mensagem"
           required
           rows={4}
           placeholder="Mensagem"
-          className="w-full resize-y rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
         />
-        <button
-          type="submit"
-          disabled={submitState === 'submitting'}
-          className="inline-flex w-fit items-center rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submitState === 'submitting' ? 'Enviando...' : 'Enviar mensagem'}
-        </button>
+        <div className="flex flex-wrap items-center gap-4 pt-2">
+          <Button
+            type="submit"
+            disabled={submitState === 'submitting'}
+            trailingIcon={
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12H19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M12 5L19 12L12 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            }
+          >
+            {submitState === 'submitting' ? 'Enviando...' : 'Enviar mensagem'}
+          </Button>
+        </div>
         {submitState === 'success' && (
-          <p className="text-sm text-emerald-600">Mensagem enviada com sucesso.</p>
+          <p className="text-meta-sm text-emerald-600">Mensagem enviada com sucesso.</p>
         )}
         {submitState === 'error' && (
-          <p className="text-sm text-red-600">Não foi possível enviar agora. Tente novamente.</p>
+          <p className="text-meta-sm text-red-600">Não foi possível enviar agora. Tente novamente.</p>
         )}
       </form>
-    </section>
+    </Card>
   )
 }
