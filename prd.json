@@ -21,7 +21,8 @@
     "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global.",
     "headerRedesignRule": "O header foi revisado na fase 2 (US-039A/B/C). As próximas stories devem referenciar e manter consistência com o shell já repaginado.",
     "priorityRule": "Na fase 2, a ordem de prioridade é: (1) homepage como vitrine institucional, (2) prova social e conteúdo editorial — clientes, conteúdos e news, (3) formulários e fluxos de contato, (4) hubs e detalhes de soluções, (5) polish global. Stories de soluções não devem bloquear nem atrasar as demais.",
-    "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS."
+    "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS.",
+    "note": "Polish stories may modify multiple templates but must avoid architectural refactors."
   },
   "contentAndCMSStrategy": {
     "principle": "Reaproveitar a modelagem do Payload construída na fase 1 sempre que possível.",
@@ -1141,7 +1142,7 @@
       "phase": "phase-2-redesign",
       "stream": "contact",
       "title": "Repaginação do fluxo de representante e padronização de formulários",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar a página de representante e consolidar linguagem única para formulários.",
       "acceptanceCriteria": [
         "Página de representante segue mesma linguagem premium dos demais fluxos de contato",
@@ -1150,7 +1151,7 @@
       ]
     },
     {
-      "id": "US-041A",
+      "id": "US-046A",
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação da página /solucoes",
@@ -1164,7 +1165,7 @@
       ]
     },
     {
-      "id": "US-041B",
+      "id": "US-046B",
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação dos hubs de categoria de soluções",
@@ -1178,7 +1179,7 @@
       ]
     },
     {
-      "id": "US-041C",
+      "id": "US-046C",
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Padronização visual dos cards e filtros de solução",
@@ -1191,8 +1192,9 @@
         "Mesma linguagem aplicável em /solucoes e nos hubs de categoria"
       ]
     },
+    
     {
-      "id": "US-042A",
+      "id": "US-047A",
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação do template base de páginas de solução",
@@ -1206,7 +1208,7 @@
       ]
     },
     {
-      "id": "US-042B",
+      "id": "US-048B",
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação de elementos auxiliares das páginas de solução",
@@ -1219,7 +1221,116 @@
       ]
     },
     {
-      "id": "US-045",
+      "id": "US-049A",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Revisão de consistência do shell global (navbar, footer e overlays)",
+      "passes": false,
+      "description": "Auditar e harmonizar o shell global do site para garantir consistência visual e comportamental com o novo design system.",
+      "acceptanceCriteria": [
+        "Navbar revisada para spacing, alinhamento, estados hover/focus e contraste",
+        "Mega menu e mobile menu revisados para consistência de tipografia, espaçamento e superfícies",
+        "SearchOverlay revisado para spacing, tipografia, estados e animações",
+        "Footer revisado para hierarquia visual, spacing vertical e consistência de botões e links",
+        "CookieConsent, WhatsAppFloat e ScrollToTop alinhados ao novo padrão visual",
+        "Nenhum componente do shell apresenta aparência anterior à fase 2",
+        "progress.txt registra ajustes aplicados e inconsistências encontradas"
+      ]
+    },
+    {
+      "id": "US-049B",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Harmonização global de tipografia",
+      "passes": false,
+      "description": "Garantir que todos os templates usem a escala tipográfica e hierarquia definidas no design system.",
+      "acceptanceCriteria": [
+        "Headings H1–H6 consistentes entre templates",
+        "Body text, subtitles e labels seguem escala tipográfica definida",
+        "Line-height e spacing vertical harmonizados",
+        "Nenhuma página usa estilos tipográficos isolados ou fora do design system",
+        "progress.txt registra correções aplicadas"
+      ]
+    },
+        {
+      "id": "US-049C",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Revisão de spacing e rhythm de layout",
+      "passes": false,
+      "description": "Auditar e harmonizar spacing entre seções, grids e componentes em todo o site.",
+      "acceptanceCriteria": [
+        "Espaçamento vertical consistente entre seções principais",
+        "Grids e cards seguem rhythm consistente",
+        "Containers e paddings alinhados ao design system",
+        "Nenhuma página apresenta compressão ou excesso de whitespace",
+        "progress.txt registra inconsistências corrigidas"
+      ]
+    },
+    {
+      "id": "US-049D",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Harmonização de motion e microinterações",
+      "passes": false,
+      "description": "Revisar e padronizar animações e microinterações em todo o site.",
+      "acceptanceCriteria": [
+        "Transições consistentes entre templates",
+        "Hover e focus states harmonizados",
+        "Animações não são excessivas ou inconsistentes",
+        "Respeito a prefers-reduced-motion",
+        "progress.txt registra ajustes realizados"
+      ]
+    },
+    {
+      "id": "US-049E",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Harmonização de motion e microinterações",
+      "passes": false,
+      "description": "Revisar e padronizar animações e microinterações em todo o site.",
+      "acceptanceCriteria": [
+        "Transições consistentes entre templates",
+        "Hover e focus states harmonizados",
+        "Animações não são excessivas ou inconsistentes",
+        "Respeito a prefers-reduced-motion",
+        "progress.txt registra ajustes realizados"
+      ]
+    },
+    {
+      "id": "US-049F",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "Revisão visual das páginas principais",
+      "passes": false,
+      "description": "Auditar páginas principais para garantir consistência com o redesign.",
+      "acceptanceCriteria": [
+        "Home revisada para spacing, grids e hierarquia visual",
+        "Sobre revisada para consistência de layout e tipografia",
+        "Soluções e páginas de solução revisadas",
+        "Clientes revisada para consistência de cards e grids",
+        "Contato e formulários revisados",
+        "Nenhuma página principal apresenta aparência defasada",
+        "progress.txt registra correções realizadas"
+      ]
+    },
+    {
+      "id": "US-049G",
+      "phase": "phase-2-redesign",
+      "stream": "polish",
+      "title": "QA responsivo completo",
+      "passes": false,
+      "description": "Revisão completa de comportamento responsivo em desktop, tablet e mobile.",
+      "acceptanceCriteria": [
+        "Desktop revisado para alinhamento, spacing e grids",
+        "Tablet revisado para adaptação de layout e legibilidade",
+        "Mobile revisado para spacing vertical e ergonomia",
+        "Nenhum layout quebra ou apresenta overflow",
+        "progress.txt registra ajustes realizados"
+      ]
+    },
+    {
+      "id": "US-050",
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Polish visual, consistência global e QA de redesign",

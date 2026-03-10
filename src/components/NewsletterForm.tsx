@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 
-import { Badge, Button } from '@/components/ui'
+import { Badge, Button, Card, Input, SectionHeading } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'duplicate' | 'error'
@@ -18,22 +18,22 @@ export function NewsletterForm({
   description = 'Inscreva-se para receber novas leituras, artigos tecnicos e materiais curatoriais da Apollo Gestão.',
   title = 'Receba novos artigos da Apollo por e-mail.',
 }: NewsletterFormProps) {
+  const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const [validationMessage, setValidationMessage] = useState<string | null>(null)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    const formData = new FormData(form)
-    const email = String(formData.get('email') || '')
-      .trim()
-      .toLowerCase()
+    const normalizedEmail = email.trim().toLowerCase()
 
-    if (!email) {
-      setSubmitState('error')
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      setValidationMessage('Digite um e-mail valido para concluir a inscricao.')
+      setSubmitState('idle')
       return
     }
 
     try {
+      setValidationMessage(null)
       setSubmitState('submitting')
 
       const response = await fetch('/api/newsletter-subscribers', {
@@ -41,11 +41,11 @@ export function NewsletterForm({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: normalizedEmail }),
       })
 
       if (response.ok) {
-        form.reset()
+        setEmail('')
         setSubmitState('success')
         return
       }
@@ -62,9 +62,11 @@ export function NewsletterForm({
   }
 
   return (
-    <div
+    <Card
+      as="section"
+      padding="lg"
       className={cn(
-        'relative overflow-hidden rounded-panel border border-border bg-white/95 p-6 shadow-soft backdrop-blur-sm sm:p-7',
+        'relative overflow-hidden border-border/90 bg-white/95 shadow-soft backdrop-blur-sm',
         className,
       )}
     >
@@ -78,27 +80,37 @@ export function NewsletterForm({
       />
       <div className="relative">
         <Badge tone="accent">Newsletter Apollo</Badge>
-        <h2 className="mt-5 font-display text-heading-lg font-semibold text-text-primary">{title}</h2>
-        <p className="mt-3 text-body-sm text-text-secondary">{description}</p>
+        <SectionHeading className="mt-5" size="sm" title={title} description={description} />
 
-        <form className="mt-6 grid gap-3" onSubmit={handleSubmit}>
-          <label htmlFor="newsletter-email" className="sr-only">
-            E-mail
-          </label>
-          <input
+        <form
+          className="mt-6 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto]"
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <Input
             id="newsletter-email"
             name="email"
             type="email"
             required
             autoComplete="email"
+            label="E-mail"
+            labelClassName="sr-only"
             placeholder="Seu melhor e-mail profissional"
-            className="w-full rounded-field border border-border bg-surface-primary px-4 py-3 text-sm text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition duration-200 placeholder:text-text-muted focus:border-accent/40 focus:outline-none focus:ring-4 focus:ring-accent/10"
+            description="Usamos este cadastro para enviar artigos, leituras tecnicas e materiais curatoriais da Apollo."
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value)
+              if (validationMessage) {
+                setValidationMessage(null)
+              }
+            }}
+            error={validationMessage ?? undefined}
           />
           <Button
             type="submit"
             disabled={submitState === 'submitting'}
             size="lg"
-            className="w-full rounded-pill"
+            className="w-full rounded-pill sm:min-w-[15rem]"
           >
             {submitState === 'submitting' ? 'Inscrevendo...' : 'Quero receber atualizacoes'}
           </Button>
@@ -106,16 +118,22 @@ export function NewsletterForm({
 
         <div className="mt-4 min-h-5" aria-live="polite">
           {submitState === 'success' ? (
-            <p className="text-sm text-emerald-700">Inscricao realizada com sucesso.</p>
+            <p className="text-sm text-emerald-700" role="status">
+              Inscricao realizada com sucesso.
+            </p>
           ) : null}
           {submitState === 'duplicate' ? (
-            <p className="text-sm text-amber-700">Este e-mail ja esta inscrito na newsletter.</p>
+            <p className="text-sm text-amber-700" role="status">
+              Este e-mail ja esta inscrito na newsletter.
+            </p>
           ) : null}
           {submitState === 'error' ? (
-            <p className="text-sm text-red-700">Nao foi possivel concluir agora. Tente novamente.</p>
+            <p className="text-sm text-red-700" role="alert">
+              Nao foi possivel concluir agora. Tente novamente.
+            </p>
           ) : null}
         </div>
       </div>
-    </div>
+    </Card>
   )
 }

@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Badge, Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
+import { cn } from '@/lib/utils'
+
 type RepresentanteFormValues = {
   nome: string
   email: string
@@ -17,7 +20,67 @@ type SubmitState = 'idle' | 'success' | 'error'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const fitHighlights = [
+  {
+    title: 'Contato principal',
+    description: 'Quem conduz a relacao comercial e qual o melhor canal para devolutiva.',
+  },
+  {
+    title: 'Cobertura regional',
+    description: 'Cidade, estado e raio de atuacao para calibrar agenda, proximidade e potencial.',
+  },
+  {
+    title: 'Repertorio comercial',
+    description: 'Segmentos, tipos de conta e experiencia com vendas consultivas ou tecnicas.',
+  },
+]
+
+const reviewSteps = [
+  {
+    title: 'Triagem comercial',
+    description: 'Avaliamos contexto de cobertura, aderencia e complementaridade com o mapa atual.',
+  },
+  {
+    title: 'Leitura consultiva',
+    description:
+      'Buscamos parceiros capazes de qualificar demanda antes de transformar conversa em proposta.',
+  },
+  {
+    title: 'Retorno do time Apollo',
+    description:
+      'Se houver aderencia, o time comercial entra em contato para alinhar proximos passos.',
+  },
+]
+
 const hasValidPhone = (value: string): boolean => value.replace(/\D/g, '').length >= 10
+
+function ArrowIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 13l4 4L19 7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 export function RepresentanteForm() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
@@ -26,6 +89,7 @@ export function RepresentanteForm() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RepresentanteFormValues>({
     mode: 'onBlur',
@@ -39,6 +103,34 @@ export function RepresentanteForm() {
       mensagem: '',
     },
   })
+
+  const contactName = watch('nome')
+  const companyName = watch('empresa')
+  const coverageRegion = watch('cidadeEstado')
+  const businessSegment = watch('segmentoAtuacao')
+
+  const summaryItems = [
+    {
+      label: 'Responsavel',
+      value: contactName?.trim() || null,
+      fallback: 'Nome do contato principal ainda nao informado.',
+    },
+    {
+      label: 'Empresa',
+      value: companyName?.trim() || null,
+      fallback: 'Empresa ainda nao informada.',
+    },
+    {
+      label: 'Cobertura',
+      value: coverageRegion?.trim() || null,
+      fallback: 'Cidade e estado de atuacao ainda nao informados.',
+    },
+    {
+      label: 'Segmento',
+      value: businessSegment?.trim() || null,
+      fallback: 'Segmento ou repertorio comercial ainda nao informado.',
+    },
+  ]
 
   const onSubmit = async (values: RepresentanteFormValues) => {
     setSubmitState('idle')
@@ -66,7 +158,7 @@ export function RepresentanteForm() {
       })
 
       if (!response.ok) {
-        throw new Error('Erro ao enviar formulário')
+        throw new Error('Erro ao enviar formulario')
       }
 
       reset()
@@ -77,228 +169,280 @@ export function RepresentanteForm() {
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-      <h2 className="text-2xl font-bold sm:text-3xl">Cadastro de representante</h2>
-      <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-        Compartilhe seus dados e contexto de atuação. Nossa equipe avaliará o cadastro e entrará em
-        contato.
-      </p>
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.82fr)] lg:items-start">
+      <Card
+        as="section"
+        padding="lg"
+        className="relative overflow-hidden border-white/80 bg-white/96 shadow-[var(--shadow-strong)] backdrop-blur-sm"
+        id="formulario-representante"
+      >
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(155deg, rgba(0,86,166,0.06) 0%, rgba(255,255,255,0) 44%, rgba(15,23,42,0.05) 100%)',
+          }}
+          aria-hidden
+        />
 
-      <form className="mt-6 grid gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="representante-nome"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Nome
-            </label>
-            <input
-              id="representante-nome"
-              type="text"
-              autoComplete="name"
-              aria-invalid={errors.nome ? 'true' : 'false'}
-              {...register('nome', {
-                required: 'Informe seu nome.',
-                minLength: {
-                  value: 2,
-                  message: 'Digite ao menos 2 caracteres.',
-                },
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="Seu nome completo"
+        <div className="relative">
+          <div className="border-b border-border pb-6">
+            <Badge tone="accent">Cadastro consultivo</Badge>
+            <SectionHeading
+              className="mt-5"
+              eyebrow="Representacao comercial"
+              title="Apresente sua cobertura, repertorio e contexto de atuacao"
+              description="O formulario abaixo mantem o mesmo fluxo de envio, mas agora organiza melhor as informacoes que a Apollo usa para avaliar a parceria."
             />
-            {errors.nome ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.nome.message}
-              </p>
-            ) : null}
+
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              {fitHighlights.map((highlight) => (
+                <div
+                  key={highlight.title}
+                  className="rounded-[1.25rem] border border-accent/10 bg-accent-soft/55 p-4"
+                >
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.16em] text-accent-strong">
+                    {highlight.title}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                    {highlight.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="representante-email"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              E-mail
-            </label>
-            <input
-              id="representante-email"
-              type="email"
-              autoComplete="email"
-              aria-invalid={errors.email ? 'true' : 'false'}
-              {...register('email', {
-                required: 'Informe um e-mail válido.',
-                pattern: {
-                  value: emailPattern,
-                  message: 'Digite um e-mail válido.',
-                },
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="voce@empresa.com"
-            />
-            {errors.email ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.email.message}
-              </p>
-            ) : null}
-          </div>
+          <form className="mt-8 grid gap-8" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Card tone="muted" padding="md" className="border-border/80 bg-surface-secondary/90">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                  Contato principal
+                </p>
+                <div className="mt-5 grid gap-4">
+                  <Input
+                    type="text"
+                    autoComplete="name"
+                    label="Nome"
+                    error={errors.nome?.message}
+                    placeholder="Seu nome completo"
+                    {...register('nome', {
+                      required: 'Informe seu nome.',
+                      minLength: {
+                        value: 2,
+                        message: 'Digite ao menos 2 caracteres.',
+                      },
+                    })}
+                  />
 
-          <div>
-            <label
-              htmlFor="representante-telefone"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Telefone
-            </label>
-            <input
-              id="representante-telefone"
-              type="tel"
-              autoComplete="tel"
-              aria-invalid={errors.telefone ? 'true' : 'false'}
-              {...register('telefone', {
-                required: 'Informe um telefone para contato.',
-                validate: (value) =>
-                  hasValidPhone(value) || 'Digite um telefone com DDD válido.',
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="(00) 00000-0000"
-            />
-            {errors.telefone ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.telefone.message}
-              </p>
-            ) : null}
-          </div>
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    label="E-mail corporativo"
+                    error={errors.email?.message}
+                    placeholder="voce@empresa.com"
+                    {...register('email', {
+                      required: 'Informe um e-mail valido.',
+                      pattern: {
+                        value: emailPattern,
+                        message: 'Digite um e-mail valido.',
+                      },
+                    })}
+                  />
 
-          <div>
-            <label
-              htmlFor="representante-empresa"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Empresa
-            </label>
-            <input
-              id="representante-empresa"
-              type="text"
-              aria-invalid={errors.empresa ? 'true' : 'false'}
-              {...register('empresa', {
-                required: 'Informe sua empresa.',
-                minLength: {
-                  value: 2,
-                  message: 'Digite ao menos 2 caracteres.',
-                },
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="Nome da empresa"
-            />
-            {errors.empresa ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.empresa.message}
-              </p>
-            ) : null}
-          </div>
+                  <Input
+                    type="tel"
+                    autoComplete="tel"
+                    label="Telefone"
+                    error={errors.telefone?.message}
+                    placeholder="(00) 00000-0000"
+                    description="Use um numero com DDD para facilitar o retorno do time comercial."
+                    {...register('telefone', {
+                      required: 'Informe um telefone para contato.',
+                      validate: (value) =>
+                        hasValidPhone(value) || 'Digite um telefone com DDD valido.',
+                    })}
+                  />
+                </div>
+              </Card>
 
-          <div>
-            <label
-              htmlFor="representante-cidade-estado"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Cidade e estado de atuação
-            </label>
-            <input
-              id="representante-cidade-estado"
-              type="text"
-              aria-invalid={errors.cidadeEstado ? 'true' : 'false'}
-              {...register('cidadeEstado', {
-                required: 'Informe a cidade e estado de atuação.',
-                minLength: {
-                  value: 3,
-                  message: 'Digite ao menos 3 caracteres.',
-                },
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="Ex: Curitiba, PR"
-            />
-            {errors.cidadeEstado ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.cidadeEstado.message}
-              </p>
-            ) : null}
-          </div>
+              <Card tone="muted" padding="md" className="border-border/80 bg-surface-secondary/90">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                  Atuacao e cobertura
+                </p>
+                <div className="mt-5 grid gap-4">
+                  <Input
+                    type="text"
+                    label="Empresa"
+                    error={errors.empresa?.message}
+                    placeholder="Nome da empresa"
+                    {...register('empresa', {
+                      required: 'Informe sua empresa.',
+                      minLength: {
+                        value: 2,
+                        message: 'Digite ao menos 2 caracteres.',
+                      },
+                    })}
+                  />
 
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="representante-segmento"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Segmento de atuação
-            </label>
-            <input
-              id="representante-segmento"
-              type="text"
-              aria-invalid={errors.segmentoAtuacao ? 'true' : 'false'}
-              {...register('segmentoAtuacao', {
-                required: 'Informe seu segmento de atuação.',
-                minLength: {
-                  value: 3,
-                  message: 'Digite ao menos 3 caracteres.',
-                },
-              })}
-              className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="Ex: Consultoria, vendas técnicas, serviços B2B"
-            />
-            {errors.segmentoAtuacao ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.segmentoAtuacao.message}
-              </p>
-            ) : null}
-          </div>
+                  <Input
+                    type="text"
+                    label="Cidade e estado de atuacao"
+                    error={errors.cidadeEstado?.message}
+                    placeholder="Ex: Curitiba, PR"
+                    description="Se a cobertura envolver mais de uma regiao, indique a base principal."
+                    {...register('cidadeEstado', {
+                      required: 'Informe a cidade e estado de atuacao.',
+                      minLength: {
+                        value: 3,
+                        message: 'Digite ao menos 3 caracteres.',
+                      },
+                    })}
+                  />
 
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="representante-mensagem"
-              className="mb-1.5 block text-sm font-medium text-text-primary"
-            >
-              Experiência comercial e cobertura regional
-            </label>
-            <textarea
-              id="representante-mensagem"
-              rows={5}
-              aria-invalid={errors.mensagem ? 'true' : 'false'}
-              {...register('mensagem', {
-                required: 'Descreva sua experiência para representação.',
-                minLength: {
-                  value: 20,
-                  message: 'Digite ao menos 20 caracteres.',
-                },
-              })}
-              className="w-full resize-y rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-              placeholder="Descreva histórico de vendas, carteira de clientes e região de interesse."
-            />
-            {errors.mensagem ? (
-              <p className="mt-1 text-xs text-red-600" role="alert">
-                {errors.mensagem.message}
+                  <Input
+                    type="text"
+                    label="Segmento de atuacao"
+                    error={errors.segmentoAtuacao?.message}
+                    placeholder="Ex: vendas tecnicas, consultoria, servicos B2B"
+                    description="Compartilhe o tipo de conta, mercado ou frente comercial que voce domina."
+                    {...register('segmentoAtuacao', {
+                      required: 'Informe seu segmento de atuacao.',
+                      minLength: {
+                        value: 3,
+                        message: 'Digite ao menos 3 caracteres.',
+                      },
+                    })}
+                  />
+                </div>
+              </Card>
+            </div>
+
+            <Card tone="muted" padding="md" className="border-border/80 bg-surface-secondary/90">
+              <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                Experiencia comercial
+              </p>
+              <Textarea
+                rows={7}
+                className="mt-5"
+                label="Experiencia comercial e cobertura regional"
+                error={errors.mensagem?.message}
+                description="Descreva historico, carteira, tipo de relacionamento com decisores e o perfil de oportunidade que voce costuma desenvolver."
+                placeholder="Explique sua experiencia, os segmentos com que trabalha, a regiao que cobre e como costuma estruturar a prospeccao."
+                {...register('mensagem', {
+                  required: 'Descreva sua experiencia para representacao.',
+                  minLength: {
+                    value: 20,
+                    message: 'Digite ao menos 20 caracteres.',
+                  },
+                })}
+              />
+            </Card>
+
+            <div className="flex flex-col gap-4 border-t border-border pt-2 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-xl text-meta-sm text-text-muted">
+                Ao enviar, o cadastro segue para triagem comercial. Quanto mais clara a combinacao
+                entre cobertura, segmento e experiencia, mais objetivo tende a ser o retorno.
+              </p>
+
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                trailingIcon={<ArrowIcon />}
+                className="sm:shrink-0"
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar cadastro'}
+              </Button>
+            </div>
+
+            {submitState === 'success' ? (
+              <p className="text-sm text-emerald-600" role="status" aria-live="polite">
+                Cadastro enviado com sucesso.
               </p>
             ) : null}
-          </div>
+            {submitState === 'error' ? (
+              <p className="text-sm text-red-600" role="alert">
+                Nao foi possivel enviar agora. Tente novamente.
+              </p>
+            ) : null}
+          </form>
         </div>
+      </Card>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex w-fit items-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isSubmitting ? 'Enviando...' : 'Enviar cadastro'}
-        </button>
+      <div className="space-y-4 lg:sticky lg:top-28">
+        <Card tone="dark" className="relative overflow-hidden border-white/10">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(circle at 18% 14%, rgba(0,86,166,0.26), transparent 40%), linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))',
+            }}
+            aria-hidden
+          />
 
-        {submitState === 'success' ? (
-          <p className="text-sm text-emerald-600">Cadastro enviado com sucesso.</p>
-        ) : null}
-        {submitState === 'error' ? (
-          <p className="text-sm text-red-600">Não foi possível enviar agora. Tente novamente.</p>
-        ) : null}
-      </form>
-    </section>
+          <div className="relative">
+            <Badge tone="dark" className="border border-white/10 bg-white/[0.08] text-white/78">
+              Triagem Apollo
+            </Badge>
+            <h3 className="mt-5 font-display text-heading-xl font-semibold text-white">
+              Como o cadastro e lido pelo time comercial
+            </h3>
+            <ul className="mt-6 space-y-4">
+              {reviewSteps.map((step, index) => (
+                <li key={step.title} className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.06] text-sm font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{step.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/68">{step.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Card>
+
+        <Card className="border-white/70 bg-white/92 shadow-soft">
+          <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+            Resumo do cadastro
+          </p>
+          <dl className="mt-5 space-y-4">
+            {summaryItems.map((item) => (
+              <div key={item.label}>
+                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-text-muted">
+                  {item.label}
+                </dt>
+                <dd
+                  className={cn(
+                    'mt-1 text-sm leading-relaxed',
+                    item.value ? 'text-text-primary' : 'text-text-secondary',
+                  )}
+                >
+                  {item.value || item.fallback}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-6 rounded-[1.25rem] border border-accent/10 bg-accent-soft/55 p-4">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-accent-strong shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                <CheckIcon />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-text-primary">
+                  Mais contexto, menos ruido
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                  O objetivo desta pagina e qualificar melhor a conversa desde o primeiro envio, sem
+                  mudar o fluxo tecnico de recebimento do cadastro.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
   )
 }
