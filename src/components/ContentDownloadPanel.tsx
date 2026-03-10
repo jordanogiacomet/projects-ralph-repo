@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import Link from 'next/link'
+
+import { Badge, Button, Input } from '@/components/ui'
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -24,6 +25,18 @@ export function ContentDownloadPanel({
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [downloadReleased, setDownloadReleased] = useState(!requiresEmail)
   const [validationMessage, setValidationMessage] = useState<string | null>(null)
+
+  const accessHighlights = requiresEmail
+    ? [
+        'Registro simples para liberar o arquivo imediatamente.',
+        'Fluxo pensado para qualificar interesse sem quebrar a leitura.',
+        'Download ideal para compartilhar com times financeiro, patrimonial e auditoria.',
+      ]
+    : [
+        'Arquivo disponivel para download imediato.',
+        'Mesmo padrao visual e editorial da biblioteca Apollo.',
+        'Material pronto para circular entre equipes tecnicas e executivas.',
+      ]
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -75,83 +88,139 @@ export function ContentDownloadPanel({
 
   if (!downloadUrl) {
     return (
-      <section className="rounded-2xl border border-border bg-bg-secondary p-6 sm:p-7">
-        <h2 className="text-xl font-bold sm:text-2xl">Download em preparacao</h2>
-        <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-          Este material ainda nao possui arquivo publicado. Fale com nossa equipe para receber o
-          conteudo.
+      <section className="surface-muted overflow-hidden rounded-panel p-6 sm:p-7">
+        <Badge tone="accent">Arquivo em preparacao</Badge>
+        <h2 className="mt-4 font-display text-heading-lg font-semibold text-text-primary sm:text-heading-xl">
+          Solicite este material diretamente a nossa equipe.
+        </h2>
+        <p className="mt-3 text-body-md text-text-secondary">
+          Este conteudo ainda nao possui arquivo publicado. Se ele for relevante para o seu
+          contexto, direcionamos a melhor alternativa por contato consultivo.
         </p>
-        <Link
-          href="/contato"
-          className="mt-5 inline-flex rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-hover"
-        >
+        <Button href="/contato" size="lg" className="mt-6 rounded-pill">
           Solicitar material
-        </Link>
+        </Button>
       </section>
     )
   }
 
   if (!requiresEmail || downloadReleased) {
     return (
-      <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-7">
-        <h2 className="text-xl font-bold sm:text-2xl">Download liberado</h2>
-        <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-          Clique no botao abaixo para acessar o material.
-        </p>
-        <a
-          href={downloadUrl}
-          className="mt-5 inline-flex rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-hover"
-        >
-          Baixar material
-        </a>
-        {submitState === 'success' ? (
-          <p className="mt-3 text-sm text-emerald-600">E-mail registrado com sucesso.</p>
-        ) : null}
+      <section className="relative overflow-hidden rounded-panel border border-border bg-white p-6 shadow-strong sm:p-7">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(145deg, rgba(0,86,166,0.05) 0%, rgba(255,255,255,0) 44%, rgba(40,167,69,0.08) 100%)',
+          }}
+          aria-hidden
+        />
+        <div className="relative">
+          <Badge tone="success">
+            {submitState === 'success' ? 'Acesso liberado' : 'Download disponivel'}
+          </Badge>
+          <h2 className="mt-4 font-display text-heading-lg font-semibold text-text-primary sm:text-heading-xl">
+            Baixar material
+          </h2>
+          <p className="mt-3 text-body-md text-text-secondary">
+            O arquivo ja esta pronto para ser acessado. Use o botao abaixo para abrir o material.
+          </p>
+
+          <div className="mt-6 space-y-3">
+            {accessHighlights.map((highlight) => (
+              <div
+                key={highlight}
+                className="flex gap-3 rounded-card border border-border bg-surface-secondary px-4 py-3 text-sm leading-relaxed text-text-secondary"
+              >
+                <span className="mt-1 h-2.5 w-2.5 rounded-full bg-cta-green" aria-hidden />
+                <span>{highlight}</span>
+              </div>
+            ))}
+          </div>
+
+          <a
+            href={downloadUrl}
+            className="mt-6 inline-flex min-h-14 items-center justify-center rounded-pill bg-accent px-6 text-base font-semibold text-white shadow-soft transition-all duration-200 hover:-translate-y-px hover:bg-accent-hover"
+          >
+            Baixar material
+          </a>
+
+          {submitState === 'success' ? (
+            <p className="mt-3 text-meta-sm font-medium text-emerald-700" role="status">
+              E-mail registrado com sucesso.
+            </p>
+          ) : null}
+        </div>
       </section>
     )
   }
 
   return (
-    <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-7">
-      <h2 className="text-xl font-bold sm:text-2xl">Receber material por e-mail</h2>
-      <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-        Informe seu e-mail para liberar o download imediato deste conteudo.
-      </p>
+    <section className="relative overflow-hidden rounded-panel border border-border bg-white p-6 shadow-strong sm:p-7">
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(145deg, rgba(0,86,166,0.05) 0%, rgba(255,255,255,0) 44%, rgba(15,23,42,0.05) 100%)',
+        }}
+        aria-hidden
+      />
+      <div className="relative">
+        <Badge tone="accent">Acesso por e-mail</Badge>
+        <h2 className="mt-4 font-display text-heading-lg font-semibold text-text-primary sm:text-heading-xl">
+          Receber material
+        </h2>
+        <p className="mt-3 text-body-md text-text-secondary">
+          Informe seu e-mail para liberar o download imediato deste conteudo sem sair da pagina.
+        </p>
 
-      <form className="mt-5 grid gap-3" onSubmit={handleSubmit} noValidate>
-        <label htmlFor="conteudo-email" className="text-sm font-medium text-text-primary">
-          E-mail
-        </label>
-        <input
-          id="conteudo-email"
-          name="email"
-          type="email"
-          required
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="voce@empresa.com"
-          className="w-full rounded-md border border-border px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/80 focus:border-accent focus:outline-none"
-        />
+        <div className="mt-6 space-y-3">
+          {accessHighlights.map((highlight) => (
+            <div
+              key={highlight}
+              className="flex gap-3 rounded-card border border-border bg-surface-secondary px-4 py-3 text-sm leading-relaxed text-text-secondary"
+            >
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
+              <span>{highlight}</span>
+            </div>
+          ))}
+        </div>
 
-        {validationMessage ? (
-          <p className="text-sm text-red-600" role="alert">
-            {validationMessage}
-          </p>
-        ) : null}
-        {submitState === 'error' ? (
-          <p className="text-sm text-red-600" role="alert">
-            Nao foi possivel liberar o download agora. Tente novamente.
-          </p>
-        ) : null}
+        <form className="mt-6 grid gap-4" onSubmit={handleSubmit} noValidate>
+          <Input
+            id="conteudo-email"
+            name="email"
+            type="email"
+            required
+            label="E-mail"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value)
+              if (validationMessage) {
+                setValidationMessage(null)
+              }
+            }}
+            placeholder="voce@empresa.com"
+            description="Usamos este registro apenas para liberar o arquivo e qualificar o interesse pelo material."
+            error={validationMessage ?? undefined}
+          />
 
-        <button
-          type="submit"
-          disabled={submitState === 'submitting'}
-          className="inline-flex w-fit items-center rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submitState === 'submitting' ? 'Liberando...' : 'Liberar download'}
-        </button>
-      </form>
+          {submitState === 'error' ? (
+            <p className="text-meta-sm font-medium text-red-600" role="alert">
+              Nao foi possivel liberar o download agora. Tente novamente.
+            </p>
+          ) : null}
+
+          <Button
+            type="submit"
+            size="lg"
+            className="rounded-pill"
+            disabled={submitState === 'submitting'}
+          >
+            {submitState === 'submitting' ? 'Liberando...' : 'Liberar download'}
+          </Button>
+        </form>
+      </div>
     </section>
   )
 }

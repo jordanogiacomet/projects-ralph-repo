@@ -1502,3 +1502,33 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - For proof-social pages, reducing card density and giving logos a framed presentation improves perceived quality more than maximizing logos per row
   - Reusing shared filter primitives (`Chip`) keeps redesign pages visually aligned with the shell without reopening CMS/data-model work
 ---
+## 2026-03-10 16:12 UTC - US-043B
+- **Story:** Repaginação de Conteúdos e detail pages de material
+- **What was implemented:**
+  - Redesigned `/conteudos` into a premium library surface with a stronger dark hero, editorial framing, access-state stats, a featured material treatment, upgraded support cards, and a closing consultive CTA
+  - Rebuilt `/conteudos/[slug]` to balance image, metadata, reading surface, sticky conversion, and onward discovery with a richer material-detail layout instead of the previous thin hero + sidebar structure
+  - Restyled `ContentDownloadPanel` so gated and direct-download states follow the phase-2 design system while preserving the existing lead-capture behavior and `/api/form-submissions` integration
+- **Files changed:**
+  - `src/app/(frontend)/conteudos/page.tsx` — redesigned conteúdos hub hero, library framing, featured card, supporting card grid, and closing CTA
+  - `src/app/(frontend)/conteudos/[slug]/page.tsx` — redesigned material detail hero, metadata surfaces, rich-content rendering, sticky conversion column, and related-materials section
+  - `src/components/ContentDownloadPanel.tsx` — repaginated gated/direct download panel states with shared UI primitives
+  - `prd.json` — marked `US-043B` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The phase-1 conteúdos pages were functional, but they still read like simple download listings rather than a premium material library
+  - This pass pushes the template toward the active phase-2 language: darker editorial hero, clearer metadata, stronger card hierarchy, more deliberate surfaces, and a better-resolved download CTA
+  - The detail page now treats conversion as part of the editorial composition instead of a detached utility box
+- **Affected shared components:** `ContentDownloadPanel` was upgraded and now reuses the shared `Badge`, `Button`, `Container`, `Input`, and `SectionHeading` primitives more consistently
+- **Responsive impact:** The hub now scales from stacked mobile cards to a featured-plus-grid library layout on larger screens, and the detail page keeps the conversion panel stacked on small screens before switching to a sticky sidebar on desktop
+- **Accessibility impact:** Preserved semantic headings, visible form labeling, keyboard-accessible links/buttons, readable contrast across dark/light sections, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/conteudos` and `/conteudos/[slug]` across desktop/tablet/mobile, including hero spacing, card density, sticky-sidebar behavior, and gated-download interaction
+- **Learnings for future iterations:**
+  - Material-library pages feel more premium when one item gets a featured treatment and the remaining assets shift into a lighter support grid instead of a flat repeated card wall
+  - Even without extra CMS fields, content detail pages can feel substantially more editorial by surfacing derived metadata (format/access/update state) alongside the existing image, description, and CTA
+---

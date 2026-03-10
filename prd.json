@@ -1084,7 +1084,7 @@
       "phase": "phase-2-redesign",
       "stream": "content-and-proof",
       "title": "Repaginação de Conteúdos e detail pages de material",
-      "passes": false,
+      "passes": true,
       "description": "Atualizar hub de conteúdos e páginas de material para biblioteca mais premium.",
       "acceptanceCriteria": [
         "Página de Conteúdos parece biblioteca de materiais de valor com cards mais fortes e CTA de download bem resolvida",
