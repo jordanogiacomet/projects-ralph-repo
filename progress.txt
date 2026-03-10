@@ -1,42 +1,143 @@
 # Ralph Progress Log
 Started: Mon Mar  9 09:19:04 PDT 2026
 ---
+
 ## Codebase Patterns
 - Payload CMS 3.x is integrated into Next.js (not standalone) — config at `src/payload.config.ts`
 - Frontend routes live in `src/app/(frontend)/`, Payload admin/API in `src/app/(payload)/`
 - Use `@payload-config` path alias to import payload config
 - Use `@/*` path alias for src imports
-- Tailwind design tokens: accent (#0056A6), bg-dark-section (#1A1A2E), cta-green (#28A745)
 - Collections go in `src/collections/`, globals in `src/globals/`, blocks in `src/blocks/`
-- Use `--legacy-peer-deps` for npm install due to Payload/Next.js peer dep conflicts
+- Use `--legacy-peer-deps` for npm install due to Payload/Next.js peer dependency conflicts
 - Next.js version must match Payload peer requirements (currently 15.4.x)
-- Access control helpers at `src/access/index.ts` — use `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
-- Slug auto-generation hook at `src/hooks/formatSlug.ts` — use `formatSlugHook` in field `hooks.beforeValidate`
-- Collection slugs use kebab-case (e.g., `solucao-categories`, `cliente-segmentos`)
+- Access control helpers live at `src/access/index.ts` — use `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
+- Slug auto-generation hook lives at `src/hooks/formatSlug.ts` — use `formatSlugHook` in field `hooks.beforeValidate`
+- Collection slugs use kebab-case (for example `solucao-categories`, `cliente-segmentos`)
 - Block definitions live in `src/blocks/`, exported via `src/blocks/index.ts`
-- BlockRenderer component at `src/components/BlockRenderer.tsx` maps blockType to React components
-- Import all blocks from `@/blocks` barrel export when registering in collections
-- Server/client split for interactive layout components: FooServer.tsx (async, fetches data) + Foo.tsx ('use client', handles state/events)
-- Payload upload relations may be string IDs or objects — always check `typeof field === 'object'` before accessing `.url`
-- When route slugs change, keep a backward-compatible route file that re-exports the canonical page (`export { default, generateMetadata } from '../canonical/page'`)
-- Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
-- Use framer-motion AnimatePresence for enter/exit animations on conditional renders
-- Framer Motion components should gate animation intensity with `useReducedMotion()` and disable drag/transition-heavy behavior for users with reduced-motion preferences
-- Overlay-style UI (mobile menu/search) should trap focus with Tab/Shift+Tab and close on Escape while open
-- Frontend typography is loaded via `next/font/google` in `src/app/(frontend)/layout.tsx`; Tailwind `font-sans` maps to CSS variables (`--font-inter`, `--font-open-sans`)
+- `BlockRenderer` at `src/components/BlockRenderer.tsx` maps `blockType` to React components
+- Import blocks from the `@/blocks` barrel export when registering blocks in collections
+- Interactive layout components use a server/client split: `FooServer.tsx` fetches data, `Foo.tsx` handles state/events
+- Payload upload relations may resolve as string IDs or populated objects — always guard `typeof field === 'object'` before accessing nested properties such as `.url`
+- When route slugs change, keep a backward-compatible route file that re-exports the canonical page using `export { default, generateMetadata } from '../canonical/page'`
+- Social icons are inline SVGs in `SocialLinks.tsx` — no icon library is required
+- Use `AnimatePresence` for conditional enter/exit animation surfaces
+- Framer Motion surfaces should gate animation intensity with `useReducedMotion()` and disable drag/transition-heavy behavior for users with reduced-motion preferences
+- Overlay-style UI (mobile menu, search) should trap focus with Tab/Shift+Tab and close on Escape while open
+- Frontend typography is loaded via `next/font/google` in `src/app/(frontend)/layout.tsx`
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
-- Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
-- Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
-- Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` and extra context fields in `data` (for example `origem`, `conteudoSlug`) before releasing protected files
-- Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'` before reading `name`/`email`
-- Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang` (`pt-BR`), Open Graph, Twitter Card, and icon tags consistent with global fallbacks
-- Public site origin resolution should prefer `NEXT_PUBLIC_SERVER_URL` and fallback to `NEXT_PUBLIC_SITE_URL` for backward compatibility across SEO/news rendering
-- Structured data scripts are emitted with `JsonLd` (`src/components/JsonLd.tsx`) and schema builders in `src/lib/seo.ts` (Organization, LocalBusiness, BreadcrumbList, Article)
-- Search engine discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`; include both static paths and CMS-driven slugs with safe fallbacks when Payload is unavailable
-- Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep the response grouped by collection type (`pages`, `posts`, `solucoes`, `conteudos`) so the UI can render typed sections without extra client-side joins
-- Payload CLI `run` imports scripts and exits when module import resolves, so async seed scripts should use top-level `await` to guarantee completion
-- Nested Payload array fields in Postgres should avoid reusing the same field name at consecutive levels (`children -> children`), otherwise relation names can collide during global reads
+- Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `Footer`
+- Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`
+- Until binary upload persistence is defined, file fields should store validated metadata in `data`
+- Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` plus extra context fields in `data`
+- Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'`
+- Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang`, Open Graph, Twitter Card, and icon tags consistent
+- Public site origin resolution should prefer `NEXT_PUBLIC_SERVER_URL` and fall back to `NEXT_PUBLIC_SITE_URL`
+- Structured data scripts are emitted with `JsonLd` in `src/components/JsonLd.tsx` and schema builders in `src/lib/seo.ts`
+- Search discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`
+- Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep grouped responses by collection type (`pages`, `posts`, `solucoes`, `conteudos`)
+- Payload CLI `run` imports scripts and exits when module import resolves, so async seed scripts should use top-level `await`
+- Nested Payload array fields in Postgres should avoid reusing the same field name at consecutive levels (`children -> children`) to prevent relation-name collisions
+- Phase-2 design tokens and aliases live in `src/styles/tokens.css` and `src/styles/utilities.css`
+- Shared UI primitives live in `src/components/ui/` and should be preferred over one-off control styling when the same visual pattern appears in multiple templates
+- Shared shell navigation normalization lives in `src/lib/navigation.ts` and should be reused anywhere header/footer navigation needs the same resilient Payload + fallback structure
+- Redesign work should prefer front-end evolution over CMS schema changes unless there is clear editorial-governance value
+- Payload-inspired visual language must be translated to Apollo’s institutional context; do not drift into a literal SaaS clone of Payload
+- The header is functional but is not final merely because it works; current redesign backlog explicitly requires continued shell refinement
 
+## Project Snapshot
+- Project: `apollo-gestao-website`
+- Expected branch from current PRD: `main`
+- PRD version expected with this progress file: `3.2`
+- PRD status: `phase-2-redesign-in-progress`
+- Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
+- Frontend app area: `src/app/(frontend)/`
+- Payload admin/API area: `src/app/(payload)/`
+- Shared UI layer: `src/components/ui/`
+- Design token layer: `src/styles/tokens.css`, `src/styles/utilities.css`
+- SEO/search layer: `src/lib/seo.ts`, `src/app/api/search/route.ts`
+- Seed script: `src/seed.ts`
+
+## PRD Sync Notes
+- Current story order must follow prd.json (v3.2).
+- PRD v3.2 reordered phase-2 priorities: homepage (US-040A/B/C) → clientes/conteúdos/news (US-043A/B/C) → formulários (US-044A/B/C) → soluções (US-041A/B/C, US-042A/B).
+- Phase-2 completed stories: US-038, US-039A, US-039B, US-039C — all passes: true.
+- The older log entry `US-039` predates the split into US-039A/B/C; treat as historical context only.
+- Next story to execute: US-040A — first passes: false in the new priority order.
+- US-040A dependencies (US-038, US-039A) are satisfied.
+
+## Current Delivery Status
+- Phase 1 functional foundation is implemented:
+  - CMS schema and globals
+  - layout blocks
+  - global shell
+  - homepage
+  - sobre
+  - soluções hub/category/detail pages
+  - clientes
+  - contato/cotação/representante
+  - conteúdos
+  - news
+  - SEO/search/sitemap/robots
+  - seed
+  - deploy/docs baseline
+- Phase 2 groundwork already present in the repo:
+  - design-system tokens and utility layer
+  - shared UI primitives
+  - shell navigation normalization
+  - first redesign pass on header/shell components
+- Current redesign work should now continue incrementally from the active PRD v3.1 backlog.
+
+## Validation Rules
+- Practical validation order in this repository:
+  - `npm run lint`
+  - `npx tsc --noEmit`
+  - `npm run build`
+- `npm run typecheck` is not defined unless explicitly added later
+- `npm run test` is not defined unless explicitly added later
+- In this repository, `npx tsc --noEmit` is the practical type-check gate
+- In this repository, `npm run build` is the practical integration/build gate
+- If `.next/types` is missing and `npx tsc --noEmit` fails because of that, rerun type validation after a successful Next build path
+- If plain `npm run build` is flaky in the sandbox, `npx next build --debug` may be used as a diagnostic fallback, but the result must be logged precisely
+- Manual browser QA is still required for UI stories when browser tooling is unavailable
+
+## Active Risks / Known Issues
+- Sandbox/static builds may log Postgres connectivity errors during static generation even when build exits successfully; distinguish runtime log noise from actual build failure
+- Plain `npm run build` may intermittently fail in the sandbox with transient Next.js worker/module/page-resolution issues; record retries or `--debug` runs clearly
+- Mobile and tablet experience must not be treated as a late adaptation pass during redesign work
+- There is risk of mixing old phase-1 visual language and new phase-2 visual language for too long; redesign stories should aim for coherent template-level upgrades, not isolated decorative tweaks
+- There is risk of drifting into a literal Payload clone; redesign decisions must preserve Apollo’s institutional tone and commercial structure
+- Do not reopen CMS modeling just to solve purely visual problems unless editorial governance clearly improves
+
+## Phase-2 Redesign Guardrails
+- Modernize without decharacterizing Apollo
+- Preserve institutional seriousness with more mature execution
+- Increase whitespace and reduce visual noise
+- Make cards, grids, filters, overlays, and forms feel more premium
+- Use motion as refinement, not spectacle
+- Keep the site consultive, technical, and commercially clear
+- Keep SEO, accessibility, keyboard navigation, reduced motion, and route integrity intact
+- Prefer design-system and template evolution over CMS remodeling
+- Every redesign entry should record:
+  - files changed
+  - visual rationale summary
+  - affected shared components
+  - responsive impact
+  - accessibility impact
+  - pending manual QA
+
+## Progress Entry Format
+- Always append; never replace historical entries
+- Use this format for each new entry:
+
+## [Date/Time] - [Story ID]
+- What was implemented
+- Files changed
+- Quality checks run and results
+- Browser/manual verification status
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Gotchas encountered
+  - Useful context
 ---
 
 ## 2026-03-09 - US-001
@@ -1225,4 +1326,26 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Public-facing shell copy should stay institutional and user-facing; avoid leaking internal redesign/system terminology into footer labels or CTA copy.
   - Useful context
   - Footer hierarchy reads lighter when contact, units, social, and navigation are split into distinct layers instead of one dense all-in-one panel.
+---
+
+## 2026-03-10 - US-039A (re-validation)
+- What was implemented
+- US-039A was previously implemented (commit 6fd44e8) but prd.json was reset to passes: false during PRD v3.2 restructuring. Re-evaluated current codebase against acceptance criteria.
+- All 7 acceptance criteria verified as satisfied in the current code:
+  - Header critically revised: Full redesign in Navbar.tsx with sophisticated state management, backdrop blur, gradient surfaces
+  - Cleaner hierarchical composition: Four-zone layout (logo | nav | utilities | CTA) with clear visual separation
+  - More whitespace: Rounded pill containers, progressive spacing, gradient backgrounds
+  - CTA prominence: Green success variant with trailing icon, elevated shadow, separate positioning
+  - Payload-inspired visual language: Rounded modular design, color subtlety, micro-interactions adapted to Apollo institutional context
+  - Search/social isolation: Separate utilities container, social hidden until 2xl, search opens as overlay
+  - Responsive and accessible: Full breakpoint coverage, ARIA labels, keyboard nav, focus management, reduced-motion support
+- Files verified: Navbar.tsx, NavbarServer.tsx, MegaMenu.tsx, MobileMenu.tsx, SearchOverlay.tsx, SocialLinks.tsx, tokens.css, utilities.css, Button.tsx
+- Quality checks run and results
+  - npm run lint: passed (only warning: unused eslint-disable in payload-types.ts)
+  - npx tsc --noEmit: passed
+  - npm run build: passed
+- Browser/manual verification status
+  - Browser tooling unavailable; manual QA still required for transparent nav on hero, mega-menu keyboard nav, mobile menu transitions, search overlay tab trapping
+- **Learnings for future iterations:**
+  - When PRD is restructured (version bump), story passes flags may be reset even if implementation exists; always re-validate current code state
 ---

@@ -1,8 +1,8 @@
 {
   "projectName": "apollo-gestao-website",
   "branchName": "main",
-  "version": "3.1",
-  "status": "phase-1-complete-phase-2-redesign-planned-v3-payload-inspired",
+  "version": "3.2",
+  "status": "phase-2-redesign-in-progress",
   "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. Toda a camada pública do front deve carregar uma pegada visual inspirada no site do Payload CMS em termos de clareza, navegação, hero, CTAs, espaçamento, hierarquia tipográfica, polimento de interface e sensação de produto moderno — sem copiar literalmente sua IA, sua estrutura comercial ou sua identidade de marca. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
   "productVision": {
     "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna, consultiva e claramente inspirada na linguagem visual do ecossistema Payload.",
@@ -12,14 +12,15 @@
   },
   "projectStrategy": {
     "phase1": "Reconstrução funcional e estrutural baseada no site anterior, com CMS, rotas, conteúdo, SEO, formulários e arquitetura já implementados.",
-    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos.",
+    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos. Prioridade: homepage, prova social e conteúdo editorial, formulários e contato, depois soluções.",
     "phase3": "Hardening operacional posterior, incluindo automação de testes, CI/CD mais robusto, operação de formulários, observabilidade e evidências formais de performance/acessibilidade, quando entrar no backlog.",
     "visualPositioning": "Não perseguir clone visual do WordPress. Usar o site anterior apenas como referência de conteúdo, estrutura, hierarquia institucional e repertório comercial.",
-    "payloadInspirationRule": "Todo o site público deve assumir explicitamente uma pegada visual inspirada no site do Payload CMS. Essa inspiração deve aparecer em header, hero, grids, cards, filtros, CTAs, listagens, detalhes editoriais e fluxos de formulário, principalmente em clareza, composição, espaçamento, hierarquia e acabamento premium.",
+    "payloadInspirationRule": "Todo o site público deve assumir explicitamente uma pegada visual inspirada no site do Payload CMS. Essa inspiração deve aparecer em header, hero, grids, cards, filtros, CTAs, listagens, páginas editoriais, formulários e acabamento de componentes, principalmente em clareza, composição, espaçamento, hierarquia e acabamento premium.",
     "implementationRule": "Stories já concluídas permanecem como base funcional entregue. O redesign deve acontecer por meio de novas histórias incrementais, sem apagar o histórico técnico da fase anterior.",
     "nonBreakingRule": "A fase 2 deve preferir evolução incremental da base existente. Alterações de modelagem CMS só devem ocorrer se houver ganho claro de governança editorial ou de qualidade visual impossível de atingir apenas no front.",
     "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global.",
-    "headerRedesignRule": "O header deve ser explicitamente revisto na fase 2. A versão atual não deve ser tratada como definitiva apenas por estar funcional. A navegação principal deve evoluir para uma linguagem mais premium, limpa e confiante, com inspiração no estilo do site do Payload em termos de clareza, espaçamento, hierarquia, CTA e acabamento visual — sem copiar sua arquitetura de informação literalmente.",
+    "headerRedesignRule": "O header foi revisado na fase 2 (US-039A/B/C). As próximas stories devem referenciar e manter consistência com o shell já repaginado.",
+    "priorityRule": "Na fase 2, a ordem de prioridade é: (1) homepage como vitrine institucional, (2) prova social e conteúdo editorial — clientes, conteúdos e news, (3) formulários e fluxos de contato, (4) hubs e detalhes de soluções, (5) polish global. Stories de soluções não devem bloquear nem atrasar as demais.",
     "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS."
   },
   "contentAndCMSStrategy": {
@@ -93,6 +94,12 @@
       "US-036",
       "US-037"
     ],
+    "phase2CompletedStories": [
+      "US-038",
+      "US-039A",
+      "US-039B",
+      "US-039C"
+    ],
     "phase2RecommendedOrder": [
       "US-038",
       "US-039A",
@@ -101,20 +108,20 @@
       "US-040A",
       "US-040B",
       "US-040C",
-      "US-041A",
-      "US-041B",
-      "US-041C",
-      "US-042A",
-      "US-042B",
       "US-043A",
       "US-043B",
       "US-043C",
       "US-044A",
       "US-044B",
       "US-044C",
+      "US-041A",
+      "US-041B",
+      "US-041C",
+      "US-042A",
+      "US-042B",
       "US-045"
     ],
-    "phase2Logic": "Primeiro consolidar design system e direção visual Payload-inspired, depois shell global, depois homepage, depois hubs e detalhes, depois templates editoriais e formulários, e por fim polish global."
+    "phase2Logic": "Primeiro consolidar design system e shell global (US-038, US-039A/B/C — já concluídos), depois homepage como vitrine institucional principal (US-040A/B/C), depois prova social e conteúdo editorial (US-043A/B/C), depois formulários e fluxos de contato (US-044A/B/C), depois hubs e detalhes de soluções (US-041A/B/C, US-042A/B), e por fim polish global (US-045)."
   },
   "storyDependencies": {
     "US-039A": [
@@ -142,30 +149,6 @@
       "US-040A",
       "US-040B"
     ],
-    "US-041A": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-041B": [
-      "US-038",
-      "US-039A",
-      "US-041A"
-    ],
-    "US-041C": [
-      "US-038",
-      "US-039A",
-      "US-041A"
-    ],
-    "US-042A": [
-      "US-038",
-      "US-039A",
-      "US-041A"
-    ],
-    "US-042B": [
-      "US-038",
-      "US-039A",
-      "US-042A"
-    ],
     "US-043A": [
       "US-038",
       "US-039A"
@@ -191,6 +174,34 @@
       "US-038",
       "US-039A",
       "US-044A"
+    ],
+    "US-041A": [
+      "US-038",
+      "US-039A",
+      "US-040A"
+    ],
+    "US-041B": [
+      "US-038",
+      "US-039A",
+      "US-040A",
+      "US-041A"
+    ],
+    "US-041C": [
+      "US-038",
+      "US-039A",
+      "US-040A",
+      "US-041A"
+    ],
+    "US-042A": [
+      "US-038",
+      "US-039A",
+      "US-040A",
+      "US-041A"
+    ],
+    "US-042B": [
+      "US-038",
+      "US-039A",
+      "US-042A"
     ],
     "US-045": [
       "US-038",
@@ -219,7 +230,8 @@
       "Nenhuma story de redesign deve quebrar conteúdo ou rotas existentes",
       "Acessibilidade, keyboard navigation e reduced motion devem ser preservados",
       "Todas as alterações visuais relevantes devem ser verificadas em desktop, tablet e mobile",
-      "Toda implementação de redesign deve ser avaliada contra a diretriz de pegada visual Payload-inspired"
+      "Toda implementação de redesign deve ser avaliada contra a diretriz de pegada visual Payload-inspired",
+      "O shell repaginado em US-039A/B/C deve ser referência de linguagem para todas as stories seguintes"
     ],
     "perStoryEvidence": [
       "Lista de arquivos alterados",
@@ -230,7 +242,7 @@
     ]
   },
   "techStack": [
-    "Next.js 14+ (App Router)",
+    "Next.js 15.4.x (App Router)",
     "TypeScript",
     "Payload CMS 3.x",
     "PostgreSQL",
@@ -251,6 +263,7 @@
       "sóbrio"
     ],
     "siteWidePayloadPegada": "Todo o front público deve carregar uma sensação visual próxima ao que o Payload comunica: clareza, produto maduro, interface limpa, conteúdo bem respirado, CTA forte, tipografia firme e navegação premium.",
+    "shellReference": "O shell global (navbar, mega menu, mobile menu, search overlay, footer, floats) foi repaginado em US-039A/B/C e serve como referência visual base para todos os templates seguintes. Stories de redesign devem garantir coerência com esse shell.",
     "payloadInspiredLanguage": {
       "primaryInspiration": "Payload official website",
       "inspirationUse": "Usar como referência de linguagem visual para todo o site, especialmente header, hero, CTAs, grids, listagens, páginas editoriais, formulários e acabamento de componentes.",
@@ -349,7 +362,7 @@
       "buttons": "Botões com geometria precisa, padding generoso, estados hover/focus refinados e contraste alto. O CTA principal deve ter presença visual forte, mas sem parecer agressivo.",
       "cards": "Cards mais premium, com superfícies limpas, bordas sutis, sombra suave e hover discreto. Evitar aparência genérica de card branco quadrado com ícone.",
       "forms": "Formulários mais elegantes, com campos espaçosos, labels claras, estados de foco fortes e agrupamento visual coerente.",
-      "navigation": "Navbar e mega menu devem parecer parte de um sistema premium, e não apenas uma camada funcional sobre o conteúdo.",
+      "navigation": "Navbar e mega menu foram repaginados em US-039A/B. Novos templates devem respeitar e reforçar essa linguagem.",
       "filters": "Tabs e chips de filtro devem parecer controles modernos de interface, com estados ativo, hover e contagem bem resolvidos."
     },
     "motionLanguage": {
@@ -389,7 +402,7 @@
       "Fazer o site parecer mais consultivo, técnico e contemporâneo",
       "Usar motion como acabamento de produto, não como distração",
       "Garantir consistência entre homepage, hubs, páginas internas, formulários e conteúdo editorial",
-      "Garantir que a pegada visual inspirada no Payload seja perceptível em todo o site, e não apenas no header"
+      "Garantir que a pegada visual inspirada no Payload seja perceptível em todo o site público, incluindo header, homepage, hubs, detalhes, conteúdo e formulários"
     ]
   },
   "folderStructure": {
@@ -432,18 +445,18 @@
       "SiteSettings.ts — WhatsApp number, cookie text, analytics ID, SEO defaults"
     ],
     "src/blocks/": [
-      "HeroBlock.ts — Hero fullscreen com título, subtítulo e imagem de fundo",
-      "RichContentBlock.ts — Bloco de conteúdo rico (rich text editor)",
-      "ServiceCardsBlock.ts — Grid de cards de serviço com ícone + título + link",
-      "CTABlock.ts — Bloco de call-to-action com botão",
-      "AccordionBlock.ts — Bloco de FAQ/acordeão expansível",
-      "TestimonialsBlock.ts — Bloco de depoimentos (futuro)",
-      "StatsBlock.ts — Bloco de números/estatísticas",
-      "ContactFormBlock.ts — Formulário de contato embutido",
-      "ImageTextBlock.ts — Imagem + texto lado a lado",
-      "ClientLogosBlock.ts — Grid de logos de clientes",
-      "VideoBlock.ts — Embed de vídeo do YouTube",
-      "DownloadBlock.ts — Bloco de download de material (e-book, planilha)"
+      "HeroBlock.ts",
+      "RichContentBlock.ts",
+      "ServiceCardsBlock.ts",
+      "CTABlock.ts",
+      "AccordionBlock.ts",
+      "TestimonialsBlock.ts",
+      "StatsBlock.ts",
+      "ContactFormBlock.ts",
+      "ImageTextBlock.ts",
+      "ClientLogosBlock.ts",
+      "VideoBlock.ts",
+      "DownloadBlock.ts"
     ],
     "src/components/": [
       "Navbar.tsx",
@@ -515,10 +528,12 @@
       "ContactTemplate.tsx"
     ],
     "src/lib/": [
-      "payload.ts — Payload client config",
-      "queries.ts — Funções de fetch para collections e globals",
-      "utils.ts — Helpers gerais",
-      "constants.ts — Constantes do projeto (social links, unidades, etc.)"
+      "payload.ts",
+      "queries.ts",
+      "utils.ts",
+      "constants.ts",
+      "navigation.ts",
+      "seo.ts"
     ],
     "src/styles/": [
       "tokens.css — Tokens visuais e aliases de cor/spacing/shadow/radius",
@@ -526,59 +541,59 @@
       "payload-inspired.css — regras globais de acabamento visual para o redesign"
     ],
     "public/": [
-      "images/ — Imagens estáticas (logos, ícones de soluções)",
-      "fonts/ — Fontes locais se necessário"
+      "images/",
+      "fonts/"
     ]
   },
   "payloadCollections": {
     "Pages": {
-      "description": "Páginas estáticas e dinâmicas do site (Home, Sobre, Contato, etc.)",
+      "description": "Páginas estáticas e dinâmicas do site",
       "fields": {
-        "title": "text (required) — Título da página",
-        "slug": "text (unique, auto-generated) — Slug da URL",
-        "heroType": "select [fullscreen, banner, none] — Tipo de hero da página",
-        "heroTitle": "richText — Título do hero com suporte a bold/destaque",
-        "heroSubtitle": "text — Subtítulo do hero",
-        "heroImage": "upload (Media) — Imagem de fundo do hero",
-        "heroCTALabel": "text — Texto do botão CTA no hero",
-        "heroCTALink": "text — Link do botão CTA",
-        "layout": "blocks[] — Array de blocos de conteúdo (layout builder)",
-        "parent": "relationship (Pages) — Página pai para URLs aninhadas",
-        "showContactForm": "checkbox — Exibir formulário de contato na seção do footer",
-        "meta": "group { title: text, description: textarea, image: upload } — SEO"
+        "title": "text (required)",
+        "slug": "text (unique, auto-generated)",
+        "heroType": "select [fullscreen, banner, none]",
+        "heroTitle": "richText",
+        "heroSubtitle": "text",
+        "heroImage": "upload (Media)",
+        "heroCTALabel": "text",
+        "heroCTALink": "text",
+        "layout": "blocks[]",
+        "parent": "relationship (Pages)",
+        "showContactForm": "checkbox",
+        "meta": "group { title, description, image }"
       }
     },
     "Posts": {
-      "description": "Artigos do blog/news. Estrutura vazia inicial, sem migração do WordPress.",
+      "description": "Artigos do blog/news",
       "fields": {
-        "title": "text (required) — Título do post",
-        "slug": "text (unique) — Slug para URL",
-        "excerpt": "textarea — Resumo para listagem e SEO",
-        "featuredImage": "upload (Media) — Imagem destacada",
-        "content": "richText — Conteúdo completo do artigo (Lexical editor)",
-        "categories": "relationship[] (PostCategories) — Categorias",
-        "author": "text — Nome do autor",
-        "publishedAt": "date — Data de publicação",
-        "status": "select [draft, published] — Status de publicação",
-        "meta": "group { title, description, image } — SEO"
+        "title": "text (required)",
+        "slug": "text (unique)",
+        "excerpt": "textarea",
+        "featuredImage": "upload (Media)",
+        "content": "richText",
+        "categories": "relationship[]",
+        "author": "text",
+        "publishedAt": "date",
+        "status": "select [draft, published]",
+        "meta": "group { title, description, image }"
       }
     },
     "Solucoes": {
-      "description": "Serviços/soluções oferecidos pela Apollo Gestão. Total de 14 serviços em 3 categorias.",
+      "description": "14 serviços em 3 categorias",
       "fields": {
-        "title": "text (required) — Nome da solução",
-        "slug": "text (unique) — Slug para URL",
-        "icon": "upload (Media) — Ícone ilustrativo (PNG/SVG)",
-        "shortDescription": "textarea — Descrição curta para cards no grid",
-        "content": "richText/blocks — Conteúdo completo da página de solução",
-        "category": "relationship (SolucaoCategories) — Categoria pai",
-        "tags": "relationship[] (SolucaoTags) — Tags para filtro no grid de soluções",
-        "order": "number — Ordem de exibição no grid",
-        "meta": "group { title, description, image } — SEO"
+        "title": "text (required)",
+        "slug": "text (unique)",
+        "icon": "upload (Media)",
+        "shortDescription": "textarea",
+        "content": "richText/blocks",
+        "category": "relationship (SolucaoCategories)",
+        "tags": "relationship[]",
+        "order": "number",
+        "meta": "group { title, description, image }"
       }
     },
     "SolucaoCategories": {
-      "description": "Categorias de soluções: Controle Patrimonial, Consultoria e Tecnologia, Avaliação Patrimonial",
+      "description": "3 categorias de soluções",
       "fields": {
         "title": "text (required)",
         "slug": "text (unique)",
@@ -589,88 +604,44 @@
       }
     },
     "Clientes": {
-      "description": "Logos e dados dos clientes da Apollo. Atualmente ~130+ clientes no site.",
+      "description": "Logos e dados dos clientes",
       "fields": {
-        "name": "text (required) — Nome do cliente",
-        "logo": "upload (Media) — Logo do cliente",
-        "segmento": "relationship (ClienteSegmentos) — Segmento de atuação",
-        "website": "text — URL do site do cliente (opcional)",
-        "order": "number — Ordem de exibição"
+        "name": "text (required)",
+        "logo": "upload (Media)",
+        "segmento": "relationship (ClienteSegmentos)",
+        "website": "text",
+        "order": "number"
       }
     },
     "ClienteSegmentos": {
-      "description": "Segmentos de atuação dos clientes para filtro (Agrícola, Alimentação, Tecnologia, etc.)",
+      "description": "32 segmentos de atuação",
       "fields": {
-        "title": "text (required) — Nome do segmento",
+        "title": "text (required)",
         "slug": "text (unique)"
-      },
-      "seedData": [
-        "Agência",
-        "Agrícola",
-        "Alimentação",
-        "Armas e Acessórios",
-        "Autopeças",
-        "Cerâmica",
-        "Combustível",
-        "Construção",
-        "Educação",
-        "Eletrodomésticos",
-        "Eletrônicos",
-        "Energia",
-        "Esportes",
-        "Eventos",
-        "Governo",
-        "Hotel",
-        "Implementos Agrícolas",
-        "Logística",
-        "Metalurgia",
-        "Móveis",
-        "Papel e Celulose",
-        "Polímeros",
-        "Químicos",
-        "Rodovias",
-        "Saúde",
-        "Serviços Financeiros",
-        "Tecnologia",
-        "Transporte",
-        "Utensílios Domésticos",
-        "Varejo",
-        "Vestuário",
-        "Vidros"
-      ]
+      }
     },
     "Conteudos": {
-      "description": "Materiais para download (e-books, planilhas, guias).",
+      "description": "Materiais para download",
       "fields": {
         "title": "text (required)",
         "slug": "text (unique)",
         "description": "textarea",
         "featuredImage": "upload (Media)",
-        "downloadFile": "upload (Media) — Arquivo para download (PDF, XLSX)",
-        "requiresEmail": "checkbox — Exigir e-mail para download (lead capture)",
-        "content": "richText — Descrição completa / landing page do material",
-        "meta": "group { title, description, image } — SEO"
-      },
-      "initialItems": [
-        {
-          "title": "[EBOOK Gratuito] Guia da Identificação Patrimonial",
-          "slug": "ebook-identificacao-patrimonial"
-        },
-        {
-          "title": "Planilha de Cálculo da Vida Útil de Imobilizado – CPC 27",
-          "slug": "planilha-de-calculo-da-vida-util-de-imobilizado-cpc-27"
-        }
-      ]
+        "downloadFile": "upload (Media)",
+        "requiresEmail": "checkbox",
+        "content": "richText",
+        "meta": "group { title, description, image }"
+      }
     },
     "Media": {
-      "description": "Uploads de imagens e arquivos para todo o site.",
+      "description": "Uploads de imagens e arquivos",
       "fields": {
-        "alt": "text — Texto alternativo para acessibilidade",
-        "caption": "text — Legenda opcional"
+        "alt": "text",
+        "caption": "text"
       }
     },
     "Users": {
-      "description": "Usuários do painel admin do Payload.",
+      "description": "Usuários do admin",
       "fields": {
         "email": "email (required)",
         "name": "text",
@@ -678,16 +649,16 @@
       }
     },
     "FormSubmissions": {
-      "description": "Registros de envios de formulários (contato, cotação, representante). Abordagem de envio a definir posteriormente.",
+      "description": "Envios de formulários",
       "fields": {
         "formType": "select [contato, cotacao, representante, newsletter]",
-        "data": "json — Dados do formulário",
+        "data": "json",
         "submittedAt": "date",
         "status": "select [new, read, replied]"
       }
     },
     "NewsletterSubscribers": {
-      "description": "E-mails cadastrados na newsletter (seção News).",
+      "description": "E-mails de newsletter",
       "fields": {
         "email": "email (required, unique)",
         "subscribedAt": "date"
@@ -697,27 +668,27 @@
   "payloadGlobals": {
     "Header": {
       "fields": {
-        "logo": "upload (Media) — Logo principal (colorido)",
-        "logoNegativo": "upload (Media) — Logo negativo (para hero escuro)",
-        "navItems": "array [{ label: text, link: text, children: array [{ label, link, children }] }]",
-        "ctaButton": "group { label: text, link: text }",
-        "socialLinks": "array [{ platform: select, url: text }]"
+        "logo": "upload (Media)",
+        "logoNegativo": "upload (Media)",
+        "navItems": "array [{ label, link, children }]",
+        "ctaButton": "group { label, link }",
+        "socialLinks": "array [{ platform, url }]"
       }
     },
     "Footer": {
       "fields": {
-        "unidades": "array [{ name: text, phone: text, email: email, address: richText }]",
+        "unidades": "array [{ name, phone, email, address }]",
         "copyrightText": "text",
-        "socialLinks": "array [{ platform: select, url: text }]"
+        "socialLinks": "array [{ platform, url }]"
       }
     },
     "SiteSettings": {
       "fields": {
-        "whatsappNumber": "text — Número do WhatsApp com DDI",
-        "whatsappMessage": "text — Mensagem padrão do WhatsApp",
-        "cookieConsentText": "richText — Texto do banner de cookies",
-        "defaultMeta": "group { title, description, image } — SEO padrão",
-        "analyticsId": "text — ID do Google Analytics ou similar",
+        "whatsappNumber": "text",
+        "whatsappMessage": "text",
+        "cookieConsentText": "richText",
+        "defaultMeta": "group { title, description, image }",
+        "analyticsId": "text",
         "maintenanceMode": "checkbox"
       }
     }
@@ -728,682 +699,259 @@
       "phase": "phase-1-foundation",
       "stream": "foundation",
       "title": "Setup do projeto Next.js + Payload CMS",
-      "passes": true,
-      "description": "Configurar o projeto base com Next.js 14+ (App Router), Payload CMS 3.x integrado, TypeScript, Tailwind CSS, PostgreSQL e estrutura de diretórios.",
-      "acceptanceCriteria": [
-        "Projeto base criado com scaffold compatível (CLI ou setup manual) para Next.js + Payload integrado",
-        "Next.js 14+ com App Router configurado e rodando",
-        "Payload CMS 3.x integrado ao Next.js (não standalone)",
-        "PostgreSQL configurado como database adapter via @payloadcms/db-postgres",
-        "TypeScript strict mode habilitado",
-        "Tailwind CSS 3.x instalado e configurado com tokens de cor do design direction (--bg-primary, --accent, etc.)",
-        "Estrutura de pastas criada conforme folderStructure do PRD",
-        "Painel admin do Payload acessível em /admin",
-        "Variáveis de ambiente configuradas: DATABASE_URI, PAYLOAD_SECRET, NEXT_PUBLIC_SERVER_URL",
-        "ESLint e Prettier configurados",
-        "Git inicializado com .gitignore adequado (node_modules, .env, .next, media/)",
-        "Script de seed básico criado (vazio, para uso futuro)",
-        "Build rodando sem erros: npm run build && npm run dev"
-      ]
+      "passes": true
     },
     {
       "id": "US-002",
       "phase": "phase-1-foundation",
       "stream": "cms-modeling",
       "title": "Collections e Globals do Payload CMS",
-      "passes": true,
-      "description": "Criar todas as collections (Pages, Posts, Solucoes, SolucaoCategories, Clientes, ClienteSegmentos, Conteudos, Media, Users, FormSubmissions, NewsletterSubscribers) e globals (Header, Footer, SiteSettings) conforme modelagem do PRD.",
-      "acceptanceCriteria": [
-        "Collection Pages criada com todos os campos: title, slug (auto-generated), heroType, heroTitle (richText), heroSubtitle, heroImage, heroCTALabel, heroCTALink, layout (blocks), parent, showContactForm, meta group",
-        "Collection Posts criada com: title, slug, excerpt, featuredImage, content (Lexical richText), categories, author, publishedAt, status (draft/published), meta group",
-        "Collection Solucoes criada com: title, slug, icon, shortDescription, content, category (relationship), tags, order, meta group",
-        "Collection SolucaoCategories criada com: title, slug, description, heroTitle, heroImage, order",
-        "Collection Clientes criada com: name, logo, segmento (relationship), website, order",
-        "Collection ClienteSegmentos criada com: title, slug. Seed data com os 32 segmentos listados no PRD",
-        "Collection Conteudos criada com: title, slug, description, featuredImage, downloadFile, requiresEmail, content, meta group",
-        "Collection Media com campos alt e caption, configurada para uploads de imagem e arquivo",
-        "Collection Users com auth habilitada, campos email, name, role (admin/editor)",
-        "Collection FormSubmissions com: formType, data (json), submittedAt, status",
-        "Collection NewsletterSubscribers com: email (unique), subscribedAt",
-        "Global Header com: logo, logoNegativo, navItems (nested array), ctaButton, socialLinks",
-        "Global Footer com: unidades (array), copyrightText, socialLinks",
-        "Global SiteSettings com: whatsappNumber, whatsappMessage, cookieConsentText, defaultMeta, analyticsId, maintenanceMode",
-        "Todas as collections acessíveis e funcionais no painel admin /admin",
-        "Access control básico: admin full access, editor pode criar/editar Posts e Solucoes",
-        "Hooks de auto-generate slug a partir do title em Pages, Posts, Solucoes, Conteudos"
-      ]
+      "passes": true
     },
     {
       "id": "US-003",
       "phase": "phase-1-foundation",
       "stream": "cms-layout-builder",
       "title": "Blocos de layout (Payload Blocks)",
-      "passes": true,
-      "description": "Criar todos os blocos reutilizáveis de conteúdo que serão usados no campo layout das Pages e em outras collections.",
-      "acceptanceCriteria": [
-        "HeroBlock criado com campos: title (richText), subtitle (text), backgroundImage (upload), ctaLabel (text), ctaLink (text), overlayOpacity (number)",
-        "RichContentBlock criado com: content (richText Lexical)",
-        "ServiceCardsBlock criado com: heading (text), cards (array [{ icon: upload, title: text, description: textarea, link: text }])",
-        "CTABlock criado com: heading (text), description (text), buttonLabel (text), buttonLink (text), variant (select: primary/secondary/outline)",
-        "AccordionBlock criado com: heading (text), items (array [{ question: text, answer: richText }])",
-        "StatsBlock criado com: items (array [{ value: text, label: text }])",
-        "ContactFormBlock criado com: heading (text), description (text), formType (select: contato/cotacao)",
-        "ImageTextBlock criado com: image (upload), content (richText), imagePosition (select: left/right)",
-        "ClientLogosBlock criado com: heading (text), maxItems (number), filterable (checkbox)",
-        "VideoBlock criado com: url (text), caption (text)",
-        "DownloadBlock criado com: heading (text), description (text), file (upload), requiresEmail (checkbox)",
-        "BlockRenderer component criado em src/components/ que renderiza cada bloco por blockType",
-        "Todos os blocos disponíveis no campo layout da collection Pages",
-        "Cada bloco deve estar inserível/editável no admin do Payload; Live Preview é opcional e não bloqueante"
-      ]
+      "passes": true
     },
     {
       "id": "US-004",
       "phase": "phase-1-foundation",
       "stream": "layout-global",
       "title": "Layout global: Navbar com Mega Menu",
-      "passes": true,
-      "description": "Criar o layout principal do site com Navbar fixa, mega menu dropdown de soluções, busca, redes sociais, menu mobile hamburger e versão transparente sobre hero.",
-      "acceptanceCriteria": [
-        "Navbar fixa no topo com z-index alto, ocupando largura total",
-        "Logo Apollo Gestão à esquerda (versão colorida por padrão, versão negativa quando sobre hero escuro)",
-        "Itens de navegação: Cotação (CTA destaque), Soluções (com mega menu), Clientes, Contato (com sub-itens), Sobre, Conteúdos, News, Home",
-        "Mega menu de Soluções com 3 colunas: Controle Patrimonial (4 sub-itens), Consultoria e Tecnologia (6 sub-itens), Avaliação Patrimonial (4 sub-itens)",
-        "Mega menu abre em hover no desktop e em tap no mobile",
-        "Sub-menu de Contato com: Cotação e Representante",
-        "Ícone de busca que abre overlay de pesquisa fullscreen",
-        "Barra de redes sociais (Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X) abaixo ou ao lado da nav",
-        "Navbar transparente com texto branco quando sobre hero fullscreen",
-        "Navbar com fundo branco e backdrop-blur quando rola para baixo (scroll > 50px)",
-        "Menu mobile hamburger com animação de abertura, lista completa de itens com acordeão para sub-menus",
-        "Dados de navegação vindos do Global Header do Payload",
-        "Componentes: Navbar.tsx, MegaMenu.tsx, MobileMenu.tsx, SocialLinks.tsx, SearchOverlay.tsx",
-        "Acessibilidade: aria-labels, keyboard navigation, focus trap no menu mobile",
-        "Responsivo: desktop (mega menu), tablet (dropdown simplificado), mobile (hamburger)"
-      ]
+      "passes": true
     },
     {
       "id": "US-005",
       "phase": "phase-1-foundation",
       "stream": "layout-global",
       "title": "Layout global: Footer com formulário e unidades",
-      "passes": true,
-      "description": "Criar o footer global presente em todas as páginas com formulário de contato, dados das 3 unidades (RS, SC, SP), redes sociais, copyright, scroll-to-top e cookie consent.",
-      "acceptanceCriteria": [
-        "Footer dividido em duas grandes áreas: formulário de contato à esquerda e dados das unidades à direita",
-        "Seção 'Entre em contato' com formulário inline: Nome, E-Mail, Assunto, Mensagem — todos required",
-        "Imagem ilustrativa ao lado do formulário (como no site atual)",
-        "3 blocos de unidade: UNIDADE RS (Caxias do Sul), UNIDADE SC (Joinville), UNIDADE SP (São Paulo) — cada um com telefone, e-mail e endereço completo",
-        "Barra de copyright: '© Copyright - Apollo Gestão Empreendedora - [ano dinâmico]'",
-        "Ícones de redes sociais no footer: Instagram, Facebook, YouTube, WhatsApp, LinkedIn, X",
-        "Botão Scroll-to-top fixo no canto inferior direito, aparece após scroll > 300px",
-        "Cookie consent banner na primeira visita: texto sobre cookies com botões Aceitar/Ocultar/Configurações",
-        "Botão flutuante do WhatsApp (canto inferior direito, acima do scroll-to-top)",
-        "Todos os dados vindos dos Globals Footer e SiteSettings do Payload",
-        "Componentes: Footer.tsx, FooterContactForm.tsx, FooterUnidades.tsx, ScrollToTop.tsx, CookieConsent.tsx, WhatsAppFloat.tsx",
-        "Responsivo: unidades empilham verticalmente no mobile, formulário full-width"
-      ]
+      "passes": true
     },
     {
       "id": "US-006",
       "phase": "phase-1-foundation",
       "stream": "public-pages",
       "title": "Homepage",
-      "passes": true,
-      "description": "Na fase 1, criar a homepage replicando estruturalmente o site anterior: hero fullscreen com título e CTA, 3 cards de serviço (Avaliações, Controle, Consultoria), seção 'Seu parceiro em Gestão Patrimonial', seção 'Quem é a Apollo' com vídeo/imagem e link para Sobre. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero fullscreen (100vh) com imagem de fundo, overlay escuro e scroll-down indicator",
-        "Título do hero com destaque em bold: 'Gerenciamento **inteligente** dos ativos da sua empresa. **Avaliações e Controle Patrimonial** de verdade'",
-        "Subtítulo: 'Daqui para frente **conte** com a **Apollo Gestão**'",
-        "Scroll-down chevron animado na base do hero",
-        "Seção com 3 cards de serviço abaixo do hero: Avaliações Patrimoniais, Controle Patrimonial, Consultoria e Tecnologia — cada um com ícone/imagem, descrição curta e link 'Detalhes'",
-        "Seção 'Seu parceiro em Gestão Patrimonial' com texto descritivo e botão 'Quero um orçamento' linkando para /contato/cotacao",
-        "Seção 'Quem é a Apollo? O que nós fazemos?' com texto descritivo e botão 'Saiba mais...' linkando para /sobre",
-        "Todo conteúdo gerenciável via Payload (Page com layout blocks ou campos específicos de homepage)",
-        "Framer Motion: fade-in nos cards, parallax sutil no hero background",
-        "Responsive: cards empilham no mobile, hero mantém proporção legível"
-      ]
+      "passes": true
     },
     {
       "id": "US-007",
       "phase": "phase-1-foundation",
       "stream": "public-pages",
       "title": "Página Sobre",
-      "passes": true,
-      "description": "Na fase 1, criar a página Sobre com hero, seção de origem/história da empresa e slider Missão/Visão/Valores. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero fullscreen com título: 'Conheça a história da **Apollo Gestão**'",
-        "Subtítulo: 'Se quiser ir rápido, vá sozinho, **se quiser ir longe, vá acompanhado**'",
-        "Seção 'Origem…' com texto sobre a inspiração no Deus Apollo e a expressão GE (Gestão Empreendedora)",
-        "Bloco de citação estilizado com referência à mitologia de Apollo",
-        "Seção 'História…' com texto sobre o propósito e diferencial da empresa",
-        "Slider/Carousel com 3 slides: Missão, Visão, Valores — cada um com título, texto descritivo e imagem de fundo. Navegação por setas e indicadores (dots)",
-        "Seção 'Fique em contato' com botão linkando para /contato",
-        "Conteúdo gerenciável via Payload (Page ou campos dedicados)",
-        "Responsive: slider em fullwidth no mobile com swipe"
-      ]
+      "passes": true
     },
     {
       "id": "US-008",
       "phase": "phase-1-foundation",
       "stream": "solutions",
       "title": "Página Hub de Soluções",
-      "passes": true,
-      "description": "Na fase 1, criar a página /solucoes com listagem filtrada de todas as 14 soluções em grid com ícones e filtro por categoria/tag. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero com título: 'Nós temos a **solução completa** para o gerenciamento de ativos'",
-        "Texto descritivo sobre as soluções da Apollo Gestão",
-        "Grid de 14 cards de solução com: ícone ilustrativo, título e link para a página individual",
-        "Barra de filtros horizontais por tags: Todos (14), Avaliação Patrimonial (4), Controle Patrimonial (4), Consultoria e IFRS (4), Tecnologia (2), etc. — com contadores",
-        "Filtro client-side via React state (sem reload de página)",
-        "Animação de fade ao filtrar (Framer Motion AnimatePresence)",
-        "Cards linkam para /solucoes/[categorySlug]/[solutionSlug]",
-        "Formulário de contato inline abaixo do grid",
-        "Seção 'Fique em contato' acima do footer",
-        "Dados vindos da collection Solucoes do Payload",
-        "Responsive: grid 4 cols desktop, 2 cols tablet, 1 col mobile"
-      ]
+      "passes": true
     },
     {
       "id": "US-009",
       "phase": "phase-1-foundation",
       "stream": "solutions",
       "title": "Página Hub de Categoria — Controle Patrimonial",
-      "passes": true,
-      "description": "Na fase 1, criar a página /solucoes/controle-patrimonial/ com hero específico e grid das 4 soluções da categoria. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero fullscreen com título: 'Nós temos a **solução completa** para o **Controle Patrimonial** da sua empresa'",
-        "Subtítulo sobre oferecer as melhores soluções de forma completa",
-        "Grid de 4 cards: Identificação Patrimonial, Inventário de Estoques, Organização Patrimonial, Processamento Patrimonial — cada um com ícone e link",
-        "Seção 'Fique em contato' com texto sobre Controle Patrimonial e formulário",
-        "Dados vindos da collection SolucaoCategories + Solucoes filtradas",
-        "Responsive: grid 2 cols tablet, 1 col mobile"
-      ]
+      "passes": true
     },
     {
       "id": "US-010",
       "phase": "phase-1-foundation",
       "stream": "solutions",
       "title": "Página Hub de Categoria — Consultoria e Tecnologia",
-      "passes": true,
-      "description": "Na fase 1, criar a página /solucoes/consultoria-e-tecnologia/ com hero específico e grid das 6 soluções da categoria. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero fullscreen com título específico de Consultoria e Tecnologia",
-        "Grid de 6 cards: Teste de Impairment, Revisão da Vida Útil, Ativos Inteligentes RFID/RTLS, Arrendamento Mercantil, Combinação de Negócios, Softwares",
-        "Cada card com ícone ilustrativo, título e link para página individual",
-        "Seção de contato e formulário inline",
-        "Dados do Payload filtrados por categoria",
-        "Responsive: grid 3 cols desktop, 2 cols tablet, 1 col mobile com hero e formulário legíveis em todos os breakpoints"
-      ]
+      "passes": true
     },
     {
       "id": "US-011",
       "phase": "phase-1-foundation",
       "stream": "solutions",
       "title": "Página Hub de Categoria — Avaliação Patrimonial",
-      "passes": true,
-      "description": "Na fase 1, criar a página /solucoes/avaliacao-patrimonial/ com hero específico e grid das 4 soluções da categoria. A fase 2 refina visualmente esse template.",
-      "acceptanceCriteria": [
-        "Hero fullscreen com título específico de Avaliação Patrimonial",
-        "Grid de 4 cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas",
-        "Cada card com ícone, título e link",
-        "Seção de contato e formulário",
-        "Dados do Payload",
-        "Responsive: grid 2 cols tablet, 1 col mobile com hero e formulário legíveis em todos os breakpoints"
-      ]
+      "passes": true
     },
     {
       "id": "US-012",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Organização Patrimonial",
-      "passes": true,
-      "description": "Criar a página /solucoes/controle-patrimonial/organizacao-patrimonial/ com conteúdo detalhado do serviço, breadcrumbs e CTA.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Organização Patrimonial'",
-        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Organização Patrimonial",
-        "Conteúdo rico gerenciável via Payload (richText blocks)",
-        "CTA para cotação: botão 'Solicitar Cotação' linkando para /contato/cotacao",
-        "Links para outras soluções da mesma categoria (navegação lateral ou cards 'Veja também')",
-        "Formulário de contato no footer",
-        "SEO meta tags específicas da solução",
-        "Responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-013",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Controle e Inventário de Estoques",
-      "passes": true,
-      "description": "Criar a página /solucoes/controle-patrimonial/controle-e-inventario-de-estoques/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Controle e Inventário de Estoques'",
-        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Controle e Inventário de Estoques",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-014",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Processamento Patrimonial",
-      "passes": true,
-      "description": "Criar a página /solucoes/controle-patrimonial/processamento-patrimonial/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Processamento Patrimonial'",
-        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Processamento Patrimonial",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-015",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Etiquetas Patrimoniais Inteligentes",
-      "passes": true,
-      "description": "Criar a página /solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Etiquetas Patrimoniais Inteligentes'",
-        "Breadcrumbs: Home > Soluções > Controle Patrimonial > Etiquetas Patrimoniais Inteligentes",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-016",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Teste de Impairment",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/teste-de-impairment/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Teste de Impairment'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Teste de Impairment",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-017",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Revisão da Vida Útil",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/revisao-da-vida-util/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Revisão da Vida Útil'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Revisão da Vida Útil",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-018",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Ativos Inteligentes RFID e RTLS",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Ativos Inteligentes RFID e RTLS'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Ativos Inteligentes RFID e RTLS",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-019",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
-      "title": "Subpágina de Solução — Arrendamento Mercantil (CPC 06 / IFRS 16)",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/arrendamento-mercantil/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Arrendamento Mercantil – CPC 06 (IFRS 16)'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Arrendamento Mercantil",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "title": "Subpágina de Solução — Arrendamento Mercantil",
+      "passes": true
     },
     {
       "id": "US-020",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Combinação de Negócios (PPA) – CPC 15",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Combinação de Negócios (PPA) – CPC 15'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Combinação de Negócios",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-021",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Softwares",
-      "passes": true,
-      "description": "Criar a página /solucoes/consultoria-e-tecnologia/softwares/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Softwares'",
-        "Breadcrumbs: Home > Soluções > Consultoria e Tecnologia > Softwares",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-022",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Ativos",
-      "passes": true,
-      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Avaliação de Ativos'",
-        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-023",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Ativos Biológicos",
-      "passes": true,
-      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Avaliação de Ativos Biológicos'",
-        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos Biológicos",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-024",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Imóveis Urbanos e Rurais",
-      "passes": true,
-      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Avaliação de Imóveis Urbanos e Rurais'",
-        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Imóveis Urbanos e Rurais",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-025",
       "phase": "phase-1-foundation",
       "stream": "solution-details",
       "title": "Subpágina de Solução — Avaliação de Máquinas",
-      "passes": true,
-      "description": "Criar a página /solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/ seguindo o template de solução.",
-      "acceptanceCriteria": [
-        "Hero banner com título 'Avaliação de Máquinas'",
-        "Breadcrumbs: Home > Soluções > Avaliação Patrimonial > Avaliação de Máquinas",
-        "Conteúdo rico via Payload",
-        "CTA para cotação",
-        "Links para soluções relacionadas",
-        "SEO e responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-026",
       "phase": "phase-1-foundation",
       "stream": "proof-social",
       "title": "Página de Clientes com filtro por segmento",
-      "passes": true,
-      "description": "Criar a página /clientes com grid de logos de clientes e filtro horizontal por segmento de atuação (~32 categorias, ~130+ clientes).",
-      "acceptanceCriteria": [
-        "Hero com título: 'Conheça alguns dos nossos **Principais Clientes**'",
-        "Texto descritivo sobre projetos realizados",
-        "Barra de filtros horizontal com scroll: Todos + 32 segmentos (Agência, Agrícola, Alimentação, etc.)",
-        "Filtro 'Todos' selecionado por padrão, exibindo todos os clientes",
-        "Grid de logos: imagem do logo centralizada em card com fundo branco",
-        "Filtro client-side com React state, animação de fade ao filtrar (Framer Motion)",
-        "Lazy loading das imagens dos logos",
-        "Seção inferior com texto descritivo e formulário de contato inline",
-        "Dados vindos das collections Clientes e ClienteSegmentos do Payload",
-        "Responsive: grid 6 cols desktop, 4 cols tablet, 2 cols mobile. Filtros com scroll horizontal no mobile"
-      ]
+      "passes": true
     },
     {
       "id": "US-027",
       "phase": "phase-1-foundation",
       "stream": "contact",
       "title": "Página de Contato",
-      "passes": true,
-      "description": "Criar a página /contato com formulário principal, dados das unidades e mapa (opcional).",
-      "acceptanceCriteria": [
-        "Hero com título sobre contato",
-        "Formulário de contato: Nome, E-Mail, Assunto, Mensagem — todos required",
-        "Validação client-side com React Hook Form",
-        "Submit envia para /api/form-submissions (formType: contato) com feedback inline de sucesso/erro",
-        "Dados das 3 unidades (RS, SC, SP) exibidos ao lado do formulário",
-        "Links para sub-páginas: Cotação e Representante",
-        "Responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-028",
       "phase": "phase-1-foundation",
       "stream": "contact",
       "title": "Formulário de Cotação avançado",
-      "passes": true,
-      "description": "Criar a página /contato/cotacao com formulário multi-step de orçamento, similar ao do site atual com seleção de serviço, upload de arquivo e dados de contato.",
-      "acceptanceCriteria": [
-        "Hero com título: '**Orçamento**'",
-        "Subtítulo explicativo pedindo para descrever a demanda",
-        "Seção de seleção de serviço organizada em 3 grupos com checkboxes: Avaliações Patrimoniais (4 opções), Controle Patrimonial (4 opções), Consultoria e IFRS (4 opções)",
-        "Campos adicionais: 'Qual a finalidade?' (textarea com dicas), 'Quantos ativos?' (textarea com dicas), 'Onde será realizado o trabalho?' (textarea)",
-        "Campo de upload de arquivo (texto, excel, word, pdf) com drag-and-drop",
-        "Campos de contato: Nome e E-mail (required)",
-        "Validação client-side completa",
-        "Submit envia para /api/form-submissions (formType: cotacao) com feedback inline de sucesso/erro e metadados de upload validados",
-        "Responsive: campos empilham no mobile"
-      ]
+      "passes": true
     },
     {
       "id": "US-029",
       "phase": "phase-1-foundation",
       "stream": "contact",
       "title": "Formulário de Representante",
-      "passes": true,
-      "description": "Criar a página /contato/representante com formulário para representantes comerciais.",
-      "acceptanceCriteria": [
-        "Hero com título sobre se tornar representante",
-        "Formulário com campos relevantes para cadastro de representante",
-        "Validação client-side",
-        "Submit envia para /api/form-submissions (formType: representante) com feedback inline de sucesso/erro",
-        "Responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-030",
       "phase": "phase-1-foundation",
       "stream": "content",
       "title": "Página de Conteúdos (materiais para download)",
-      "passes": true,
-      "description": "Criar a página /conteudos como hub de materiais gratuitos (e-books, planilhas) e as páginas individuais de cada conteúdo.",
-      "acceptanceCriteria": [
-        "Página /conteudos com listagem de materiais disponíveis: cards com imagem, título e link",
-        "Páginas individuais /conteudos/[slug] com: descrição do material, imagem de capa e botão/formulário de download",
-        "Se requiresEmail estiver ativo no Payload, exibir campo de e-mail antes do download (lead capture)",
-        "2 conteúdos iniciais: E-book de Identificação Patrimonial e Planilha de Vida Útil CPC 27",
-        "Dados vindos da collection Conteudos do Payload",
-        "Responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-031",
       "phase": "phase-1-foundation",
       "stream": "content",
       "title": "Blog/News — listagem e post individual",
-      "passes": true,
-      "description": "Criar a página /news com listagem de posts do blog com paginação, sidebar com busca e link para e-book, e as páginas individuais de cada post.",
-      "acceptanceCriteria": [
-        "Página /news com hero: 'Fique bem informado: **Nossas recentes publicações**'",
-        "Listagem de posts em cards: imagem destacada, título, data, autor e trecho",
-        "Paginação ou botão 'Carregar mais' (load more)",
-        "Sidebar (desktop): campo de busca e banner com link para download do e-book de Identificação Patrimonial",
-        "Seção inferior: formulário de newsletter com campo de e-mail e CTA 'Inscreva-se'",
-        "Páginas individuais /news/[slug]: título, data, autor, imagem, conteúdo rico, compartilhar em redes sociais",
-        "Estrutura vazia inicial (sem posts migrados do WordPress)",
-        "Dados vindos da collection Posts do Payload",
-        "Responsive: sidebar some no mobile, cards empilham"
-      ]
+      "passes": true
     },
     {
       "id": "US-032",
       "phase": "phase-1-foundation",
       "stream": "seo",
       "title": "SEO, meta tags e sitemap",
-      "passes": true,
-      "description": "Configurar SEO completo com meta tags dinâmicas, Open Graph, sitemap.xml e robots.txt.",
-      "acceptanceCriteria": [
-        "Meta tags dinâmicas por página: title, description vindos do campo meta de cada collection",
-        "Fallback para meta tags padrão do Global SiteSettings quando não definidas na página",
-        "Open Graph tags: og:title, og:description, og:image, og:url, og:type",
-        "Twitter Card tags: twitter:card, twitter:title, twitter:description, twitter:image",
-        "Canonical URL em todas as páginas",
-        "Sitemap.xml dinâmico gerado automaticamente com todas as rotas públicas (pages, posts, soluções, conteúdos)",
-        "robots.txt configurado para permitir crawlers e referenciar sitemap",
-        "JSON-LD structured data: Organization, LocalBusiness (3 unidades), BreadcrumbList, Article (posts)",
-        "Hreflang tag pt-BR",
-        "Favicon e apple-touch-icon configurados"
-      ]
+      "passes": true
     },
     {
       "id": "US-033",
       "phase": "phase-1-foundation",
       "stream": "search",
       "title": "Busca global do site",
-      "passes": true,
-      "description": "Implementar funcionalidade de busca que pesquisa em Pages, Posts, Soluções e Conteúdos.",
-      "acceptanceCriteria": [
-        "Overlay de busca fullscreen ativado pelo ícone de busca na Navbar",
-        "Campo de texto com auto-focus ao abrir",
-        "Busca em tempo real (debounce 300ms) nas collections: Pages, Posts, Solucoes, Conteudos",
-        "Resultados agrupados por tipo com link para a página correspondente",
-        "Estado de loading durante a busca",
-        "Mensagem quando nenhum resultado encontrado",
-        "Fechar com Escape ou clique fora",
-        "Responsive"
-      ]
+      "passes": true
     },
     {
       "id": "US-034",
       "phase": "phase-1-foundation",
       "stream": "seed",
       "title": "Seed de dados iniciais",
-      "passes": true,
-      "description": "Criar script de seed para popular o Payload CMS com os dados iniciais do site: categorias de soluções, soluções, segmentos de clientes, globals e páginas base.",
-      "acceptanceCriteria": [
-        "Script seed.ts executável via npm run seed",
-        "Seed das 3 SolucaoCategories: Controle Patrimonial, Consultoria e Tecnologia, Avaliação Patrimonial",
-        "Seed das 14 Solucoes com título, slug, shortDescription e category corretos",
-        "Seed dos 32 ClienteSegmentos",
-        "Seed do Global Header com navegação completa e redes sociais",
-        "Seed do Global Footer com dados das 3 unidades",
-        "Seed do Global SiteSettings com WhatsApp, cookie text e SEO defaults",
-        "Seed das Pages básicas: Home, Sobre, Contato, Cotação, Representante, Conteúdos",
-        "Seed dos 2 Conteudos iniciais (e-book e planilha)",
-        "Script idempotente (verifica se dados já existem antes de inserir)",
-        "Documentado no README como executar"
-      ]
+      "passes": true
     },
     {
       "id": "US-035",
       "phase": "phase-1-foundation",
       "stream": "quality",
       "title": "Performance, acessibilidade e otimização",
-      "passes": true,
-      "description": "Auditoria e otimização de performance, acessibilidade e boas práticas.",
-      "acceptanceCriteria": [
-        "Todas as imagens usando next/image com alt text, sizes e prioridade correta",
-        "Lazy loading em imagens abaixo do fold",
-        "Fontes carregadas via next/font com display swap",
-        "Lighthouse Performance >= 90 desktop, >= 80 mobile",
-        "Lighthouse Accessibility >= 95",
-        "Lighthouse SEO >= 95",
-        "Semantic HTML em todas as páginas: header, nav, main, section, article, footer",
-        "ARIA labels em todos os elementos interativos",
-        "Keyboard navigation funcional em menus, formulários e overlays",
-        "Focus trap no menu mobile e overlay de busca",
-        "Animações Framer Motion respeitam prefers-reduced-motion",
-        "Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1",
-        "Ausência de hydration mismatches",
-        "Medições de Lighthouse/Core Web Vitals devem ser registradas com evidência (ferramenta, data e contexto desktop/mobile)"
-      ]
+      "passes": true
     },
     {
       "id": "US-036",
       "phase": "phase-1-foundation",
       "stream": "operations",
       "title": "Deploy e documentação",
-      "passes": true,
-      "description": "Preparar o projeto para deploy e documentar setup, arquitetura e manutenção.",
-      "acceptanceCriteria": [
-        "README.md completo com: visão geral, stack, como rodar local, variáveis de ambiente, como executar seed, como fazer deploy",
-        "Dockerfile para deploy containerizado (opcional, se não for Vercel)",
-        "Configuração de deploy para Vercel com variáveis de ambiente documentadas",
-        "Variáveis de produção: DATABASE_URI, PAYLOAD_SECRET, NEXT_PUBLIC_SERVER_URL, S3 credentials (se usar)",
-        "Configuração de domínio personalizado documentada",
-        "Guia básico de uso do Payload admin para editores (como criar post, editar página, adicionar cliente)",
-        "Backup strategy documentada (PostgreSQL dump + media files)"
-      ]
+      "passes": true
     },
     {
       "id": "US-037",
       "phase": "phase-1-foundation",
       "stream": "strategy",
-      "title": "Revisar backlog e direção visual com reasoning xhigh",
-      "passes": true,
-      "description": "Executar uma revisão completa das user stories restantes e da direção visual do site usando GPT-5.3-Codex com reasoning effort xhigh. A revisão deve validar ordem, dependências, clareza, critérios de aceite e consistência do backlog, além de avaliar se as histórias preservam o estilo atual da Apollo Gestão enquanto modernizam hierarquia visual, espaçamento, tipografia, animações e experiência geral.",
-      "acceptanceCriteria": [
-        "Revisar todas as user stories com passes=true no prd.json",
-        "Identificar dependências implícitas, lacunas de escopo, histórias duplicadas, ambiguidades e ordem inadequada de execução",
-        "Validar se cada story possui acceptance criteria objetivos, verificáveis e implementáveis",
-        "Apontar histórias que dependem de infraestrutura, assets, conteúdo, banco, imagens ou setup ainda não resolvidos",
-        "Revisar se o backlog preserva a identidade visual atual da Apollo Gestão, sem descaracterizar o site existente",
-        "Apontar onde o backlog deve exigir uma modernização visual mais clara, incluindo tipografia, espaçamento, grid, ritmo, animações, hierarquia e acabamento premium",
-        "Sugerir ajustes nas stories para deixar explícito que a evolução visual deve respeitar o estilo atual, mas com execução mais moderna e refinada",
-        "Registrar em progress.txt um relatório resumido com problemas encontrados, recomendações de reordenação e observações visuais",
-        "Se necessário, atualizar o prd.json para corrigir títulos, descrições ou acceptance criteria das stories revisadas",
-        "Não implementar features de produto nesta story; apenas revisar e refinar backlog e direção visual",
-        "Executar esta revisão usando GPT-5.3-Codex com reasoning effort xhigh"
-      ]
+      "title": "Revisar backlog e direção visual",
+      "passes": true
     },
     {
       "id": "US-038",
@@ -1411,16 +959,15 @@
       "stream": "design-system",
       "title": "Definir direção visual refinada, pegada Payload e design system base",
       "passes": true,
-      "description": "Consolidar a segunda fase do projeto com uma direção visual mais premium e contemporânea, explicitamente inspirada na linguagem visual do Payload CMS, traduzindo essa visão em tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
+      "description": "Consolidar a segunda fase com tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
       "acceptanceCriteria": [
-        "A direção visual do projeto deve ser atualizada no PRD para explicitar que o objetivo não é mais copiar fielmente o WordPress, e sim evoluir sua identidade com acabamento mais moderno e com pegada visual inspirada no Payload",
-        "Deve existir uma escala tipográfica clara para display, headings, body, small text, labels e metadata",
-        "Deve existir uma escala explícita de spacing e rhythm vertical para seções, blocos, cards e formulários",
-        "O projeto deve possuir tokens ou aliases visuais reutilizáveis para superfícies, bordas, sombras, radius e estados interativos",
-        "Deve ser criada uma camada de componentes-base reutilizáveis em src/components/ui/ para botões, inputs, textareas, cards, chips, badges, headings e containers",
-        "Deve ser criada ou ajustada uma camada de estilos globais para carregar a sensação visual Payload-inspired de forma transversal",
-        "Deve ser documentado no progress.txt o racional da nova direção visual, a tradução da referência do Payload para Apollo e os princípios de consistência a serem seguidos nas próximas histórias",
-        "O redesign deve ser compatível com a base técnica existente e não deve exigir reconstrução do CMS, rotas ou modelagem já concluída"
+        "Direção visual atualizada no PRD",
+        "Escala tipográfica clara para display, headings, body, labels",
+        "Escala de spacing e rhythm vertical",
+        "Tokens/aliases para superfícies, bordas, sombras, radius e estados",
+        "Camada src/components/ui/ com botões, inputs, textareas, cards, chips, badges, headings, containers",
+        "Camada de estilos globais com sensação Payload-inspired",
+        "Documentado em progress.txt o racional da nova direção visual"
       ]
     },
     {
@@ -1429,15 +976,15 @@
       "stream": "shell-global",
       "title": "Repaginação do header e navegação principal",
       "passes": true,
-      "description": "Redesenhar o header principal para que a Apollo adote uma navegação mais limpa, premium e claramente inspirada no estilo do Payload, sem perder as necessidades institucionais e comerciais do projeto.",
+      "description": "Redesenhar o header principal para navegação mais limpa, premium e inspirada no Payload.",
       "acceptanceCriteria": [
-        "O header atual deve ser revisto criticamente e não pode ser mantido apenas por já estar funcional",
-        "A composição entre logo, navegação primária, CTA e utilitários deve ficar mais limpa e hierárquica",
-        "O topo deve ganhar mais whitespace, melhor distribuição horizontal e sensação de produto mais sofisticado",
-        "O CTA principal deve ganhar mais destaque e clareza visual",
-        "A pegada visual do header deve remeter à clareza e ao acabamento do Payload, mas traduzida ao universo institucional da Apollo",
-        "Busca, sociais e itens utilitários não devem competir com a navegação principal",
-        "A navegação deve continuar responsiva e acessível em desktop, tablet e mobile"
+        "Header criticamente revisto",
+        "Composição mais limpa e hierárquica entre logo, navegação, CTA e utilitários",
+        "Mais whitespace e sensação de produto sofisticado",
+        "CTA principal com mais destaque",
+        "Pegada visual Payload traduzida ao universo Apollo",
+        "Busca e sociais não competem com navegação principal",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1445,15 +992,15 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do mega menu, menu mobile e overlay de busca",
-      "passes": true,
-      "description": "Redesenhar superfícies de navegação secundária para que o sistema inteiro pareça mais premium, editorial e coerente com a nova pegada inspirada no Payload.",
+      "passes": false,
+      "description": "Redesenhar superfícies de navegação secundária para linguagem mais premium e coerente.",
       "acceptanceCriteria": [
-        "O mega menu deve evoluir de dropdown funcional para painel de navegação mais sofisticado",
-        "O mega menu deve ter melhor organização visual das categorias e subitens, com leitura mais clara",
-        "O menu mobile deve parecer extensão natural do novo header, e não versão simplificada sem refinamento",
-        "O overlay de busca deve ganhar hierarquia mais limpa, moderna e editorial",
-        "Transições, sombras, bordas, fundos e agrupamentos devem refletir o novo design system",
-        "Todos os fluxos precisam continuar acessíveis, com navegação por teclado e foco gerenciado"
+        "Mega menu evoluído para painel de navegação mais sofisticado",
+        "Melhor organização visual de categorias e subitens",
+        "Menu mobile como extensão natural do header",
+        "Overlay de busca com hierarquia mais limpa e editorial",
+        "Transições, sombras, bordas e agrupamentos refletem o design system",
+        "Acessível com navegação por teclado e foco gerenciado"
       ]
     },
     {
@@ -1461,14 +1008,14 @@
       "phase": "phase-2-redesign",
       "stream": "shell-global",
       "title": "Repaginação do footer, CTA flutuantes e elementos globais",
-      "passes": true,
-      "description": "Refinar footer, WhatsApp float, cookie consent e scroll-to-top para que o shell global inteiro carregue linguagem mais madura e uniforme.",
+      "passes": false,
+      "description": "Refinar footer, WhatsApp float, cookie consent e scroll-to-top para linguagem uniforme.",
       "acceptanceCriteria": [
-        "O footer deve ser repaginado para reduzir peso visual e melhorar hierarquia entre contato, unidades e navegação",
-        "O formulário global de contato, caso permaneça no footer, deve ganhar aparência mais leve e contemporânea",
-        "WhatsApp float, cookie consent e scroll-to-top devem ser visualmente integrados ao novo sistema e não parecer componentes isolados",
-        "A sensação visual global deve permanecer consistente com a pegada Payload-inspired definida em US-038",
-        "A experiência precisa permanecer totalmente responsiva e acessível"
+        "Footer repaginado com menos peso visual e melhor hierarquia",
+        "Formulário global de contato mais leve e contemporâneo",
+        "WhatsApp float, cookie consent e scroll-to-top integrados ao sistema",
+        "Sensação visual consistente com pegada Payload-inspired",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1477,13 +1024,14 @@
       "stream": "homepage",
       "title": "Repaginação do hero da homepage",
       "passes": false,
-      "description": "Transformar o hero da homepage em uma abertura institucional premium, mais próxima da força visual e da clareza de produto do Payload, adaptada ao posicionamento da Apollo.",
+      "description": "Transformar o hero da homepage em uma abertura institucional premium, mais próxima da força visual do Payload, adaptada ao posicionamento da Apollo.",
       "acceptanceCriteria": [
-        "O hero principal deve ser redesenhado com melhor composição, melhor quebra de headline e tratamento mais refinado de imagem/fundo",
-        "O hero deve transmitir clareza, autoridade e sofisticação visual imediatamente",
-        "Headline, subtítulo e CTA devem ter hierarquia mais forte e mais limpa",
-        "O resultado deve ter pegada moderna e premium perceptível em desktop e mobile",
-        "O hero deve parecer muito mais maduro que a versão de reconstrução da fase 1"
+        "Hero redesenhado com melhor composição, headline e tratamento de imagem/fundo",
+        "Transmite clareza, autoridade e sofisticação visual imediatamente",
+        "Headline, subtítulo e CTA com hierarquia mais forte e limpa",
+        "Visual moderno e premium em desktop e mobile",
+        "Visivelmente mais maduro que a versão da fase 1",
+        "Coerente com a linguagem do shell repaginado em US-039A/B/C"
       ]
     },
     {
@@ -1492,12 +1040,13 @@
       "stream": "homepage",
       "title": "Repaginação dos blocos centrais da homepage",
       "passes": false,
-      "description": "Redesenhar seções de serviços, prova institucional e bloco institucional da homepage para elevar ritmo, valor percebido e qualidade visual.",
+      "description": "Redesenhar seções de serviços, prova institucional e bloco institucional da homepage.",
       "acceptanceCriteria": [
-        "A seção dos 3 pilares de serviço deve ganhar novo tratamento de cards, hierarquia e microinterações",
-        "Deve existir uma seção de valor/prova institucional com composição mais premium, podendo usar números, credenciais, segmentos ou diferenciais",
-        "A seção institucional da Apollo deve ficar mais limpa, mais respirada e com leitura mais contemporânea",
-        "Os blocos devem refletir a nova pegada Payload-inspired em layout, espaçamento e clareza"
+        "Seção dos 3 pilares com novo tratamento de cards, hierarquia e microinterações",
+        "Seção de valor/prova institucional com composição mais premium (números, credenciais ou diferenciais)",
+        "Seção institucional da Apollo mais limpa, respirada e contemporânea",
+        "Blocos refletem a pegada Payload-inspired em layout, espaçamento e clareza",
+        "Coerência visual com hero (US-040A) e shell (US-039)"
       ]
     },
     {
@@ -1506,81 +1055,13 @@
       "stream": "homepage",
       "title": "Costura final da homepage e consistência de narrativa",
       "passes": false,
-      "description": "Revisar ordem, densidade, transições e coerência da homepage como uma vitrine institucional completa.",
+      "description": "Revisar ordem, densidade, transições e coerência da homepage como vitrine institucional completa.",
       "acceptanceCriteria": [
-        "A homepage deve deixar de parecer apenas uma reprodução estrutural do site anterior e passar a comunicar maior sofisticação visual",
-        "A ordem e densidade das seções devem ser revisadas para melhorar ritmo, contraste e fluidez da navegação",
-        "A homepage deve parecer moderna, premium e comercialmente clara em todos os breakpoints",
-        "A homepage deve refletir o design system e a inspiração no Payload como uma linguagem transversal, não apenas local"
-      ]
-    },
-    {
-      "id": "US-041A",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação da página /solucoes",
-      "passes": false,
-      "description": "Redesenhar a página hub de soluções para deixá-la menos mecânica e mais consultiva, com filtros, hero e grid mais bem resolvidos visualmente.",
-      "acceptanceCriteria": [
-        "A página /solucoes deve ganhar hero, introdução, filtros e grid com linguagem visual alinhada ao novo design system",
-        "Os filtros devem evoluir visualmente para chips ou tabs mais modernos, com estados ativos e contadores mais legíveis",
-        "Os cards de solução devem ter aparência mais premium, com melhor proporção, padding, título, descrição e hover",
-        "A página deve carregar com clareza a pegada visual inspirada no Payload"
-      ]
-    },
-    {
-      "id": "US-041B",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação dos hubs de categoria de soluções",
-      "passes": false,
-      "description": "Redesenhar os hubs de categoria para que pareçam menos páginas repetitivas e mais aberturas consultivas por domínio de solução.",
-      "acceptanceCriteria": [
-        "As páginas de categoria devem deixar de ser apenas hero + grid + formulário e passar a ter abertura mais narrativa e mais valor percebido",
-        "A hierarquia entre hero, introdução, grid, CTA e contato deve ser revista para reduzir a sensação de página seca ou repetitiva",
-        "A experiência visual precisa se manter consistente entre as três categorias e seus diferentes volumes de conteúdo",
-        "Os hubs devem conversar visualmente com a homepage e com a linguagem Payload-inspired"
-      ]
-    },
-    {
-      "id": "US-041C",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Padronização visual dos cards e filtros de solução",
-      "passes": false,
-      "description": "Criar uma linguagem consistente e premium para cards, filtros e superfícies de listagem de soluções.",
-      "acceptanceCriteria": [
-        "Cards e filtros de solução devem virar primitives visuais coerentes e reutilizáveis",
-        "Hover, foco, estados ativos e densidade do conteúdo devem ser harmonizados",
-        "O acabamento deve ficar mais próximo de produto premium e menos próximo de grid genérico institucional",
-        "A mesma linguagem deve poder ser aplicada em /solucoes e nos hubs de categoria"
-      ]
-    },
-    {
-      "id": "US-042A",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação do template base de páginas de solução",
-      "passes": false,
-      "description": "Refinar o template base das páginas individuais de solução para parecer mais técnico, premium e confortável para leitura.",
-      "acceptanceCriteria": [
-        "O hero ou banner das páginas de solução deve ser refinado visualmente, com melhor composição, melhor respiro e tipografia mais forte",
-        "Breadcrumbs, metadata e CTA principal devem receber hierarquia mais elegante e menos utilitária",
-        "A área de conteúdo rico deve adotar largura de leitura controlada, melhor espaçamento entre blocos e melhor estilo tipográfico",
-        "O template deve melhorar a percepção de autoridade técnica sem ficar excessivamente denso ou pesado"
-      ]
-    },
-    {
-      "id": "US-042B",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação de elementos auxiliares das páginas de solução",
-      "passes": false,
-      "description": "Refinar blocos auxiliares, listas, destaques, callouts e área de recomendação relacionada nas páginas de solução.",
-      "acceptanceCriteria": [
-        "Devem existir tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts e seções auxiliares",
-        "A área de 'Veja também' deve ser redesenhada para parecer recomendação editorial ou comercial de alto nível, não apenas links utilitários",
-        "A linguagem visual deve permanecer coerente com a inspiração Payload sem perder o tom institucional da Apollo"
+        "Homepage não parece mais apenas reprodução estrutural do site anterior",
+        "Ordem e densidade das seções revisadas para melhor ritmo e fluidez",
+        "Homepage moderna, premium e comercialmente clara em todos os breakpoints",
+        "Design system e inspiração Payload aplicados de forma transversal",
+        "Nenhuma seção destoa visualmente das demais"
       ]
     },
     {
@@ -1591,9 +1072,11 @@
       "passes": false,
       "description": "Atualizar a página de Clientes para que prova social e filtros pareçam mais premium e organizados.",
       "acceptanceCriteria": [
-        "A página de Clientes deve receber novo tratamento de hero, filtros e grid de logos, com sensação mais premium e melhor organização visual",
-        "Os filtros devem ficar mais claros, refinados e consistentes com os demais filtros do sistema",
-        "O grid de logos deve equilibrar limpeza visual, valor de marca e legibilidade"
+        "Novo tratamento de hero, filtros e grid de logos com sensação mais premium",
+        "Filtros mais claros, refinados e consistentes com os demais filtros do sistema",
+        "Grid de logos equilibra limpeza visual, valor de marca e legibilidade",
+        "Coerente com o design system e shell repaginados",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1602,11 +1085,12 @@
       "stream": "content-and-proof",
       "title": "Repaginação de Conteúdos e detail pages de material",
       "passes": false,
-      "description": "Atualizar hub de conteúdos e telas de material para parecerem uma biblioteca mais premium e bem organizada.",
+      "description": "Atualizar hub de conteúdos e páginas de material para biblioteca mais premium.",
       "acceptanceCriteria": [
-        "A página de Conteúdos deve parecer uma biblioteca de materiais de valor, com cards mais fortes, capas melhor valorizadas e CTA de download mais bem resolvida",
-        "As páginas de detalhe de material devem equilibrar melhor imagem, tipografia, metadata e conversão",
-        "A linguagem visual deve refletir o design system Payload-inspired em cards, blocos e estados"
+        "Página de Conteúdos parece biblioteca de materiais de valor com cards mais fortes e CTA de download bem resolvida",
+        "Páginas de detalhe equilibram imagem, tipografia, metadata e conversão",
+        "Linguagem visual reflete o design system Payload-inspired em cards, blocos e estados",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1615,12 +1099,13 @@
       "stream": "content-and-proof",
       "title": "Repaginação de News e post detail",
       "passes": false,
-      "description": "Atualizar listagens e detalhes editoriais do blog/news para uma estética mais editorial, madura e premium.",
+      "description": "Atualizar listagens e detalhes editoriais do blog/news para estética mais editorial e premium.",
       "acceptanceCriteria": [
-        "As páginas de News devem ganhar tratamento mais editorial, com cards, metadata, listagem e detalhe mais sofisticados",
-        "A sidebar de News, quando presente no desktop, deve parecer parte do sistema e não um bloco colado lateralmente",
-        "As telas de conteúdo devem equilibrar bem imagem, tipografia, metadata, conversão e navegação relacionada",
-        "A inspiração do Payload deve aparecer em clareza de hierarquia, respiro e polimento geral"
+        "Páginas de News com tratamento mais editorial, cards e metadata mais sofisticados",
+        "Sidebar de News (desktop) integrada ao sistema, não colada lateralmente",
+        "Telas de conteúdo equilibram imagem, tipografia, metadata e conversão",
+        "Inspiração Payload aparece em clareza de hierarquia, respiro e polimento",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1629,11 +1114,12 @@
       "stream": "contact",
       "title": "Repaginação da página de contato",
       "passes": false,
-      "description": "Redesenhar a página principal de contato para que ela pareça mais confiável, organizada e contemporânea.",
+      "description": "Redesenhar a página principal de contato para parecer mais confiável, organizada e contemporânea.",
       "acceptanceCriteria": [
-        "A página /contato deve ganhar layout mais refinado, com melhor composição entre copy, unidades e formulário",
-        "A leitura, a hierarquia e a distribuição visual devem ficar mais claras em desktop e mobile",
-        "A linguagem do front deve refletir o padrão premium inspirado no Payload"
+        "Layout refinado com melhor composição entre copy, unidades e formulário",
+        "Hierarquia e distribuição visual mais claras em desktop e mobile",
+        "Linguagem do front reflete padrão premium inspirado no Payload",
+        "Responsivo e acessível"
       ]
     },
     {
@@ -1642,12 +1128,12 @@
       "stream": "contact",
       "title": "Repaginação do fluxo de cotação",
       "passes": false,
-      "description": "Redesenhar o formulário de cotação para que ele pareça um fluxo consultivo de alto nível, e não apenas uma sequência funcional de campos.",
+      "description": "Redesenhar o formulário de cotação para parecer fluxo consultivo de alto nível.",
       "acceptanceCriteria": [
-        "Os formulários devem adotar inputs, labels, validações e agrupamentos visuais alinhados ao novo design system",
-        "A página de cotação deve parecer um fluxo consultivo e profissional, e não apenas uma sequência funcional de campos",
-        "Stepper, grupos de seleção, upload e estados de erro ou sucesso devem ganhar tratamento visual mais maduro",
-        "O fluxo deve continuar claro, responsivo e acessível"
+        "Inputs, labels, validações e agrupamentos visuais alinhados ao design system",
+        "Página de cotação parece fluxo consultivo e profissional",
+        "Stepper, grupos de seleção, upload e estados de erro/sucesso com tratamento visual maduro",
+        "Fluxo claro, responsivo e acessível"
       ]
     },
     {
@@ -1656,11 +1142,80 @@
       "stream": "contact",
       "title": "Repaginação do fluxo de representante e padronização de formulários",
       "passes": false,
-      "description": "Redesenhar a página de representante e consolidar uma linguagem única para formulários do produto.",
+      "description": "Redesenhar a página de representante e consolidar linguagem única para formulários.",
       "acceptanceCriteria": [
-        "A página de representante deve seguir a mesma linguagem premium e consistente dos demais fluxos de contato",
-        "Todos os formulários públicos devem compartilhar linguagem visual clara, madura e coerente",
-        "Todos os formulários devem permanecer responsivos, acessíveis e claros em mobile"
+        "Página de representante segue mesma linguagem premium dos demais fluxos de contato",
+        "Todos os formulários públicos compartilham linguagem visual clara e coerente",
+        "Formulários responsivos, acessíveis e claros no mobile"
+      ]
+    },
+    {
+      "id": "US-041A",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação da página /solucoes",
+      "passes": false,
+      "description": "Redesenhar a página hub de soluções para ser menos mecânica e mais consultiva.",
+      "acceptanceCriteria": [
+        "Hero, introdução, filtros e grid alinhados ao design system",
+        "Filtros evoluídos para chips/tabs modernos com estados ativos e contadores legíveis",
+        "Cards com aparência mais premium, proporção, padding e hover refinados",
+        "Página carrega claramente a pegada visual Payload-inspired"
+      ]
+    },
+    {
+      "id": "US-041B",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação dos hubs de categoria de soluções",
+      "passes": false,
+      "description": "Redesenhar hubs de categoria para aberturas consultivas mais narrativas por domínio.",
+      "acceptanceCriteria": [
+        "Páginas de categoria com abertura mais narrativa e valor percebido",
+        "Hierarquia entre hero, introdução, grid, CTA e contato revista",
+        "Experiência visual consistente entre as três categorias",
+        "Hubs conversam visualmente com homepage e linguagem Payload-inspired"
+      ]
+    },
+    {
+      "id": "US-041C",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Padronização visual dos cards e filtros de solução",
+      "passes": false,
+      "description": "Criar linguagem consistente e premium para cards, filtros e superfícies de listagem.",
+      "acceptanceCriteria": [
+        "Cards e filtros de solução viram primitives visuais coerentes e reutilizáveis",
+        "Hover, foco, estados ativos e densidade harmonizados",
+        "Acabamento mais próximo de produto premium",
+        "Mesma linguagem aplicável em /solucoes e nos hubs de categoria"
+      ]
+    },
+    {
+      "id": "US-042A",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação do template base de páginas de solução",
+      "passes": false,
+      "description": "Refinar o template base das páginas individuais de solução.",
+      "acceptanceCriteria": [
+        "Hero/banner refinado com melhor composição, respiro e tipografia mais forte",
+        "Breadcrumbs, metadata e CTA com hierarquia mais elegante",
+        "Área de conteúdo rico com largura de leitura controlada e melhor espaçamento tipográfico",
+        "Template melhora percepção de autoridade técnica"
+      ]
+    },
+    {
+      "id": "US-042B",
+      "phase": "phase-2-redesign",
+      "stream": "solutions",
+      "title": "Repaginação de elementos auxiliares das páginas de solução",
+      "passes": false,
+      "description": "Refinar blocos auxiliares e área de recomendação relacionada.",
+      "acceptanceCriteria": [
+        "Tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts",
+        "Área 'Veja também' redesenhada como recomendação editorial de alto nível",
+        "Linguagem coerente com inspiração Payload sem perder tom institucional da Apollo"
       ]
     },
     {
@@ -1669,20 +1224,20 @@
       "stream": "polish",
       "title": "Polish visual, consistência global e QA de redesign",
       "passes": false,
-      "description": "Executar uma revisão final de consistência e acabamento para garantir que a repaginação tenha coerência real em todo o produto.",
+      "description": "Revisão final de consistência e acabamento em todo o produto.",
       "acceptanceCriteria": [
-        "Todas as principais páginas públicas devem ser revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",
-        "Deve haver revisão específica de desktop, tablet e mobile, com foco em densidade visual, alinhamento, contraste e clareza",
-        "Nenhuma página principal deve aparentar pertencer a uma linguagem visual antiga enquanto outras já estiverem no novo padrão",
-        "Hover, focus, estados vazios, transições e detalhes de interação devem ser harmonizados entre templates",
-        "O progress.txt deve registrar o que foi harmonizado, quais débitos visuais permaneceram e quais decisões de design system passaram a valer globalmente",
-        "O resultado final deve comunicar evolução clara em relação à fase inicial do projeto, sem quebrar a identidade institucional da Apollo",
-        "A pegada visual inspirada no Payload deve ser perceptível em todo o site público, incluindo header, homepage, hubs, detalhes, conteúdo e formulários"
+        "Todas as principais páginas públicas revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",
+        "Revisão específica de desktop, tablet e mobile",
+        "Nenhuma página principal com aparência defasada em relação ao novo padrão",
+        "Hover, focus, estados vazios, transições e interações harmonizados entre templates",
+        "progress.txt registra o que foi harmonizado, débitos visuais e decisões de design system",
+        "Evolução clara em relação à fase 1 sem quebrar identidade institucional da Apollo",
+        "Pegada visual Payload perceptível de forma transversal em todo o site público"
       ]
     }
   ],
   "functionalRequirements": [
-    "FR-01: Next.js 14+ com App Router e React Server Components",
+    "FR-01: Next.js 15.4.x com App Router e React Server Components",
     "FR-02: Payload CMS 3.x integrado ao Next.js (não standalone, single deploy)",
     "FR-03: PostgreSQL como banco de dados via @payloadcms/db-postgres",
     "FR-04: TypeScript strict em todo o projeto",
@@ -1714,15 +1269,16 @@
     "FR-30: A evolução visual deve ser incremental sobre a base existente, sem invalidar a arquitetura CMS, rotas, SEO e conteúdo já implementados.",
     "FR-31: O redesign deve priorizar percepção de marca, clareza comercial e acabamento premium antes de introduzir novas features funcionais.",
     "FR-32: Todo o site público deve ter uma pegada visual inspirada no site do Payload CMS, aplicada de forma consistente em navegação, hero, CTAs, grids, cards, conteúdo editorial, overlays e formulários.",
-    "FR-33: O header deve ser explicitamente redesenhado com inspiração no estilo do Payload, pois a versão atual não é considerada satisfatória como solução final.",
-    "FR-34: A inspiração no Payload deve ser traduzida para o contexto institucional da Apollo sem descaracterizar sua identidade nem transformar o site em uma cópia literal de produto SaaS.",
-    "FR-35: O sistema visual do redesign deve tornar perceptível uma sensação de clareza de produto maduro, com whitespace, hierarquia e acabamento superiores aos da fase 1."
+    "FR-33: O shell global foi repaginado em US-039A/B/C e serve como referência de linguagem para todos os templates seguintes.",
+    "FR-34: A inspiração no Payload deve ser traduzida para o contexto institucional da Apollo sem descaracterizar sua identidade nem transformar o site em uma cópia de produto SaaS.",
+    "FR-35: O sistema visual do redesign deve tornar perceptível uma sensação de clareza de produto maduro, com whitespace, hierarquia e acabamento superiores aos da fase 1.",
+    "FR-36: A ordem de prioridade de redesign na fase 2 é: homepage, clientes/conteúdos/news, formulários/contato, soluções, polish global."
   ],
   "nonGoals": [
     "Clone visual pixel-perfect do WordPress atual",
     "Clone visual pixel-perfect do site do Payload",
     "Migração automática do conteúdo do WordPress atual",
-    "Migração dos posts existentes do blog — a collection Posts continua podendo começar vazia",
+    "Migração dos posts existentes do blog",
     "Rebranding completo da Apollo Gestão com mudança radical de identidade",
     "Interface de startup genérica ou visual excessivamente promocional",
     "Transformar a Apollo em um produto SaaS no discurso visual e comercial",
@@ -1733,7 +1289,7 @@
     "Multi-idioma / internacionalização (apenas pt-BR)",
     "Chat ao vivo (além do WhatsApp float)",
     "A/B testing",
-    "Definição da solução final de mensageria/entrega operacional dos formulários, exceto quando virar story própria",
+    "Definição da solução final de mensageria/entrega operacional dos formulários",
     "Dark mode / toggle de tema nesta fase"
   ],
   "risksAndConstraints": {
@@ -1743,14 +1299,16 @@
       "Reabrir modelagem CMS sem ganho claro e atrasar a execução",
       "Melhorar visualmente desktop e deixar mobile como adaptação tardia",
       "Perder clareza comercial em nome de estética",
-      "Confundir inspiração no Payload com cópia literal e descaracterizar a Apollo"
+      "Confundir inspiração no Payload com cópia literal e descaracterizar a Apollo",
+      "Bloquear homepage e conteúdo editorial aguardando stories de soluções"
     ],
     "constraints": [
       "O redesign deve respeitar a base técnica e editorial já construída",
       "As páginas públicas já existem e devem evoluir incrementalmente",
       "SEO e rotas já entregues não devem ser prejudicados",
       "Nem toda melhoria visual justifica nova modelagem de conteúdo",
-      "A linguagem Payload-inspired deve ser traduzida, não copiada"
+      "A linguagem Payload-inspired deve ser traduzida, não copiada",
+      "Stories de soluções não devem bloquear homepage, conteúdo editorial ou formulários"
     ]
   },
   "definitionOfDone": {
