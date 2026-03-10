@@ -155,6 +155,7 @@ export function Navbar({
                 alt={currentLogo.alt || 'Apollo Gestão'}
                 width={currentLogo.width || 180}
                 height={currentLogo.height || 40}
+                sizes="(min-width: 1024px) 180px, 144px"
                 className="h-8 lg:h-10 w-auto"
                 priority
               />

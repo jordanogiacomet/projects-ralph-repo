@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 
 type Slide = {
@@ -18,6 +18,7 @@ type MissaoVisaoValoresProps = {
 export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps) {
   const safeSlides = useMemo(() => slides.filter((slide) => slide.title.trim().length > 0), [slides])
   const [activeIndex, setActiveIndex] = useState(0)
+  const shouldReduceMotion = useReducedMotion()
 
   if (safeSlides.length === 0) return null
 
@@ -61,14 +62,15 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
           <AnimatePresence mode="wait" initial={false}>
             <motion.article
               key={currentSlide.id}
-              initial={{ opacity: 0, x: 24 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
-              drag="x"
-              dragElastic={0.08}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -24 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.28, ease: 'easeOut' }}
+              drag={shouldReduceMotion ? false : 'x'}
+              dragElastic={shouldReduceMotion ? 0 : 0.08}
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(_, info) => {
+                if (shouldReduceMotion) return
                 if (info.offset.x < -80) goTo(activeIndex + 1)
                 if (info.offset.x > 80) goTo(activeIndex - 1)
               }}

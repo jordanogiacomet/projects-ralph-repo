@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { Inter, Open_Sans } from 'next/font/google'
 
 import { JsonLd } from '@/components/JsonLd'
 import { Footer } from '@/components/Footer'
@@ -9,6 +10,18 @@ import {
   buildOrganizationAndLocalBusinessJsonLd,
 } from '@/lib/seo'
 import '../globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  variable: '--font-open-sans',
+  display: 'swap',
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -28,7 +41,7 @@ export default async function FrontendLayout({
 
   return (
     <html lang="pt-BR">
-      <body className="font-sans text-text-primary bg-bg-primary">
+      <body className={`${inter.variable} ${openSans.variable} font-sans text-text-primary bg-bg-primary`}>
         <JsonLd id="organization-jsonld" data={organization} />
         {locations.map((location, index) => (
           <JsonLd

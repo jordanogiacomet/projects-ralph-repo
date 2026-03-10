@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { SocialLinks } from './SocialLinks'
 
@@ -38,6 +38,7 @@ type MobileMenuProps = {
 export function MobileMenu({ isOpen, onClose, navItems, ctaButton, socialLinks }: MobileMenuProps) {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
   const menuRef = useRef<HTMLDivElement>(null)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     if (isOpen) {
@@ -102,19 +103,20 @@ export function MobileMenu({ isOpen, onClose, navItems, ctaButton, socialLinks }
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
             className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             onClick={onClose}
             aria-hidden="true"
           />
           <motion.div
             ref={menuRef}
-            initial={{ x: '100%' }}
+            initial={shouldReduceMotion ? false : { x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: 'tween', duration: 0.3 }}
             className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white z-50 overflow-y-auto shadow-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
@@ -186,10 +188,10 @@ export function MobileMenu({ isOpen, onClose, navItems, ctaButton, socialLinks }
                       <AnimatePresence>
                         {hasChildren && isExpanded && (
                           <motion.ul
-                            initial={{ height: 0, opacity: 0 }}
+                            initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                             className="overflow-hidden pl-4 border-l-2 border-accent-light ml-2"
                           >
                             {item.children!.map((child) => {
@@ -231,10 +233,10 @@ export function MobileMenu({ isOpen, onClose, navItems, ctaButton, socialLinks }
                                   <AnimatePresence>
                                     {hasGrandchildren && isChildExpanded && (
                                       <motion.ul
-                                        initial={{ height: 0, opacity: 0 }}
+                                        initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
                                         animate={{ height: 'auto', opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
+                                        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                                         className="overflow-hidden pl-4"
                                       >
                                         {child.children!.map((grandchild) => (

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useMemo, useState, type ReactNode } from 'react'
 import { ContatoForm } from './ContatoForm'
 
@@ -56,6 +56,7 @@ export function ClientsPage({
   clients,
 }: ClientsPageProps) {
   const [activeFilter, setActiveFilter] = useState('all')
+  const shouldReduceMotion = useReducedMotion()
 
   const filteredClients = useMemo(() => {
     if (activeFilter === 'all') return clients
@@ -115,10 +116,10 @@ export function ClientsPage({
                 <motion.article
                   key={client.id}
                   layout
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                   className="flex min-h-[146px] flex-col items-center justify-center rounded-xl border border-border bg-white p-4 text-center shadow-sm"
                 >
                   {client.logoUrl ? (

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
 type ServiceCardData = {
@@ -62,6 +62,7 @@ export function HomePage({
   aboutSection,
 }: HomePageProps) {
   const heroRef = useRef<HTMLElement | null>(null)
+  const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -73,7 +74,7 @@ export function HomePage({
       <section ref={heroRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <motion.div
           style={{
-            y: backgroundY,
+            y: shouldReduceMotion ? 0 : backgroundY,
             backgroundImage: `url(${hero.backgroundImageUrl || '/images/home-hero-placeholder.jpg'})`,
           }}
           className="absolute inset-0 bg-cover bg-center"
@@ -97,8 +98,8 @@ export function HomePage({
 
         <motion.div
           className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-white"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={shouldReduceMotion ? { y: 0 } : { y: [0, 8, 0] }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
           aria-label="Role para baixo"
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -114,10 +115,10 @@ export function HomePage({
             {services.slice(0, 3).map((card, index) => (
               <motion.article
                 key={card.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.45, delay: index * 0.12 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, delay: index * 0.12 }}
                 className="rounded-xl border border-border bg-white p-6 shadow-sm"
               >
                 {card.iconUrl ? (
@@ -126,6 +127,8 @@ export function HomePage({
                     alt={card.title}
                     width={48}
                     height={48}
+                    loading="lazy"
+                    sizes="48px"
                     className="h-12 w-12 rounded object-cover"
                   />
                 ) : (
@@ -189,6 +192,8 @@ export function HomePage({
                 alt="Apollo Gestão"
                 width={800}
                 height={520}
+                loading="lazy"
+                sizes="(min-width: 1024px) 45vw, 100vw"
                 className="h-full min-h-64 w-full rounded-xl border border-border object-cover shadow-sm"
               />
             ) : (

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 type SolutionItem = {
   id: string
@@ -17,6 +17,8 @@ type SolutionGridProps = {
 }
 
 export function SolutionGrid({ items }: SolutionGridProps) {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <motion.div layout className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <AnimatePresence mode="popLayout">
@@ -24,10 +26,10 @@ export function SolutionGrid({ items }: SolutionGridProps) {
           <motion.article
             key={item.id}
             layout
-            initial={{ opacity: 0, y: 10 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.22 }}
             className="rounded-xl border border-border bg-white p-5 shadow-sm"
           >
             {item.iconUrl ? (
@@ -36,6 +38,8 @@ export function SolutionGrid({ items }: SolutionGridProps) {
                 alt={item.title}
                 width={56}
                 height={56}
+                loading="lazy"
+                sizes="56px"
                 className="h-14 w-14 rounded object-cover"
               />
             ) : (

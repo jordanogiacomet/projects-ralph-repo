@@ -22,6 +22,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - When route slugs change, keep a backward-compatible route file that re-exports the canonical page (`export { default, generateMetadata } from '../canonical/page'`)
 - Social icons are inline SVGs in SocialLinks.tsx — no icon library needed
 - Use framer-motion AnimatePresence for enter/exit animations on conditional renders
+- Framer Motion components should gate animation intensity with `useReducedMotion()` and disable drag/transition-heavy behavior for users with reduced-motion preferences
+- Overlay-style UI (mobile menu/search) should trap focus with Tab/Shift+Tab and close on Escape while open
+- Frontend typography is loaded via `next/font/google` in `src/app/(frontend)/layout.tsx`; Tailwind `font-sans` maps to CSS variables (`--font-inter`, `--font-open-sans`)
 - Global layout components should include deterministic fallback data when Payload globals are unavailable during static builds
 - Footer defaults for unidades/social/cookie/WhatsApp are centralized in `src/lib/constants.ts` and merged with Payload globals in `src/components/Footer.tsx`
 - Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
@@ -969,4 +972,39 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Reusing nested array field names (`children -> children`) in Payload globals with Postgres can trigger relation-name collisions during `findGlobal`.
   - Useful context
   - When a nested field rename changes generated DB schema, the first run may prompt for conflict resolution; after applying, repeated seed runs stay idempotent.
+---
+## 2026-03-10 00:39 UTC - US-035
+- What was implemented
+- Added frontend font optimization using `next/font/google` (`Inter`, `Open Sans`) with `display: 'swap'`, wired through CSS variables in the frontend layout and Tailwind `font-sans`.
+- Improved animation accessibility by updating Framer Motion surfaces (`HomePage`, `ClientsPage`, `SolutionGrid`, `MegaMenu`, `MobileMenu`, `SearchOverlay`, `MissaoVisaoValores`) to respect `prefers-reduced-motion` via `useReducedMotion()`.
+- Added keyboard focus trapping to `SearchOverlay` (Tab/Shift+Tab loop + Escape close) to match overlay accessibility behavior expected alongside the mobile menu trap.
+- Completed image optimization pass on existing `next/image` usage by adding missing `sizes` metadata and explicit lazy-loading where appropriate on below-the-fold images.
+- Files changed
+- src/app/(frontend)/layout.tsx
+- tailwind.config.ts
+- src/components/HomePage.tsx
+- src/components/ClientsPage.tsx
+- src/components/SolutionGrid.tsx
+- src/components/MegaMenu.tsx
+- src/components/MobileMenu.tsx
+- src/components/SearchOverlay.tsx
+- src/components/MissaoVisaoValores.tsx
+- src/components/Navbar.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual verification still required for Lighthouse score thresholds, keyboard interaction flows, and reduced-motion behavior in a real browser.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Accessibility/performance stories can be implemented consistently by combining `useReducedMotion()` for motion controls with reusable focus-trap behavior in overlay components.
+  - Gotchas encountered
+  - This repository relies on generated `.next` artifacts for some type flows; keep `npx tsc --noEmit` and `next build` both in the validation loop for confidence.
+  - Useful context
+  - Font loading is now centralized at the frontend layout level via `next/font` variables, so typography-level performance changes should be made there first.
 ---

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 type SearchOverlayProps = {
   isOpen: boolean
@@ -40,7 +40,9 @@ function normalizeText(value: unknown): string {
 }
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
+  const overlayRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const shouldReduceMotion = useReducedMotion()
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -69,12 +71,38 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   }, [isOpen])
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+    if (!isOpen || !overlayRef.current) return
+
+    const overlay = overlayRef.current
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const focusableEls = overlay.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])',
+      )
+      if (focusableEls.length === 0) return
+
+      const firstEl = focusableEls[0]
+      const lastEl = focusableEls[focusableEls.length - 1]
+
+      if (event.shiftKey) {
+        if (document.activeElement === firstEl) {
+          event.preventDefault()
+          lastEl?.focus()
+        }
+      } else if (document.activeElement === lastEl) {
+        event.preventDefault()
+        firstEl?.focus()
+      }
     }
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown)
-    }
+
+    window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
@@ -161,10 +189,11 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
+          ref={overlayRef}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
           className="fixed inset-0 z-[60] flex items-center justify-center bg-bg-dark-section/95"
           role="dialog"
           aria-modal="true"

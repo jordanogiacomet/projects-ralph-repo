@@ -891,7 +891,7 @@
     {
       "id": "US-035",
       "title": "Performance, acessibilidade e otimização",
-      "passes": false,
+      "passes": true,
       "description": "Auditoria e otimização de performance, acessibilidade e boas práticas.",
       "acceptanceCriteria": [
         "Todas as imagens usando next/image com alt text, sizes e prioridade correta",

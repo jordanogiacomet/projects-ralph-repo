@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 type NavChild = {
   label: string
@@ -19,16 +19,18 @@ type MegaMenuProps = {
 }
 
 export function MegaMenu({ isOpen, items, onClose }: MegaMenuProps) {
+  const shouldReduceMotion = useReducedMotion()
+
   if (!items || items.length === 0) return null
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.2 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
           className="absolute left-0 top-full w-full bg-white shadow-xl border-t border-border z-50"
           onMouseLeave={onClose}
           role="menu"
