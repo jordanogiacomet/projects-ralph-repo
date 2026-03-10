@@ -1054,7 +1054,7 @@
       "phase": "phase-2-redesign",
       "stream": "homepage",
       "title": "Costura final da homepage e consistência de narrativa",
-      "passes": false,
+      "passes": true,
       "description": "Revisar ordem, densidade, transições e coerência da homepage como vitrine institucional completa.",
       "acceptanceCriteria": [
         "Homepage não parece mais apenas reprodução estrutural do site anterior",

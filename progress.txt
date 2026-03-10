@@ -1445,3 +1445,31 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - The `--radius-card` token was defined in tokens.css but not mapped in Tailwind config — always verify new token usage has a Tailwind mapping
   - Hardcoded institutional stats (20+ anos, 500+ clientes, etc.) are appropriate for visual redesign without CMS schema changes per the redesign guardrails
 ---
+
+## 2026-03-10 15:47 UTC - US-040C
+- **Story:** Costura final da homepage e consistência de narrativa
+- **What was implemented:**
+  - Added a stitched transition panel between the hero and service pillars with an overlapping premium surface that reframes the homepage as a connected institutional journey instead of isolated stacked sections
+  - Tightened homepage rhythm by reducing dead space after the hero, using the new bridge panel to preview the three solution fronts, and rebalancing the services section spacing around that overlap
+  - Unified section transitions with subtle dividers, blend gradients, and carry-through accent treatments so the light services section, dark proof section, and institutional about section no longer feel visually disconnected
+  - Elevated the about section with trust-signal cards, ambient accent lighting, a framed media shell, and a closing operational note to keep the final section as polished as the hero and proof surfaces
+- **Files changed:**
+  - `src/components/HomePage.tsx` — homepage narrative pacing, transitions, and section finishing pass
+  - `prd.json` — marked `US-040C` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - US-040A and US-040B had already upgraded the hero and core blocks, but the homepage still read as discrete redesigned parts; this pass focuses on flow, density, and narrative continuity across the full page
+  - The overlapping bridge panel creates a more contemporary, Payload-inspired transition out of the hero while preserving Apollo’s institutional tone and commercial clarity
+  - The later sections now share stronger surface language and transition cues, which makes the homepage feel intentionally composed rather than inherited from the original structural reproduction
+- **Affected shared components:** None — changes are scoped to `HomePage.tsx`
+- **Responsive impact:** The overlap panel stacks cleanly on mobile and becomes a split narrative + preview surface on large screens; section spacing was tuned so the homepage remains readable without excessive vertical gaps across breakpoints
+- **Accessibility impact:** Existing reduced-motion gating remains intact, decorative layers stay `aria-hidden`, CTA/link semantics are unchanged, and the revised layout preserves readable hierarchy in light and dark sections
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for homepage overlap spacing, section transitions, dark/light contrast balance, and mobile/tablet rhythm
+- **Learnings for future iterations:**
+  - Final homepage polish can be delivered safely without CMS schema changes by introducing transitional composition layers and narrative bridge surfaces within the existing Payload-driven structure
+  - When a redesign is split across multiple stories, the closing pass should explicitly address the seams between already-upgraded sections rather than treating each block in isolation
+---
