@@ -872,7 +872,7 @@
     {
       "id": "US-034",
       "title": "Seed de dados iniciais",
-      "passes": false,
+      "passes": true,
       "description": "Criar script de seed para popular o Payload CMS com os dados iniciais do site: categorias de soluções, soluções, segmentos de clientes, globals e páginas base.",
       "acceptanceCriteria": [
         "Script seed.ts executável via npm run seed",

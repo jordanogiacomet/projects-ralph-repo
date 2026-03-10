@@ -33,6 +33,28 @@ type SocialLink = {
   id?: string
 }
 
+type RawNavChildItem = {
+  label?: unknown
+  link?: unknown
+  id?: unknown
+}
+
+type RawNavChild = {
+  label?: unknown
+  link?: unknown
+  description?: unknown
+  children?: unknown
+  subItems?: unknown
+  id?: unknown
+}
+
+type RawNavItem = {
+  label?: unknown
+  link?: unknown
+  children?: unknown
+  id?: unknown
+}
+
 const fallbackNavItems: NavItem[] = [
   {
     id: 'solucoes',
@@ -213,6 +235,90 @@ const fallbackSocialLinks: SocialLink[] = [
   },
 ]
 
+function text(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined
+  const normalized = value.trim()
+  return normalized.length > 0 ? normalized : undefined
+}
+
+function normalizeNavChildItems(value: unknown): NavChildItem[] | undefined {
+  if (!Array.isArray(value)) return undefined
+
+  const items: NavChildItem[] = []
+
+  for (const item of value) {
+    if (!item || typeof item !== 'object') continue
+    const raw = item as RawNavChildItem
+    const label = text(raw.label)
+    if (!label) continue
+
+    const normalized: NavChildItem = { label }
+    const id = text(raw.id)
+    const link = text(raw.link)
+
+    if (id) normalized.id = id
+    if (link) normalized.link = link
+
+    items.push(normalized)
+  }
+
+  return items.length > 0 ? items : undefined
+}
+
+function normalizeNavChildren(value: unknown): NavChild[] | undefined {
+  if (!Array.isArray(value)) return undefined
+
+  const children: NavChild[] = []
+
+  for (const child of value) {
+    if (!child || typeof child !== 'object') continue
+    const raw = child as RawNavChild
+    const label = text(raw.label)
+    if (!label) continue
+
+    const normalized: NavChild = { label }
+    const id = text(raw.id)
+    const link = text(raw.link)
+    const description = text(raw.description)
+    const nestedItems = normalizeNavChildItems(raw.children) || normalizeNavChildItems(raw.subItems)
+
+    if (id) normalized.id = id
+    if (link) normalized.link = link
+    if (description) normalized.description = description
+    if (nestedItems) normalized.children = nestedItems
+
+    children.push(normalized)
+  }
+
+  return children.length > 0 ? children : undefined
+}
+
+function normalizeNavItems(value: unknown): NavItem[] {
+  if (!Array.isArray(value)) return []
+
+  const items: NavItem[] = []
+
+  for (const item of value) {
+    if (!item || typeof item !== 'object') continue
+    const raw = item as RawNavItem
+    const label = text(raw.label)
+    if (!label) continue
+
+    const normalized: NavItem = { label }
+    const id = text(raw.id)
+    const link = text(raw.link)
+    const children = normalizeNavChildren(raw.children)
+
+    if (id) normalized.id = id
+    if (link) normalized.link = link
+    if (children) normalized.children = children
+
+    items.push(normalized)
+  }
+
+  return items
+}
+
 export async function NavbarServer({ isHeroPage = false }: NavbarServerProps) {
   let headerData = null
 
@@ -229,10 +335,12 @@ export async function NavbarServer({ isHeroPage = false }: NavbarServerProps) {
       ? headerData.logoNegativo
       : null
 
-  const navItems =
+  const normalizedNavItems =
     Array.isArray(headerData?.navItems) && headerData.navItems.length > 0
-      ? (headerData.navItems as NavItem[])
-      : fallbackNavItems
+      ? normalizeNavItems(headerData.navItems)
+      : []
+
+  const navItems = normalizedNavItems.length > 0 ? normalizedNavItems : fallbackNavItems
 
   const ctaButton =
     headerData?.ctaButton?.label && headerData?.ctaButton?.link

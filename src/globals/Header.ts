@@ -47,7 +47,7 @@ export const Header: GlobalConfig = {
               type: 'text',
             },
             {
-              name: 'children',
+              name: 'subItems',
               type: 'array',
               fields: [
                 {

@@ -85,6 +85,18 @@ Add to `~/.config/amp/settings.json`:
 
 This enables automatic handoff when context fills up, allowing Ralph to handle large stories that exceed a single context window.
 
+## Project Seed (Apollo)
+
+To populate the Payload CMS with initial Apollo website data (solution categories, solutions, client segments, globals, base pages, and initial contents), run:
+
+```bash
+npm run seed
+```
+
+Notes:
+- Ensure `DATABASE_URI` and `PAYLOAD_SECRET` are set in your environment before running the seed.
+- The seed is idempotent: existing records (by `slug`) and configured globals are skipped.
+
 ## Workflow
 
 ### 1. Create a PRD

@@ -31,6 +31,8 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Structured data scripts are emitted with `JsonLd` (`src/components/JsonLd.tsx`) and schema builders in `src/lib/seo.ts` (Organization, LocalBusiness, BreadcrumbList, Article)
 - Search engine discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`; include both static paths and CMS-driven slugs with safe fallbacks when Payload is unavailable
 - Global site search is served by `src/app/api/search/route.ts` and consumed by `SearchOverlay`; keep the response grouped by collection type (`pages`, `posts`, `solucoes`, `conteudos`) so the UI can render typed sections without extra client-side joins
+- Payload CLI `run` imports scripts and exits when module import resolves, so async seed scripts should use top-level `await` to guarantee completion
+- Nested Payload array fields in Postgres should avoid reusing the same field name at consecutive levels (`children -> children`), otherwise relation names can collide during global reads
 
 ---
 
@@ -935,4 +937,36 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - In this repository, `npx tsc --noEmit` may fail before a build because `tsconfig.json` includes `.next/types`; run typecheck after `next build` when those artifacts are missing
   - Useful context
   - Pages with non-root public paths (e.g., `cotacao`, `representante`) need explicit slug-to-route mapping in search results to avoid broken links
+---
+## 2026-03-10 17:35 UTC - US-034
+- What was implemented
+- Replaced the placeholder seed with `src/seed.ts` and wired `npm run seed` to `payload run src/seed.ts`.
+- Implemented idempotent seeding for 3 `solucao-categories`, 14 `solucoes` (with category relations), 32 `cliente-segmentos`, base `pages` (`home`, `sobre`, `contato`, `cotacao`, `representante`, `conteudos`), and 2 initial `conteudos`.
+- Implemented global seeding for `header`, `footer`, and `site-settings` with existence checks so configured globals are skipped on subsequent runs.
+- Fixed a blocking Header global schema issue for Postgres relation generation by renaming the deepest nested field to `subItems` and normalizing it back to `children` in `NavbarServer`.
+- Added seed usage instructions to `README.md`.
+- Files changed
+- src/seed.ts
+- src/globals/Header.ts
+- src/components/NavbarServer.tsx
+- package.json
+- README.md
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run seed` passed; first run required resolving one schema prompt (`header_nav_items_children_sub_items` create/rename), subsequent run passed non-interactively and confirmed idempotency (`created: 0`, `skipped: 57`, globals skipped).
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (header mega menu rendering from Payload global data on desktop/mobile).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For Payload CLI `run`, async scripts should complete via top-level `await`; otherwise the CLI may exit before background promises finish.
+  - Gotchas encountered
+  - Reusing nested array field names (`children -> children`) in Payload globals with Postgres can trigger relation-name collisions during `findGlobal`.
+  - Useful context
+  - When a nested field rename changes generated DB schema, the first run may prompt for conflict resolution; after applying, repeated seed runs stay idempotent.
 ---
