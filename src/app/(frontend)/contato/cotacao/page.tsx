@@ -1,8 +1,20 @@
+import type { Metadata } from 'next'
+
 import { CotacaoForm } from '@/components/CotacaoForm'
+import { buildMetadata } from '@/lib/seo'
 
 const heroTitle = 'Orçamento'
 const heroSubtitle =
   'Descreva sua demanda com o máximo de contexto possível para que nossa equipe prepare uma proposta técnica e comercial aderente ao seu cenário.'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata({
+    path: '/contato/cotacao',
+    fallbackTitle: 'Orcamento - Apollo Gestao',
+    fallbackDescription:
+      'Solicite um orcamento tecnico para projetos de avaliacao e controle patrimonial.',
+  })
+}
 
 export default function CotacaoPage() {
   return (

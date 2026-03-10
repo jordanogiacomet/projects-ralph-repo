@@ -1,8 +1,20 @@
+import type { Metadata } from 'next'
+
 import { RepresentanteForm } from '@/components/RepresentanteForm'
+import { buildMetadata } from '@/lib/seo'
 
 const heroTitle = 'Seja um representante Apollo Gestão'
 const heroSubtitle =
   'Buscamos parceiros comerciais para ampliar nossa presença regional com soluções de avaliação e controle patrimonial.'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata({
+    path: '/contato/representante',
+    fallbackTitle: 'Representante Apollo Gestao',
+    fallbackDescription:
+      'Cadastre-se para representar a Apollo Gestao e ampliar nossa atuacao em solucoes patrimoniais.',
+  })
+}
 
 export default function RepresentantePage() {
   return (

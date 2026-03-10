@@ -27,6 +27,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Advanced contact forms follow a server-page + client-form split and submit JSON payloads to `/api/form-submissions`; until binary upload persistence is defined, file fields should store validated metadata in `data`
 - Download-gated content flows can reuse `/api/form-submissions` with `formType: 'contato'` and extra context fields in `data` (for example `origem`, `conteudoSlug`) before releasing protected files
 - Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === 'object'` before reading `name`/`email`
+- Route metadata should be authored via `buildMetadata` from `src/lib/seo.ts` to keep canonical, `hreflang` (`pt-BR`), Open Graph, Twitter Card, and icon tags consistent with global fallbacks
+- Structured data scripts are emitted with `JsonLd` (`src/components/JsonLd.tsx`) and schema builders in `src/lib/seo.ts` (Organization, LocalBusiness, BreadcrumbList, Article)
+- Search engine discovery routes are centralized at `src/app/sitemap.ts` and `src/app/robots.ts`; include both static paths and CMS-driven slugs with safe fallbacks when Payload is unavailable
 
 ---
 
@@ -856,4 +859,65 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `posts.author` must be treated as relation ID-or-object; rendering author names without object guards can cause runtime errors.
   - Useful context
   - Newsletter signups can post directly to `/api/newsletter-subscribers` because public create access is already enabled in the `NewsletterSubscribers` collection.
+---
+## 2026-03-10 00:03 UTC - US-032
+- What was implemented
+- Implemented a centralized SEO layer in `src/lib/seo.ts` and migrated all frontend route metadata to use `buildMetadata`, ensuring consistent canonical URLs, `hreflang` (`pt-BR`), Open Graph, Twitter Card tags, and icon declarations with SiteSettings/global fallbacks.
+- Added structured data support: global `Organization` + `LocalBusiness` JSON-LD emitted from frontend layout, plus `BreadcrumbList` and `Article` JSON-LD on `/news/[slug]` and `BreadcrumbList` on `/conteudos/[slug]`.
+- Added dynamic discovery endpoints `src/app/sitemap.ts` and `src/app/robots.ts` with CMS-driven route inclusion (pages, posts, soluções, conteúdos) and static fallback paths when Payload is unavailable.
+- Added site icons and metadata icon wiring (`public/favicon.svg`, `public/apple-touch-icon.png`).
+- Updated `prd.json` to mark `US-032` as complete (`"passes": true`).
+- Files changed
+- src/lib/seo.ts
+- src/components/JsonLd.tsx
+- src/app/(frontend)/layout.tsx
+- src/app/(frontend)/page.tsx
+- src/app/(frontend)/sobre/page.tsx
+- src/app/(frontend)/solucoes/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/processamento-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/teste-de-impairment/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/softwares/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx
+- src/app/(frontend)/clientes/page.tsx
+- src/app/(frontend)/contato/page.tsx
+- src/app/(frontend)/contato/cotacao/page.tsx
+- src/app/(frontend)/contato/representante/page.tsx
+- src/app/(frontend)/conteudos/page.tsx
+- src/app/(frontend)/conteudos/[slug]/page.tsx
+- src/app/(frontend)/news/page.tsx
+- src/app/(frontend)/news/[slug]/page.tsx
+- src/app/sitemap.ts
+- src/app/robots.ts
+- public/favicon.svg
+- public/apple-touch-icon.png
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/sitemap.xml` and `/robots.txt` plus all frontend routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI/SEO verification still required (view-source/meta tags, JSON-LD validation, and sitemap/robots inspection on a running deployment).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Centralizing SEO assembly in one helper avoids metadata drift across many route files and makes global fallback behavior auditable.
+  - Gotchas encountered
+  - Bulk text-replacement commands can silently fail on import strings containing `@`; prefer narrower patches or escaped delimiters for safe batch edits.
+  - Useful context
+  - `sitemap.ts` can safely mix static and CMS-generated paths as long as route URLs are deduplicated and Payload failures degrade to static defaults.
 ---

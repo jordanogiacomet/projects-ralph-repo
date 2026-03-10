@@ -1,7 +1,9 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ContatoPageForm } from '@/components/ContatoPageForm'
 import { FOOTER_DEFAULT_UNIDADES } from '@/lib/constants'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 
 type MediaLike = {
   url?: string | null
@@ -11,6 +13,11 @@ type PageDoc = {
   heroTitle?: unknown
   heroSubtitle?: string
   heroImage?: unknown
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
 }
 
 type Unidade = {
@@ -68,6 +75,11 @@ function mediaUrl(media: unknown): string | undefined {
   return undefined
 }
 
+function normalizeText(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  return value.replace(/\s+/g, ' ').trim()
+}
+
 function phoneHref(phone?: string): string | undefined {
   if (!hasString(phone)) return undefined
 
@@ -101,6 +113,39 @@ function mergeUnits(unidades?: Unidade[]): Unidade[] {
       phone: hasString(unit.phone) ? unit.phone : defaultUnit.phone,
       email: hasString(unit.email) ? unit.email : defaultUnit.email,
     }
+  })
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  let title: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+
+  try {
+    const payload = await getPayloadClient()
+    const pageResult = await payload.find({
+      collection: 'pages',
+      limit: 1,
+      where: { slug: { equals: 'contato' } },
+      depth: 1,
+    })
+
+    const pageData = pageResult.docs[0] as PageDoc | undefined
+    title = normalizeText(pageData?.meta?.title) || undefined
+    description = normalizeText(pageData?.meta?.description) || undefined
+    image = mediaUrl(pageData?.meta?.image) || mediaUrl(pageData?.heroImage)
+  } catch {
+    // Payload can be unavailable during static build in sandboxed environments.
+  }
+
+  return buildMetadata({
+    path: '/contato',
+    title,
+    description,
+    image,
+    fallbackTitle: 'Contato - Apollo Gestao',
+    fallbackDescription:
+      'Entre em contato com a Apollo Gestao para avaliacao patrimonial, controle de ativos e consultoria tecnica.',
   })
 }
 

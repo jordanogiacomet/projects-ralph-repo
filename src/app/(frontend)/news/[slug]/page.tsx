@@ -4,7 +4,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import { JsonLd } from '@/components/JsonLd'
 import { getPayloadClient } from '@/lib/payload'
+import {
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+  buildMetadata,
+} from '@/lib/seo'
 import type { Post, User } from '@/payload-types'
 
 type MediaLike = {
@@ -34,6 +40,8 @@ type NewsPostPageData = {
   imageUrl?: string
   authorName: string
   publishedAtLabel: string
+  publishedAtISO?: string
+  updatedAtISO?: string
   content?: unknown
   metaTitle: string
   metaDescription: string
@@ -99,6 +107,16 @@ function formatDateLabel(value: unknown): string {
     month: 'long',
     year: 'numeric',
   }).format(date)
+}
+
+function toISODate(value: unknown): string | undefined {
+  const source = normalizeText(value)
+  if (!source) return undefined
+
+  const date = new Date(source)
+  if (Number.isNaN(date.getTime())) return undefined
+
+  return date.toISOString()
 }
 
 function resolveAuthorName(author: Post['author']): string {
@@ -289,6 +307,8 @@ async function getPostData(slug: string): Promise<NewsPostPageData | null> {
       imageUrl: mediaUrl(post.featuredImage) || mediaUrl(post.meta?.image),
       authorName: resolveAuthorName(post.author),
       publishedAtLabel: formatDateLabel(post.publishedAt || post.createdAt),
+      publishedAtISO: toISODate(post.publishedAt || post.createdAt),
+      updatedAtISO: toISODate(post.updatedAt),
       content: post.content,
       metaTitle: normalizeText(post.meta?.title) || `${title} | Apollo Gestão`,
       metaDescription: normalizeText(post.meta?.description) || excerpt,
@@ -304,26 +324,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPostData(slug)
 
   if (!post) {
-    return {
-      title: 'Publicação não encontrada | Apollo Gestão',
-      description: 'A publicação solicitada não foi encontrada.',
-    }
+    return buildMetadata({
+      path: '/news',
+      fallbackTitle: 'Publicacao nao encontrada - Apollo Gestao',
+      fallbackDescription: 'A publicacao solicitada nao foi encontrada.',
+    })
   }
 
-  return {
+  return buildMetadata({
+    path: `/news/${post.slug}`,
     title: post.metaTitle,
     description: post.metaDescription,
-    alternates: {
-      canonical: `/news/${post.slug}`,
-    },
-    openGraph: {
-      title: post.metaTitle,
-      description: post.metaDescription,
-      type: 'article',
-      url: `/news/${post.slug}`,
-      images: post.imageUrl ? [post.imageUrl] : undefined,
-    },
-  }
+    image: post.imageUrl,
+    type: 'article',
+    fallbackTitle: `${post.title} | Apollo Gestao`,
+    fallbackDescription: post.excerpt,
+  })
 }
 
 export default async function NewsPostPage({ params }: PageProps) {
@@ -339,6 +355,20 @@ export default async function NewsPostPage({ params }: PageProps) {
   const encodedShareUrl = encodeURIComponent(shareUrl)
   const encodedTitle = encodeURIComponent(post.title)
   const encodedWhatsAppText = encodeURIComponent(`${post.title} ${shareUrl}`)
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'News', path: '/news' },
+    { name: post.title, path: canonicalPath },
+  ])
+  const articleJsonLd = buildArticleJsonLd({
+    headline: post.title,
+    description: post.metaDescription,
+    path: canonicalPath,
+    image: post.imageUrl,
+    datePublished: post.publishedAtISO,
+    dateModified: post.updatedAtISO || post.publishedAtISO,
+    authorName: post.authorName,
+  })
 
   const shareLinks = [
     { label: 'WhatsApp', href: `https://wa.me/?text=${encodedWhatsAppText}` },
@@ -358,6 +388,8 @@ export default async function NewsPostPage({ params }: PageProps) {
 
   return (
     <div className="bg-bg-primary text-text-primary">
+      <JsonLd id="news-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="news-article-jsonld" data={articleJsonLd} />
       <section className="relative overflow-hidden bg-bg-dark-section">
         <div className="absolute inset-0 bg-black/55" aria-hidden />
         <div

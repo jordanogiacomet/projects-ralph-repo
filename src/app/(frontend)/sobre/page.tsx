@@ -1,6 +1,8 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MissaoVisaoValores } from '@/components/MissaoVisaoValores'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 
 type MediaLike = {
   url?: string | null
@@ -18,6 +20,11 @@ type AboutPageDoc = {
   heroCTALabel?: string
   heroCTALink?: string
   layout?: LayoutBlock[]
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
 }
 
 function mediaUrl(media: unknown): string | undefined {
@@ -75,9 +82,7 @@ const fallbackSlides = [
   },
 ]
 
-export default async function SobrePage() {
-  let pageData: AboutPageDoc | undefined
-
+async function getSobrePageDoc(): Promise<AboutPageDoc | undefined> {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
@@ -86,10 +91,28 @@ export default async function SobrePage() {
       where: { slug: { equals: 'sobre' } },
     })
 
-    pageData = result.docs[0] as AboutPageDoc | undefined
+    return result.docs[0] as AboutPageDoc | undefined
   } catch {
-    // Payload may be unavailable during static build in sandboxed environments.
+    return undefined
   }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const pageData = await getSobrePageDoc()
+
+  return buildMetadata({
+    path: '/sobre',
+    title: pageData?.meta?.title,
+    description: pageData?.meta?.description,
+    image: mediaUrl(pageData?.meta?.image) || mediaUrl(pageData?.heroImage),
+    fallbackTitle: 'Sobre a Apollo Gestao',
+    fallbackDescription:
+      'Conheca a historia, missao e valores da Apollo Gestao em avaliacoes e controle patrimonial.',
+  })
+}
+
+export default async function SobrePage() {
+  const pageData = await getSobrePageDoc()
 
   const layout: LayoutBlock[] = pageData?.layout || []
   const richBlocks = layout.filter((block) => block.blockType === 'richContentBlock') as {

@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { ContentDownloadPanel } from '@/components/ContentDownloadPanel'
+import { JsonLd } from '@/components/JsonLd'
 import { getFallbackConteudoBySlug } from '@/lib/conteudos'
 import { getPayloadClient } from '@/lib/payload'
+import { buildBreadcrumbJsonLd, buildMetadata } from '@/lib/seo'
 import type { Conteudo } from '@/payload-types'
 
 type MediaLike = {
@@ -137,26 +139,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const data = await getConteudoData(slug)
 
   if (!data) {
-    return {
-      title: 'Conteudo nao encontrado | Apollo Gestao',
-      description: 'O conteudo solicitado nao foi encontrado.',
-    }
+    return buildMetadata({
+      path: '/conteudos',
+      fallbackTitle: 'Conteudo nao encontrado - Apollo Gestao',
+      fallbackDescription: 'O conteudo solicitado nao foi encontrado.',
+    })
   }
 
-  return {
+  return buildMetadata({
+    path: `/conteudos/${data.slug}`,
     title: data.metaTitle,
     description: data.metaDescription,
-    alternates: {
-      canonical: `/conteudos/${data.slug}`,
-    },
-    openGraph: {
-      title: data.metaTitle,
-      description: data.metaDescription,
-      type: 'article',
-      url: `/conteudos/${data.slug}`,
-      images: data.imageUrl ? [data.imageUrl] : undefined,
-    },
-  }
+    image: data.imageUrl,
+    type: 'article',
+    fallbackTitle: `${data.title} | Apollo Gestao`,
+    fallbackDescription: data.description,
+  })
 }
 
 export default async function ConteudoDetailPage({ params }: PageProps) {
@@ -167,8 +165,16 @@ export default async function ConteudoDetailPage({ params }: PageProps) {
     notFound()
   }
 
+  const canonicalPath = `/conteudos/${data.slug}`
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'Conteudos', path: '/conteudos' },
+    { name: data.title, path: canonicalPath },
+  ])
+
   return (
     <div className="bg-bg-primary text-text-primary">
+      <JsonLd id="conteudos-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <section className="relative overflow-hidden bg-bg-dark-section">
         <div className="absolute inset-0 bg-black/55" aria-hidden />
         <div

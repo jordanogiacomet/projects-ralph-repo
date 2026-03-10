@@ -4,6 +4,7 @@ import { NewsletterForm } from '@/components/NewsletterForm'
 import { PostList } from '@/components/PostList'
 import type { NewsPostCardItem } from '@/components/PostCard'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Post, User } from '@/payload-types'
 
 type MediaLike = {
@@ -12,13 +13,13 @@ type MediaLike = {
 
 const fallbackExcerpt = 'Conteúdo técnico sobre gestão e controle patrimonial.'
 
-export const metadata: Metadata = {
-  title: 'News | Apollo Gestão',
-  description:
-    'Acompanhe as publicações mais recentes da Apollo Gestão sobre avaliação, inventário e governança de ativos.',
-  alternates: {
-    canonical: '/news',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata({
+    path: '/news',
+    fallbackTitle: 'News - Apollo Gestao',
+    fallbackDescription:
+      'Acompanhe as publicacoes mais recentes da Apollo Gestao sobre avaliacao, inventario e governanca de ativos.',
+  })
 }
 
 function normalizeText(value: unknown): string {

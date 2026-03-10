@@ -838,7 +838,7 @@
     {
       "id": "US-032",
       "title": "SEO, meta tags e sitemap",
-      "passes": false,
+      "passes": true,
       "description": "Configurar SEO completo com meta tags dinâmicas, Open Graph, sitemap.xml e robots.txt.",
       "acceptanceCriteria": [
         "Meta tags dinâmicas por página: title, description vindos do campo meta de cada collection",

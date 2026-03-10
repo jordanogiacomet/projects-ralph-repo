@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Solucoe, SolucaoCategory } from '@/payload-types'
 
 type MediaLike = {
@@ -330,19 +331,15 @@ async function getSolutionPageData(): Promise<SolutionPageData> {
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSolutionPageData()
 
-  return {
+  return buildMetadata({
+    path: `/solucoes/${categorySlug}/${solutionSlug}`,
     title: data.metaTitle,
     description: data.metaDescription,
-    alternates: {
-      canonical: `/solucoes/${categorySlug}/${solutionSlug}`,
-    },
-    openGraph: {
-      title: data.metaTitle,
-      description: data.metaDescription,
-      type: 'article',
-      url: `/solucoes/${categorySlug}/${solutionSlug}`,
-    },
-  }
+    image: data.heroImage,
+    type: 'article',
+    fallbackTitle: data.metaTitle,
+    fallbackDescription: data.metaDescription,
+  })
 }
 
 export default async function AvaliacaoDeImoveisUrbanosERuraisPage() {

@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { fallbackConteudos } from '@/lib/conteudos'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Conteudo } from '@/payload-types'
 
 type MediaLike = {
@@ -20,13 +21,13 @@ type ConteudoCard = {
 
 const fallbackImageUrl = '/images/conteudos/default-cover.svg'
 
-export const metadata: Metadata = {
-  title: 'Conteudos gratuitos | Apollo Gestao',
-  description:
-    'Baixe e-books e materiais tecnicos gratuitos sobre controle patrimonial, avaliacao de ativos e conformidade contabil.',
-  alternates: {
-    canonical: '/conteudos',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata({
+    path: '/conteudos',
+    fallbackTitle: 'Conteudos Gratuitos - Apollo Gestao',
+    fallbackDescription:
+      'Baixe e-books e materiais tecnicos gratuitos sobre controle patrimonial, avaliacao de ativos e conformidade contabil.',
+  })
 }
 
 function mediaUrl(media: unknown): string | undefined {

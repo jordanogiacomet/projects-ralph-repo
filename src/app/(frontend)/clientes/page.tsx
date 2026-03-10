@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
+
 import {
   ClientsPage,
   type ClientCardItem,
   type ClientSegmentFilter,
 } from '@/components/ClientsPage'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Cliente, ClienteSegmento } from '@/payload-types'
 
 type MediaLike = {
@@ -14,6 +17,14 @@ type SegmentData = {
   id: string
   key: string
   label: string
+}
+
+type PageDoc = {
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
 }
 
 const heroTitle = 'Conheça alguns dos nossos Principais Clientes'
@@ -58,6 +69,11 @@ function mediaUrl(media: unknown): string | undefined {
   return undefined
 }
 
+function normalizeText(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  return value.replace(/\s+/g, ' ').trim()
+}
+
 function normalizeSegmentKey(value: string): string {
   return value
     .normalize('NFD')
@@ -80,6 +96,39 @@ function buildFilters(clients: ClientCardItem[], segments: SegmentData[]): Clien
   }
 
   return filters
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  let title: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+
+  try {
+    const payload = await getPayloadClient()
+    const pageResult = await payload.find({
+      collection: 'pages',
+      limit: 1,
+      where: { slug: { equals: 'clientes' } },
+      depth: 1,
+    })
+
+    const pageData = pageResult.docs[0] as PageDoc | undefined
+    title = normalizeText(pageData?.meta?.title) || undefined
+    description = normalizeText(pageData?.meta?.description) || undefined
+    image = mediaUrl(pageData?.meta?.image)
+  } catch {
+    // Payload can be unavailable during static build in sandboxed environments.
+  }
+
+  return buildMetadata({
+    path: '/clientes',
+    title,
+    description,
+    image,
+    fallbackTitle: 'Clientes - Apollo Gestao',
+    fallbackDescription:
+      'Conheca alguns dos principais clientes da Apollo Gestao em projetos de avaliacao e controle patrimonial.',
+  })
 }
 
 export default async function ClientesPageRoute() {

@@ -1,9 +1,17 @@
+import type { Metadata } from 'next'
+
 import { SolutionsHubPage, type SolutionFilter } from '@/components/SolutionsHubPage'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Solucoe, SolucaoCategory } from '@/payload-types'
 
 type PageDoc = {
   heroTitle?: unknown
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
 }
 
 type MediaLike = {
@@ -174,6 +182,11 @@ function normalize(value: string): string {
     .trim()
 }
 
+function normalizeText(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  return value.replace(/\s+/g, ' ').trim()
+}
+
 function buildFilterKeys(solution: Solucoe): string[] {
   const keys = new Set<string>(['all'])
   const categorySlug = typeof solution.category === 'object' ? solution.category.slug : ''
@@ -215,6 +228,39 @@ function buildFilters(solutions: SolutionData[]): SolutionFilter[] {
       }
     })
     .filter((filter) => filter.key === 'all' || filter.count > 0)
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  let title: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+
+  try {
+    const payload = await getPayloadClient()
+    const pageResult = await payload.find({
+      collection: 'pages',
+      limit: 1,
+      where: { slug: { equals: 'solucoes' } },
+      depth: 1,
+    })
+
+    const pageData = pageResult.docs[0] as PageDoc | undefined
+    title = normalizeText(pageData?.meta?.title) || undefined
+    description = normalizeText(pageData?.meta?.description) || undefined
+    image = mediaUrl(pageData?.meta?.image)
+  } catch {
+    // Payload may be unavailable during static builds in sandboxed environments.
+  }
+
+  return buildMetadata({
+    path: '/solucoes',
+    title,
+    description,
+    image,
+    fallbackTitle: 'Solucoes para Gestao Patrimonial',
+    fallbackDescription:
+      'Conheca as solucoes da Apollo Gestao para controle patrimonial, consultoria tecnica e avaliacao de ativos.',
+  })
 }
 
 export default async function SolucoesPage() {

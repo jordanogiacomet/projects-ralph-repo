@@ -1,6 +1,9 @@
+import type { Metadata } from 'next'
+
 import { ContatoForm } from '@/components/ContatoForm'
 import { SolutionGrid, type SolutionItem } from '@/components/SolutionGrid'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 import type { Solucoe, SolucaoCategory } from '@/payload-types'
 
 type MediaLike = {
@@ -8,6 +11,14 @@ type MediaLike = {
 }
 
 type SolutionData = SolutionItem
+
+type PageDoc = {
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
+}
 
 const categorySlug = 'avaliacao-patrimonial'
 const orderedSolutionSlugs = [
@@ -53,6 +64,53 @@ function mediaUrl(media: unknown): string | undefined {
   }
 
   return undefined
+}
+
+function normalizeText(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  return value.replace(/\s+/g, ' ').trim()
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  let title: string | undefined
+  let description: string | undefined
+  let image: string | undefined
+
+  try {
+    const payload = await getPayloadClient()
+    const [pageResult, categoryResult] = await Promise.all([
+      payload.find({
+        collection: 'pages',
+        limit: 1,
+        where: { slug: { equals: categorySlug } },
+        depth: 1,
+      }),
+      payload.find({
+        collection: 'solucao-categories',
+        limit: 1,
+        where: { slug: { equals: categorySlug } },
+        depth: 1,
+      }),
+    ])
+
+    const pageData = pageResult.docs[0] as PageDoc | undefined
+    const category = categoryResult.docs[0] as SolucaoCategory | undefined
+
+    title = normalizeText(pageData?.meta?.title) || normalizeText(category?.title) || undefined
+    description = normalizeText(pageData?.meta?.description) || normalizeText(category?.description) || undefined
+    image = mediaUrl(pageData?.meta?.image) || mediaUrl(category?.heroImage)
+  } catch {
+    // Payload may be unavailable during static builds in sandboxed environments.
+  }
+
+  return buildMetadata({
+    path: '/solucoes/avaliacao-patrimonial',
+    title,
+    description,
+    image,
+    fallbackTitle: 'Avaliacao Patrimonial',
+    fallbackDescription: fallbackHeroSubtitle,
+  })
 }
 
 export default async function AvaliacaoPatrimonialPage() {

@@ -1,5 +1,8 @@
+import type { Metadata } from 'next'
+
 import { HomePage } from '@/components/HomePage'
 import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 
 type MediaLike = {
   url?: string | null
@@ -17,6 +20,11 @@ type HomePageDoc = {
   heroCTALabel?: string
   heroCTALink?: string
   layout?: LayoutBlock[]
+  meta?: {
+    title?: string
+    description?: string
+    image?: unknown
+  }
 }
 
 function mediaUrl(media: unknown): string | undefined {
@@ -77,9 +85,7 @@ const fallbackServices = [
   },
 ]
 
-export default async function Home() {
-  let pageData: HomePageDoc | undefined
-
+async function getHomePageDoc(): Promise<HomePageDoc | undefined> {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
@@ -88,10 +94,28 @@ export default async function Home() {
       where: { slug: { equals: 'home' } },
     })
 
-    pageData = result.docs[0] as HomePageDoc | undefined
+    return result.docs[0] as HomePageDoc | undefined
   } catch {
-    // Payload may not be reachable during build time in sandboxed environments.
+    return undefined
   }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const pageData = await getHomePageDoc()
+
+  return buildMetadata({
+    path: '/',
+    title: pageData?.meta?.title,
+    description: pageData?.meta?.description,
+    image: mediaUrl(pageData?.meta?.image) || mediaUrl(pageData?.heroImage),
+    fallbackTitle: 'Apollo Gestao - Avaliacoes e Controle Patrimonial',
+    fallbackDescription:
+      'Gerenciamento inteligente de ativos com solucoes em controle e avaliacao patrimonial.',
+  })
+}
+
+export default async function Home() {
+  const pageData = await getHomePageDoc()
 
   const layout: LayoutBlock[] = pageData?.layout || []
   const serviceCardsBlock = layout.find((block) => block.blockType === 'serviceCardsBlock') as
