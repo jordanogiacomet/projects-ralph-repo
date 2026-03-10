@@ -1302,7 +1302,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Revisão visual das páginas principais",
-      "passes": false,
+      "passes": true,
       "description": "Auditar páginas principais para garantir consistência com o redesign.",
       "acceptanceCriteria": [
         "Home revisada para spacing, grids e hierarquia visual",

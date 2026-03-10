@@ -562,3 +562,63 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Reusable interaction polish should land in the shared motion utility layer first, then be consumed by primitives and high-traffic cards instead of reintroducing hardcoded `duration-*` or transform classes in individual templates.
   - Full-card links need shell-level `focus-within` handling so keyboard states read with the same visual emphasis as hover states.
 ---
+## 2026-03-10 20:14 UTC - US-049F
+- **Story:** Revisao visual das paginas principais
+- **Status:** In progress, not complete
+- **What was implemented:**
+  - Rebuilt `/sobre` so the page now uses the same phase-2 composition language as the redesigned homepage, clientes, contato, and solucoes templates: darker hero framing, stronger CTA hierarchy, overlapped narrative panel, clearer institutional cards, and a refined closing contact bridge
+  - Reworked `MissaoVisaoValores` into a premium two-column editorial surface with active-state navigation, stronger slide presentation, and better integration with the rest of the about-page system instead of the older standalone carousel block
+  - Audited the other primary templates covered by `US-049F` and kept code changes scoped to the remaining visibly outdated surface rather than reopening already-aligned routes
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — redesigned hero, narrative sections, institutional proof cards, CTA framing, and route-level spacing/hierarchy
+  - `src/components/MissaoVisaoValores.tsx` — redesigned the mission/vision/values surface, navigation states, and slide presentation
+- **Visual rationale:**
+  - `/sobre` was the clearest remaining phase-1-style outlier among the audited primary pages, especially in hero treatment, institutional storytelling, and CTA composition
+  - This pass brings the page back into the current Payload-inspired but Apollo-appropriate system without introducing new product behavior or reopening CMS modeling
+- **Affected shared components:** `MissaoVisaoValores` now behaves like a phase-2 shared content surface rather than a legacy isolated carousel
+- **Responsive impact:** The about page now collapses from split hero and narrative compositions into stacked mobile flows while preserving card spacing, CTA clarity, and readable content rhythm
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible slider controls, reduced-motion gating for slide transitions/drag behavior, and decorative backgrounds remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js sandbox error `unhandledRejection Error: Cannot find module './8548.js'` from `.next/server/webpack-runtime.js`
+  - Retried `npm run build` once as required: failed again with the same transient Next.js sandbox error while collecting page data
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/sobre` across desktop/tablet/mobile, especially hero readability, overlap spacing, CTA emphasis, and slider controls
+- **Outcome:** `prd.json` was not updated and no commit was created because the required build check did not pass in the current environment
+- **Learnings for future iterations:**
+  - A late-phase visual audit can stay safely scoped by correcting the last obviously outdated template instead of reworking already-aligned routes just to show broader file churn
+  - The current sandbox still intermittently fails Next production builds with missing `.next/server` module artifacts during page-data collection; this must be resolved or bypassed before `US-049F` can be marked complete
+---
+## 2026-03-10 20:22 UTC - US-049F
+- **Story:** Revisao visual das paginas principais
+- **Status:** Complete
+- **What was implemented:**
+  - Finalized the `/sobre` redesign already scoped in the working tree so the page now matches the phase-2 hierarchy used across homepage, clientes, contato, and solucoes templates
+  - Kept the code changes intentionally narrow to the last visibly outdated primary page and its institutional slider surface, while confirming the other audited main routes were already aligned with the redesign baseline
+  - Revalidated the current state end to end and completed story closure after the required build retry succeeded
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — redesigned hero, narrative bridge, institutional proof cards, history section, and closing CTA composition
+  - `src/components/MissaoVisaoValores.tsx` — upgraded the mission/vision/values module into a shared phase-2 editorial surface with stronger active states and slide presentation
+  - `prd.json` — marked `US-049F` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - `/sobre` was the remaining main-page outlier relative to the already polished homepage, clientes, contato, and solucoes routes
+  - Updating that page was sufficient to remove the last obvious phase-1 visual drift without reopening already-consistent templates or introducing unrelated product work
+- **Affected shared components:** `MissaoVisaoValores` now reads as a reusable phase-2 institutional content module instead of a legacy carousel block
+- **Responsive impact:** The about page preserves the new split compositions on desktop and collapses cleanly into stacked mobile sections without losing CTA clarity or content rhythm
+- **Accessibility impact:** Preserved heading hierarchy, keyboard-accessible slider controls, reduced-motion handling for transitions/drag behavior, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js `PageNotFoundError` for `/solucoes/avaliacao-patrimonial`
+  - Retried `npm run build` once as required: passed and generated all 35 static pages, including `/sobre`, `/clientes`, `/contato`, and `/solucoes`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/sobre` and the audited primary templates across desktop/tablet/mobile, especially hero readability, overlap spacing, CTA emphasis, and slider controls
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and commit created after checks passed
+- **Learnings for future iterations:**
+  - Late-stage visual review can stay precise by correcting the last outlier template instead of forcing broad churn across pages that already satisfy the active phase-2 bar
+  - The intermittent Next build failure for missing solution-route modules can clear on retry, so the required second build attempt remains necessary evidence before treating the issue as a hard blocker
+---
