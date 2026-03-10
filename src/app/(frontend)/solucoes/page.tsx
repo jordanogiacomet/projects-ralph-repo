@@ -24,6 +24,7 @@ type SolutionData = {
   description: string
   href: string
   iconUrl?: string
+  categoryLabel?: string
   filterKeys: string[]
 }
 
@@ -37,6 +38,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Identificação Patrimonial',
     description: 'Etiquetagem e padronização para rastreabilidade dos ativos.',
     href: '/solucoes/controle-patrimonial/identificacao-patrimonial',
+    categoryLabel: 'Controle Patrimonial',
     filterKeys: ['all', 'controle-patrimonial'],
   },
   {
@@ -44,6 +46,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Controle e Inventário de Estoques',
     description: 'Inventário técnico para maior acuracidade e governança de estoque.',
     href: '/solucoes/controle-patrimonial/controle-e-inventario-de-estoques',
+    categoryLabel: 'Controle Patrimonial',
     filterKeys: ['all', 'controle-patrimonial'],
   },
   {
@@ -51,6 +54,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Organização Patrimonial',
     description: 'Estruturação de base patrimonial com dados confiáveis.',
     href: '/solucoes/controle-patrimonial/organizacao-patrimonial',
+    categoryLabel: 'Controle Patrimonial',
     filterKeys: ['all', 'controle-patrimonial'],
   },
   {
@@ -58,6 +62,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Processamento Patrimonial',
     description: 'Conciliação e saneamento de informações patrimoniais.',
     href: '/solucoes/controle-patrimonial/processamento-patrimonial',
+    categoryLabel: 'Controle Patrimonial',
     filterKeys: ['all', 'controle-patrimonial'],
   },
   {
@@ -65,6 +70,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Teste de Impairment',
     description: 'Análise de recuperabilidade em conformidade com normas contábeis.',
     href: '/solucoes/consultoria-e-tecnologia/teste-de-impairment',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'consultoria-ifrs'],
   },
   {
@@ -72,6 +78,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Revisão da Vida Útil',
     description: 'Revisões técnicas para aderência ao CPC 27 e melhor depreciação.',
     href: '/solucoes/consultoria-e-tecnologia/revisao-da-vida-util',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'consultoria-ifrs'],
   },
   {
@@ -79,6 +86,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Arrendamento Mercantil (CPC 06 / IFRS 16)',
     description: 'Modelagem e suporte para contratos de leasing e IFRS 16.',
     href: '/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'consultoria-ifrs'],
   },
   {
@@ -86,6 +94,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Combinação de Negócios (PPA) – CPC 15',
     description: 'Alocação de preço de compra e suporte técnico para M&A.',
     href: '/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'consultoria-ifrs'],
   },
   {
@@ -93,6 +102,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Ativos Inteligentes RFID e RTLS',
     description: 'Monitoramento em tempo real para ativos críticos.',
     href: '/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-e-rtls',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'tecnologia'],
   },
   {
@@ -100,6 +110,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Softwares',
     description: 'Plataformas para inventário, rastreio e gestão de ativos.',
     href: '/solucoes/consultoria-e-tecnologia/softwares',
+    categoryLabel: 'Consultoria e Tecnologia',
     filterKeys: ['all', 'consultoria-e-tecnologia', 'tecnologia'],
   },
   {
@@ -107,6 +118,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Avaliação de Ativos',
     description: 'Laudos técnicos para valor justo e suporte estratégico.',
     href: '/solucoes/avaliacao-patrimonial/avaliacao-de-ativos',
+    categoryLabel: 'Avaliacao Patrimonial',
     filterKeys: ['all', 'avaliacao-patrimonial'],
   },
   {
@@ -114,6 +126,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Avaliação de Ativos Biológicos',
     description: 'Valoração especializada para operações do agronegócio.',
     href: '/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos',
+    categoryLabel: 'Avaliacao Patrimonial',
     filterKeys: ['all', 'avaliacao-patrimonial'],
   },
   {
@@ -121,6 +134,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Avaliação de Imóveis Urbanos e Rurais',
     description: 'Pareceres técnicos em conformidade com normas aplicáveis.',
     href: '/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais',
+    categoryLabel: 'Avaliacao Patrimonial',
     filterKeys: ['all', 'avaliacao-patrimonial'],
   },
   {
@@ -128,6 +142,7 @@ const fallbackSolutions: SolutionData[] = [
     title: 'Avaliação de Máquinas',
     description: 'Diagnóstico técnico para ativos industriais e operacionais.',
     href: '/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas',
+    categoryLabel: 'Avaliacao Patrimonial',
     filterKeys: ['all', 'avaliacao-patrimonial'],
   },
 ]
@@ -307,15 +322,16 @@ export default async function SolucoesPage() {
 
         return [
           {
-          id: String(solution.id),
-          title: solution.title,
-          description: solution.shortDescription || 'Solução especializada para gestão de ativos.',
-          href: `/solucoes/${category.slug}/${solution.slug}`,
-          iconUrl: mediaUrl(solution.icon),
-          filterKeys: buildFilterKeys({
-            ...solution,
-            category,
-          }),
+            id: String(solution.id),
+            title: solution.title,
+            description: solution.shortDescription || 'Solução especializada para gestão de ativos.',
+            href: `/solucoes/${category.slug}/${solution.slug}`,
+            iconUrl: mediaUrl(solution.icon),
+            categoryLabel: category.title,
+            filterKeys: buildFilterKeys({
+              ...solution,
+              category,
+            }),
           },
         ]
       })

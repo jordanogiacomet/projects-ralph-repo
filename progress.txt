@@ -651,3 +651,35 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Public-form standardization can stay safely within redesign scope when payload contracts remain unchanged and only the route composition plus shared form primitives are upgraded
   - If a route-level redesign lands before its underlying client form component, the page can look complete while the critical interaction remains out of family; future contact stories should always validate both layers together
 ---
+## 2026-03-10 17:37 UTC - US-046A
+- **Story:** Repaginacao da pagina `/solucoes`
+- **What was implemented:**
+  - Rebuilt the `/solucoes` hub around a stronger phase-2 composition with a darker editorial hero, consultive trust framing, an overlaid introduction/filter panel, a clearer solutions count summary, and a more deliberate bridge into contact
+  - Upgraded the hub filtering treatment so the category chips read as modern interface controls with clearer active state feedback, preserved counters, and stronger visual integration with the design-system surfaces already used across the redesigned shell and homepage
+  - Added a hub-specific premium card presentation for solution listings, including better spacing, category context, refined icon treatment, and a more polished CTA hierarchy while keeping the default shared grid behavior intact for non-hub routes
+- **Files changed:**
+  - `src/app/(frontend)/solucoes/page.tsx` — added category labels to mapped solution data so the redesigned hub cards can surface clearer context without changing CMS schema
+  - `src/components/SolutionsHubPage.tsx` — redesigned the `/solucoes` hero, intro/filter surface, grid framing, and consultive contact bridge
+  - `src/components/SolutionFilterTabs.tsx` — refined filter chips with better spacing, shadow treatment, and explicit active-state semantics
+  - `src/components/SolutionGrid.tsx` — added a hub-specific `variant="hub"` card treatment while preserving the default grid used by existing category pages
+  - `prd.json` — marked the selected `US-046A` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The old hub worked functionally but still read as a straightforward catalog. This pass moves it closer to a consultive solutions map with clearer hierarchy, more whitespace, better contrast between surfaces, and card treatment that feels closer to a premium product interface
+  - The redesign keeps Apollo institutional and commercially direct, but translates the Payload-inspired language through calmer gradients, stronger typography, refined chips, and more intentional section transitions instead of decorative effects
+- **Affected shared components:** `SolutionsHubPage`, `SolutionFilterTabs`, and `SolutionGrid` now carry the new hub treatment; `SolutionGrid` was extended with a scoped hub variant so unfinished category-hub stories can continue independently
+- **Responsive impact:** The hero, intro/filter surface, and contact area now collapse from split desktop compositions into single-column tablet/mobile layouts with preserved chip scrolling, readable card spacing, and cleaner vertical rhythm
+- **Accessibility impact:** Preserved semantic headings, keyboard-accessible filter buttons, visible active-state semantics via `aria-pressed`, reduced-motion gating for animated sections/cards, and decorative backgrounds marked `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - First `npx tsc --noEmit`: failed because `.next/types` entries were missing, matching the known repository validation note
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed with the known transient Next.js sandbox issue (`PageNotFoundError: /_document` after `Collecting page data`)
+  - Retried `npm run build` once as required: passed and generated `/solucoes`
+  - Final `npx tsc --noEmit`: passed after the successful Next build regenerated `.next/types`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` across desktop/tablet/mobile, including hero overlap spacing, filter-chip behavior, grid hover states, and the consultive contact bridge
+- **Learnings for future iterations:**
+  - Shared listing components can absorb redesign scope safely when the new treatment is isolated behind an explicit variant instead of forcing unfinished templates onto the same visual step prematurely
+  - In this repository, practical type validation may need to happen after a successful Next build refreshes `.next/types`, even when the TypeScript pass is listed earlier in the nominal command order
+---

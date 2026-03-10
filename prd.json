@@ -1155,7 +1155,7 @@
       "phase": "phase-2-redesign",
       "stream": "solutions",
       "title": "Repaginação da página /solucoes",
-      "passes": false,
+      "passes": true,
       "description": "Redesenhar a página hub de soluções para ser menos mecânica e mais consultiva.",
       "acceptanceCriteria": [
         "Hero, introdução, filtros e grid alinhados ao design system",
