@@ -5,17 +5,25 @@ import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
 import { JsonLd } from '@/components/JsonLd'
+import { NewsletterForm } from '@/components/NewsletterForm'
+import { PostCard } from '@/components/PostCard'
+import { Badge, Button, Container, SectionHeading } from '@/components/ui'
+import {
+  fallbackNewsExcerpt,
+  formatDateLabel,
+  mapPostToNewsPostCardItem,
+  normalizeText,
+  type NewsPostCardItem,
+  richTextToPlainText,
+  toISODate,
+} from '@/lib/news'
 import { getPayloadClient } from '@/lib/payload'
 import {
   buildArticleJsonLd,
   buildBreadcrumbJsonLd,
   buildMetadata,
 } from '@/lib/seo'
-import type { Post, User } from '@/payload-types'
-
-type MediaLike = {
-  url?: string | null
-}
+import type { Post } from '@/payload-types'
 
 type LexicalNode = {
   type?: string
@@ -34,6 +42,7 @@ type PageProps = {
 }
 
 type NewsPostPageData = {
+  id: string
   title: string
   slug: string
   excerpt: string
@@ -42,96 +51,18 @@ type NewsPostPageData = {
   publishedAtLabel: string
   publishedAtISO?: string
   updatedAtISO?: string
+  updatedAtLabel: string
+  categories: string[]
+  readingTimeLabel: string
   content?: unknown
   metaTitle: string
   metaDescription: string
+  related: NewsPostCardItem[]
 }
 
-const fallbackExcerpt = 'Conteúdo técnico sobre gestão e controle patrimonial.'
 const siteOrigin =
   (process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_SITE_URL)?.replace(/\/+$/, '') ||
   'https://www.apollogestao.com.br'
-
-function normalizeText(value: unknown): string {
-  if (typeof value !== 'string') return ''
-  return value.replace(/\s+/g, ' ').trim()
-}
-
-function mediaUrl(media: unknown): string | undefined {
-  if (media && typeof media === 'object' && 'url' in media) {
-    return (media as MediaLike).url || undefined
-  }
-
-  return undefined
-}
-
-function richTextToPlainText(value: unknown): string {
-  if (!value || typeof value !== 'object') return ''
-
-  const stack: unknown[] = [value]
-  const textParts: string[] = []
-
-  while (stack.length > 0) {
-    const node = stack.pop()
-    if (!node || typeof node !== 'object') continue
-
-    if ('text' in node && typeof (node as { text?: unknown }).text === 'string') {
-      textParts.push((node as { text: string }).text)
-    }
-
-    if ('children' in node && Array.isArray((node as { children?: unknown[] }).children)) {
-      stack.push(...((node as { children: unknown[] }).children))
-    }
-
-    if ('root' in node && (node as { root?: unknown }).root) {
-      stack.push((node as { root: unknown }).root)
-    }
-  }
-
-  return textParts.reverse().join(' ').replace(/\s+/g, ' ').trim()
-}
-
-function withTruncatedText(value: string, maxLength: number): string {
-  if (value.length <= maxLength) return value
-  return `${value.slice(0, maxLength - 1).trimEnd()}…`
-}
-
-function formatDateLabel(value: unknown): string {
-  const source = normalizeText(value)
-  if (!source) return 'Sem data'
-
-  const date = new Date(source)
-  if (Number.isNaN(date.getTime())) return 'Sem data'
-
-  return new Intl.DateTimeFormat('pt-BR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
-
-function toISODate(value: unknown): string | undefined {
-  const source = normalizeText(value)
-  if (!source) return undefined
-
-  const date = new Date(source)
-  if (Number.isNaN(date.getTime())) return undefined
-
-  return date.toISOString()
-}
-
-function resolveAuthorName(author: Post['author']): string {
-  if (author && typeof author === 'object') {
-    const user = author as User
-    const name = normalizeText(user.name)
-    if (name) return name
-
-    const email = normalizeText(user.email)
-    if (email) return email
-  }
-
-  return 'Equipe Apollo Gestão'
-}
 
 function getRootChildren(value: unknown): LexicalNode[] {
   if (!value || typeof value !== 'object') return []
@@ -161,7 +92,7 @@ function renderInline(children: LexicalNode[] | undefined, keyPrefix: string): R
         <a
           key={key}
           href={href || '#'}
-          className="font-medium text-accent underline-offset-2 hover:underline"
+          className="font-semibold text-accent underline-offset-4 transition hover:text-accent-hover hover:underline"
         >
           {renderInline(child.children, `${key}-link`) || 'Link'}
         </a>
@@ -188,7 +119,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
     if (tag === 'h3') {
       return (
-        <h3 key={key} className="mt-8 text-2xl font-bold text-text-primary">
+        <h3 key={key} className="mt-10 font-display text-heading-xl font-semibold text-text-primary">
           {renderInline(node.children, `${key}-h3`)}
         </h3>
       )
@@ -196,14 +127,14 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
     if (tag === 'h4') {
       return (
-        <h4 key={key} className="mt-7 text-xl font-semibold text-text-primary">
+        <h4 key={key} className="mt-8 text-xl font-semibold text-text-primary">
           {renderInline(node.children, `${key}-h4`)}
         </h4>
       )
     }
 
     return (
-      <h2 key={key} className="mt-8 text-3xl font-bold text-text-primary">
+      <h2 key={key} className="mt-12 font-display text-heading-2xl font-semibold text-text-primary">
         {renderInline(node.children, `${key}-h2`)}
       </h2>
     )
@@ -213,7 +144,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
     return (
       <blockquote
         key={key}
-        className="mt-6 rounded-xl border-l-4 border-accent bg-accent-light/50 px-5 py-4 italic text-text-primary"
+        className="mt-8 rounded-panel border border-border bg-surface-secondary px-6 py-5 text-body-md italic text-text-primary shadow-soft"
       >
         {renderInline(node.children, `${key}-quote`)}
       </blockquote>
@@ -229,8 +160,8 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
         key={key}
         className={
           node.listType === 'number'
-            ? 'mt-5 list-decimal space-y-2 pl-6 text-text-secondary'
-            : 'mt-5 list-disc space-y-2 pl-6 text-text-secondary'
+            ? 'mt-6 list-decimal space-y-3 pl-6 text-body-md text-text-secondary'
+            : 'mt-6 list-disc space-y-3 pl-6 text-body-md text-text-secondary'
         }
       >
         {listChildren.map((item, itemIndex) => (
@@ -244,7 +175,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
   if (node.type === 'paragraph') {
     return (
-      <p key={key} className="mt-5 leading-relaxed text-text-secondary">
+      <p key={key} className="mt-6 text-body-lg leading-8 text-text-secondary">
         {renderInline(node.children, `${key}-p`)}
       </p>
     )
@@ -252,7 +183,7 @@ function renderBlock(node: LexicalNode, index: number): ReactNode {
 
   if (Array.isArray(node.children) && node.children.length > 0) {
     return (
-      <p key={key} className="mt-5 leading-relaxed text-text-secondary">
+      <p key={key} className="mt-6 text-body-lg leading-8 text-text-secondary">
         {renderInline(node.children, `${key}-fallback`)}
       </p>
     )
@@ -265,7 +196,7 @@ function renderRichContent(value: unknown): ReactNode {
   const blocks = getRootChildren(value)
 
   if (blocks.length === 0) {
-    return <p className="mt-5 leading-relaxed text-text-secondary">{fallbackExcerpt}</p>
+    return <p className="mt-6 text-body-lg leading-8 text-text-secondary">{fallbackNewsExcerpt}</p>
   }
 
   return blocks.map((node, index) => renderBlock(node, index))
@@ -274,45 +205,59 @@ function renderRichContent(value: unknown): ReactNode {
 async function getPostData(slug: string): Promise<NewsPostPageData | null> {
   try {
     const payload = await getPayloadClient()
-    const result = await payload.find({
-      collection: 'posts',
-      limit: 1,
-      where: {
-        and: [
-          {
-            slug: {
-              equals: slug,
+    const [result, recentResult] = await Promise.all([
+      payload.find({
+        collection: 'posts',
+        limit: 1,
+        where: {
+          and: [
+            {
+              slug: {
+                equals: slug,
+              },
             },
-          },
-          {
-            status: {
-              equals: 'published',
+            {
+              status: {
+                equals: 'published',
+              },
             },
+          ],
+        },
+        depth: 1,
+      }),
+      payload.find({
+        collection: 'posts',
+        limit: 5,
+        where: {
+          status: {
+            equals: 'published',
           },
-        ],
-      },
-      depth: 1,
-    })
+        },
+        sort: '-publishedAt',
+        depth: 1,
+      }),
+    ])
 
     const post = result.docs[0] as Post | undefined
     if (!post) return null
 
-    const excerpt =
-      normalizeText(post.excerpt) || withTruncatedText(richTextToPlainText(post.content), 180) || fallbackExcerpt
-    const title = post.title || 'Publicação'
+    const summary = mapPostToNewsPostCardItem(post)
+    const related = (recentResult.docs as Post[])
+      .filter(
+        (item) =>
+          item.id !== post.id && typeof item.slug === 'string' && item.slug.length > 0,
+      )
+      .map(mapPostToNewsPostCardItem)
+      .slice(0, 3)
 
     return {
-      title,
-      slug,
-      excerpt,
-      imageUrl: mediaUrl(post.featuredImage) || mediaUrl(post.meta?.image),
-      authorName: resolveAuthorName(post.author),
-      publishedAtLabel: formatDateLabel(post.publishedAt || post.createdAt),
-      publishedAtISO: toISODate(post.publishedAt || post.createdAt),
+      ...summary,
       updatedAtISO: toISODate(post.updatedAt),
+      updatedAtLabel: formatDateLabel(post.updatedAt || post.createdAt),
       content: post.content,
-      metaTitle: normalizeText(post.meta?.title) || `${title} | Apollo Gestão`,
-      metaDescription: normalizeText(post.meta?.description) || excerpt,
+      metaTitle: normalizeText(post.meta?.title) || `${summary.title} | Apollo Gestão`,
+      metaDescription: normalizeText(post.meta?.description) || summary.excerpt,
+      related,
     }
   } catch {
     // Payload can be unavailable during static build in sandboxed environments.
@@ -391,79 +336,293 @@ export default async function NewsPostPage({ params }: PageProps) {
     <div className="bg-bg-primary text-text-primary">
       <JsonLd id="news-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <JsonLd id="news-article-jsonld" data={articleJsonLd} />
-      <section className="relative overflow-hidden bg-bg-dark-section">
-        <div className="absolute inset-0 bg-black/55" aria-hidden />
+      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-24 sm:pb-28 sm:pt-28 lg:pb-32 lg:pt-32">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(160deg, rgba(8,14,26,0.94) 0%, rgba(12,22,38,0.86) 42%, rgba(8,14,26,0.98) 100%)',
+          }}
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at 16% 16%, rgba(0, 86, 166, 0.32), transparent 42%), radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.12), transparent 34%)',
+              'radial-gradient(circle at 16% 18%, rgba(0, 86, 166, 0.34), transparent 36%), radial-gradient(circle at 82% 14%, rgba(255, 255, 255, 0.12), transparent 26%), radial-gradient(circle at 52% 92%, rgba(40, 167, 69, 0.12), transparent 28%)',
           }}
           aria-hidden
         />
-        <div className="relative mx-auto max-w-6xl px-4 py-14 text-text-on-dark sm:px-6 lg:px-8 lg:py-20">
-          <nav aria-label="Breadcrumb" className="text-sm text-white/80">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden>›</li>
-              <li>
-                <Link href="/news" className="hover:text-white">
-                  News
-                </Link>
-              </li>
-              <li aria-hidden>›</li>
-              <li className="text-white">{post.title}</li>
-            </ol>
-          </nav>
+        <Container className="relative z-10">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:items-end">
+            <div className="max-w-3xl text-text-on-dark">
+              <nav aria-label="Breadcrumb" className="text-sm text-white/78">
+                <ol className="flex flex-wrap items-center gap-2">
+                  <li>
+                    <Link href="/" className="hover:text-white">
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden>›</li>
+                  <li>
+                    <Link href="/news" className="hover:text-white">
+                      News
+                    </Link>
+                  </li>
+                  <li aria-hidden>›</li>
+                  <li className="text-white">{post.title}</li>
+                </ol>
+              </nav>
 
-          <h1 className="mt-6 max-w-5xl text-3xl font-bold leading-tight sm:text-5xl">{post.title}</h1>
-
-          <p className="mt-4 text-sm font-medium text-white/90">
-            {post.publishedAtLabel} · {post.authorName}
-          </p>
-        </div>
-      </section>
-
-      <section className="py-14 sm:py-16">
-        <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {post.imageUrl ? (
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border bg-accent-light shadow-sm">
-              <Image
-                src={post.imageUrl}
-                alt={post.title}
-                fill
-                sizes="(min-width: 1024px) 80vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          ) : null}
-
-          <div className="mt-8 rounded-2xl border border-border bg-white px-6 py-7 shadow-sm sm:px-8 sm:py-9">
-            {renderRichContent(post.content)}
-
-            <div className="mt-12 border-t border-border pt-7">
-              <h2 className="text-lg font-semibold text-text-primary">Compartilhar em redes sociais</h2>
-              <div className="mt-4 flex flex-wrap gap-3">
-                {shareLinks.map((share) => (
-                  <a
-                    key={share.label}
-                    href={share.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-accent hover:text-accent"
+              <div className="mt-6 flex flex-wrap gap-2">
+                <Badge className="border border-white/12 bg-white/[0.08] text-white/78 shadow-[0_14px_35px_rgba(8,14,26,0.2)]">
+                  News Apollo
+                </Badge>
+                {post.categories.slice(0, 2).map((category) => (
+                  <Badge
+                    key={category}
+                    className="border border-white/12 bg-white/[0.08] text-white/78 shadow-[0_14px_35px_rgba(8,14,26,0.2)]"
                   >
-                    {share.label}
-                  </a>
+                    {category}
+                  </Badge>
                 ))}
               </div>
+
+              <h1 className="mt-6 font-display text-display-md font-extrabold tracking-tight text-white">
+                {post.title}
+              </h1>
+              <p className="mt-5 max-w-2xl text-body-lg text-white/74">{post.excerpt}</p>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                    Publicacao
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">{post.publishedAtLabel}</p>
+                </div>
+                <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                    Leitura
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">{post.readingTimeLabel}</p>
+                </div>
+                <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                    Autor
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">{post.authorName}</p>
+                </div>
+              </div>
+            </div>
+
+            <aside className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-6 text-white shadow-[0_24px_65px_rgba(8,14,26,0.26)] backdrop-blur-sm sm:p-7">
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 38%, rgba(0,86,166,0.16) 100%)',
+                }}
+                aria-hidden
+              />
+              <div className="relative">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                  Resumo editorial
+                </p>
+
+                <div className="mt-6 grid gap-3">
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                      Atualizado
+                    </p>
+                    <p className="mt-2 font-display text-heading-lg font-bold text-white">
+                      {post.updatedAtLabel}
+                    </p>
+                  </div>
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                      Editorias
+                    </p>
+                    <p className="mt-2 font-display text-heading-lg font-bold text-white">
+                      {post.categories.length > 0 ? post.categories.length : 1}
+                    </p>
+                  </div>
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                      Conversao
+                    </p>
+                    <p className="mt-2 font-display text-heading-lg font-bold text-white">
+                      Leitura + acao
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mt-6 text-sm leading-relaxed text-white/68">
+                  O detalhe foi reorganizado para equilibrar imagem, metadata, leitura e proximos
+                  passos sem tratar o artigo como um simples texto corrido.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </Container>
+      </section>
+
+      <section className="relative z-10 -mt-10 sm:-mt-14">
+        <Container>
+          <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
+            <article className="overflow-hidden rounded-[1.75rem] border border-border bg-white shadow-strong">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-accent-light/60">
+                {post.imageUrl ? (
+                  <Image
+                    src={post.imageUrl}
+                    alt={post.title}
+                    fill
+                    sizes="(min-width: 1280px) 62vw, (min-width: 768px) 100vw, 100vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(8,14,26,0.96)_0%,rgba(12,22,38,0.88)_48%,rgba(0,86,166,0.62)_100%)]" />
+                )}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(25deg, rgba(15,23,42,0.08) 0%, rgba(15,23,42,0) 44%, rgba(255,255,255,0.2) 100%)',
+                  }}
+                  aria-hidden
+                />
+                {!post.imageUrl ? (
+                  <div className="absolute inset-0 flex items-end p-8">
+                    <div className="max-w-xl">
+                      <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                        News Apollo
+                      </p>
+                      <p className="mt-4 font-display text-heading-2xl font-semibold text-white">
+                        {post.title}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="border-t border-border/80 bg-white px-6 py-6 sm:px-8">
+                <div className="grid gap-3 md:grid-cols-4">
+                  <div className="rounded-card border border-border bg-surface-secondary p-4 shadow-soft">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
+                      Publicado
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-text-primary">
+                      {post.publishedAtLabel}
+                    </p>
+                  </div>
+                  <div className="rounded-card border border-border bg-surface-secondary p-4 shadow-soft">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
+                      Atualizado
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-text-primary">
+                      {post.updatedAtLabel}
+                    </p>
+                  </div>
+                  <div className="rounded-card border border-border bg-surface-secondary p-4 shadow-soft">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
+                      Autor
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-text-primary">{post.authorName}</p>
+                  </div>
+                  <div className="rounded-card border border-border bg-surface-secondary p-4 shadow-soft">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-text-muted">
+                      Leitura
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-text-primary">
+                      {post.readingTimeLabel}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-6 pb-10 pt-8 sm:px-10 sm:pb-12">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-accent">
+                  Conteudo da publicacao
+                </p>
+                <div className="mt-6 max-w-none">
+                  {renderRichContent(post.content || richTextToPlainText(post.excerpt))}
+                </div>
+              </div>
+            </article>
+
+            <div className="space-y-5 xl:sticky xl:top-28 xl:self-start">
+              <section className="surface-muted rounded-panel p-6 sm:p-7">
+                <h2 className="font-display text-heading-lg font-semibold text-text-primary">
+                  Compartilhar este artigo
+                </h2>
+                <p className="mt-3 text-body-sm text-text-secondary">
+                  Leve o conteudo para sua equipe ou compartilhe com quem participa da discussao.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  {shareLinks.map((share) => (
+                    <a
+                      key={share.label}
+                      href={share.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center rounded-pill border border-border bg-white px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-accent/30 hover:text-accent"
+                    >
+                      {share.label}
+                    </a>
+                  ))}
+                </div>
+              </section>
+
+              <NewsletterForm
+                title="Receba novas leituras e materiais tecnicos."
+                description="Entre na newsletter para acompanhar novos artigos, pontos de vista e materiais curatoriais da Apollo."
+              />
+
+              <section className="surface-muted rounded-panel p-6 sm:p-7">
+                <h2 className="font-display text-heading-lg font-semibold text-text-primary">
+                  Transforme a leitura em conversa consultiva
+                </h2>
+                <p className="mt-3 text-body-sm text-text-secondary">
+                  Se o tema desta publicacao se conecta ao seu contexto, avance para um contato
+                  consultivo ou complemente a leitura com a biblioteca gratuita da Apollo.
+                </p>
+                <div className="mt-6 flex flex-col gap-3">
+                  <Button href="/contato" size="lg" className="rounded-pill">
+                    Falar com especialistas
+                  </Button>
+                  <Button href="/conteudos" variant="outline" size="lg" className="rounded-pill">
+                    Ver biblioteca gratuita
+                  </Button>
+                </div>
+              </section>
             </div>
           </div>
-        </article>
+        </Container>
       </section>
+
+      {post.related.length > 0 ? (
+        <section className="section-space bg-bg-secondary">
+          <Container>
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeading
+                eyebrow="Continue lendo"
+                title="Outras publicacoes da editoria Apollo"
+                description="Mais artigos recentes para manter a leitura editorial coesa e aprofundar o contexto."
+                size="sm"
+                className="max-w-2xl"
+              />
+              <Button href="/news" variant="outline" size="lg" className="rounded-pill">
+                Voltar para News
+              </Button>
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {post.related.map((item) => (
+                <PostCard key={item.id} post={item} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
     </div>
   )
 }

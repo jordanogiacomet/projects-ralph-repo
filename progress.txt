@@ -1532,3 +1532,36 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Material-library pages feel more premium when one item gets a featured treatment and the remaining assets shift into a lighter support grid instead of a flat repeated card wall
   - Even without extra CMS fields, content detail pages can feel substantially more editorial by surfacing derived metadata (format/access/update state) alongside the existing image, description, and CTA
 ---
+## 2026-03-10 16:32 UTC - US-043C
+- **Story:** Repaginação de News e post detail
+- **What was implemented:**
+  - Redesigned `/news` into a more editorial hub with a stronger dark hero, radar/stats panel, elevated search-and-topic filter surface, a featured-story treatment, richer article cards, an integrated desktop sidebar, and a closing consultive CTA
+  - Rebuilt `/news/[slug]` so the article detail now balances hero composition, metadata, lead image fallback, reading surface, sticky share/newsletter/conversion rail, and onward discovery through related articles
+  - Added shared news-mapping helpers so category chips, reading-time labels, and editorial metadata are derived from the existing `posts` schema without reopening CMS modeling
+- **Files changed:**
+  - `src/app/(frontend)/news/page.tsx` — redesigned news hub hero, stats panel, archive composition, and closing CTA
+  - `src/app/(frontend)/news/[slug]/page.tsx` — redesigned article hero, metadata surfaces, reading layout, conversion/sidebar areas, and related-posts section
+  - `src/components/PostList.tsx` — rebuilt archive filtering, featured-story composition, and integrated editorial sidebar
+  - `src/components/PostCard.tsx` — upgraded article-card hierarchy with featured and standard variants
+  - `src/components/NewsletterForm.tsx` — repaginated newsletter capture to match the phase-2 editorial system
+  - `src/lib/news.ts` — added reusable news/article mapping helpers for excerpt, category, date, and reading-time derivation
+  - `prd.json` — marked the selected `US-043C` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous news pages were functional but still felt like phase-1 blog templates, especially in hero framing, card hierarchy, and the way the sidebar detached from the rest of the layout
+  - This pass aligns news with the phase-2 language already established in homepage, clientes, and conteudos: darker editorial heroes, better whitespace, stronger typography, more intentional surfaces, and clearer conversion support
+  - The detail page now treats metadata, image, article body, sharing, and next steps as one composed editorial experience instead of isolated utility blocks
+- **Affected shared components:** `PostCard` and `NewsletterForm` were upgraded, and the news templates now reuse shared `Badge`, `Button`, `Card`, `Chip`, `Container`, `Input`, and `SectionHeading` primitives more consistently
+- **Responsive impact:** The archive collapses cleanly from desktop main-column + side-rail composition into a stacked mobile flow, featured/news cards scale without losing hierarchy, and detail-side surfaces stack before becoming sticky on larger breakpoints
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible filter controls and links, visible form labeling, readable dark/light contrast, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed on retry; first attempt failed with transient Next.js error `ENOENT: no such file or directory, open '/workspace/.next/server/pages-manifest.json'`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/news` and `/news/[slug]` across desktop/tablet/mobile, including filter interactions, sticky-side panels, card density, and dark/light contrast balance
+- **Learnings for future iterations:**
+  - Editorial/news surfaces can feel substantially more premium without CMS schema changes by deriving category chips, reading-time labels, and featured-story hierarchy from existing `posts` content and category fields
+  - Current `prd.json` includes a later duplicate `US-043C` identifier under the polish stream; this run treated the first `US-043C` entry in story order as the selected story and left the later item untouched as future cleanup context
+---

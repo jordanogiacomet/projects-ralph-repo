@@ -1098,7 +1098,7 @@
       "phase": "phase-2-redesign",
       "stream": "content-and-proof",
       "title": "Repaginação de News e post detail",
-      "passes": false,
+      "passes": true,
       "description": "Atualizar listagens e detalhes editoriais do blog/news para estética mais editorial e premium.",
       "acceptanceCriteria": [
         "Páginas de News com tratamento mais editorial, cards e metadata mais sofisticados",

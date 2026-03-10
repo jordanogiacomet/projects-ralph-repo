@@ -1,17 +1,14 @@
 import type { Metadata } from 'next'
 
-import { NewsletterForm } from '@/components/NewsletterForm'
 import { PostList } from '@/components/PostList'
-import type { NewsPostCardItem } from '@/components/PostCard'
+import { Badge, Button, Container } from '@/components/ui'
+import {
+  mapPostToNewsPostCardItem,
+  type NewsPostCardItem,
+} from '@/lib/news'
 import { getPayloadClient } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
-import type { Post, User } from '@/payload-types'
-
-type MediaLike = {
-  url?: string | null
-}
-
-const fallbackExcerpt = 'Conteúdo técnico sobre gestão e controle patrimonial.'
+import type { Post } from '@/payload-types'
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -20,77 +17,6 @@ export async function generateMetadata(): Promise<Metadata> {
     fallbackDescription:
       'Acompanhe as publicacoes mais recentes da Apollo Gestao sobre avaliacao, inventario e governanca de ativos.',
   })
-}
-
-function normalizeText(value: unknown): string {
-  if (typeof value !== 'string') return ''
-  return value.replace(/\s+/g, ' ').trim()
-}
-
-function mediaUrl(media: unknown): string | undefined {
-  if (media && typeof media === 'object' && 'url' in media) {
-    return (media as MediaLike).url || undefined
-  }
-
-  return undefined
-}
-
-function richTextToPlainText(value: unknown): string {
-  if (!value || typeof value !== 'object') return ''
-
-  const stack: unknown[] = [value]
-  const textParts: string[] = []
-
-  while (stack.length > 0) {
-    const node = stack.pop()
-    if (!node || typeof node !== 'object') continue
-
-    if ('text' in node && typeof (node as { text?: unknown }).text === 'string') {
-      textParts.push((node as { text: string }).text)
-    }
-
-    if ('children' in node && Array.isArray((node as { children?: unknown[] }).children)) {
-      stack.push(...((node as { children: unknown[] }).children))
-    }
-
-    if ('root' in node && (node as { root?: unknown }).root) {
-      stack.push((node as { root: unknown }).root)
-    }
-  }
-
-  return textParts.reverse().join(' ').replace(/\s+/g, ' ').trim()
-}
-
-function withTruncatedText(value: string, maxLength: number): string {
-  if (value.length <= maxLength) return value
-  return `${value.slice(0, maxLength - 1).trimEnd()}…`
-}
-
-function formatDateLabel(value: unknown): string {
-  const source = normalizeText(value)
-  if (!source) return 'Sem data'
-
-  const date = new Date(source)
-  if (Number.isNaN(date.getTime())) return 'Sem data'
-
-  return new Intl.DateTimeFormat('pt-BR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
-
-function resolveAuthorName(author: Post['author']): string {
-  if (author && typeof author === 'object') {
-    const user = author as User
-    const name = normalizeText(user.name)
-    if (name) return name
-
-    const email = normalizeText(user.email)
-    if (email) return email
-  }
-
-  return 'Equipe Apollo Gestão'
 }
 
 async function getNewsPosts(): Promise<NewsPostCardItem[]> {
@@ -110,22 +36,7 @@ async function getNewsPosts(): Promise<NewsPostCardItem[]> {
 
     return (result.docs as Post[])
       .filter((post) => typeof post.slug === 'string' && post.slug.length > 0)
-      .map((post) => {
-        const excerpt =
-          normalizeText(post.excerpt) ||
-          withTruncatedText(richTextToPlainText(post.content), 180) ||
-          fallbackExcerpt
-
-        return {
-          id: String(post.id),
-          slug: post.slug,
-          title: post.title,
-          excerpt,
-          imageUrl: mediaUrl(post.featuredImage) || mediaUrl(post.meta?.image),
-          authorName: resolveAuthorName(post.author),
-          publishedAtLabel: formatDateLabel(post.publishedAt || post.createdAt),
-        }
-      })
+      .map(mapPostToNewsPostCardItem)
   } catch {
     // Payload can be unavailable during static build in sandboxed environments.
     return []
@@ -134,44 +45,185 @@ async function getNewsPosts(): Promise<NewsPostCardItem[]> {
 
 export default async function NewsPage() {
   const posts = await getNewsPosts()
+  const categoryCount = new Set(posts.flatMap((post) => post.categories)).size
+  const authorCount = new Set(posts.map((post) => post.authorName)).size
+  const latestDate = posts[0]?.publishedAtLabel || 'Acervo em atualizacao'
 
   return (
     <div className="bg-bg-primary text-text-primary">
-      <section className="relative overflow-hidden bg-bg-dark-section">
-        <div className="absolute inset-0 bg-black/50" aria-hidden />
+      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(160deg, rgba(8,14,26,0.94) 0%, rgba(12,22,38,0.86) 42%, rgba(8,14,26,0.98) 100%)',
+          }}
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'radial-gradient(circle at 18% 18%, rgba(0, 86, 166, 0.36), transparent 44%), radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.12), transparent 34%)',
+              'radial-gradient(circle at 14% 18%, rgba(0, 86, 166, 0.36), transparent 34%), radial-gradient(circle at 82% 14%, rgba(255, 255, 255, 0.12), transparent 26%), radial-gradient(circle at 48% 92%, rgba(40, 167, 69, 0.12), transparent 28%)',
           }}
           aria-hidden
         />
-        <div className="relative mx-auto max-w-6xl px-4 py-16 text-text-on-dark sm:px-6 lg:px-8 lg:py-20">
-          <h1 className="max-w-5xl text-3xl font-bold leading-tight sm:text-5xl">
-            Fique bem informado: <strong>Nossas recentes publicações</strong>
-          </h1>
-          <p className="mt-5 max-w-3xl text-base text-white/90 sm:text-lg">
-            Insights e orientações técnicas para apoiar decisões em avaliação, inventário e
-            governança patrimonial.
-          </p>
-        </div>
-      </section>
+        <div
+          className="absolute inset-x-0 top-0 h-40"
+          style={{
+            background: 'linear-gradient(180deg, rgba(8,14,26,0.5) 0%, transparent 100%)',
+          }}
+          aria-hidden
+        />
 
-      <section className="bg-bg-secondary py-14 sm:py-16">
-        <PostList posts={posts} />
-      </section>
+        <Container className="relative z-10">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:items-end">
+            <div className="max-w-3xl text-text-on-dark">
+              <Badge className="border border-white/12 bg-white/[0.08] text-white/78 shadow-[0_14px_35px_rgba(8,14,26,0.2)]">
+                News Apollo
+              </Badge>
+              <h1 className="mt-6 font-display text-display-md font-extrabold tracking-tight text-white sm:mt-8">
+                Artigos, analises e pontos de vista para liderar decisoes patrimoniais com mais
+                clareza.
+              </h1>
+              <p className="mt-5 max-w-2xl text-body-lg text-white/74 sm:mt-6">
+                O hub de News foi reorganizado como um acervo editorial mais premium: melhor
+                hierarquia, metadata mais clara, superfícies mais maduras e leitura mais fluida
+                entre listagem e detalhe.
+              </p>
 
-      <section className="py-14 sm:py-16">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold sm:text-3xl">Receba nossas atualizações por e-mail</h2>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
-            Inscreva-se para receber novos artigos e materiais técnicos da Apollo Gestão.
-          </p>
-          <div className="mt-6">
-            <NewsletterForm />
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button
+                  href="#news-archive"
+                  variant="success"
+                  size="lg"
+                  className="rounded-pill shadow-[0_18px_40px_rgba(31,138,56,0.24)]"
+                >
+                  Explorar artigos
+                </Button>
+                <Button
+                  href="/contato"
+                  variant="ghost"
+                  size="lg"
+                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                >
+                  Falar com especialistas
+                </Button>
+              </div>
+            </div>
+
+            <aside className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-6 text-white shadow-[0_24px_65px_rgba(8,14,26,0.26)] backdrop-blur-sm sm:p-7">
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 38%, rgba(0,86,166,0.16) 100%)',
+                }}
+                aria-hidden
+              />
+              <div className="relative">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                  Radar editorial
+                </p>
+                <p className="mt-4 text-body-md text-white/74">
+                  O novo desenho aproxima o blog da linguagem do restante da fase 2: mais respiro,
+                  melhor valor percebido e um fluxo editorial mais consistente em desktop e mobile.
+                </p>
+
+                <div className="mt-6 grid grid-cols-3 gap-3">
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="font-display text-heading-lg font-bold text-white">
+                      {posts.length}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/62">artigos ativos</p>
+                  </div>
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="font-display text-heading-lg font-bold text-white">
+                      {categoryCount}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/62">temas mapeados</p>
+                  </div>
+                  <div className="rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                    <p className="font-display text-heading-lg font-bold text-white">
+                      {authorCount}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/62">vozes ativas</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 rounded-card border border-white/10 bg-black/10 p-4 shadow-[0_14px_28px_rgba(8,14,26,0.18)]">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/48">
+                    Ultima atualizacao editorial
+                  </p>
+                  <p className="mt-2 font-display text-heading-lg font-bold text-white">
+                    {latestDate}
+                  </p>
+                </div>
+              </div>
+            </aside>
           </div>
-        </div>
+        </Container>
+      </section>
+
+      <section id="news-archive" className="relative z-10 -mt-12 sm:-mt-16">
+        <Container>
+          <PostList posts={posts} />
+        </Container>
+      </section>
+
+      <section className="section-space bg-bg-secondary">
+        <Container>
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-bg-dark-section p-8 text-white shadow-strong sm:p-10 lg:p-12">
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(135deg, rgba(8,14,26,0.96) 0%, rgba(8,14,26,0.88) 44%, rgba(0,86,166,0.22) 100%)',
+              }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(circle at 16% 18%, rgba(255,255,255,0.08), transparent 24%), radial-gradient(circle at 82% 82%, rgba(40,167,69,0.14), transparent 28%)',
+              }}
+              aria-hidden
+            />
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                  Conversa consultiva
+                </p>
+                <h2 className="mt-4 font-display text-heading-2xl font-semibold text-white sm:text-heading-3xl">
+                  Se um tema do acervo toca o seu contexto, leve a conversa para um plano de ação.
+                </h2>
+                <p className="mt-4 text-body-md text-white/72">
+                  Use o hub como ponto de partida e aprofunde com o time da Apollo ou com a
+                  biblioteca gratuita de materiais.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  href="/contato"
+                  variant="success"
+                  size="lg"
+                  className="rounded-pill shadow-[0_18px_40px_rgba(31,138,56,0.24)]"
+                >
+                  Falar com especialistas
+                </Button>
+                <Button
+                  href="/conteudos"
+                  variant="ghost"
+                  size="lg"
+                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                >
+                  Ver biblioteca
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Container>
       </section>
     </div>
   )
