@@ -20,7 +20,7 @@ export function WhatsAppFloat({ number, message }: WhatsAppFloatProps) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com a Apollo via WhatsApp"
-      className="group fixed bottom-4 right-4 z-40 inline-flex items-center gap-3 rounded-[22px] border border-white/12 bg-[#0e1a2d]/92 px-3 py-3 text-white shadow-[0_24px_48px_rgba(7,12,23,0.28)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#12213a]/96 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15 sm:bottom-5 sm:right-5"
+      className="group motion-transition motion-lift-subtle fixed bottom-4 right-4 z-40 inline-flex items-center gap-3 rounded-[22px] border border-white/12 bg-[#0e1a2d]/92 px-3 py-3 text-white shadow-[0_24px_48px_rgba(7,12,23,0.28)] backdrop-blur hover:border-white/18 hover:bg-[#12213a]/96 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15 sm:bottom-5 sm:right-5"
     >
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-[15px] bg-cta-green shadow-[0_12px_28px_rgba(31,138,56,0.34)]">
         <svg viewBox="0 0 24 24" fill="currentColor" className="h-5.5 w-5.5" aria-hidden="true">

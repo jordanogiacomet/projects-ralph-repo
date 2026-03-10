@@ -68,7 +68,14 @@
   --container-wide: 85rem;
 
   --focus-ring: 0 0 0 4px rgba(0, 86, 166, 0.14);
-  --transition-standard: 180ms ease;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --transition-fast: 140ms;
+  --transition-standard: 180ms;
+  --transition-emphasis: 280ms;
+  --motion-lift-subtle: 1px;
+  --motion-lift-card: 4px;
+  --motion-scale-media: 1.03;
 }
 
 @media (min-width: 640px) {

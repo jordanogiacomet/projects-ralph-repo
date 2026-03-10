@@ -42,7 +42,7 @@ export function Card({
         'rounded-panel',
         toneClasses[tone],
         paddingClasses[padding],
-        interactive && 'transition duration-200 hover:-translate-y-0.5 hover:shadow-medium',
+        interactive && 'motion-transition motion-lift-card hover:shadow-medium focus-within:shadow-medium',
         className,
       )}
       {...props}

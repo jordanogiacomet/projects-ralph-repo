@@ -1283,21 +1283,6 @@
       ]
     },
     {
-      "id": "US-049E",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Harmonização de motion e microinterações",
-      "passes": false,
-      "description": "Revisar e padronizar animações e microinterações em todo o site.",
-      "acceptanceCriteria": [
-        "Transições consistentes entre templates",
-        "Hover e focus states harmonizados",
-        "Animações não são excessivas ou inconsistentes",
-        "Respeito a prefers-reduced-motion",
-        "progress.txt registra ajustes realizados"
-      ]
-    },
-    {
       "id": "US-049F",
       "phase": "phase-2-redesign",
       "stream": "polish",

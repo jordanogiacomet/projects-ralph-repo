@@ -77,3 +77,61 @@ button {
 .text-display-balance {
   text-wrap: balance;
 }
+
+.motion-transition {
+  transition-property: transform, opacity, color, background-color, border-color, box-shadow,
+    text-decoration-color;
+  transition-duration: var(--transition-standard);
+  transition-timing-function: var(--ease-standard);
+}
+
+.motion-transition-emphasis {
+  transition-duration: var(--transition-emphasis);
+  transition-timing-function: var(--ease-emphasis);
+}
+
+.motion-lift-subtle:is(:hover, :focus-visible, :focus-within) {
+  transform: translateY(calc(var(--motion-lift-subtle) * -1));
+}
+
+.motion-lift-card:is(:hover, :focus-visible, :focus-within) {
+  transform: translateY(calc(var(--motion-lift-card) * -1));
+}
+
+.motion-media-scale {
+  transition-property: transform, opacity;
+  transition-duration: var(--transition-emphasis);
+  transition-timing-function: var(--ease-emphasis);
+  transform-origin: center;
+}
+
+.group:hover .motion-media-scale,
+.group:focus-within .motion-media-scale,
+.group:focus-visible .motion-media-scale {
+  transform: scale(var(--motion-scale-media));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-lift-subtle:is(:hover, :focus-visible, :focus-within),
+  .motion-lift-card:is(:hover, :focus-visible, :focus-within),
+  .group:hover .motion-media-scale,
+  .group:focus-within .motion-media-scale,
+  .group:focus-visible .motion-media-scale {
+    transform: none !important;
+  }
+}

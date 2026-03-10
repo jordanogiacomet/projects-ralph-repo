@@ -25,15 +25,11 @@ type ButtonProps = CommonButtonProps &
   (ButtonHTMLAttributes<HTMLButtonElement> | AnchorHTMLAttributes<HTMLAnchorElement>)
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-accent text-white shadow-soft hover:-translate-y-px hover:bg-accent-hover',
-  secondary:
-    'border border-accent/10 bg-accent-light text-accent-strong hover:bg-highlight',
-  outline:
-    'border border-border-strong bg-surface-primary text-text-primary hover:border-accent/30 hover:text-accent',
+  primary: 'bg-accent text-white shadow-soft hover:bg-accent-hover',
+  secondary: 'border border-accent/10 bg-accent-light text-accent-strong hover:bg-highlight',
+  outline: 'border border-border-strong bg-surface-primary text-text-primary hover:border-accent/30 hover:text-accent',
   ghost: 'bg-transparent text-text-primary hover:bg-accent-light hover:text-accent',
-  success:
-    'bg-cta-green text-white shadow-soft hover:-translate-y-px hover:bg-cta-green-hover',
+  success: 'bg-cta-green text-white shadow-soft hover:bg-cta-green-hover',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -54,7 +50,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    'inline-flex items-center justify-center gap-2 rounded-button font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 disabled:pointer-events-none disabled:opacity-60',
+    'motion-transition motion-lift-subtle inline-flex items-center justify-center gap-2 rounded-button font-semibold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 disabled:pointer-events-none disabled:transform-none disabled:opacity-60',
     sizeClasses[size],
     variantClasses[variant],
     fullWidth && 'w-full',

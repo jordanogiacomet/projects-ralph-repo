@@ -41,6 +41,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Payload CLI `run` imports scripts and exits when module import resolves, so async seed scripts should use top-level `await`
 - Nested Payload array fields in Postgres should avoid reusing the same field name at consecutive levels (`children -> children`) to prevent relation-name collisions
 - Phase-2 design tokens and aliases live in `src/styles/tokens.css` and `src/styles/utilities.css`
+- Shared motion behavior should be authored in `src/styles/tokens.css` and `src/styles/utilities.css`; prefer the `motion-transition`, `motion-lift-*`, and `motion-media-scale` utilities over ad-hoc per-template durations/transforms so `prefers-reduced-motion` stays aligned
 - Shared UI primitives live in `src/components/ui/` and should be preferred over one-off control styling when the same visual pattern appears in multiple templates
 - Shared shell navigation normalization lives in `src/lib/navigation.ts` and should be reused anywhere header/footer navigation needs the same resilient Payload + fallback structure
 - Canonical solution detail routes now use per-page config objects plus the shared `src/components/SolutionDetailPage.tsx` template/loader; preserve alias routes as re-exports when historical slugs still need to resolve
@@ -532,4 +533,32 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - `npx tsc --noEmit`: passed
   - `npm run build`: passed
 - **Browser verification:** Browser tooling unavailable; manual QA required.
+---
+
+## 2026-03-10 19:58 UTC - US-049D
+- Harmonized motion and microinteractions around shared CSS utilities/tokens so buttons, form fields, chips, editorial cards, solution cards, social links, pagination, and floating actions now share the same transition rhythm and lighter hover/focus behavior.
+- Files changed:
+  - `src/styles/tokens.css`
+  - `src/styles/utilities.css`
+  - `src/components/ui/Button.tsx`
+  - `src/components/ui/Card.tsx`
+  - `src/components/ui/Chip.tsx`
+  - `src/components/ui/Input.tsx`
+  - `src/components/ui/Select.tsx`
+  - `src/components/ui/Textarea.tsx`
+  - `src/components/PostCard.tsx`
+  - `src/components/SolutionCard.tsx`
+  - `src/components/SocialLinks.tsx`
+  - `src/components/Pagination.tsx`
+  - `src/components/ScrollToTop.tsx`
+  - `src/components/WhatsAppFloat.tsx`
+- Quality checks run and results:
+  - `npm run lint`: passed with the existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling unavailable in this environment; manual QA is still required for hover/focus/reduced-motion behavior across desktop, tablet, and mobile.
+- **Learnings for future iterations:**
+  - Reusable interaction polish should land in the shared motion utility layer first, then be consumed by primitives and high-traffic cards instead of reintroducing hardcoded `duration-*` or transform classes in individual templates.
+  - Full-card links need shell-level `focus-within` handling so keyboard states read with the same visual emphasis as hover states.
 ---

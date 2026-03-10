@@ -49,7 +49,7 @@ export function SolutionCard({ item, index, variant = 'feature' }: SolutionCardP
       href={item.href}
       aria-label={`Explorar a solucao ${item.title}`}
       className={cn(
-        'group block h-full transition duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 focus-visible:ring-offset-4',
+        'group motion-transition motion-lift-card block h-full focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 focus-visible:ring-offset-4',
         density.card,
       )}
     >
@@ -57,12 +57,12 @@ export function SolutionCard({ item, index, variant = 'feature' }: SolutionCardP
         as="article"
         padding="none"
         className={cn(
-          'relative flex h-full overflow-hidden border border-border/80 bg-white transition duration-300 group-hover:border-accent/18 group-hover:shadow-[var(--shadow-medium)] group-focus-visible:border-accent/18 group-focus-visible:shadow-[var(--shadow-medium)]',
+          'motion-transition relative flex h-full overflow-hidden border border-border/80 bg-white group-hover:border-accent/18 group-hover:shadow-[var(--shadow-medium)] group-focus-visible:border-accent/18 group-focus-visible:shadow-[var(--shadow-medium)]',
           density.card,
         )}
       >
         <div
-          className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="motion-transition pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
           style={{
             background:
               'linear-gradient(145deg, rgba(0,86,166,0.07) 0%, rgba(255,255,255,0) 42%, rgba(15,23,42,0.06) 100%)',
@@ -70,7 +70,7 @@ export function SolutionCard({ item, index, variant = 'feature' }: SolutionCardP
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent opacity-0 transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="motion-transition pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
           aria-hidden
         />
 
@@ -117,11 +117,11 @@ export function SolutionCard({ item, index, variant = 'feature' }: SolutionCardP
           </p>
 
           <div className="mt-6 flex items-center justify-between gap-4 border-t border-border/80 pt-5">
-            <span className="rounded-pill border border-border bg-surface-secondary px-3 py-1.5 text-label-sm font-semibold text-text-secondary transition duration-300 group-hover:border-accent/12 group-hover:bg-accent-soft/55 group-hover:text-accent-strong group-focus-visible:border-accent/12 group-focus-visible:bg-accent-soft/55 group-focus-visible:text-accent-strong">
+            <span className="motion-transition rounded-pill border border-border bg-surface-secondary px-3 py-1.5 text-label-sm font-semibold text-text-secondary group-hover:border-accent/12 group-hover:bg-accent-soft/55 group-hover:text-accent-strong group-focus-visible:border-accent/12 group-focus-visible:bg-accent-soft/55 group-focus-visible:text-accent-strong">
               Escopo tecnico
             </span>
 
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition duration-200 group-hover:text-accent-hover group-focus-visible:text-accent-hover">
+            <span className="motion-transition inline-flex items-center gap-2 text-sm font-semibold text-accent group-hover:text-accent-hover group-focus-visible:text-accent-hover">
               Explorar solucao
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path

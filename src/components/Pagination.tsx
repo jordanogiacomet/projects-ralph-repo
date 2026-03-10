@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from '@/components/ui'
+
 type PaginationProps = {
   hasMore: boolean
   onLoadMore: () => void
@@ -12,13 +14,15 @@ export function Pagination({ hasMore, onLoadMore }: PaginationProps) {
 
   return (
     <div className="mt-10 flex justify-center">
-      <button
+      <Button
         type="button"
+        variant="outline"
+        size="md"
         onClick={onLoadMore}
-        className="inline-flex items-center rounded-full border border-accent bg-white px-6 py-3 text-sm font-semibold text-accent transition hover:bg-accent hover:text-white"
+        className="rounded-pill border-accent text-accent hover:bg-accent hover:text-white"
       >
         Carregar mais
-      </button>
+      </Button>
     </div>
   )
 }

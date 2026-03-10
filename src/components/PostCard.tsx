@@ -24,9 +24,9 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
 
   if (variant === 'featured') {
     return (
-      <article className="group relative overflow-hidden rounded-[1.75rem] border border-border bg-white shadow-strong transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(8,14,26,0.12)]">
+      <article className="group motion-transition motion-lift-card relative overflow-hidden rounded-[1.75rem] border border-border bg-white shadow-strong hover:shadow-[0_28px_70px_rgba(8,14,26,0.12)] focus-within:shadow-[0_28px_70px_rgba(8,14,26,0.12)]">
         <div
-          className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+          className="motion-transition absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
           style={{
             background:
               'linear-gradient(135deg, rgba(0,86,166,0.08) 0%, rgba(255,255,255,0) 46%, rgba(15,23,42,0.04) 100%)',
@@ -35,7 +35,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
         />
         <Link
           href={`/news/${post.slug}`}
-          className="relative grid h-full gap-0 lg:grid-cols-[minmax(280px,0.96fr)_minmax(0,1.04fr)]"
+          className="relative grid h-full gap-0 rounded-[inherit] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 focus-visible:ring-inset lg:grid-cols-[minmax(280px,0.96fr)_minmax(0,1.04fr)]"
         >
           <div className="relative min-h-[280px] overflow-hidden bg-bg-dark-section">
             {hasImage ? (
@@ -45,7 +45,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
                 fill
                 priority={priority}
                 sizes="(min-width: 1280px) 36vw, (min-width: 1024px) 42vw, 100vw"
-                className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                className="motion-media-scale object-cover"
               />
             ) : null}
             <div
@@ -89,7 +89,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
               <span>{post.readingTimeLabel}</span>
             </div>
 
-            <h2 className="mt-5 font-display text-heading-2xl font-semibold leading-tight text-text-primary transition duration-200 group-hover:text-accent">
+            <h2 className="motion-transition mt-5 font-display text-heading-2xl font-semibold leading-tight text-text-primary group-hover:text-accent group-focus-within:text-accent">
               {post.title}
             </h2>
             <p className="mt-4 max-w-2xl text-body-md text-text-secondary">{post.excerpt}</p>
@@ -101,7 +101,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
                 </p>
                 <p className="mt-2 text-sm font-semibold text-text-primary">{post.authorName}</p>
               </div>
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition duration-200 group-hover:text-accent-hover">
+              <span className="motion-transition inline-flex items-center gap-2 text-sm font-semibold text-accent group-hover:text-accent-hover group-focus-within:text-accent-hover">
                 Ler reportagem
                 <span aria-hidden>→</span>
               </span>
@@ -113,16 +113,19 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
   }
 
   return (
-    <article className="group relative overflow-hidden rounded-panel border border-border bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-strong">
+    <article className="group motion-transition motion-lift-card relative overflow-hidden rounded-panel border border-border bg-white shadow-soft hover:shadow-strong focus-within:shadow-strong">
       <div
-        className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+        className="motion-transition absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
         style={{
           background:
             'linear-gradient(135deg, rgba(0,86,166,0.06) 0%, rgba(255,255,255,0) 48%, rgba(15,23,42,0.04) 100%)',
         }}
         aria-hidden
       />
-      <Link href={`/news/${post.slug}`} className="relative flex h-full flex-col">
+      <Link
+        href={`/news/${post.slug}`}
+        className="relative flex h-full flex-col rounded-[inherit] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 focus-visible:ring-inset"
+      >
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-accent-light/60">
           {hasImage ? (
             <Image
@@ -130,7 +133,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
               alt={post.title}
               fill
               sizes="(min-width: 1280px) 22vw, (min-width: 768px) 44vw, 100vw"
-              className="object-cover transition duration-700 group-hover:scale-[1.03]"
+              className="motion-media-scale object-cover"
             />
           ) : (
             <div className="flex h-full items-end bg-[linear-gradient(145deg,rgba(8,14,26,0.96)_0%,rgba(12,22,38,0.88)_48%,rgba(0,86,166,0.62)_100%)] p-6">
@@ -160,7 +163,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
             <span>{post.readingTimeLabel}</span>
           </div>
 
-          <h2 className="mt-5 font-display text-heading-xl font-semibold leading-tight text-text-primary transition duration-200 group-hover:text-accent">
+          <h2 className="motion-transition mt-5 font-display text-heading-xl font-semibold leading-tight text-text-primary group-hover:text-accent group-focus-within:text-accent">
             {post.title}
           </h2>
           <p className="mt-4 flex-1 text-body-sm text-text-secondary">{post.excerpt}</p>
@@ -174,7 +177,7 @@ export function PostCard({ post, priority = false, variant = 'standard' }: PostC
                 {post.authorName}
               </p>
             </div>
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition duration-200 group-hover:text-accent-hover">
+            <span className="motion-transition inline-flex items-center gap-2 text-sm font-semibold text-accent group-hover:text-accent-hover group-focus-within:text-accent-hover">
               Ler artigo
               <span aria-hidden>→</span>
             </span>

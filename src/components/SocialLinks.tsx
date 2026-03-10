@@ -88,13 +88,13 @@ export function SocialLinks({
             rel="noopener noreferrer"
             aria-label={platformLabels[link.platform] || link.platform}
             className={cn(
-              'inline-flex items-center justify-center rounded-pill border border-border bg-surface-primary text-text-secondary shadow-soft transition duration-200 hover:-translate-y-0.5 hover:border-accent/25 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
+              'motion-transition motion-lift-subtle inline-flex items-center justify-center rounded-pill border border-border bg-surface-primary text-text-secondary shadow-soft hover:border-accent/25 hover:text-accent focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15',
               sizeClasses[size],
               itemClassName,
             )}
           >
             <span
-              className={cn('flex items-center justify-center transition-colors', iconClassName)}
+              className={cn('motion-transition flex items-center justify-center', iconClassName)}
             >
               {icon}
             </span>
