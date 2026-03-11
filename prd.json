@@ -1451,7 +1451,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-audit",
       "title": "Auditoria visual estruturada e criação do registro de débito visual",
-      "passes": false,
+      "passes": true,
       "description": "Auditar as rotas públicas do site e registrar problemas visuais de forma objetiva antes das correções.",
       "acceptanceCriteria": [
         "Todas as principais rotas públicas são auditadas em desktop, tablet e mobile",

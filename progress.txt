@@ -34,9 +34,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-051`
-- Next eligible story after this run: `US-052`
-- Current open phase-2 order: `US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`
+- Story completed in this run: `US-052`
+- Next eligible story after this run: `US-053`
+- Current open phase-2 order: `US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
@@ -49,8 +49,8 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 ## Current Delivery Status
 - Phase 1 functional foundation is implemented: CMS schema, globals, layout blocks, public routes, SEO/search, form flows, and seed baseline.
 - Phase 2 broad redesign delivery is implemented through `US-049G` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
-- `US-051` completes operational backlog sanitation only; no new product behavior or visual redesign work was executed in this run.
-- The active follow-up cycle is now: structured visual audit (`US-052`), targeted fix stories (`US-053` through `US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
+- The active follow-up cycle is now: shell fixes (`US-053`), institutional fixes (`US-054`), editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -110,4 +110,28 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Learnings for future iterations:
   - Backlog-governance stories need the structured `userStories` order and the narrative execution-plan text to agree, otherwise agents can land on blocked gate stories even when dependencies are technically enforcing the right answer.
   - When historical progress entries become operationally misleading, archive them with context instead of deleting them; keep `progress.txt` focused on current-state guidance and treat `prd.json` as the final source of truth for completion state.
+---
+## 2026-03-11 12:20 UTC - US-052
+- What was implemented:
+  - Audited the main public route set in desktop, tablet, and mobile: `/`, `/sobre`, `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, `/clientes`, `/conteudos`, `/conteudos/e-book-identificacao-patrimonial`, `/news`, `/contato`, `/contato/cotacao`, and `/contato/representante`.
+  - Exercised the relevant non-default shell and archive states available in the current build: desktop mega-menu open, desktop search overlay open/loading/empty, mobile menu open, News zero-results search, and a representative missing-route 404 at `/news/nao-existe`.
+  - Created the versioned visual debt register at `docs/visual-debt-register.md` with uniquely tracked items `VD-001` through `VD-009`, including route, breakpoint, component, observed issue, expected behavior, severity, and the intended follow-up story (`US-053` through `US-055`).
+  - Recorded two concrete missing fallback-media debts discovered during the browser pass: `/images/home-hero-placeholder.jpg` from `src/components/HomePage.tsx` and `/images/sobre-slide-placeholder.jpg` from `src/components/MissaoVisaoValores.tsx`.
+- Files changed:
+  - `docs/visual-debt-register.md`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: passed on the first attempt
+- Browser/manual verification status:
+  - Browser verification completed with a local Playwright audit pass across desktop/tablet/mobile plus the additional open/loading/empty/error states listed above.
+  - Inline validation and success/error messaging for `CotacaoForm` and `RepresentanteForm` were reviewed at the page/template level, but their interactive messages did not surface stable headless captures in this run; keep manual interactive confirmation in scope for `US-056`.
+- Learnings for future iterations:
+  - A versioned debt register is more useful when each finding is already mapped to the next corrective story stream; that keeps `US-053` through `US-057` scoped and prevents another broad unfocused redesign pass.
+  - Missing visual fallback assets can hide in otherwise “working” templates until a browser audit is run; runtime 404s for placeholder media belong in the debt register because they directly change the perceived polish of the page.
+  - Even when no horizontal overflow is present, shell-level floating surfaces can still materially damage first-fold readability on mobile and tablet, so the overlay pass (`US-053`) should land before route-specific polish stories.
 ---
