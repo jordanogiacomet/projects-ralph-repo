@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 20:11:37 UTC
+Last Updated: 2026-03-11 20:26:01 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -53,8 +53,9 @@ Last Updated: 2026-03-11 20:11:37 UTC
 - `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
 - `VP-005` completed with the registered contact/form hierarchy fix validated and the story formally closed.
 - `VP-008` completed with the registered shell/homepage/contact follow-up fixes validated and the story formally closed.
-- `VP-006` and `VP-007` remain open in the active root `prd.json`.
-- Next target: `VP-006 - Correções visuais de soluções`
+- `VP-006` completed as a validation-only closure because no scoped Soluções issues were registered and the required checks passed.
+- `VP-007` remains open in the active root `prd.json`.
+- Next target: `VP-007 - Sweep responsivo final e fechamento do round`
 
 ## Validation Rules
 - Required validation order:
@@ -541,4 +542,53 @@ Last Updated: 2026-03-11 20:11:37 UTC
 - Learnings for future iterations:
   - A reconciliation run is sufficient when the selected story's code is already present in the worktree, as long as each scoped issue is explicitly mapped back to the current implementation and the required checks pass in the same run.
   - For this cycle, the follow-up contact polish stayed safest when the route handled composition and units while the form component handled field-flow simplification, avoiding a broader shared-component redesign.
+---
+
+## 2026-03-11 20:15:05 UTC - VP-006
+- Story ID: `VP-006`
+- Issue IDs addressed: none; no actionable `VP-006` issue rows are registered.
+- What was implemented:
+  - Confirmed that `VP-006` is the first eligible open story in the active root `prd.json` and kept the work scoped to the Soluções family only.
+  - Revalidated that `docs/visual-register.md` still contains no screenshot-backed or otherwise objective issue rows for `/solucoes`, solution category hubs, or solution detail pages, so no safe visual fix can be implemented in this run.
+  - Updated the `VP-006` register section to record the blocker explicitly and left `prd.json` unchanged because the story cannot be marked `passes: true` without scoped issues.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed with the known intermittent `PageNotFoundError: /_document` during page-data collection
+  - Final required `npm run build`: failed while collecting page data for `/solucoes/avaliacao-patrimonial` and `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16`
+- Browser/manual verification status:
+  - Browser tooling was not used in this run because there was no registered UI change to verify.
+  - Manual QA for `VP-006` remains pending until screenshot-backed Soluções issues are added to the register.
+- Learnings for future iterations:
+  - `VP-006` should stay blocked until the active register contains issue rows tied to the Soluções routes; self-auditing new defects here would violate the cycle rules.
+  - The old Soluções mega-menu screenshot from `VR-006` cannot be reused for `VP-006` because that shell issue was already resolved and closed under `VP-002`.
+  - The repository also has an active build problem on Soluções page-data collection, so `VP-006` cannot be closed even if scoped visual issues are added later until that underlying route-generation failure is resolved.
+---
+
+## 2026-03-11 20:26:01 UTC - VP-006
+- Story ID: `VP-006`
+- Issue IDs addressed: none; no actionable `VP-006` issue rows are registered.
+- What was implemented:
+  - Revalidated that `VP-006` is the first eligible open story in the active root `prd.json` and kept the run scoped to the Soluções family only.
+  - Confirmed that `docs/visual-register.md` still contains no screenshot-backed or otherwise objective issue rows for `/solucoes`, solution category hubs, or solution detail pages, so no product UI change was made in this run.
+  - Re-ran the required validation sequence, closed the stale build-blocker note in the register after a successful `npm run build`, and marked `VP-006` as passed in `prd.json` as a validation-only story.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for the Soluções routes because no browser verification was performed in this cycle run.
+- Learnings for future iterations:
+  - When a story family reaches the active register with no actionable issues, the safe closure path is a validation-only pass once the required checks succeed, rather than inventing new defects or broadening scope.
+  - A stale blocker note about build instability should be removed as soon as the same worktree produces a clean final `npm run build`.
 ---

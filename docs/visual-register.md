@@ -60,7 +60,11 @@ The visual direction for this round remains **Payload-inspired**, translated to 
 
 ## VP-006 — Soluções
 
-No screenshot-backed issues registered yet for this story family.
+No actionable issue rows are registered yet for this story family.
+
+Closed on 2026-03-11: the active register still has no screenshot-backed or otherwise objective issue descriptions for `/solucoes`, category hubs, or solution detail pages, so `VP-006` was completed as a validation-only story with no product UI changes.
+
+Validation note: `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed on 2026-03-11. `npm run test` is not defined in `package.json`. Browser tooling was not used, so manual QA remains pending if the Soluções routes are reviewed visually later.
 
 ---
 

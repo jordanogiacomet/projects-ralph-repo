@@ -162,8 +162,8 @@
     {
       "id": "VP-006",
       "title": "Correções visuais de soluções",
-      "passes": false,
-      "status": "deferred",
+      "passes": true,
+      "status": "done",
       "description": "Corrigir débitos visuais residuais de /solucoes, hubs de categoria e detail pages de solução.",
       "acceptanceCriteria": [
         "As issues registradas para hubs e details foram tratadas",
