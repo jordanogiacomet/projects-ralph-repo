@@ -549,7 +549,7 @@ export default async function NewsPostPage({ params }: PageProps) {
               </div>
             </article>
 
-            <div className="space-y-5 xl:sticky xl:top-28 xl:self-start">
+            <div className="space-y-5 xl:sticky xl:top-32 xl:self-start">
               <section className="surface-muted rounded-panel p-6 sm:p-7">
                 <h2 className="font-display text-heading-lg font-semibold text-text-primary">
                   Compartilhar este artigo

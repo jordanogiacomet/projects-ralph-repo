@@ -1502,7 +1502,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-fixes-editorial-proof",
       "title": "Correções visuais de Clientes, Conteúdos e News",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir inconsistências visuais remanescentes em /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
       "acceptanceCriteria": [
         "Página /clientes revisada contra o registro de débito visual",

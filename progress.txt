@@ -30,15 +30,16 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
 - Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
 - When premium route media is optional, prefer layered gradient fallback treatments in-component instead of hard-coded placeholder image URLs that can 404
+- With multiple top-level route groups acting as root layouts, branded public 404s should live in segment-level `not-found.tsx` files (for example `news/not-found.tsx`) rather than a root `src/app/not-found.tsx`
 
 ## Project Snapshot
 - Project: `apollo-gestao-website`
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-054`
-- Next eligible story after this run: `US-055`
-- Current open phase-2 order: `US-055 -> US-056 -> US-057 -> US-058 -> US-050`
+- Story completed in this run: `US-055`
+- Next eligible story after this run: `US-056`
+- Current open phase-2 order: `US-056 -> US-057 -> US-058 -> US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
@@ -53,8 +54,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Phase 2 broad redesign delivery is implemented through `US-049G` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
 - `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
 - `US-053` closed the first shell debt pass with a lighter consent surface, coordinated floating controls, a navigation-first mobile menu, and a stronger search loading state.
-- `US-054` cleared the current institutional debt pass by replacing broken homepage/about media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
-- The active follow-up cycle is now: editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-054` cleared the homepage/about debt pass by replacing broken media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
+- `US-055` closed the editorial/proof debt pass by introducing Apollo-branded missing-route recovery, tightening the News zero-results flow, and aligning empty-state/sticky-rail behavior across `clientes`, `conteudos`, and `news`.
+- The active follow-up cycle is now: contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -192,4 +194,35 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Learnings for future iterations:
   - When optional editorial media drives a premium hero or slider surface, layered CSS fallbacks are safer than depending on static placeholder assets that may never be committed.
   - Mobile hero fixes land more cleanly when spacing, typography scale, CTA width, and non-essential chrome are tuned together instead of only shrinking one element in isolation.
+---
+## 2026-03-11 13:12 UTC - US-055
+- What was implemented:
+  - Cleared `VD-008` by adding an Apollo-branded recovery template at `src/app/(frontend)/not-found.tsx` and routing the `news` and `conteudos` segments through `src/app/(frontend)/news/not-found.tsx` and `src/app/(frontend)/conteudos/not-found.tsx`, so missing editorial URLs no longer fall back to the generic Next.js English 404 view.
+  - Cleared `VD-009` in `src/components/PostList.tsx` by moving zero-results recovery copy and actions directly under the News search/filter controls, while keeping the fuller archive empty state below for broader guidance.
+  - Added the shared `src/components/EditorialEmptyState.tsx` pattern and reused it across `src/components/PostList.tsx`, `src/components/ClientsPage.tsx`, and `src/app/(frontend)/conteudos/page.tsx` so archive empty states now share one visual language and clearer recovery CTAs.
+  - Tightened editorial detail-rail consistency by aligning the sticky offset rhythm in `src/app/(frontend)/news/[slug]/page.tsx` and `src/app/(frontend)/conteudos/[slug]/page.tsx`, and added a quick reset action to the clients filter summary for faster archive recovery.
+- Files changed:
+  - `src/components/EditorialEmptyState.tsx`
+  - `src/components/PostList.tsx`
+  - `src/components/ClientsPage.tsx`
+  - `src/app/(frontend)/conteudos/page.tsx`
+  - `src/app/(frontend)/conteudos/[slug]/page.tsx`
+  - `src/app/(frontend)/news/[slug]/page.tsx`
+  - `src/app/(frontend)/not-found.tsx`
+  - `src/app/(frontend)/news/not-found.tsx`
+  - `src/app/(frontend)/conteudos/not-found.tsx`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: passed on the final current state
+- Browser/manual verification status:
+  - Browser tooling is unavailable in this Codex environment, so manual browser QA is still required for this UI story.
+  - As a lightweight fallback verification, the built app was started locally on `http://127.0.0.1:3001`; `/clientes`, `/conteudos`, and `/news` returned `200`, while `/news/nao-existe` and `/conteudos/nao-existe` returned `404` and exposed the new Apollo-branded recovery copy in the response payload.
+- Learnings for future iterations:
+  - In this codebase, multiple top-level route groups behave as separate root layouts, so branded public 404s should be attached at the relevant segment (`news/not-found.tsx`, `conteudos/not-found.tsx`) instead of attempting a root `src/app/not-found.tsx`.
+  - Archive empty states feel more actionable when the first recovery sentence sits next to the active filters, with a fuller empty-state panel following below for secondary guidance and CTA depth.
 ---

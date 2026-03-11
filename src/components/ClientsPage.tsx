@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useMemo, useState, type ReactNode } from 'react'
 
+import { EditorialEmptyState } from '@/components/EditorialEmptyState'
 import { Badge, Button, Chip, Container, SectionHeading } from '@/components/ui'
 
 import { ContatoForm } from './ContatoForm'
@@ -89,6 +90,10 @@ export function ClientsPage({
     if (activeFilter === 'all') return clients
     return clients.filter((client) => client.segmentKey === activeFilter)
   }, [activeFilter, clients])
+
+  const resetFilters = () => {
+    setActiveFilter('all')
+  }
 
   return (
     <div className="bg-bg-primary text-text-primary">
@@ -246,6 +251,17 @@ export function ClientsPage({
                   <p className="mt-1 text-sm text-text-secondary">
                     {filteredClients.length} {filteredClients.length === 1 ? 'marca exibida' : 'marcas exibidas'}
                   </p>
+                  {activeFilter !== 'all' ? (
+                    <Button
+                      type="button"
+                      onClick={resetFilters}
+                      variant="ghost"
+                      size="sm"
+                      className="mt-3 rounded-pill"
+                    >
+                      Ver todos os segmentos
+                    </Button>
+                  ) : null}
                 </div>
               </div>
 
@@ -399,15 +415,21 @@ export function ClientsPage({
                   transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.24 }}
                   className="sm:col-span-2 xl:col-span-4"
                 >
-                  <div className="rounded-panel border border-dashed border-border-strong bg-white/92 p-8 text-center shadow-soft">
-                    <p className="font-display text-heading-lg font-semibold text-text-primary">
-                      Nenhuma marca encontrada neste recorte.
-                    </p>
-                    <p className="mx-auto mt-3 max-w-xl text-body-md text-text-secondary">
-                      Ajuste o filtro para visualizar clientes de outros segmentos e explorar toda a
-                      base de prova social da Apollo.
-                    </p>
-                  </div>
+                  <EditorialEmptyState
+                    align="center"
+                    eyebrow="Sem marcas neste recorte"
+                    title="Nenhuma marca encontrada neste recorte."
+                    description="Ajuste o filtro para visualizar clientes de outros segmentos e explorar toda a base de prova social da Apollo."
+                    primaryAction={{
+                      label: 'Ver todos os clientes',
+                      onClick: resetFilters,
+                    }}
+                    secondaryAction={{
+                      label: 'Falar com especialistas',
+                      href: '/contato',
+                      variant: 'ghost',
+                    }}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>

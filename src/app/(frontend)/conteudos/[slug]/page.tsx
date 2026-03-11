@@ -592,7 +592,7 @@ export default async function ConteudoDetailPage({ params }: PageProps) {
               </div>
             </article>
 
-            <div className="space-y-5 xl:sticky xl:top-28 xl:self-start">
+            <div className="space-y-5 xl:sticky xl:top-32 xl:self-start">
               <ContentDownloadPanel
                 title={data.title}
                 slug={data.slug}

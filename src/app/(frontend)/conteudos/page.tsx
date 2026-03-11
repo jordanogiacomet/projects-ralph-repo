@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
+import { EditorialEmptyState } from '@/components/EditorialEmptyState'
 import { Badge, Button, Container, SectionHeading } from '@/components/ui'
 import { fallbackConteudos } from '@/lib/conteudos'
 import { getPayloadClient } from '@/lib/payload'
@@ -440,15 +441,20 @@ export default async function ConteudosPage() {
               ) : null}
             </div>
           ) : (
-            <div className="rounded-panel border border-border bg-white p-8 shadow-soft">
-              <p className="font-display text-heading-lg font-semibold text-text-primary">
-                Nenhum material publicado no momento.
-              </p>
-              <p className="mt-3 max-w-2xl text-body-md text-text-secondary">
-                Assim que novos materiais forem disponibilizados, eles aparecerao nesta
-                biblioteca.
-              </p>
-            </div>
+            <EditorialEmptyState
+              eyebrow="Biblioteca em atualizacao"
+              title="Nenhum material publicado no momento."
+              description="Assim que novos materiais forem disponibilizados, eles aparecerao nesta biblioteca."
+              primaryAction={{
+                label: 'Solicitar orientacao',
+                href: '/contato',
+              }}
+              secondaryAction={{
+                label: 'Explorar solucoes',
+                href: '/solucoes',
+                variant: 'outline',
+              }}
+            />
           )}
         </Container>
       </section>

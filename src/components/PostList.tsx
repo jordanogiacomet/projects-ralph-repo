@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { Pagination } from '@/components/Pagination'
+import { EditorialEmptyState } from '@/components/EditorialEmptyState'
 import { PostCard } from '@/components/PostCard'
 import { Button, Card, Chip, Input, SectionHeading } from '@/components/ui'
 import type { NewsPostCardItem } from '@/lib/news'
@@ -67,6 +68,12 @@ export function PostList({ posts }: PostListProps) {
   const totalCategories = categories.length
   const totalAuthors = new Set(posts.map((post) => post.authorName)).size
   const latestPost = posts[0]
+  const isEmptyResult = !featuredPost
+  const emptyTitle = posts.length === 0 ? 'Nenhuma publicacao encontrada' : 'Nenhum resultado para a busca atual'
+  const emptyDescription =
+    posts.length === 0
+      ? 'A editoria ainda esta em formacao. Novos artigos aparecerao aqui em breve.'
+      : 'Ajuste a busca ou o tema ativo para encontrar outras publicacoes do acervo.'
 
   const resetFilters = () => {
     setSearchTerm('')
@@ -150,6 +157,40 @@ export function PostList({ posts }: PostListProps) {
               ))}
             </div>
           ) : null}
+
+          {isEmptyResult ? (
+            <div className="mt-6 rounded-card border border-accent/12 bg-accent-soft/70 p-4 shadow-soft">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-2xl">
+                  <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-accent">
+                    Recuperacao rapida
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-text-primary">{emptyTitle}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{emptyDescription}</p>
+                </div>
+                <div className="flex flex-col gap-3 sm:min-w-[220px]">
+                  {hasFilters ? (
+                    <Button
+                      type="button"
+                      onClick={resetFilters}
+                      variant="outline"
+                      size="sm"
+                      className="rounded-pill"
+                    >
+                      Limpar filtros
+                    </Button>
+                  ) : (
+                    <Button href={ebookHref} variant="secondary" size="sm" className="rounded-pill">
+                      Explorar materiais gratuitos
+                    </Button>
+                  )}
+                  <Button href="/contato" variant="ghost" size="sm" className="rounded-pill">
+                    Falar com especialistas
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {featuredPost ? (
@@ -195,45 +236,33 @@ export function PostList({ posts }: PostListProps) {
           </section>
         ) : null}
 
-        {!featuredPost ? (
-          <Card as="article" className="relative overflow-hidden bg-white/95 p-8 shadow-soft sm:p-10">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(135deg, rgba(0,86,166,0.06) 0%, rgba(255,255,255,0) 48%, rgba(15,23,42,0.04) 100%)',
-              }}
-              aria-hidden
-            />
-            <div className="relative">
-              <h2 className="font-display text-heading-xl font-semibold text-text-primary">
-                Nenhuma publicacao encontrada
-              </h2>
-              <p className="mt-4 max-w-2xl text-body-md text-text-secondary">
-                {posts.length === 0
-                  ? 'A editoria ainda esta em formacao. Novos artigos aparecerao aqui em breve.'
-                  : 'Ajuste a busca ou o tema ativo para encontrar outras publicacoes do acervo.'}
-              </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                {hasFilters ? (
-                  <Button type="button" onClick={resetFilters} size="lg" className="rounded-pill">
-                    Limpar filtros
-                  </Button>
-                ) : (
-                  <Button href={ebookHref} variant="outline" size="lg" className="rounded-pill">
-                    Explorar materiais gratuitos
-                  </Button>
-                )}
-                <Button href="/contato" variant="ghost" size="lg" className="rounded-pill">
-                  Falar com especialistas
-                </Button>
-              </div>
-            </div>
-          </Card>
+        {isEmptyResult ? (
+          <EditorialEmptyState
+            eyebrow={posts.length === 0 ? 'Editoria em formacao' : 'Sem resultados'}
+            title={emptyTitle}
+            description={emptyDescription}
+            primaryAction={
+              hasFilters
+                ? {
+                    label: 'Limpar filtros',
+                    onClick: resetFilters,
+                  }
+                : {
+                    label: 'Explorar materiais gratuitos',
+                    href: ebookHref,
+                    variant: 'outline',
+                  }
+            }
+            secondaryAction={{
+              label: 'Falar com especialistas',
+              href: '/contato',
+              variant: 'ghost',
+            }}
+          />
         ) : null}
       </div>
 
-      <aside className="space-y-5 xl:sticky xl:top-28 xl:self-start" aria-label="Painel editorial">
+      <aside className="space-y-5 xl:sticky xl:top-32 xl:self-start" aria-label="Painel editorial">
         <Card tone="dark" className="relative overflow-hidden">
           <div
             className="absolute inset-0"
