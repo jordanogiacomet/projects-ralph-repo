@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 18:47:21 UTC
+Last Updated: 2026-03-11 19:21:07 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -385,4 +385,29 @@ Last Updated: 2026-03-11 18:47:21 UTC
 - Learnings for future iterations:
   - In this repository, intermittent page-data collection failures can still surface on unrelated routes during `next build`; the successful immediate rerun should be recorded as the authoritative result when no code changes intervene.
   - When a story's scoped fix is already present in the worktree, the safe closure path is a validation-and-reconciliation pass rather than additional churn in the UI component.
+---
+
+## 2026-03-11 19:21:07 UTC - VP-002
+- Story ID: `VP-002`
+- Issue IDs addressed: `VR-001`, `VR-002`, `VR-003`, `VR-005`, `VR-006`
+- What was implemented:
+  - Reconciled the active cycle state by treating `prd.json` and `docs/visual-register.md` as authoritative for story selection while recognizing that the current shell/homepage fixes were already present in `src/components/HomePage.tsx`, `src/components/Navbar.tsx`, and `src/components/MegaMenu.tsx`.
+  - Closed the five `VP-002` issue rows in `docs/visual-register.md` using the existing implementation as the smallest safe resolution: calmer hero-to-panel overlap, stronger metrics hierarchy, wider desktop navbar breathing, and viewport-safe mega-menu containment for both Contato and Soluções.
+  - Marked `VP-002` as passed in `prd.json` without introducing extra product UI churn outside the selected story scope.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed after static page generation with `Cannot find module for page: /_error`
+  - Final required `npm run build`: passed on immediate rerun
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-001`, `VR-002`, `VR-003`, `VR-005`, and `VR-006`.
+- Learnings for future iterations:
+  - When `progress.txt` drifts from the active status files, story selection should still follow the current root `prd.json` and the active visual register rather than the older progress snapshot.
+  - The repository can still surface transient `next build` failures on framework error pages; the successful immediate rerun should be recorded as the authoritative required build result when no code changes intervene.
 ---
