@@ -148,8 +148,8 @@
     {
       "id": "VP-008",
       "title": "Follow-up visual de shell, homepage e contato",
-      "passes": false,
-      "status": "active",
+      "passes": true,
+      "status": "done",
       "description": "Corrigir débitos visuais adicionais descobertos após o primeiro lote de shell, homepage e contato, com foco em header widescreen, costura do hero da homepage, refinamento do formulário principal e apresentação mais discreta das unidades.",
       "acceptanceCriteria": [
         "As issues registradas para shell, homepage e contato neste follow-up foram tratadas",

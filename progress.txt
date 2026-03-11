@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 19:51:56 UTC
+Last Updated: 2026-03-11 20:11:37 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -52,8 +52,9 @@ Last Updated: 2026-03-11 19:51:56 UTC
 - `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
 - `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
 - `VP-005` completed with the registered contact/form hierarchy fix validated and the story formally closed.
-- `VP-008`, `VP-006`, and `VP-007` remain open in the active root `prd.json`.
-- Next target: `VP-008 - Follow-up visual de shell, homepage e contato`
+- `VP-008` completed with the registered shell/homepage/contact follow-up fixes validated and the story formally closed.
+- `VP-006` and `VP-007` remain open in the active root `prd.json`.
+- Next target: `VP-006 - Correções visuais de soluções`
 
 ## Validation Rules
 - Required validation order:
@@ -511,4 +512,33 @@ Last Updated: 2026-03-11 19:51:56 UTC
 - Learnings for future iterations:
   - Current branch metadata can drift backward even when the scoped UI implementation is unchanged, so story selection and closure still need to follow the active root `prd.json`.
   - This repository can also flake on generated `.next/types` artifacts during `next build`; when an immediate rerun passes without code changes, the rerun should be recorded as the authoritative required build result.
+---
+
+## 2026-03-11 20:11:37 UTC - VP-008
+- Story ID: `VP-008`
+- Issue IDs addressed: `VR-011`, `VR-012`, `VR-013`, `VR-014`
+- What was implemented:
+  - Revalidated that the existing widescreen header adjustments in `src/components/Navbar.tsx` already resolve the scoped shell follow-up by capping the desktop shell width and redistributing the search, utility, and CTA groups without reopening broader navbar design work.
+  - Revalidated that the existing homepage hero spacing changes in `src/components/HomePage.tsx` already resolve the follow-up transition issue by adding bottom breathing room, lowering the `Explorar` indicator, and softening the overlap into the next surface.
+  - Revalidated that the existing contact follow-up implementation in `src/components/ContatoPageForm.tsx` and `src/app/(frontend)/contato/page.tsx` already resolves the remaining contact issues through a single-column primary form and a lighter units rail.
+  - Closed `VR-011`, `VR-012`, `VR-013`, and `VR-014` in `docs/visual-register.md` and marked `VP-008` as passed in the active root `prd.json`.
+- Files changed:
+  - src/components/Navbar.tsx
+  - src/components/HomePage.tsx
+  - src/components/ContatoPageForm.tsx
+  - src/app/(frontend)/contato/page.tsx
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-011`, `VR-012`, `VR-013`, and `VR-014`.
+- Learnings for future iterations:
+  - A reconciliation run is sufficient when the selected story's code is already present in the worktree, as long as each scoped issue is explicitly mapped back to the current implementation and the required checks pass in the same run.
+  - For this cycle, the follow-up contact polish stayed safest when the route handled composition and units while the form component handled field-flow simplification, avoiding a broader shared-component redesign.
 ---

@@ -112,52 +112,39 @@ export function ContatoPageForm() {
 
       <div className="relative">
         <div className="border-b border-border pb-7">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.14fr)_minmax(16rem,0.86fr)] lg:items-start">
-            <div>
-              <Badge tone="accent">Contato principal</Badge>
-              <SectionHeading
-                className="mt-5"
-                eyebrow="Encaminhamento consultivo"
-                size="md"
-                title="Conte um pouco sobre a sua demanda"
-                description="Descreva o contexto, a urgencia e o objetivo do projeto. Nossa equipe encaminha sua solicitacao para o especialista mais aderente."
-              />
-              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-text-secondary">
-                O formulario abaixo concentra apenas o essencial para a triagem inicial, mantendo
-                a mensagem principal em foco e reduzindo ruido visual na primeira leitura.
-              </p>
-            </div>
+          <div className="max-w-3xl">
+            <Badge tone="accent">Contato principal</Badge>
+            <SectionHeading
+              className="mt-5"
+              eyebrow="Encaminhamento consultivo"
+              size="md"
+              title="Conte um pouco sobre a sua demanda"
+              description="Descreva o contexto, a urgencia e o objetivo do projeto. Nossa equipe encaminha sua solicitacao para o especialista mais aderente."
+            />
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-text-secondary">
+              O formulario abaixo concentra apenas o essencial para a triagem inicial, mantendo a
+              leitura em uma unica coluna e deixando o direcionamento mais claro desde o primeiro
+              contato.
+            </p>
 
-            <div className="rounded-[1.35rem] border border-accent/10 bg-accent-soft/58 p-5">
-              <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent-strong">
-                Ajuda no primeiro retorno
-              </p>
-              <div className="mt-4 space-y-4">
-                {intakeHighlights.map((highlight, index) => (
-                  <div
-                    key={highlight.title}
-                    className={index > 0 ? 'border-t border-accent/10 pt-4' : undefined}
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-xs font-semibold text-accent-strong shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
-                        0{index + 1}
-                      </span>
-                      <div>
-                        <p className="text-sm font-semibold text-text-primary">{highlight.title}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
-                          {highlight.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {intakeHighlights.map((highlight, index) => (
+                <span
+                  key={highlight.title}
+                  className="inline-flex items-center gap-2 rounded-pill border border-accent/10 bg-accent-soft/48 px-3.5 py-2 text-sm text-text-secondary"
+                >
+                  <span className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent-strong">
+                    0{index + 1}
+                  </span>
+                  <span className="font-medium text-text-primary">{highlight.title}</span>
+                </span>
+              ))}
             </div>
           </div>
         </div>
 
         <form className="mt-8 grid gap-6" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-5">
             <Input
               type="text"
               autoComplete="name"
@@ -192,7 +179,6 @@ export function ContatoPageForm() {
               type="text"
               label="Assunto"
               error={errors.assunto?.message}
-              wrapperClassName="md:col-span-2"
               description="Se houver area, unidade ou tipo de projeto, informe isso aqui."
               placeholder="Ex: apoio para inventario patrimonial"
               {...register('assunto', {
@@ -208,7 +194,6 @@ export function ContatoPageForm() {
               rows={7}
               label="Mensagem"
               error={errors.mensagem?.message}
-              wrapperClassName="md:col-span-2"
               description="Inclua objetivo, volume estimado, localidade e qualquer prazo relevante."
               placeholder="Conte-nos como podemos ajudar."
               {...register('mensagem', {
@@ -221,8 +206,8 @@ export function ContatoPageForm() {
             />
           </div>
 
-          <div className="rounded-[1.35rem] border border-accent/12 bg-accent-soft/65 p-5 sm:p-6">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div className="rounded-[1.35rem] border border-accent/12 bg-[linear-gradient(135deg,rgba(234,242,251,0.78)_0%,rgba(255,255,255,0.96)_100%)] p-5 sm:p-6">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-xl">
                 <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent-strong">
                   Proximo passo
@@ -237,7 +222,7 @@ export function ContatoPageForm() {
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full sm:min-w-[15rem] sm:w-auto sm:shrink-0"
+                className="w-full lg:min-w-[16rem] lg:w-auto lg:shrink-0"
                 trailingIcon={<ArrowIcon />}
               >
                 {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}

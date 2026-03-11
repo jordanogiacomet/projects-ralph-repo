@@ -408,14 +408,14 @@ export default async function ContatoPage() {
       </section>
 
       <section className="relative -mt-8 pb-section-loose sm:-mt-10">
-        <div className="mx-auto grid max-w-content gap-6 px-6 sm:px-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:items-start lg:gap-7 lg:px-12 xl:grid-cols-[minmax(0,1.26fr)_minmax(19rem,0.74fr)]">
+        <div className="mx-auto grid max-w-content gap-6 px-6 sm:px-8 lg:grid-cols-[minmax(0,1.34fr)_minmax(17rem,0.66fr)] lg:items-start lg:gap-6 lg:px-12 xl:grid-cols-[minmax(0,1.42fr)_minmax(18rem,0.58fr)]">
           <ContatoPageForm />
 
           <aside className="space-y-5 lg:pt-3">
             <Card
               as="section"
-              padding="md"
-              className="relative overflow-hidden border-border/80 bg-white/92"
+              padding="sm"
+              className="relative overflow-hidden border-border/75 bg-white/88 shadow-soft"
             >
               <div
                 className="pointer-events-none absolute inset-0"
@@ -427,25 +427,25 @@ export default async function ContatoPage() {
               />
               <div className="relative">
                 <SectionHeading
-                  eyebrow="Como agilizar o retorno"
+                  eyebrow="Apoio a triagem"
                   size="sm"
-                  title="Envie informacoes que ajudem na triagem ja no primeiro contato."
-                  description="Alguns detalhes tornam o encaminhamento mais rapido e preciso, especialmente em demandas tecnicas ou com varias unidades envolvidas."
+                  title="Inclua contexto, localidade e objetivo para acelerar o retorno."
+                  description="Esses pontos ajudam a encaminhar a demanda sem competir com a leitura principal do formulario."
                 />
 
-                <div className="mt-6 divide-y divide-border/70">
+                <div className="mt-5 space-y-3">
                   {messageGuidance.map((item, index) => (
                     <div
                       key={item.title}
-                      className="py-4 first:pt-0 last:pb-0"
+                      className="rounded-[1.1rem] border border-border/70 bg-surface-secondary/70 p-4"
                     >
                       <div className="flex items-start gap-4">
-                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent-strong">
+                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-xs font-semibold text-accent-strong shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                           0{index + 1}
                         </span>
                         <div>
-                          <h3 className="text-base font-semibold text-text-primary">{item.title}</h3>
-                          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                          <h3 className="text-sm font-semibold text-text-primary">{item.title}</h3>
+                          <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
                             {item.description}
                           </p>
                         </div>
@@ -456,7 +456,11 @@ export default async function ContatoPage() {
               </div>
             </Card>
 
-            <Card as="section" padding="lg" className="relative overflow-hidden">
+            <Card
+              as="section"
+              padding="md"
+              className="relative overflow-hidden border-border/75 bg-surface-secondary/72 shadow-soft"
+            >
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
@@ -469,18 +473,25 @@ export default async function ContatoPage() {
                 <SectionHeading
                   eyebrow="Unidades Apollo"
                   size="sm"
-                  title="Atendimento regional com coordenacao integrada."
-                  description="Equipes especializadas no Rio Grande do Sul, Santa Catarina e Sao Paulo, com capacidade de encaminhar projetos de forma coordenada."
+                  title="Presenca regional com leitura mais direta."
+                  description="As unidades seguem disponiveis para apoio local, mas com apresentacao mais leve e facil de escanear."
                 />
 
-                <div className="mt-8 grid gap-4">
+                <div className="mt-6 overflow-hidden rounded-[1.25rem] border border-border/70 bg-white/78">
                   {unidades.map((unit, index) => (
                     <article
                       key={unit.id || `${unit.state}-${index}`}
-                      className="rounded-[1.3rem] border border-border bg-white/85 p-4 shadow-[var(--shadow-soft)]"
+                      className={
+                        index > 0
+                          ? 'grid gap-3 border-t border-border/70 p-4 sm:p-5'
+                          : 'grid gap-3 p-4 sm:p-5'
+                      }
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
+                          <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent/70">
+                            {unit.state || 'BR'}
+                          </p>
                           <h3 className="text-base font-semibold text-text-primary">
                             {unit.name || 'Apollo Gestão'}
                           </h3>
@@ -490,28 +501,19 @@ export default async function ContatoPage() {
                             </p>
                           ) : null}
                         </div>
-                        <Badge tone="accent">{unit.state || 'BR'}</Badge>
+                        <Badge tone="accent" className="shrink-0">
+                          Contato regional
+                        </Badge>
                       </div>
 
-                      <div className="mt-4 grid gap-3">
+                      <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-text-secondary">
                         {hasString(unit.phone) ? (
                           <a
                             href={phoneHref(unit.phone)}
-                            className="motion-transition inline-flex items-center gap-3 text-sm font-medium text-accent hover:text-accent-hover"
+                            className="motion-transition inline-flex items-center gap-2 font-medium text-accent hover:text-accent-hover"
                           >
-                            <span
-                              aria-hidden
-                              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent-strong"
-                            >
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path
-                                  d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.33 1.77.62 2.62a2 2 0 01-.45 2.11L8.01 9.99a16 16 0 006 6l1.54-1.29a2 2 0 012.11-.45c.85.29 1.72.5 2.62.62A2 2 0 0122 16.92z"
-                                  stroke="currentColor"
-                                  strokeWidth="1.8"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
+                            <span className="text-label-sm font-semibold uppercase tracking-[0.16em] text-text-muted">
+                              Tel
                             </span>
                             <span>{unit.phone}</span>
                           </a>
@@ -520,21 +522,10 @@ export default async function ContatoPage() {
                         {hasString(unit.email) ? (
                           <a
                             href={`mailto:${unit.email}`}
-                            className="motion-transition inline-flex items-center gap-3 text-sm font-medium text-accent hover:text-accent-hover"
+                            className="motion-transition inline-flex items-center gap-2 font-medium text-accent hover:text-accent-hover"
                           >
-                            <span
-                              aria-hidden
-                              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent-strong"
-                            >
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path
-                                  d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2zm0 2l8 5 8-5"
-                                  stroke="currentColor"
-                                  strokeWidth="1.8"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
+                            <span className="text-label-sm font-semibold uppercase tracking-[0.16em] text-text-muted">
+                              E-mail
                             </span>
                             <span className="break-all">{unit.email}</span>
                           </a>

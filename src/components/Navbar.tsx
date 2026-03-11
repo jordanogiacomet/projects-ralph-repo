@@ -93,13 +93,13 @@ export function Navbar({
       : 'border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(246,248,251,0.94)_100%)] shadow-[0_24px_60px_rgba(15,23,42,0.14)]',
   )
   const desktopUtilityClass = cn(
-    'hidden items-center gap-2.5 rounded-pill border px-2.5 py-2 lg:flex',
+    'hidden items-center gap-2 rounded-pill border px-2 py-2 lg:flex xl:gap-2.5 xl:px-2.5',
     isTransparent
       ? 'border-white/10 bg-white/[0.06] text-white/62'
       : 'border-border/70 bg-white/72 text-text-muted shadow-soft',
   )
   const desktopGroupClass = cn(
-    'hidden items-center gap-1 rounded-pill border px-2.5 py-2 lg:inline-flex',
+    'hidden max-w-full items-center gap-1 rounded-pill border px-2.5 py-2 lg:inline-flex',
     isTransparent
       ? 'border-white/10 bg-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
       : 'border-border/70 bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]',
@@ -122,13 +122,13 @@ export function Navbar({
       : 'border-border/70 bg-surface-secondary/80 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
   )
   const brandTagClass = cn(
-    'hidden 2xl:inline-flex items-center rounded-pill border px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.22em]',
+    'hidden min-[1700px]:inline-flex items-center rounded-pill border px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.22em]',
     isTransparent
       ? 'border-white/10 bg-white/[0.05] text-white/62'
       : 'border-border/70 bg-white/76 text-text-muted',
   )
   const utilityDividerClass = cn(
-    'hidden h-6 w-px 2xl:block',
+    'hidden h-6 w-px min-[1700px]:block',
     isTransparent ? 'bg-white/10' : 'bg-border',
   )
   const ctaClass = cn(
@@ -143,7 +143,9 @@ export function Navbar({
           size="wide"
           className={cn(
             'motion-transition motion-transition-emphasis',
-            isTransparent ? 'pt-3.5 lg:pt-5 xl:px-10 2xl:px-12' : 'pt-3.5 lg:pt-4 xl:px-10 2xl:px-12',
+            isTransparent
+              ? 'pt-3.5 lg:pt-5 xl:px-10 2xl:max-w-[82rem] 2xl:px-12'
+              : 'pt-3.5 lg:pt-4 xl:px-10 2xl:max-w-[82rem] 2xl:px-12',
           )}
         >
           <div className="relative">
@@ -156,7 +158,7 @@ export function Navbar({
                 )}
               />
               <nav
-                className="flex h-[70px] items-center justify-between gap-3 px-4 sm:px-5 lg:h-[88px] lg:px-6 xl:gap-4 xl:px-8"
+                className="grid h-[70px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 lg:h-[88px] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:px-6 xl:gap-4 xl:px-7"
                 aria-label="Navegação principal"
               >
                 <Link
@@ -187,7 +189,7 @@ export function Navbar({
                   <span className={brandTagClass}>Avaliações e Controle Patrimonial</span>
                 </Link>
 
-                <div className="hidden flex-1 justify-center px-3 lg:flex xl:px-5">
+                <div className="hidden min-w-0 justify-center px-2 lg:flex xl:px-4">
                   <div className={desktopGroupClass}>
                     {desktopNavItems.map((item) => {
                       const key = item.id || item.label
@@ -255,14 +257,14 @@ export function Navbar({
                   </div>
                 </div>
 
-                <div className="hidden items-center gap-4 xl:gap-5 lg:flex">
+                <div className="hidden min-w-0 items-center justify-end gap-3 lg:flex xl:gap-4">
                   <div className={desktopUtilityClass}>
                     <button
                       type="button"
                       onClick={() => setSearchOpen(true)}
                       className={cn(
                         iconButtonClass,
-                        'h-10 min-w-[3rem] gap-2 px-3.5 xl:min-w-[8.75rem] xl:justify-start',
+                        'h-10 min-w-[3rem] gap-2 px-3 lg:min-w-[7.25rem] lg:justify-start xl:min-w-[7.75rem] xl:px-3.5 min-[1700px]:min-w-[8.75rem]',
                       )}
                       aria-label="Abrir busca"
                     >
@@ -285,7 +287,7 @@ export function Navbar({
                         <SocialLinks
                           links={socialLinks}
                           size="sm"
-                          className="hidden 2xl:flex gap-1.5"
+                          className="hidden min-[1700px]:flex gap-1.5"
                           itemClassName={cn(
                             'h-8 w-8 shadow-none',
                             isTransparent
@@ -313,7 +315,7 @@ export function Navbar({
                           <path d="m13 5 7 7-7 7" />
                         </svg>
                       }
-                      className={cn('min-h-12', ctaClass)}
+                      className={cn('min-h-12 shrink-0', ctaClass)}
                     >
                       {ctaButton.label}
                     </Button>

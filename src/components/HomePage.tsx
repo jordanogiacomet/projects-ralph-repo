@@ -153,7 +153,7 @@ export function HomePage({
         />
 
         {/* Hero content */}
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-24 pt-24 text-center text-text-on-dark sm:px-8 sm:pb-32 sm:pt-36 lg:px-12 lg:pb-40 xl:pb-44">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-28 pt-24 text-center text-text-on-dark sm:px-8 sm:pb-36 sm:pt-36 lg:px-12 lg:pb-44 xl:pb-48">
           {/* Institutional badge */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
@@ -231,7 +231,7 @@ export function HomePage({
 
         {/* Scroll indicator — refined */}
         <motion.div
-          className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 sm:flex sm:bottom-10"
+          className="absolute bottom-12 left-1/2 z-10 hidden -translate-x-1/2 sm:flex sm:bottom-14 lg:bottom-[4.5rem]"
           animate={shouldReduceMotion ? { y: 0 } : { y: [0, 6, 0] }}
           transition={
             shouldReduceMotion
@@ -273,7 +273,7 @@ export function HomePage({
         />
         <div className="mx-auto max-w-content px-6 sm:px-8 lg:px-12">
           <motion.div
-            className="relative z-10 mx-auto -mt-10 max-w-[72rem] overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/92 p-6 shadow-[var(--shadow-strong)] backdrop-blur-sm sm:-mt-14 sm:p-8 lg:-mt-16 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.3fr)] lg:items-start lg:gap-8 lg:p-9 xl:max-w-[74rem] xl:gap-10"
+            className="relative z-10 mx-auto -mt-6 max-w-[72rem] overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/92 p-6 shadow-[var(--shadow-strong)] backdrop-blur-sm sm:-mt-9 sm:p-8 lg:-mt-11 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.3fr)] lg:items-start lg:gap-8 lg:p-9 xl:-mt-12 xl:max-w-[74rem] xl:gap-10"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
