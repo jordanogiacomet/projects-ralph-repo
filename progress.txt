@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 19:21:07 UTC
+Last Updated: 2026-03-11 19:34:46 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -49,9 +49,8 @@ Last Updated: 2026-03-11 19:21:07 UTC
 - `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
 - `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
 - `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
-- `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
-- `VP-005` completed with the registered contact/form hierarchy fix validated and the story formally closed.
-- Next target: `VP-006 - Correções visuais de soluções`
+- `VP-004`, `VP-005`, `VP-008`, `VP-006`, and `VP-007` remain open in the active root `prd.json`.
+- Next target: `VP-004 - Correções visuais editorial e prova social`
 
 ## Validation Rules
 - Required validation order:
@@ -410,4 +409,53 @@ Last Updated: 2026-03-11 19:21:07 UTC
 - Learnings for future iterations:
   - When `progress.txt` drifts from the active status files, story selection should still follow the current root `prd.json` and the active visual register rather than the older progress snapshot.
   - The repository can still surface transient `next build` failures on framework error pages; the successful immediate rerun should be recorded as the authoritative required build result when no code changes intervene.
+---
+
+## 2026-03-11 19:29:01 UTC - VP-003
+- Story ID: `VP-003`
+- Issue IDs addressed: `VR-007`
+- What was implemented:
+  - Revalidated that the existing `/sobre` alignment fix in `src/components/MissaoVisaoValores.tsx` is the only scoped `VP-003` change needed and did not expand the story beyond `VR-007`.
+  - Reconciled the active cycle state by keeping `VR-007` marked `fixed` in `docs/visual-register.md` while leaving `VP-003` open in `prd.json` because the required build did not pass.
+  - Recorded the current blocker in the register and progress log instead of forcing story closure from stale progress notes.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed during page-data collection with `PageNotFoundError` on `/contato`, `/_not-found`, `/conteudos/[slug]`, `/contato/representante`, and `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas`
+  - Final required `npm run build`: failed again during page-data collection on unrelated Soluções routes under `/(frontend)/solucoes/avaliacao-patrimonial/*`
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-007`.
+- Learnings for future iterations:
+  - In this repository, `next build` page-data collection can fail on different unrelated app-router paths between reruns even when the page files exist on disk, so story closure still has to wait for a clean required build.
+  - When `progress.txt` drifts ahead of `prd.json`, the root PRD must remain authoritative for story selection and closure status.
+---
+
+## 2026-03-11 19:34:46 UTC - VP-003
+- Story ID: `VP-003`
+- Issue IDs addressed: `VR-007`
+- What was implemented:
+  - Revalidated the existing `/sobre` institutional alignment fix in `src/components/MissaoVisaoValores.tsx` without expanding the story beyond the registered screenshot-backed issue.
+  - Closed the stale `next build` blocker after the full required validation sequence passed and formalized `VP-003` as complete in the active root `prd.json`.
+  - Updated the `VR-007` register note to reflect successful story closure while keeping browser QA explicitly pending.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-007`.
+- Learnings for future iterations:
+  - Story selection for this cycle must follow the first `passes: false` item in `prd.json` even when `progress.txt` contains older forward-looking status notes.
+  - A previously blocked visual story can be closed safely as a metadata-only run once the scoped issue is already fixed and the full required validation sequence passes cleanly.
 ---
