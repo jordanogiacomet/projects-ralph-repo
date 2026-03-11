@@ -2,7 +2,7 @@
   "projectName": "apollo-gestao-website",
   "branchName": "main",
   "version": "3.3",
-  "status": "phase-2-redesign-in-progress",
+  "status": "phase-2-redesign-complete",
   "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. Toda a camada pública do front deve carregar uma pegada visual inspirada no site do Payload CMS em termos de clareza, navegação, hero, CTAs, espaçamento, hierarquia tipográfica, polimento de interface e sensação de produto moderno — sem copiar literalmente sua IA, sua estrutura comercial ou sua identidade de marca. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
   "productVision": {
     "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna, consultiva e claramente inspirada na linguagem visual do ecossistema Payload.",
@@ -129,7 +129,8 @@
       "US-055",
       "US-056",
       "US-057",
-      "US-058"
+      "US-058",
+      "US-050"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -1569,7 +1570,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Polish visual, consistência global e QA de redesign",
-      "passes": false,
+      "passes": true,
       "description": "Gate final de consistência e acabamento do produto após saneamento operacional, auditoria visual e correções dirigidas por débito visual.",
       "acceptanceCriteria": [
         "Todas as principais páginas públicas revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",

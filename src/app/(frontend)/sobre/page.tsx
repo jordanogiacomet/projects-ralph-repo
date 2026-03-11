@@ -306,9 +306,9 @@ export default async function SobrePage() {
                 </Button>
                 <Button
                   href="/solucoes"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Explorar solucoes
                 </Button>
@@ -549,9 +549,9 @@ export default async function SobrePage() {
               </Button>
               <Button
                 href="/contato/cotacao"
-                variant="ghost"
+                variant="inverted"
                 size="lg"
-                className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                className="rounded-pill"
               >
                 Solicitar cotacao
               </Button>

@@ -103,9 +103,9 @@ export default async function NewsPage() {
                 </Button>
                 <Button
                   href="/contato"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Falar com especialistas
                 </Button>
@@ -214,9 +214,9 @@ export default async function NewsPage() {
                 </Button>
                 <Button
                   href="/conteudos"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Ver biblioteca
                 </Button>

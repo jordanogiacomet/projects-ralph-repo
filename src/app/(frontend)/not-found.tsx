@@ -72,9 +72,9 @@ export default function FrontendNotFound() {
                 </Button>
                 <Button
                   href="/news"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Explorar News
                 </Button>
@@ -109,9 +109,9 @@ export default function FrontendNotFound() {
                       <p className="mt-2 text-sm leading-relaxed text-white/62">{link.description}</p>
                       <Button
                         href={link.href}
-                        variant="ghost"
+                        variant="inverted"
                         size="sm"
-                        className="mt-4 rounded-pill border border-white/10 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                        className="mt-4 rounded-pill border-white/10"
                       >
                         Acessar rota
                       </Button>

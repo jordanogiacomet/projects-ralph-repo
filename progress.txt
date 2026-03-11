@@ -1,7 +1,3 @@
-# Ralph Progress Log
-Started: Mon Mar  9 09:19:04 PDT 2026
----
-
 ## Codebase Patterns
 - Payload CMS 3.x is integrated into Next.js (not standalone) - config at `src/payload.config.ts`
 - Frontend routes live in `src/app/(frontend)/`, Payload admin/API in `src/app/(payload)/`
@@ -27,6 +23,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Overlap sections should use `-mt-12 sm:-mt-16` with `pb-[var(--space-section-loose)]` to stay aligned with the redesign system
 - Shared motion behavior belongs in `src/styles/tokens.css` and `src/styles/utilities.css`; prefer `motion-transition`, `motion-lift-*`, and `motion-media-scale` utilities
 - Shared UI primitives in `src/components/ui/` should be preferred over one-off control styling
+- Dark-surface secondary CTAs should use `Button` variant `inverted` from `src/components/ui/Button.tsx` instead of duplicating white-glass button classes per template
 - Shared shell-navigation normalization lives in `src/lib/navigation.ts` and should be reused by header/footer navigation loaders
 - Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
 - Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
@@ -38,29 +35,30 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Project: `apollo-gestao-website`
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
-- PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-058`
-- Next eligible story after this run: `US-050`
-- Current open phase-2 order: `US-050`
+- PRD status: `phase-2-redesign-complete`
+- Story completed in this run: `US-050`
+- Next eligible story after this run: `none - phase-2 complete`
+- Current open phase-2 order: `none - all phase-2 stories complete`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
 - `prd.json` v3.3 is the authoritative source for story order, dependency state, and completion status.
-- The `userStories` tail is now aligned with the active backlog order: `US-051 -> US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`.
-- `US-050` is now the only remaining open phase-2 story because `US-052` through `US-058` are complete in the active PRD.
-- The archived `US-050` completion-style log is historical only and was superseded by the active PRD v3.3 governance pass.
+- All phase-2 redesign stories are now complete in the active PRD: `US-051 -> US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`.
+- `US-050` closed the final redesign gate in the active PRD; no open phase-2 story order remains.
+- Residual manual browser QA remains tracked only in `docs/visual-debt-register.md` under `RQ-001`; it does not reopen the completed phase-2 backlog sequence.
 - Historical duplicate or superseded logs remain preserved in `progress-archive.txt` for traceability and must not override `prd.json`.
 
 ## Current Delivery Status
 - Phase 1 functional foundation is implemented: CMS schema, globals, layout blocks, public routes, SEO/search, form flows, and seed baseline.
-- Phase 2 broad redesign delivery is implemented through `US-049G` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
+- Phase 2 redesign delivery is complete through `US-050` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
 - `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
 - `US-053` closed the first shell debt pass with a lighter consent surface, coordinated floating controls, a navigation-first mobile menu, and a stronger search loading state.
 - `US-054` cleared the homepage/about debt pass by replacing broken media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
 - `US-055` closed the editorial/proof debt pass by introducing Apollo-branded missing-route recovery, tightening the News zero-results flow, and aligning empty-state/sticky-rail behavior across `clientes`, `conteudos`, and `news`.
 - `US-056` closed the contact/forms debt pass by unifying submit-state messaging, CTA trays, upload feedback, and summary rails across the public contact flows and newsletter surface.
 - `US-057` closed the solutions debt pass by aligning the solution-family filter rails, category hubs, detail-page support surfaces, and related-solution cards around the shared phase-2 visual system.
-- `US-058` completed the final responsive evidence pass, updated the visual debt register with closure and residual tracking, and left only the final redesign gate `US-050`.
+- `US-058` completed the final responsive evidence pass and left the residual manual QA tracker `RQ-001` in the visual debt register.
+- `US-050` closed the redesign gate by harmonizing the remaining dark-surface secondary CTA treatment through shared UI primitives and revalidating the final public route set against the production build.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -77,6 +75,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 
 ## Active Risks / Known Issues
 - `prd.json` must remain the source of truth; archived progress entries may include superseded completion attempts that are preserved only for traceability.
+- Residual manual QA tracker `RQ-001` remains open because the current environment still cannot launch Playwright Chromium/WebKit due missing shared libraries; production route probes passed, but interactive browser confirmation is still pending.
 - Sandbox/static builds may log Postgres connectivity errors during static generation even when the build exits successfully - distinguish runtime noise from build failure.
 - Plain `npm run build` may intermittently fail in the sandbox with transient Next.js worker, module, or page-resolution issues; retry once and log the exact outcome.
 - Mobile and tablet experience must not be deferred until the end of redesign work.
@@ -307,4 +306,35 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Learnings for future iterations:
   - When the original debt register already exists, append the final sweep evidence and residual tracker there instead of splitting closure status across multiple ad hoc notes.
   - App Router 404 responses can still expose the segment-level branded recovery content in the streamed payload even when the root `__next_error__` shell appears first, so HTTP-only verification should search the full response body for the branded recovery copy and actions.
+---
+## 2026-03-11 14:12 UTC - US-050
+- What was implemented:
+  - Added the shared `inverted` variant to `src/components/ui/Button.tsx` so dark-surface secondary CTAs now share one white-glass treatment with a white focus ring instead of per-template one-off classes.
+  - Replaced the remaining duplicated dark CTA styling across the major public templates and recovery surfaces: `src/app/(frontend)/sobre/page.tsx`, `src/app/(frontend)/conteudos/page.tsx`, `src/app/(frontend)/news/page.tsx`, `src/app/(frontend)/not-found.tsx`, `src/components/ClientsPage.tsx`, `src/components/SolutionsHubPage.tsx`, `src/components/SolutionCategoryHubPage.tsx`, and `src/components/SolutionDetailPage.tsx`.
+  - Closed the final phase-2 consistency gap around hover/focus treatment for high-visibility public CTAs without introducing new product features or changing route structure, content modeling, or form behavior.
+  - Revalidated the affected production routes after the design-system update and confirmed the rendered responses still expose the expected CTA/recovery copy plus the new shared dark-surface focus-ring class.
+- Files changed:
+  - `src/components/ui/Button.tsx`
+  - `src/app/(frontend)/sobre/page.tsx`
+  - `src/app/(frontend)/conteudos/page.tsx`
+  - `src/app/(frontend)/news/page.tsx`
+  - `src/app/(frontend)/not-found.tsx`
+  - `src/components/ClientsPage.tsx`
+  - `src/components/SolutionsHubPage.tsx`
+  - `src/components/SolutionCategoryHubPage.tsx`
+  - `src/components/SolutionDetailPage.tsx`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: initially failed because `.next/types` was absent; passed after a successful Next build regenerated the type outputs
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: first attempt failed with transient `PageNotFoundError` for `/_document`; the required retry failed with transient prerender page-resolution errors for `/solucoes/controle-patrimonial` and `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos`; after moving the generated `.next` directory aside to force a clean output directory, a fresh `npm run build` passed
+- Browser/manual verification status:
+  - Browser tooling is still unavailable in this Codex environment; Playwright-based responsive/manual interaction QA remains tracked under `RQ-001` because Chromium/WebKit cannot launch due missing shared libraries (`libnspr4.so`, `libgstreamer-1.0.so.0`, `libgtk-4.so.1`)
+  - As a lightweight production fallback, the built app was started locally on `http://127.0.0.1:3001`; `/sobre`, `/clientes`, `/conteudos`, `/news`, `/solucoes`, and `/solucoes/controle-patrimonial` returned `200`, `/news/nao-existe` returned `404`, and each response exposed the expected CTA or recovery marker plus `focus-visible:ring-white/15` from the new shared variant
+- Learnings for future iterations:
+  - Dark-surface secondary CTAs should stay on a shared `Button` variant with a white focus ring; duplicating white-glass classes across templates makes final polish harder to keep consistent.
+  - When transient Next page-resolution failures persist after the documented retry, preserving the old `.next` directory and rebuilding into a fresh output path can restore a clean validation run without touching source files.
 ---

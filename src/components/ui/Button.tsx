@@ -7,7 +7,7 @@ import type {
 
 import { cn } from '@/lib/utils'
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'success'
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'success' | 'inverted'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 type CommonButtonProps = {
@@ -35,6 +35,17 @@ const variantClasses: Record<ButtonVariant, string> = {
     'border border-transparent bg-transparent text-text-primary hover:border-accent/10 hover:bg-accent-light/70 hover:text-accent',
   success:
     'border border-cta-green bg-cta-green text-white shadow-soft hover:border-cta-green-hover hover:bg-cta-green-hover hover:shadow-medium',
+  inverted:
+    'border border-white/12 bg-white/[0.06] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm hover:border-white/18 hover:bg-white/[0.12] hover:text-white',
+}
+
+const focusRingClasses: Record<ButtonVariant, string> = {
+  primary: 'focus-visible:ring-accent/15',
+  secondary: 'focus-visible:ring-accent/15',
+  outline: 'focus-visible:ring-accent/15',
+  ghost: 'focus-visible:ring-accent/15',
+  success: 'focus-visible:ring-accent/15',
+  inverted: 'focus-visible:ring-white/15',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -55,7 +66,8 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    'motion-transition motion-lift-subtle inline-flex items-center justify-center gap-2 rounded-button font-semibold tracking-[0.01em] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 disabled:pointer-events-none disabled:transform-none disabled:opacity-60',
+    'motion-transition motion-lift-subtle inline-flex items-center justify-center gap-2 rounded-button font-semibold tracking-[0.01em] focus-visible:outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:transform-none disabled:opacity-60',
+    focusRingClasses[variant],
     sizeClasses[size],
     variantClasses[variant],
     fullWidth && 'w-full',

@@ -101,9 +101,9 @@ export function SolutionCategoryHubPage({
                 </Button>
                 <Button
                   href="/contato/cotacao"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Solicitar diagnostico
                 </Button>
@@ -357,9 +357,9 @@ export function SolutionCategoryHubPage({
                 </Button>
                 <Button
                   href="/solucoes"
-                  variant="ghost"
+                  variant="inverted"
                   size="lg"
-                  className="rounded-pill border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white"
+                  className="rounded-pill"
                 >
                   Ver portfolio completo
                 </Button>
