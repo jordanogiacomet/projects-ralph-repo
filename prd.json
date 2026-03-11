@@ -1,7 +1,7 @@
 {
   "projectName": "apollo-gestao-website",
   "branchName": "main",
-  "version": "3.2",
+  "version": "3.3",
   "status": "phase-2-redesign-in-progress",
   "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. Toda a camada pública do front deve carregar uma pegada visual inspirada no site do Payload CMS em termos de clareza, navegação, hero, CTAs, espaçamento, hierarquia tipográfica, polimento de interface e sensação de produto moderno — sem copiar literalmente sua IA, sua estrutura comercial ou sua identidade de marca. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
   "productVision": {
@@ -12,15 +12,15 @@
   },
   "projectStrategy": {
     "phase1": "Reconstrução funcional e estrutural baseada no site anterior, com CMS, rotas, conteúdo, SEO, formulários e arquitetura já implementados.",
-    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos. Prioridade: homepage, prova social e conteúdo editorial, formulários e contato, depois soluções.",
+    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos. Após as entregas amplas de redesign (US-038 até US-049G), a fase 2 entra em um subciclo de saneamento operacional do backlog, auditoria visual estruturada, correções orientadas por débito visual e sweep responsivo final antes do gate de fechamento.",
     "phase3": "Hardening operacional posterior, incluindo automação de testes, CI/CD mais robusto, operação de formulários, observabilidade e evidências formais de performance/acessibilidade, quando entrar no backlog.",
     "visualPositioning": "Não perseguir clone visual do WordPress. Usar o site anterior apenas como referência de conteúdo, estrutura, hierarquia institucional e repertório comercial.",
     "payloadInspirationRule": "Todo o site público deve assumir explicitamente uma pegada visual inspirada no site do Payload CMS. Essa inspiração deve aparecer em header, hero, grids, cards, filtros, CTAs, listagens, páginas editoriais, formulários e acabamento de componentes, principalmente em clareza, composição, espaçamento, hierarquia e acabamento premium.",
     "implementationRule": "Stories já concluídas permanecem como base funcional entregue. O redesign deve acontecer por meio de novas histórias incrementais, sem apagar o histórico técnico da fase anterior.",
     "nonBreakingRule": "A fase 2 deve preferir evolução incremental da base existente. Alterações de modelagem CMS só devem ocorrer se houver ganho claro de governança editorial ou de qualidade visual impossível de atingir apenas no front.",
-    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade e consistência global.",
+    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade, consistência global e, quando aplicável, referência aos itens do débito visual auditado.",
     "headerRedesignRule": "O header foi revisado na fase 2 (US-039A/B/C). As próximas stories devem referenciar e manter consistência com o shell já repaginado.",
-    "priorityRule": "Na fase 2, a ordem de prioridade é: (1) homepage como vitrine institucional, (2) prova social e conteúdo editorial — clientes, conteúdos e news, (3) formulários e fluxos de contato, (4) hubs e detalhes de soluções, (5) polish global. Stories de soluções não devem bloquear nem atrasar as demais.",
+    "priorityRule": "No estado atual da fase 2, a ordem de prioridade aberta é: (1) saneamento do backlog e artefatos operacionais, (2) auditoria visual estruturada, (3) correções visuais de shell, homepage/sobre, editorial/prova social, contato e soluções, (4) QA responsivo com evidências, (5) gate final US-050. As entregas amplas anteriores permanecem como base concluída.",
     "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS.",
     "note": "Polish stories may modify multiple templates but must avoid architectural refactors."
   },
@@ -52,7 +52,8 @@
       "A fase 2 deve elevar consistência visual entre homepage, hubs, detalhes, conteúdo editorial e formulários",
       "O projeto deve manter ou melhorar SEO, responsividade e acessibilidade já implementados na fase 1",
       "O redesign não deve introduzir regressões visuais gritantes entre desktop, tablet e mobile",
-      "A pegada Payload deve ser perceptível no sistema visual como um todo, não apenas no header"
+      "A pegada Payload deve ser perceptível no sistema visual como um todo, não apenas no header",
+      "O backlog e os artefatos operacionais devem permanecer coerentes com o estado real do produto para evitar deriva de execução"
     ]
   },
   "storyExecutionPlan": {
@@ -99,7 +100,29 @@
       "US-038",
       "US-039A",
       "US-039B",
-      "US-039C"
+      "US-039C",
+      "US-040A",
+      "US-040B",
+      "US-040C",
+      "US-043A",
+      "US-043B",
+      "US-043C",
+      "US-044A",
+      "US-044B",
+      "US-044C",
+      "US-046A",
+      "US-046B",
+      "US-046C",
+      "US-047A",
+      "US-048B",
+      "US-049A",
+      "US-049B",
+      "US-049C",
+      "US-049D",
+      "US-049E",
+      "US-049F",
+      "US-049G",
+      "US-051"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -115,14 +138,29 @@
       "US-044A",
       "US-044B",
       "US-044C",
-      "US-041A",
-      "US-041B",
-      "US-041C",
-      "US-042A",
-      "US-042B",
-      "US-045"
+      "US-046A",
+      "US-046B",
+      "US-046C",
+      "US-047A",
+      "US-048B",
+      "US-049A",
+      "US-049B",
+      "US-049C",
+      "US-049D",
+      "US-049E",
+      "US-049F",
+      "US-049G",
+      "US-051",
+      "US-052",
+      "US-053",
+      "US-054",
+      "US-055",
+      "US-056",
+      "US-057",
+      "US-058",
+      "US-050"
     ],
-    "phase2Logic": "Primeiro consolidar design system e shell global (US-038, US-039A/B/C — já concluídos), depois homepage como vitrine institucional principal (US-040A/B/C), depois prova social e conteúdo editorial (US-043A/B/C), depois formulários e fluxos de contato (US-044A/B/C), depois hubs e detalhes de soluções (US-041A/B/C, US-042A/B), e por fim polish global (US-045)."
+    "phase2Logic": "A base de redesign amplo da fase 2 já foi entregue entre US-038 e US-049G. O ciclo aberto atual começa com saneamento do backlog e dos artefatos operacionais (US-051), segue com auditoria visual estruturada e criação do registro de débito visual (US-052), depois executa correções por família de template e componente (US-053 até US-057), em seguida roda o sweep responsivo com evidências e registro de débito residual (US-058), e só então fecha o gate final de polish e consistência global (US-050)."
   },
   "storyDependencies": {
     "US-039A": [
@@ -176,53 +214,115 @@
       "US-039A",
       "US-044A"
     ],
-    "US-041A": [
+    "US-046A": [
       "US-038",
       "US-039A",
       "US-040A"
     ],
-    "US-041B": [
+    "US-046B": [
       "US-038",
       "US-039A",
-      "US-040A",
-      "US-041A"
+      "US-046A"
     ],
-    "US-041C": [
+    "US-046C": [
       "US-038",
       "US-039A",
-      "US-040A",
-      "US-041A"
+      "US-046A",
+      "US-046B"
     ],
-    "US-042A": [
+    "US-047A": [
       "US-038",
       "US-039A",
-      "US-040A",
-      "US-041A"
+      "US-046A",
+      "US-046B",
+      "US-046C"
     ],
-    "US-042B": [
+    "US-048B": [
       "US-038",
       "US-039A",
-      "US-042A"
+      "US-047A"
     ],
-    "US-045": [
+    "US-049A": [
       "US-038",
       "US-039A",
       "US-039B",
-      "US-039C",
-      "US-040A",
-      "US-040B",
+      "US-039C"
+    ],
+    "US-049B": [
+      "US-038"
+    ],
+    "US-049C": [
+      "US-038"
+    ],
+    "US-049D": [
+      "US-038",
+      "US-039A",
+      "US-039B",
+      "US-039C"
+    ],
+    "US-049E": [
+      "US-049D"
+    ],
+    "US-049F": [
       "US-040C",
-      "US-041A",
-      "US-041B",
-      "US-041C",
-      "US-042A",
-      "US-042B",
       "US-043A",
       "US-043B",
       "US-043C",
       "US-044A",
       "US-044B",
-      "US-044C"
+      "US-044C",
+      "US-046A",
+      "US-046B",
+      "US-046C",
+      "US-047A",
+      "US-048B"
+    ],
+    "US-049G": [
+      "US-049F"
+    ],
+    "US-051": [
+      "US-049A",
+      "US-049B",
+      "US-049C",
+      "US-049D",
+      "US-049E",
+      "US-049F",
+      "US-049G"
+    ],
+    "US-052": [
+      "US-051"
+    ],
+    "US-053": [
+      "US-052"
+    ],
+    "US-054": [
+      "US-052"
+    ],
+    "US-055": [
+      "US-052"
+    ],
+    "US-056": [
+      "US-052"
+    ],
+    "US-057": [
+      "US-052"
+    ],
+    "US-058": [
+      "US-053",
+      "US-054",
+      "US-055",
+      "US-056",
+      "US-057"
+    ],
+    "US-050": [
+      "US-051",
+      "US-052",
+      "US-053",
+      "US-054",
+      "US-055",
+      "US-056",
+      "US-057",
+      "US-058"
     ]
   },
   "qualityGates": {
@@ -239,7 +339,8 @@
       "Racional visual resumido",
       "Impactos em componentes compartilhados",
       "Validação mínima com lint, typecheck prático e build quando aplicável",
-      "Observações de QA manual pendente quando browser tooling não estiver disponível"
+      "Observações de QA manual pendente quando browser tooling não estiver disponível",
+      "Referência aos IDs do débito visual quando a story for orientada por auditoria"
     ]
   },
   "techStack": [
@@ -363,7 +464,7 @@
       "buttons": "Botões com geometria precisa, padding generoso, estados hover/focus refinados e contraste alto. O CTA principal deve ter presença visual forte, mas sem parecer agressivo.",
       "cards": "Cards mais premium, com superfícies limpas, bordas sutis, sombra suave e hover discreto. Evitar aparência genérica de card branco quadrado com ícone.",
       "forms": "Formulários mais elegantes, com campos espaçosos, labels claras, estados de foco fortes e agrupamento visual coerente.",
-      "navigation": "Navbar e mega menu foram repaginados em US-039A/B. Novos templates devem respeitar e reforçar essa linguagem.",
+      "navigation": "Navbar e mega menu foram repaginados em US-039A/B/C. Novos templates devem respeitar e reforçar essa linguagem.",
       "filters": "Tabs e chips de filtro devem parecer controles modernos de interface, com estados ativo, hover e contagem bem resolvidos."
     },
     "motionLanguage": {
@@ -1192,7 +1293,6 @@
         "Mesma linguagem aplicável em /solucoes e nos hubs de categoria"
       ]
     },
-    
     {
       "id": "US-047A",
       "phase": "phase-2-redesign",
@@ -1252,7 +1352,7 @@
         "progress.txt registra correções aplicadas"
       ]
     },
-        {
+    {
       "id": "US-049C",
       "phase": "phase-2-redesign",
       "stream": "polish",
@@ -1286,14 +1386,14 @@
       "id": "US-049E",
       "phase": "phase-2-redesign",
       "stream": "polish",
-      "title": "Harmonização de motion e microinterações",
+      "title": "Follow-up de harmonização de motion e microinterações em rotas e shells críticos",
       "passes": true,
-      "description": "Revisar e padronizar animações e microinterações em todo o site.",
+      "description": "Fechar outliers remanescentes de animação, hover e focus em shells e rotas críticas após a primeira harmonização global.",
       "acceptanceCriteria": [
-        "Transições consistentes entre templates",
-        "Hover e focus states harmonizados",
-        "Animações não são excessivas ou inconsistentes",
-        "Respeito a prefers-reduced-motion",
+        "Shells e rotas críticas migrados para a mesma linguagem de motion da camada compartilhada",
+        "Hover e focus states mantêm paridade visual nos componentes revisados",
+        "Animações remanescentes fora do padrão são eliminadas ou justificadas",
+        "Respeito a prefers-reduced-motion é preservado",
         "progress.txt registra ajustes realizados"
       ]
     },
@@ -1330,12 +1430,140 @@
       ]
     },
     {
+      "id": "US-051",
+      "phase": "phase-2-redesign",
+      "stream": "backlog-governance",
+      "title": "Saneamento do backlog de redesign e artefatos operacionais",
+      "passes": true,
+      "description": "Alinhar prd.json, progress.txt, progress-archive.txt e AGENTS.md ao estado real do projeto antes de novas correções visuais.",
+      "acceptanceCriteria": [
+        "storyExecutionPlan atualizado para refletir apenas a ordem real das stories existentes no backlog atual",
+        "storyDependencies sincronizado com as stories atualmente válidas do phase-2-redesign",
+        "Duplicações, IDs conflitantes e stories obsoletas identificadas e corrigidas sem apagar histórico técnico relevante",
+        "progress.txt fica com topo operacional enxuto, atualizado e coerente com o prd.json atual",
+        "Histórico antigo não essencial ao próximo ciclo é movido para progress-archive.txt sem perda de rastreabilidade",
+        "AGENTS.md passa a refletir com clareza a ordem real do backlog e as regras de seleção de story sem ambiguidade",
+        "Nenhuma story funcional ou visual é executada dentro desta task"
+      ]
+    },
+    {
+      "id": "US-052",
+      "phase": "phase-2-redesign",
+      "stream": "visual-audit",
+      "title": "Auditoria visual estruturada e criação do registro de débito visual",
+      "passes": false,
+      "description": "Auditar as rotas públicas do site e registrar problemas visuais de forma objetiva antes das correções.",
+      "acceptanceCriteria": [
+        "Todas as principais rotas públicas são auditadas em desktop, tablet e mobile",
+        "Estados relevantes são auditados quando aplicável: default, hover, focus, active, open, empty, loading e error",
+        "Cada problema visual registrado inclui rota, breakpoint, componente afetado, descrição do problema, comportamento esperado e severidade",
+        "É criado um registro persistente de débito visual em arquivo versionado no repositório",
+        "Cada item do débito visual recebe um identificador único para rastreamento",
+        "A auditoria não reabre modelagem CMS nem adiciona features novas"
+      ]
+    },
+    {
+      "id": "US-053",
+      "phase": "phase-2-redesign",
+      "stream": "visual-fixes-shell",
+      "title": "Correções visuais do shell global e overlays",
+      "passes": false,
+      "description": "Corrigir inconsistências visuais restantes em navbar, mega menu, mobile menu, search overlay, footer e floats globais.",
+      "acceptanceCriteria": [
+        "Navbar, mega menu, mobile menu e search overlay revisados contra o registro de débito visual",
+        "Footer, cookie consent, WhatsApp float e scroll-to-top revisados contra o registro de débito visual",
+        "Nenhum overflow, desalinhamento gritante, foco invisível ou contraste inconsistente permanece nos componentes do shell auditados",
+        "Estados hover, focus e open dos componentes do shell ficam coerentes entre si",
+        "Responsividade do shell é validada em desktop, tablet e mobile",
+        "progress.txt registra os componentes corrigidos, impactos compartilhados e QA manual pendente"
+      ]
+    },
+    {
+      "id": "US-054",
+      "phase": "phase-2-redesign",
+      "stream": "visual-fixes-institutional",
+      "title": "Correções visuais da homepage e da página Sobre",
+      "passes": false,
+      "description": "Corrigir inconsistências visuais remanescentes na homepage e em /sobre com foco em hero, ritmo vertical, blocos institucionais e CTAs.",
+      "acceptanceCriteria": [
+        "Homepage revisada contra o registro de débito visual em desktop, tablet e mobile",
+        "Página /sobre revisada contra o registro de débito visual em desktop, tablet e mobile",
+        "Hero, overlap sections, cards institucionais, sliders e CTAs mantêm hierarquia consistente com o design system",
+        "Não permanecem quebras visuais evidentes entre seções escuras e claras",
+        "Tipografia, spacing e densidade de interface ficam coerentes entre homepage e /sobre",
+        "progress.txt registra os templates corrigidos e impactos em componentes compartilhados"
+      ]
+    },
+    {
+      "id": "US-055",
+      "phase": "phase-2-redesign",
+      "stream": "visual-fixes-editorial-proof",
+      "title": "Correções visuais de Clientes, Conteúdos e News",
+      "passes": false,
+      "description": "Corrigir inconsistências visuais remanescentes em /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
+      "acceptanceCriteria": [
+        "Página /clientes revisada contra o registro de débito visual",
+        "Hub e detalhe de Conteúdos revisados contra o registro de débito visual",
+        "Hub e detalhe de News revisados contra o registro de débito visual",
+        "Filtros, grids, cards editoriais, side rails, sticky blocks e empty states ficam coerentes com o phase-2 design system",
+        "Nenhum layout principal dessas rotas apresenta overflow, compressão severa ou hierarquia inconsistente entre desktop, tablet e mobile",
+        "progress.txt registra os templates corrigidos, componentes compartilhados impactados e QA manual pendente"
+      ]
+    },
+    {
+      "id": "US-056",
+      "phase": "phase-2-redesign",
+      "stream": "visual-fixes-contact",
+      "title": "Correções visuais dos fluxos de contato e formulários públicos",
+      "passes": false,
+      "description": "Corrigir inconsistências visuais restantes em /contato, /contato/cotacao, /contato/representante e formulários públicos compartilhados.",
+      "acceptanceCriteria": [
+        "Página /contato revisada contra o registro de débito visual",
+        "Fluxo /contato/cotacao revisado contra o registro de débito visual",
+        "Fluxo /contato/representante revisado contra o registro de débito visual",
+        "ContatoForm, CotacaoForm, RepresentanteForm e NewsletterForm mantêm linguagem visual consistente entre labels, campos, mensagens e CTAs",
+        "Stepper, upload, estados de erro/sucesso e summary rails ficam visualmente coerentes em todos os breakpoints aplicáveis",
+        "progress.txt registra os fluxos corrigidos e impactos em componentes compartilhados"
+      ]
+    },
+    {
+      "id": "US-057",
+      "phase": "phase-2-redesign",
+      "stream": "visual-fixes-solutions",
+      "title": "Correções visuais das páginas de soluções e details",
+      "passes": false,
+      "description": "Corrigir inconsistências visuais remanescentes em /solucoes, hubs de categoria e páginas de detalhe de solução.",
+      "acceptanceCriteria": [
+        "Página /solucoes revisada contra o registro de débito visual",
+        "Todos os hubs de categoria revisados contra o registro de débito visual",
+        "Template base de detail pages revisado contra o registro de débito visual",
+        "Cards, rails, filtros, hero interno, largura de leitura, blocos auxiliares e seção Veja também ficam coerentes entre templates",
+        "Nenhuma rota principal de soluções apresenta aparência claramente defasada em relação ao restante da fase 2",
+        "progress.txt registra os templates corrigidos, primitives impactadas e QA manual pendente"
+      ]
+    },
+    {
+      "id": "US-058",
+      "phase": "phase-2-redesign",
+      "stream": "responsive-qa-evidence",
+      "title": "QA responsivo final com evidências de débito residual",
+      "passes": false,
+      "description": "Executar um sweep final de QA responsivo nas rotas públicas após as correções visuais e registrar o débito residual.",
+      "acceptanceCriteria": [
+        "Desktop, tablet e mobile são revisados nas principais rotas públicas após as correções",
+        "Nenhum overflow horizontal, colapso de grid ou conflito gritante entre elementos flutuantes permanece nas rotas auditadas",
+        "É gerada evidência final do que foi corrigido e do que permanece pendente",
+        "Pendências residuais ficam registradas de forma objetiva e rastreável",
+        "progress.txt registra o sweep final, limitações de ambiente e QA manual pendente quando aplicável"
+      ]
+    },
+    {
       "id": "US-050",
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Polish visual, consistência global e QA de redesign",
-      "passes": true,
-      "description": "Revisão final de consistência e acabamento em todo o produto.",
+      "passes": false,
+      "description": "Gate final de consistência e acabamento do produto após saneamento operacional, auditoria visual e correções dirigidas por débito visual.",
       "acceptanceCriteria": [
         "Todas as principais páginas públicas revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",
         "Revisão específica de desktop, tablet e mobile",
@@ -1343,7 +1571,8 @@
         "Hover, focus, estados vazios, transições e interações harmonizados entre templates",
         "progress.txt registra o que foi harmonizado, débitos visuais e decisões de design system",
         "Evolução clara em relação à fase 1 sem quebrar identidade institucional da Apollo",
-        "Pegada visual Payload perceptível de forma transversal em todo o site público"
+        "Pegada visual Payload perceptível de forma transversal em todo o site público",
+        "US-051 até US-058 concluídas e refletidas nos artefatos operacionais"
       ]
     }
   ],
@@ -1383,7 +1612,7 @@
     "FR-33: O shell global foi repaginado em US-039A/B/C e serve como referência de linguagem para todos os templates seguintes.",
     "FR-34: A inspiração no Payload deve ser traduzida para o contexto institucional da Apollo sem descaracterizar sua identidade nem transformar o site em uma cópia de produto SaaS.",
     "FR-35: O sistema visual do redesign deve tornar perceptível uma sensação de clareza de produto maduro, com whitespace, hierarquia e acabamento superiores aos da fase 1.",
-    "FR-36: A ordem de prioridade de redesign na fase 2 é: homepage, clientes/conteúdos/news, formulários/contato, soluções, polish global."
+    "FR-36: A ordem de prioridade atual do ciclo aberto da fase 2 é: saneamento do backlog, auditoria visual, correções dirigidas por débito visual, QA responsivo com evidências e gate final de fechamento."
   ],
   "nonGoals": [
     "Clone visual pixel-perfect do WordPress atual",
@@ -1411,7 +1640,8 @@
       "Melhorar visualmente desktop e deixar mobile como adaptação tardia",
       "Perder clareza comercial em nome de estética",
       "Confundir inspiração no Payload com cópia literal e descaracterizar a Apollo",
-      "Bloquear homepage e conteúdo editorial aguardando stories de soluções"
+      "Bloquear homepage e conteúdo editorial aguardando stories de soluções",
+      "Permitir deriva entre prd.json, progress.txt, progress-archive.txt e AGENTS.md e fazer o agente executar stories fora de ordem ou com contexto inconsistente"
     ],
     "constraints": [
       "O redesign deve respeitar a base técnica e editorial já construída",
@@ -1429,14 +1659,16 @@
       "Racional da decisão documentado em progress.txt",
       "Lint, validação de tipo prática e build executados quando aplicável",
       "Impactos em acessibilidade e responsividade considerados",
-      "Débitos ou QA manual pendente explicitados"
+      "Débitos ou QA manual pendente explicitados",
+      "Quando aplicável, IDs do débito visual auditado referenciados na entrega"
     ],
     "phase2Completion": [
       "Navbar, footer, homepage, hubs, detalhes, conteúdo e formulários compartilham linguagem visual coerente",
       "Há evidência clara de evolução visual em relação à fase 1",
       "Não existem páginas principais com aparência claramente defasada em relação ao novo padrão",
       "O produto preserva identidade institucional da Apollo enquanto eleva seu acabamento",
-      "A pegada visual inspirada no Payload é perceptível de forma transversal em todo o site público"
+      "A pegada visual inspirada no Payload é perceptível de forma transversal em todo o site público",
+      "Os artefatos operacionais do projeto permanecem sincronizados com o estado real do backlog e da execução"
     ]
   }
 }

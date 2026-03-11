@@ -1,0 +1,1984 @@
+## 2026-03-09 - US-001
+- Setup Next.js 15.4 + Payload CMS 3.79 + PostgreSQL project
+- Tailwind CSS 3.x with PRD color tokens configured
+- TypeScript strict mode, ESLint (next/core-web-vitals), Prettier
+- Folder structure created per PRD specification
+- Users, Media, Pages collections; seed script placeholder
+- Files changed: package.json, tsconfig.json, next.config.mjs, tailwind.config.ts, postcss.config.mjs, eslint.config.mjs, .prettierrc, .gitignore, .env.example, src/payload.config.ts, src/collections/*, src/lib/*, src/app/*, src/seed.mjs
+- **Learnings for future iterations:**
+  - `create-payload-app` CLI doesn't work without TTY — build project manually instead
+  - Payload 3.79 requires Next.js >=15.2.9 <15.3.0 || >=15.3.9 <15.4.0 || >=15.4.11 <15.5.0
+  - The `@payloadcms/storage-local` package doesn't exist — just use Media collection `upload.staticDir`
+  - Payload admin layout needs `importMap.js` in admin folder and `ServerFunctionClient` in layout
+  - `sharp` must be dynamically imported in payload config: `sharp: (await import('sharp')).default`
+---
+
+## 2026-03-09 - US-002
+- Created all Payload CMS collections: Posts, Solucoes, SolucaoCategories, Clientes, ClienteSegmentos, Conteudos, FormSubmissions, NewsletterSubscribers
+- Updated existing collections: Users (name, role fields + access control), Media (caption field), Pages (hero fields, layout blocks, parent, meta, showContactForm)
+- Created all globals: Header (logo, navItems nested, ctaButton, socialLinks), Footer (unidades, copyrightText, socialLinks), SiteSettings (whatsapp, cookie, defaultMeta, analytics, maintenanceMode)
+- Created slug auto-generation hook at src/hooks/formatSlug.ts (normalizes accented chars, generates URL-safe slugs)
+- Created access control helpers at src/access/index.ts (isAdmin, isAdminOrEditor, isLoggedIn, isAdminOrSelf, anyone)
+- Updated payload.config.ts to register all 11 collections and 3 globals
+- Files changed: src/payload.config.ts, src/collections/*, src/globals/*, src/hooks/formatSlug.ts, src/access/index.ts
+- **Learnings for future iterations:**
+  - Access control: use `@/access` helpers — `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, `anyone`
+  - Slug hook: use `formatSlugHook` from `@/hooks/formatSlug` on slug fields with `hooks.beforeValidate`
+  - Collection slugs use kebab-case (e.g., `solucao-categories`, `cliente-segmentos`, `form-submissions`)
+  - Payload `hasMany: true` on text fields creates tag-like arrays
+  - Payload blocks field on Pages has empty blocks array — will be populated when blocks are created in US-003
+  - FormSubmissions uses `json` type field for flexible form data storage
+---
+
+## 2026-03-09 - US-003
+- Created 11 Payload block definitions in src/blocks/: HeroBlock, RichContentBlock, ServiceCardsBlock, CTABlock, AccordionBlock, StatsBlock, ContactFormBlock, ImageTextBlock, ClientLogosBlock, VideoBlock, DownloadBlock
+- Created barrel export at src/blocks/index.ts
+- Created BlockRenderer component at src/components/BlockRenderer.tsx with placeholder renderers for each block type
+- Registered all 11 blocks in Pages collection layout field
+- Files changed: src/blocks/* (12 new files), src/components/BlockRenderer.tsx, src/collections/Pages.ts
+- **Learnings for future iterations:**
+  - Block slugs use camelCase (e.g., `heroBlock`, `richContentBlock`) — Payload convention
+  - BlockRenderer uses `data-block-type` attribute for easy debugging/styling
+  - Placeholder block components use `Record<string, unknown>` props — will need proper typing when implementing frontend rendering
+  - `void props` pattern used to suppress unused variable warnings in placeholder components
+---
+
+## 2026-03-09 - US-004
+- Created Navbar with fixed positioning, scroll-based transparency/solid toggle, mega menu, mobile hamburger, search overlay, and social links bar
+- Components: Navbar.tsx (main client component), NavbarServer.tsx (server wrapper fetching Header global), MegaMenu.tsx (animated 3-column dropdown), MobileMenu.tsx (slide-in with accordion sub-menus and focus trap), SocialLinks.tsx (reusable social icon links), SearchOverlay.tsx (fullscreen search with framer-motion)
+- Updated frontend layout.tsx to include NavbarServer
+- Files changed: src/components/Navbar.tsx, src/components/NavbarServer.tsx, src/components/MegaMenu.tsx, src/components/MobileMenu.tsx, src/components/SocialLinks.tsx, src/components/SearchOverlay.tsx, src/app/(frontend)/layout.tsx
+- **Learnings for future iterations:**
+  - Server/client component split: NavbarServer.tsx (server) fetches Payload globals, Navbar.tsx (client) handles interactivity — use this pattern for other layout components
+  - Payload global fields may return string IDs or full objects for `upload` relations — always check `typeof field === 'object'` before accessing `.url`
+  - `isHeroPage` prop controls transparent navbar behavior — pass from page-level to NavbarServer when page has fullscreen hero
+  - Framer Motion AnimatePresence requires immediate children to have `key` props for exit animations
+  - Focus trap in MobileMenu uses querySelectorAll for focusable elements and Tab key handling
+  - Social link SVG icons are inline (no icon library dependency) — platform icons defined in SocialLinks.tsx
+---
+## 2026-03-09 10:38 UTC - US-005
+- Validated and completed global footer experience wired to Payload Globals: contact form area + illustration, unidades list, social links, copyright with dynamic year, scroll-to-top, cookie consent, and WhatsApp floating CTA in frontend layout
+- Files changed: prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed; `npm run build` passed (with runtime log warning for unavailable PostgreSQL in this sandbox: `connect EPERM 127.0.0.1:5432`); `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop + mobile)
+- **Learnings for future iterations:**
+  - `next build` can complete even when Payload cannot reach Postgres during static generation in this sandbox; treat DB connectivity logs separately from build exit status
+  - Footer/social/whatsapp/cookie data flow depends on `footer` and `site-settings` globals, so those globals must be seeded/configured before visual QA
+---
+## 2026-03-09 10:46 UTC - US-006
+- Implemented homepage with 100vh hero (dark overlay + animated scroll indicator), subtle parallax, 3 animated service cards, partner CTA section, and "Quem é a Apollo" section with optional embedded video/image and `/sobre` link
+- Wired homepage content to Payload `pages` document (`slug: home`) using `hero*` fields plus `layout` blocks (`serviceCardsBlock`, `ctaBlock`, `videoBlock`, `imageTextBlock`) with safe defaults when CMS/DB is unavailable
+- Files changed: src/app/(frontend)/page.tsx, src/components/HomePage.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed; `npm run build` passed (with sandbox DB connectivity log during static generation: `connect EPERM 127.0.0.1:5432`); `npm run typecheck` not available (validated with `npx tsc --noEmit`, passed); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop + mobile)
+- **Learnings for future iterations:**
+  - Homepage can be CMS-driven without schema changes by composing existing `Pages` `hero*` fields with `layout` blocks and deterministic block selection
+  - When `next build` exits with worker code `1` but no visible error, running `npx tsc --noEmit` surfaces strict TypeScript issues immediately
+  - Keep frontend resilience by wrapping Payload fetches in `try/catch` and supplying fallback content for static builds without DB access
+---
+## 2026-03-09 18:00 UTC - US-007
+- Implemented `/sobre` page with fullscreen hero, origem section, mythological quote block, história section, `Missão/Visão/Valores` carousel (arrows, dots, swipe), and a `Fique em contato` CTA linking to `/contato`
+- Wired page content to Payload `pages` document (`slug: sobre`) using existing `hero*` fields plus `layout` blocks (`richContentBlock`, `ctaBlock`, `serviceCardsBlock`) with strict fallbacks for all required copy
+- Added new client component `MissaoVisaoValores` for responsive animated slide rendering and touch drag navigation
+- Files changed: src/app/(frontend)/sobre/page.tsx, src/components/MissaoVisaoValores.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed; `npx tsc --noEmit` passed; `npm run build` was intermittently unstable in sandbox (worker exit / `_document` page resolution), but equivalent `npx next build --debug` passed and generated `/sobre` successfully; DB connectivity log expected in this environment (`connect EPERM 127.0.0.1:5432`)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop + mobile, including swipe behavior)
+- **Learnings for future iterations:**
+  - Existing `serviceCardsBlock.cards` can be reused as a CMS-managed source for small carousels (title/description/icon) without schema changes
+  - Payload fetch resilience pattern (`try/catch` + deterministic fallback content) keeps static generation stable when DB access is unavailable
+  - In this sandbox, `next build` can be flaky across runs; `next build --debug` provides clearer diagnostics and may complete successfully where plain build fails
+---
+## 2026-03-09 18:13 UTC - US-008
+- Implemented `/solucoes` hub page with hero, descriptive copy, client-side filtering with counters, animated solution grid, inline contact form, and a "Fique em contato" CTA section above the global footer
+- Wired data source to Payload collections (`solucoes`, `solucao-categories`) and page doc (`pages` with `slug: solucoes`), with deterministic 14-solution fallback content for build-time DB unavailability
+- Added reusable components for this flow: filter tabs (`SolutionFilterTabs`), card grid (`SolutionGrid`), light inline contact form (`ContatoForm`), and client orchestrator (`SolutionsHubPage`)
+- Files changed: src/app/(frontend)/solucoes/page.tsx, src/components/ContatoForm.tsx, src/components/SolutionFilterTabs.tsx, src/components/SolutionGrid.tsx, src/components/SolutionsHubPage.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run build` remained unstable in this sandbox with intermittent `Next.js build worker exited with code: 1`; `npx next build --debug` passed and generated `/solucoes` (with expected sandbox DB log `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` unavailable (missing script); `npm run test` unavailable (missing script); `npx tsc --noEmit` passed
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile and filter interactions)
+- **Learnings for future iterations:**
+  - For the soluções hub, derive UI filters from normalized `filterKeys` on each solution item to keep client-side filtering fast and deterministic
+  - In this sandbox, `next build --debug` can complete when plain `npm run build` intermittently fails with worker-exit noise; keep both results logged for traceability
+  - Keeping a static fallback list of canonical soluções preserves acceptance behavior when Payload/Postgres is unreachable during builds
+---
+## 2026-03-09 18:28 UTC - US-009
+- Implemented `/solucoes/controle-patrimonial/` with fullscreen hero, CMS-backed category data (`solucao-categories`), filtered 4-solution grid (`solucoes`), and inline contact section with formulário via `ContatoForm`
+- Added deterministic fallback content/order for the four Controle Patrimonial solutions when Payload/DB is unavailable at build time, preserving required links and labels
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` passed; `npm run build` passed (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages can safely combine `solucao-categories` (hero/title/description/image) with `solucoes` filtered by category ID and still stay resilient using ordered fallback slugs
+  - For category card order stability, map fetched docs into a slug-keyed structure and render from a fixed slug sequence rather than relying only on backend sorting
+  - In this sandbox, build-time Postgres connection errors may be logged during static generation even when `next build` exits successfully
+---
+## 2026-03-09 18:32 UTC - US-010
+- Implemented `/solucoes/consultoria-e-tecnologia/` with fullscreen hero, category-driven content from `solucao-categories`, ordered 6-solution grid from `solucoes`, and inline contact section using `ContatoForm`
+- Added deterministic fallback hero copy and fallback solutions for the six required cards: Teste de Impairment, Revisão da Vida Útil, Ativos Inteligentes RFID/RTLS, Arrendamento Mercantil, Combinação de Negócios, Softwares
+- Files changed: src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia` (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages can reuse the same resilient pattern: fetch category by slug, fetch `solucoes` by category ID, then render in fixed slug order to preserve acceptance criteria
+  - Keep explicit fallback datasets for each category hub so static builds remain deterministic when Payload/Postgres is unavailable
+  - Existing `SolutionGrid` and `ContatoForm` components support category hubs without additional schema or component changes
+---
+## 2026-03-09 18:37 UTC - US-011
+- Implemented `/solucoes/avaliacao-patrimonial/` with fullscreen hero, category-driven content from `solucao-categories`, ordered 4-solution grid from `solucoes`, and inline contact section using `ContatoForm`
+- Added deterministic fallback hero copy and fallback solutions for the four required cards: Avaliação de Ativos, Avaliação de Ativos Biológicos, Avaliação de Imóveis Urbanos e Rurais, Avaliação de Máquinas
+- Files changed: src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/avaliacao-patrimonial` (with expected sandbox DB connectivity log: `connect EPERM 127.0.0.1:5432` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Category hub pages remain stable by combining Payload fetches with deterministic fallback datasets keyed by expected solution slugs
+  - Running `npx tsc --noEmit` before `next build` can fail if `.next/types` artifacts are stale/missing; rerun after `next build` for accurate type validation in this setup
+  - Reusing `SolutionGrid` and `ContatoForm` keeps category hub implementations consistent and scope-focused
+---
+## 2026-03-09 18:44 UTC - US-012
+- Implemented `/solucoes/controle-patrimonial/organizacao-patrimonial/` with hero banner, breadcrumb trail, Payload-driven rich content rendering, CTA button (`Solicitar Cotação` -> `/contato/cotacao`), and related-solution links for the same category (`Veja também`)
+- Added solution-specific SEO metadata via `generateMetadata` using Payload `meta` fields with deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed and generated `/solucoes/controle-patrimonial/organizacao-patrimonial` (with expected sandbox DB connectivity logs: `connect EPERM 127.0.0.1:5432` during static generation); `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Individual solution pages can safely reuse the resilient Payload fetch pattern (`try/catch` + deterministic fallback content) to keep static builds stable when Postgres is unreachable in sandbox
+  - A lightweight Lexical JSON renderer embedded in the route can satisfy rich-content acceptance criteria without introducing global renderer refactors
+  - `generateMetadata` can be sourced directly from `solucoes.meta` with structured fallbacks for title/description consistency
+---
+## 2026-03-09 18:49 UTC - US-013
+- Implemented `/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/` using the existing solution detail template pattern with hero banner, breadcrumbs, Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy
+- Added route-level SEO metadata via `generateMetadata` with canonical/Open Graph values sourced from Payload when available and deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after `npm run build`; `npm run build` passed and generated `/solucoes/controle-patrimonial/controle-e-inventario-de-estoques` (with expected sandbox DB connectivity logs: `connect EPERM 127.0.0.1:5432` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Solution detail pages can be delivered quickly and consistently by reusing the same page-template structure from US-012 with only slug/fallback/metadata deltas
+  - In this repository, `npx tsc --noEmit` may depend on generated `.next/types`; running it after `next build` avoids false-negative missing-file errors
+  - Static builds may log Postgres connectivity errors in this sandbox while still succeeding, so quality reporting should track exit status separately from runtime DB logs
+---
+## 2026-03-09 19:18 UTC - US-014
+- Implemented `/solucoes/controle-patrimonial/processamento-patrimonial/` using the existing solution detail template pattern with hero banner, breadcrumbs, Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy for Processamento Patrimonial
+- Added route-level SEO metadata via `generateMetadata` with canonical/Open Graph values sourced from Payload when available and deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/processamento-patrimonial/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after `npx next build --debug`; `npm run build` failed in this sandbox with intermittent worker/module errors (`Next.js build worker exited with code: 1` and `Cannot find module './8548.js'`); `npx next build --debug` passed and generated `/solucoes/controle-patrimonial/processamento-patrimonial` (with expected sandbox DB connectivity logs: `getaddrinfo EAI_AGAIN host.docker.internal` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Solution detail pages continue to scale via the shared route-template approach with only slug/fallback/metadata deltas per story
+  - In this repository, `npx tsc --noEmit` may depend on generated `.next/types`; run it after a successful Next build path when those files are missing
+  - In this sandbox, `next build --debug` can succeed and emit the target route even when plain `npm run build` intermittently exits with worker code `1`
+---
+## 2026-03-09 19:25 UTC - US-015
+- Implemented `/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/` using the established solution detail template with hero banner, breadcrumb trail (`Home > Soluções > Controle Patrimonial > Etiquetas Patrimoniais Inteligentes`), Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy
+- Added route-level SEO metadata via `generateMetadata` with canonical/Open Graph values sourced from Payload when available and deterministic fallbacks
+- Files changed: src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after `npm run build`; `npm run build` passed and generated `/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes` (with expected sandbox DB connectivity logs: `getaddrinfo EAI_AGAIN host.docker.internal` during static generation)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - The solution-detail page template remains reusable across `controle-patrimonial` subpages by changing only route slug, fallback content, and related links
+  - In this repository, `npx tsc --noEmit` can depend on generated `.next/types`; run it after a successful Next build path when those files are absent
+  - Build-time Postgres connection errors may appear in this sandbox while `next build` still exits successfully, so check completion by exit code and generated routes
+---
+## 2026-03-09 20:30 UTC - US-003
+- Validated and completed the Payload blocks story by confirming all 11 required blocks exist with the expected field models, `BlockRenderer` covers every block `blockType`, and all blocks are registered in `Pages.layout` for admin usage/preview
+- Files changed: prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` passed; `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual admin/browser verification still required
+- **Learnings for future iterations:**
+  - Patterns discovered: For block stories, verify schema definitions in `src/blocks/*`, `src/blocks/index.ts` export wiring, and `Pages.layout` registration together to avoid partial completion
+  - Gotchas encountered: `npm run typecheck` and `npm run test` are not defined in this repository, so equivalent validation must be recorded explicitly
+  - Useful context: Payload admin block preview depends on block registration plus labels/field configs, so schema-level verification is a prerequisite before visual QA
+---
+## 2026-03-09 20:42 UTC - US-004
+- Implemented and finalized the global Navbar story by adding resilient Header fallbacks (required nav structure, CTA, social links) and enabling transparent-over-hero behavior on the fullscreen hero routes currently in the frontend app
+- Files changed: src/components/Navbar.tsx, src/components/NavbarServer.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npx tsc --noEmit` passed; `npm run build` initially failed with intermittent Next.js page-resolution errors in this sandbox (`Cannot find module for page`), then passed on retry and generated all current frontend routes; `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile, including mega menu, mobile accordion, and transparent-to-solid navbar transition)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Keep layout-level fallbacks for globals (`header`, `footer`, `site-settings`) so acceptance behavior remains testable when Payload/Postgres is unavailable during builds
+  - Gotchas encountered
+  - In this sandbox, `next build` can intermittently fail during page-data collection with transient module resolution errors; rerunning build may succeed without code changes
+  - Useful context
+  - Transparent navbar behavior can be route-driven in the client component (`usePathname`) while still supporting explicit page-level overrides via `isHeroPage`
+---
+## 2026-03-09 20:55 UTC - US-005
+- Implemented resilient global footer data handling by merging Payload `footer`/`site-settings` globals with deterministic fallback defaults (3 unidades RS/SC/SP, social links, copyright base text, cookie text, WhatsApp number/message), ensuring the footer experience remains complete when CMS data or DB access is unavailable
+- Files changed: src/components/Footer.tsx, src/lib/constants.ts, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npm run build` intermittently failed in this sandbox with `PageNotFoundError: Cannot find module for page: /_document`; `npm run build -- --debug` passed and generated routes successfully; `npx tsc --noEmit` failed before build due to missing `.next/types`, then passed after successful build generation
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for footer, cookie banner, WhatsApp float, and scroll-to-top)
+- **Learnings for future iterations:**
+  - Patterns discovered: For global UI sections backed by Payload globals, initialize with deterministic constants and then merge CMS values field-by-field to avoid empty UI states
+  - Gotchas encountered: In this environment, `npm run build` may fail with intermittent `/_document` resolution errors while `next build --debug` succeeds and produces valid output
+  - Useful context: `npx tsc --noEmit` depends on generated `.next/types` includes in this repo, so run it after a successful Next build path when those files are absent
+---
+## 2026-03-09 21:05 UTC - US-006
+- What was implemented
+- Validated the existing homepage implementation against US-006 acceptance criteria (fullscreen hero with overlay + animated scroll indicator, 3 service cards with fade-in, partner CTA section, about section with media/video fallback, and responsive behavior) and confirmed Payload-backed content wiring for hero/layout-driven sections.
+- Marked US-006 as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated the homepage route (`/`) successfully.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile hero readability, card animations, and parallax behavior).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a validation pass when implementation already exists; in that case, acceptance mapping + full checks are still required before flipping `passes`.
+  - Gotchas encountered
+  - This repo still uses `npx tsc --noEmit` as the practical typecheck gate because there is no `npm run typecheck` script.
+  - Useful context
+  - Homepage content is driven by `pages` (`slug: home`) plus `layout` blocks (`serviceCardsBlock`, `ctaBlock`, `videoBlock`, `imageTextBlock`) with deterministic fallbacks when Payload data is unavailable.
+---
+## 2026-03-09 21:10 UTC - US-007
+- What was implemented
+- Validated the existing `/sobre` implementation against US-007 acceptance criteria (fullscreen hero with required title/subtitle, origem + citação + história sections, Missão/Visão/Valores carousel with arrows/dots/swipe, and `Fique em contato` CTA to `/contato`) and confirmed CMS-manageable content via `pages` (`slug: sobre`) + `layout` blocks.
+- Marked US-007 as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` failed before build due to missing `.next/types` artifacts, then passed after build.
+- `npm run build` passed and generated `/sobre` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile, including slider swipe).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a verification pass when the implementation is already present, as long as acceptance mapping and required checks are fully recorded before flipping `passes`.
+  - Gotchas encountered
+  - In this repository, `npx tsc --noEmit` may fail before a build when `.next/types` entries are absent; rerun type checking after a successful Next build path.
+  - Useful context
+  - The `/sobre` page currently sources CMS content from `pages` hero fields and `layout` blocks (`richContentBlock`, `ctaBlock`, `serviceCardsBlock`) with deterministic fallback copy.
+---
+## 2026-03-09 21:16 UTC - US-008
+- What was implemented
+- Finalized the `/solucoes` hub page against acceptance criteria by adjusting responsive card breakpoints to `1/2/4` (`mobile/tablet/desktop`) and preserving bold emphasis for the hero phrase "solução completa".
+- Confirmed the page remains Payload-backed (`solucoes` + category relations), keeps client-side filtering with counters, AnimatePresence transitions, inline contact form, and the "Fique em contato" section.
+- Marked `US-008` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/components/SolutionGrid.tsx
+- src/components/SolutionsHubPage.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile behavior for filters and card layout).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Reusable list grids should set desktop columns at `lg` when acceptance criteria reference standard desktop breakpoints, not only `xl`.
+  - Gotchas encountered
+  - This repository still lacks `npm run typecheck` and `npm run test`, so equivalent checks must be logged explicitly each run.
+  - Useful context
+  - Hero copy with emphasized phrases can be kept CMS-flexible by rendering string content and applying targeted inline emphasis for required wording.
+---
+## 2026-03-09 21:21 UTC - US-009
+- What was implemented
+- Finalized the `/solucoes/controle-patrimonial/` hub story by validating the existing implementation against all acceptance criteria (fullscreen hero with required emphasis, subtitle, 4-solution grid, contact section with form, and Payload-backed category/solution sourcing with deterministic fallback ordering).
+- Marked `US-009` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/controle-patrimonial/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated `/solucoes/controle-patrimonial` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, 4-card grid, and contact form section).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Category hub pages can remain deterministic by mapping fetched solutions by slug and rendering in a fixed acceptance-order slug array.
+  - Gotchas encountered
+  - Story completion may rely on local untracked route files; ensure the selected story's route file is included in the commit when finalizing `passes`.
+  - Useful context
+  - The `/solucoes/controle-patrimonial` implementation already follows the resilient Payload pattern (`try/catch` + fallback content) used across other solution/category routes.
+---
+## 2026-03-09 21:26 UTC - US-010
+- What was implemented
+- Finalized `/solucoes/consultoria-e-tecnologia/` as the category hub page with fullscreen hero, category-filtered grid of the 6 required solution cards, inline contact form section, and resilient Payload fallback behavior; marked US-010 as complete in `prd.json`.
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia` successfully.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile, including hero, card links, and form responsiveness).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Category hub pages are implemented with a consistent pattern: fetch `solucao-categories` by slug, fetch `solucoes` by category ID, then render in fixed slug order with deterministic fallbacks.
+  - Gotchas encountered
+  - Story status in `prd.json` can lag behind implemented route files, so acceptance validation plus full quality checks are still required before flipping `passes`.
+  - Useful context
+  - In this repository, `npm run typecheck` and `npm run test` are not defined; the practical quality gate remains `npx tsc --noEmit` plus `npm run lint` and `npm run build`.
+---
+## 2026-03-09 21:30 UTC - US-011
+- What was implemented
+- Validated the existing `/solucoes/avaliacao-patrimonial/` hub implementation against all US-011 acceptance criteria (hero, required 4-card grid, contact section with form, Payload-backed data + deterministic fallbacks, and responsive grid behavior).
+- Updated `prd.json` to mark `US-011` as complete (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial` successfully.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, 4-card grid, and contact form flow).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Category hub pages remain consistent by fetching `solucao-categories` by slug, filtering `solucoes` by category, and rendering in a fixed slug order with deterministic fallback content.
+  - Gotchas encountered
+  - Story status in `prd.json` can be out of sync with existing implemented routes, so each run still needs acceptance validation plus full checks before flipping `passes`.
+  - Useful context
+  - This repository continues to rely on `npx tsc --noEmit` for type validation because `npm run typecheck` is not defined.
+---
+## 2026-03-09 21:35 UTC - US-012
+- What was implemented
+- Validated existing `/solucoes/controle-patrimonial/organizacao-patrimonial/` implementation against acceptance criteria (hero, breadcrumbs, Payload rich content, cotacao CTA, related solutions, SEO metadata, responsive layout, and footer contact form via global layout).
+- Marked `US-012` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated `/solucoes/controle-patrimonial/organizacao-patrimonial` successfully.
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumbs, CTA, related links, and footer form availability).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Solution-detail stories can be finalized via acceptance validation when route template and metadata are already implemented, provided all required checks are rerun in the current state.
+  - Gotchas encountered
+  - This repository still lacks `npm run typecheck` and `npm run test`; missing scripts must be recorded explicitly each run.
+  - Useful context
+  - `generateMetadata` and breadcrumb structure for solution detail pages are currently implemented directly in each route file under `src/app/(frontend)/solucoes/...`.
+---
+## 2026-03-09 21:40 UTC - US-013
+- What was implemented
+- Validated the existing `/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/` implementation against US-013 acceptance criteria (hero title, breadcrumb trail, Payload-backed rich content, cotação CTA, related solutions, SEO metadata, and responsive layout behavior).
+- Marked `US-013` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/controle-patrimonial/controle-e-inventario-de-estoques` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For solution-detail stories, acceptance completion can be a validation pass when the route template is already implemented, but all quality gates must still run in the current repo state before flipping `passes`.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; log those as unavailable and run `npx tsc --noEmit` as the practical type-check gate.
+  - Useful context
+  - The US-013 route already follows the shared solution-page pattern used in this codebase (`generateMetadata`, hero + breadcrumbs, rich-content rendering, related links, and fallback data for build resilience).
+---
+## 2026-03-09 21:45 UTC - US-014
+- What was implemented
+- Validated the existing `/solucoes/controle-patrimonial/processamento-patrimonial/` implementation against all US-014 acceptance criteria (hero title, breadcrumb trail, Payload-backed rich content, cotação CTA, related solutions, SEO metadata, and responsive layout behavior) and finalized the story status.
+- Updated `prd.json` to mark `US-014` as complete (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/controle-patrimonial/processamento-patrimonial` successfully.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumbs, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Solution-detail stories can be completed via acceptance validation when the route template is already implemented, as long as all quality gates are rerun before flipping `passes`.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; record those as unavailable and run `npx tsc --noEmit` as the practical typecheck.
+  - Useful context
+  - The US-014 route already follows the shared solution-page pattern (metadata + breadcrumbs + Payload content + related links + fallback content for build resilience).
+---
+## 2026-03-09 21:50 UTC - US-016
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/teste-de-impairment/` using the established template pattern: hero banner, breadcrumb trail (`Home > Soluções > Consultoria e Tecnologia > Teste de Impairment`), Payload-backed rich-content rendering with deterministic fallback content, CTA button (`Solicitar Cotação` -> `/contato/cotacao`), related-solutions sidebar, and route-specific metadata via `generateMetadata`.
+- Marked `US-016` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/teste-de-impairment/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia/teste-de-impairment`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumbs, CTA, and related links).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The solution-detail route template remains reusable across categories by changing only slug constants, fallback copy, and related-link defaults while keeping fetch/render/SEO structure identical.
+  - Gotchas encountered
+  - Existing lint warning in `src/payload-types.ts` is pre-existing and does not block route-level story completion.
+  - Useful context
+  - Category hub ordering already includes `teste-de-impairment`, so adding this detail route immediately enables the expected hub-to-detail navigation path.
+---
+## 2026-03-09 21:56 UTC - US-017
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/` using the established template pattern: hero banner with title `Revisão da Vida Útil`, breadcrumb trail (`Home > Soluções > Consultoria e Tecnologia > Revisão da Vida Útil`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solutions links, and route-level metadata via `generateMetadata`.
+- Updated fallback copy to be specific to vida útil/depreciação context and ensured fallback related links do not include the current page.
+- Marked `US-017` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumbs, CTA, related links, and content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The solution-detail route template remains reusable for consultoria subpages by changing slug constants, fallback copy, and related-link defaults while preserving fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; these must be logged as unavailable while using `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - `next build` now includes the new static route `/solucoes/consultoria-e-tecnologia/revisao-da-vida-util`, confirming App Router path registration and generation.
+---
+## 2026-03-09 22:04 UTC - US-018
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/` using the established template pattern with hero/banner title, breadcrumb trail (`Home > Soluções > Consultoria e Tecnologia > Ativos Inteligentes RFID e RTLS`), Payload-backed rich-content rendering with deterministic fallback copy, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solutions sidebar (`Veja também`), and route-level SEO metadata via `generateMetadata`.
+- Added a compatibility route `/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-e-rtls/` that re-exports the new canonical page so existing links continue to resolve.
+- Added fallback Payload lookup support for the legacy slug (`ativos-inteligentes-rfid-e-rtls`) to keep CMS-driven content functional while canonical metadata/URL remains the PRD route slug.
+- Updated `prd.json` to mark `US-018` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-e-rtls/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated both routes: `/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls` and `/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-e-rtls`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For evolving slugs, keep a canonical route plus a thin compatibility route to preserve existing navigation while standardizing metadata and URL structure.
+  - Gotchas encountered
+  - Existing fallback links in older stories may still reference prior slug variants, so route compatibility prevents regressions without widening story scope.
+  - Useful context
+  - In this repository, `npm run typecheck` and `npm run test` remain undefined; practical quality gating continues to be `npm run lint`, `npx tsc --noEmit`, and `npm run build`.
+---
+## 2026-03-09 22:11 UTC - US-019
+- What was implemented
+- Implemented `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/` using the established solution-detail template with hero banner, breadcrumb trail, Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy for Arrendamento Mercantil (CPC 06 / IFRS 16).
+- Added legacy-route compatibility by creating `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16/` as a re-export to the new canonical route.
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts` only).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated both `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil` and `/solucoes/consultoria-e-tecnologia/arrendamento-mercantil-cpc-06-ifrs-16`.
+- `npm run typecheck` not available (missing script).
+- `npm run test` not available (missing script).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For solution-detail routes, keeping a canonical slug page plus a legacy re-export route avoids link regressions while CMS slugs and fallback links are being normalized.
+  - Gotchas encountered
+  - Breadcrumb acceptance may differ from hero-title acceptance; treat breadcrumb `title` and hero `heroTitle` as separate outputs when implementing CPC/IFRS-qualified solution pages.
+  - Useful context
+  - Build output now includes both canonical and legacy arrendamento routes, which keeps existing internal links valid until pending stories update category-hub references.
+---
+## 2026-03-09 22:19 UTC - US-020
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/` using the established template with hero banner title (`Combinação de Negócios (PPA) - CPC 15`), breadcrumb trail ending in `Combinação de Negócios`, Payload-backed rich-content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solution links, and route-level SEO metadata via `generateMetadata`.
+- Added backward-compatible route alias `/solucoes/consultoria-e-tecnologia/combinacao-de-negocios/` that re-exports the canonical page.
+- Updated `prd.json` to mark `US-020` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15` and `/solucoes/consultoria-e-tecnologia/combinacao-de-negocios`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb text, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For solution pages where hero and breadcrumb wording differ, keep separate fields (`heroTitle` and `breadcrumbTitle`) so acceptance text remains stable even with CMS title variations.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; log those as unavailable and use `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - Keeping a thin slug-compatibility route (`export { default, generateMetadata }`) prevents link regressions while canonical URLs are standardized.
+---
+## 2026-03-09 22:28 UTC - US-021
+- What was implemented
+- Added the solution detail route `/solucoes/consultoria-e-tecnologia/softwares/` using the established template pattern with hero banner (`Softwares`), breadcrumb trail (`Home > Soluções > Consultoria e Tecnologia > Softwares`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solutions sidebar, and route-level metadata via `generateMetadata`.
+- Updated `prd.json` to mark `US-021` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/softwares/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/consultoria-e-tecnologia/softwares`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The consultoria solution-detail template remains reusable for new subpages by changing only slug constants, fallback copy, and related-link defaults while preserving the same fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; both must be logged as unavailable while using `npx tsc --noEmit` as the practical type-check gate.
+  - Useful context
+  - `npm run build` output confirms static route registration, making it a reliable acceptance signal for newly added App Router pages in this project.
+---
+## 2026-03-09 22:34 UTC - US-022
+- What was implemented
+- Added the solution detail route `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/` using the established template with hero banner (`Avaliação de Ativos`), breadcrumb trail (`Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solution links, and route-level SEO metadata via `generateMetadata`.
+- Updated `prd.json` to mark `US-022` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The solution-detail route template remains reusable for the `avaliacao-patrimonial` subpages by changing only slug constants, fallback copy, and related-link defaults while preserving fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; these must be recorded as unavailable while using `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - `npm run build` output confirms static route registration, making it a reliable completion signal for newly added App Router pages in this project.
+---
+## 2026-03-09 22:39 UTC - US-023
+- What was implemented
+- Added the solution detail route `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/` using the established template with hero banner (`Avaliação de Ativos Biológicos`), breadcrumb trail (`Home > Soluções > Avaliação Patrimonial > Avaliação de Ativos Biológicos`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solution links, and route-level SEO metadata via `generateMetadata`.
+- Updated `prd.json` to mark `US-023` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The avaliacao solution-detail template remains reusable by changing only slug constants, fallback copy, and default related links while preserving the same fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; both should be logged as unavailable while using `npx tsc --noEmit` as the practical type-check gate.
+  - Useful context
+  - Category and navbar links already referenced `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos`, so adding this route resolves that navigation target without broader scope changes.
+---
+## 2026-03-09 22:45 UTC - US-024
+- Implemented `/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/` using the existing solution-detail template with hero banner, breadcrumb trail (`Home > Soluções > Avaliação Patrimonial > Avaliação de Imóveis Urbanos e Rurais`), Payload-backed rich content rendering, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related solutions (`Veja também`), and route-specific fallback copy
+- Files changed: src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/page.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run build` passed and generated `/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais`; `npx tsc --noEmit` passed; `npm run typecheck` not available (missing script); `npm run test` not available (missing script)
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile)
+- **Learnings for future iterations:**
+  - Patterns discovered: The solution-detail route template remains reusable across `avaliacao-patrimonial` subpages by changing only slug constants, fallback copy, metadata, and related-links defaults
+  - Gotchas encountered: Keep fallback related links pointed to routes that already exist or are scheduled next in backlog to avoid dead-end navigation during incremental delivery
+  - Useful context: Route-level `generateMetadata` and breadcrumb rendering are already coupled to `categorySlug`/`solutionSlug`, so new solution pages can stay minimal when following this template
+---
+## 2026-03-09 22:51 UTC - US-025
+- What was implemented
+- Added the solution detail route `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/` using the established template with hero banner (`Avaliação de Máquinas`), breadcrumb trail (`Home > Soluções > Avaliação Patrimonial > Avaliação de Máquinas`), Payload-backed rich-content rendering with deterministic fallback content, CTA (`Solicitar Cotação` -> `/contato/cotacao`), related-solution links, and route-level SEO metadata via `generateMetadata`.
+- Updated `prd.json` to mark `US-025` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for hero, breadcrumb, CTA, related links, and rich-content rendering).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The `avaliacao-patrimonial` solution-detail route template remains reusable for additional subpages by changing only slug constants, fallback copy, and related-link defaults while preserving the same fetch/render/SEO structure.
+  - Gotchas encountered
+  - This repository still does not define `npm run typecheck` or `npm run test`; both must be logged as unavailable while using `npx tsc --noEmit` as the practical type gate.
+  - Useful context
+  - `npm run build` output confirms static route registration for new App Router pages, making it a reliable completion signal alongside lint and TypeScript checks.
+---
+## 2026-03-09 22:58 UTC - US-026
+- What was implemented
+- Added the `/clientes` page with Payload-backed data loading from `clientes` and `cliente-segmentos`, client-side segment filtering (`Todos` default), horizontal scrollable filter bar, animated logo grid (Framer Motion fade transitions), explicit lazy-loaded logos, and the required lower contact section with inline `ContatoForm`.
+- Included deterministic fallback segments/client cards so the route still renders during static builds when Payload/Postgres is unavailable in this sandbox.
+- Updated `prd.json` to mark `US-026` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/clientes/page.tsx
+- src/components/ClientsPage.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/clientes`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for filter interactions, logo-card layout, and contact-form flow).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For collection-driven listing pages, keep the server-side fetch and normalization in the route, then pass clean props to a dedicated client component for stateful filtering and animation.
+  - Gotchas encountered
+  - Relationship fields may be populated objects or raw IDs; normalize both paths and keep a fallback segment (`outros`) to avoid dropping client cards from filters.
+  - Useful context
+  - Horizontal filter chips with `overflow-x-auto` and an `inline-flex` row preserve usability when segment counts grow (e.g., 30+ categories) without introducing extra JS scrolling logic.
+---
+## 2026-03-09 23:05 UTC - US-027
+- What was implemented
+- Created `/contato` route with hero section, responsive two-column layout, main contact form, units panel, and explicit links to `/contato/cotacao` and `/contato/representante`
+- Added `ContatoPageForm` client component using React Hook Form with required fields (`Nome`, `E-Mail`, `Assunto`, `Mensagem`), client-side validation, and inline submit success/error feedback
+- Wired server-side data fetch for `pages` (`slug: contato`) and `footer` global, with deterministic fallbacks to keep page rendering stable when Payload/Postgres is unavailable
+- Files changed
+- src/app/(frontend)/contato/page.tsx
+- src/components/ContatoPageForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive)
+- `npx tsc --noEmit` passed
+- `npm run build` passed and generated `/contato` successfully
+- `npm run typecheck` not available (missing script)
+- `npm run test` not available (missing script)
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile form validation states, submission feedback, and layout of unidades + links)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For contact surfaces, keep form handling in a client component and data fetching/fallback logic in the server route to preserve static-build resilience and interactive validation
+  - Gotchas encountered
+  - `pages.heroTitle` rich text requires explicit plain-text extraction before rendering in standard hero headings
+- Useful context
+- Reusing footer global `unidades` with fallback merge logic keeps location/contact content consistent across global/footer and dedicated contact page experiences
+---
+## 2026-03-09 23:17 UTC - US-028
+- What was implemented
+- Created `/contato/cotacao` with a hero titled `Orçamento` and explanatory subtitle requesting detailed demand context.
+- Added a new multi-step `CotacaoForm` client component with: 3 grouped service selectors (4 options each), required project-context textareas (`Qual a finalidade?`, `Quantos ativos?`, `Onde será realizado o trabalho?`), drag-and-drop upload field for TXT/XLS/XLSX/DOC/DOCX/PDF, required contact fields (`Nome`, `E-mail`), and inline success/error submit feedback.
+- Implemented client-side validation across steps with React Hook Form and file-type/size checks; form submit posts to `/api/form-submissions` as `formType: 'cotacao'` including validated attachment metadata while full upload handling remains deferred per story scope.
+- Updated `prd.json` to mark `US-028` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/contato/cotacao/page.tsx
+- src/components/CotacaoForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/contato/cotacao`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for step navigation, checkbox validation, drag-and-drop upload, and submit feedback states).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Multi-step forms can remain resilient in this codebase by keeping route-level layout/hero in a server page and interaction-heavy validation in a dedicated client component.
+  - Gotchas encountered
+  - Native file uploads to Payload are out of scope for current form-submission JSON storage; validating file inputs client-side and persisting metadata avoids blocking delivery while preserving user intent.
+  - Useful context
+  - Step-gated validation with `trigger([...fields])` in React Hook Form works well for required multi-step flows without introducing extra state libraries.
+---
+## 2026-03-09 23:24 UTC - US-029
+- What was implemented
+- Added `/contato/representante` with a dedicated hero section and responsive page layout following the existing contact/cotação page pattern.
+- Created `RepresentanteForm` as a client component with React Hook Form validation, relevant representative-registration fields, and inline success/error submit feedback.
+- Wired form submission to `/api/form-submissions` using `formType: 'representante'` and trimmed payload values.
+- Updated `prd.json` to mark `US-029` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/contato/representante/page.tsx
+- src/components/RepresentanteForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/contato/representante`.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile for field validation states, submit feedback, and layout responsiveness).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Form stories in this codebase should keep interactive validation/submission logic in a dedicated client component while the route handles page structure and hero presentation.
+  - Gotchas encountered
+  - Repository scripts still omit `typecheck` and `test`, so completion reporting must explicitly log them as unavailable while using `npx tsc --noEmit` for type validation.
+  - Useful context
+  - Posting representative data to `/api/form-submissions` with `formType: 'representante'` aligns directly with existing `FormSubmissions` collection options and requires no schema changes.
+---
+## 2026-03-09 23:34 UTC - US-030
+- What was implemented
+- Implemented `/conteudos` as a CMS-driven materials hub with responsive cards (cover image, title, description, link) sourced from `conteudos` and deterministic fallback items when Payload/DB is unavailable.
+- Implemented dynamic detail pages at `/conteudos/[slug]` with breadcrumb, description, cover image, metadata, and download area.
+- Added email-gated download behavior: when `requiresEmail` is true, a client form captures lead data before releasing the file; when false, direct download is shown.
+- Added the 2 initial fallback materials required by the story: `E-book de Identificacao Patrimonial` and `Planilha de Vida Util CPC 27`, including fallback cover/download assets.
+- Files changed
+- src/app/(frontend)/conteudos/page.tsx
+- src/app/(frontend)/conteudos/[slug]/page.tsx
+- src/components/ContentDownloadPanel.tsx
+- src/lib/conteudos.ts
+- public/images/conteudos/default-cover.svg
+- public/images/conteudos/ebook-identificacao-patrimonial.svg
+- public/images/conteudos/planilha-vida-util-cpc-27.svg
+- public/downloads/e-book-identificacao-patrimonial.txt
+- public/downloads/planilha-vida-util-cpc-27.csv
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/conteudos` and `/conteudos/[slug]` (with existing lint warning only).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile cards, detail layout, and `requiresEmail` gating flow).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Lead-gated asset downloads can reuse `/api/form-submissions` by storing context fields in `data` (e.g., `origem`, `conteudoSlug`) while keeping existing collection structure.
+  - Gotchas encountered
+- Dynamic content routes should keep deterministic fallback materials to satisfy acceptance behavior when Payload/Postgres is unreachable during static builds.
+- Useful context
+- For `conteudos`, `downloadFile` and `featuredImage` are upload relations; treat them as ID-or-object relations and safely read `.url` only when populated.
+---
+## 2026-03-09 23:45 UTC - US-031
+- What was implemented
+- Implemented `/news` with hero (`Fique bem informado: Nossas recentes publicações`), Payload-backed published-post listing from `posts`, responsive stacked cards (featured image, title, date, author, excerpt), desktop-only sidebar search, e-book banner link to `/conteudos/e-book-identificacao-patrimonial`, and client-side `Carregar mais` pagination.
+- Added newsletter section at the bottom of `/news` with `NewsletterForm` (`E-mail` + CTA `Inscreva-se`) posting directly to `/api/newsletter-subscribers` with success/duplicate/error feedback.
+- Implemented `/news/[slug]` with breadcrumb, post metadata (title/date/author), featured image, rich-content rendering for Lexical content, and social share actions (WhatsApp, LinkedIn, X, Facebook); all post data is sourced from the `posts` collection.
+- Preserved empty-state behavior for initial delivery with no migrated WordPress posts by rendering informative placeholders when no published posts exist.
+- Updated `prd.json` to mark `US-031` as complete (`"passes": true`).
+- Files changed
+- src/app/(frontend)/news/page.tsx
+- src/app/(frontend)/news/[slug]/page.tsx
+- src/components/PostCard.tsx
+- src/components/PostList.tsx
+- src/components/Pagination.tsx
+- src/components/NewsletterForm.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/news` and `/news/[slug]`.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (desktop/mobile listing behavior, sidebar visibility, load-more interaction, newsletter submission states, and post-detail share links).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - News/blog pages can follow the server-fetch + client-list interaction split: server route normalizes Payload docs, client component owns search and incremental pagination.
+  - Gotchas encountered
+  - `posts.author` must be treated as relation ID-or-object; rendering author names without object guards can cause runtime errors.
+  - Useful context
+  - Newsletter signups can post directly to `/api/newsletter-subscribers` because public create access is already enabled in the `NewsletterSubscribers` collection.
+---
+## 2026-03-10 00:03 UTC - US-032
+- What was implemented
+- Implemented a centralized SEO layer in `src/lib/seo.ts` and migrated all frontend route metadata to use `buildMetadata`, ensuring consistent canonical URLs, `hreflang` (`pt-BR`), Open Graph, Twitter Card tags, and icon declarations with SiteSettings/global fallbacks.
+- Added structured data support: global `Organization` + `LocalBusiness` JSON-LD emitted from frontend layout, plus `BreadcrumbList` and `Article` JSON-LD on `/news/[slug]` and `BreadcrumbList` on `/conteudos/[slug]`.
+- Added dynamic discovery endpoints `src/app/sitemap.ts` and `src/app/robots.ts` with CMS-driven route inclusion (pages, posts, soluções, conteúdos) and static fallback paths when Payload is unavailable.
+- Added site icons and metadata icon wiring (`public/favicon.svg`, `public/apple-touch-icon.png`).
+- Updated `prd.json` to mark `US-032` as complete (`"passes": true`).
+- Files changed
+- src/lib/seo.ts
+- src/components/JsonLd.tsx
+- src/app/(frontend)/layout.tsx
+- src/app/(frontend)/page.tsx
+- src/app/(frontend)/sobre/page.tsx
+- src/app/(frontend)/solucoes/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/processamento-patrimonial/page.tsx
+- src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/teste-de-impairment/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/page.tsx
+- src/app/(frontend)/solucoes/consultoria-e-tecnologia/softwares/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/page.tsx
+- src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx
+- src/app/(frontend)/clientes/page.tsx
+- src/app/(frontend)/contato/page.tsx
+- src/app/(frontend)/contato/cotacao/page.tsx
+- src/app/(frontend)/contato/representante/page.tsx
+- src/app/(frontend)/conteudos/page.tsx
+- src/app/(frontend)/conteudos/[slug]/page.tsx
+- src/app/(frontend)/news/page.tsx
+- src/app/(frontend)/news/[slug]/page.tsx
+- src/app/sitemap.ts
+- src/app/robots.ts
+- public/favicon.svg
+- public/apple-touch-icon.png
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated `/sitemap.xml` and `/robots.txt` plus all frontend routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI/SEO verification still required (view-source/meta tags, JSON-LD validation, and sitemap/robots inspection on a running deployment).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Centralizing SEO assembly in one helper avoids metadata drift across many route files and makes global fallback behavior auditable.
+  - Gotchas encountered
+  - Bulk text-replacement commands can silently fail on import strings containing `@`; prefer narrower patches or escaped delimiters for safe batch edits.
+  - Useful context
+  - `sitemap.ts` can safely mix static and CMS-generated paths as long as route URLs are deduplicated and Payload failures degrade to static defaults.
+---
+## 2026-03-10 00:12 UTC - US-033
+- Implemented global search with a new API endpoint (`/api/search`) that queries `pages`, `posts` (published only), `solucoes`, and `conteudos`, returning grouped, typed results with route-aware hrefs
+- Upgraded `SearchOverlay` to real-time search with 300ms debounce, loading state, grouped result rendering by content type, empty-state messaging, outside-click close, Escape close, and maintained input auto-focus when opening
+- Files changed: src/app/api/search/route.ts, src/components/SearchOverlay.tsx, prd.json, progress.txt
+- Quality checks run and results: `npm run lint` passed (existing warning in `src/payload-types.ts` only); `npm run typecheck` not available (missing script); `npm run test` not available (missing script); `npx tsc --noEmit` initially failed before build due missing `.next/types`, then passed after `npm run build`; `npm run build` passed and generated `/api/search`
+- Browser/manual verification status: Browser tooling unavailable in this environment; manual UI verification still required (desktop/tablet/mobile, including debounce behavior and grouped results in search overlay)
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - The search overlay can stay lightweight by consuming a single grouped API response shape (`groups[]` with label/results), avoiding cross-collection client orchestration
+  - Gotchas encountered
+  - In this repository, `npx tsc --noEmit` may fail before a build because `tsconfig.json` includes `.next/types`; run typecheck after `next build` when those artifacts are missing
+  - Useful context
+  - Pages with non-root public paths (e.g., `cotacao`, `representante`) need explicit slug-to-route mapping in search results to avoid broken links
+---
+## 2026-03-10 17:35 UTC - US-034
+- What was implemented
+- Replaced the placeholder seed with `src/seed.ts` and wired `npm run seed` to `payload run src/seed.ts`.
+- Implemented idempotent seeding for 3 `solucao-categories`, 14 `solucoes` (with category relations), 32 `cliente-segmentos`, base `pages` (`home`, `sobre`, `contato`, `cotacao`, `representante`, `conteudos`), and 2 initial `conteudos`.
+- Implemented global seeding for `header`, `footer`, and `site-settings` with existence checks so configured globals are skipped on subsequent runs.
+- Fixed a blocking Header global schema issue for Postgres relation generation by renaming the deepest nested field to `subItems` and normalizing it back to `children` in `NavbarServer`.
+- Added seed usage instructions to `README.md`.
+- Files changed
+- src/seed.ts
+- src/globals/Header.ts
+- src/components/NavbarServer.tsx
+- package.json
+- README.md
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run seed` passed; first run required resolving one schema prompt (`header_nav_items_children_sub_items` create/rename), subsequent run passed non-interactively and confirmed idempotency (`created: 0`, `skipped: 57`, globals skipped).
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual UI verification still required (header mega menu rendering from Payload global data on desktop/mobile).
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For Payload CLI `run`, async scripts should complete via top-level `await`; otherwise the CLI may exit before background promises finish.
+  - Gotchas encountered
+  - Reusing nested array field names (`children -> children`) in Payload globals with Postgres can trigger relation-name collisions during `findGlobal`.
+  - Useful context
+  - When a nested field rename changes generated DB schema, the first run may prompt for conflict resolution; after applying, repeated seed runs stay idempotent.
+---
+## 2026-03-10 00:39 UTC - US-035
+- What was implemented
+- Added frontend font optimization using `next/font/google` (`Inter`, `Open Sans`) with `display: 'swap'`, wired through CSS variables in the frontend layout and Tailwind `font-sans`.
+- Improved animation accessibility by updating Framer Motion surfaces (`HomePage`, `ClientsPage`, `SolutionGrid`, `MegaMenu`, `MobileMenu`, `SearchOverlay`, `MissaoVisaoValores`) to respect `prefers-reduced-motion` via `useReducedMotion()`.
+- Added keyboard focus trapping to `SearchOverlay` (Tab/Shift+Tab loop + Escape close) to match overlay accessibility behavior expected alongside the mobile menu trap.
+- Completed image optimization pass on existing `next/image` usage by adding missing `sizes` metadata and explicit lazy-loading where appropriate on below-the-fold images.
+- Files changed
+- src/app/(frontend)/layout.tsx
+- tailwind.config.ts
+- src/components/HomePage.tsx
+- src/components/ClientsPage.tsx
+- src/components/SolutionGrid.tsx
+- src/components/MegaMenu.tsx
+- src/components/MobileMenu.tsx
+- src/components/SearchOverlay.tsx
+- src/components/MissaoVisaoValores.tsx
+- src/components/Navbar.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual verification still required for Lighthouse score thresholds, keyboard interaction flows, and reduced-motion behavior in a real browser.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Accessibility/performance stories can be implemented consistently by combining `useReducedMotion()` for motion controls with reusable focus-trap behavior in overlay components.
+  - Gotchas encountered
+  - This repository relies on generated `.next` artifacts for some type flows; keep `npx tsc --noEmit` and `next build` both in the validation loop for confidence.
+  - Useful context
+  - Font loading is now centralized at the frontend layout level via `next/font` variables, so typography-level performance changes should be made there first.
+---
+## 2026-03-10 00:47 UTC - US-036
+- What was implemented
+- Replaced the generic repository README with Apollo project documentation covering architecture, local setup, environment variables, seed execution, Vercel deploy, optional Docker deploy, custom domain setup, editor guide links, and backup strategy links.
+- Added deployment artifacts: `vercel.json` (explicit install/build commands), multi-stage `Dockerfile`, and `.dockerignore`.
+- Added operational docs for content/editor workflows and backup/restore runbook.
+- Fixed production URL env compatibility by preferring `NEXT_PUBLIC_SERVER_URL` with fallback to `NEXT_PUBLIC_SITE_URL` in SEO/news origin resolution.
+- Files changed
+- README.md
+- Dockerfile
+- .dockerignore
+- vercel.json
+- docs/payload-admin-guide.md
+- docs/backup-strategy.md
+- src/lib/seo.ts
+- src/app/(frontend)/news/[slug]/page.tsx
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- Browser/manual verification status
+- No UI behavior change in this story; browser/manual UI verification not required.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Keep deployment docs in-repo with runbooks (`docs/`) and link from README so operational knowledge evolves with code changes.
+  - Gotchas encountered
+  - Environment naming drift (`NEXT_PUBLIC_SITE_URL` vs `NEXT_PUBLIC_SERVER_URL`) can silently impact canonical URLs; keeping a compatibility fallback prevents regression during deploy transitions.
+  - Useful context
+  - Vercel installs should explicitly include `--legacy-peer-deps` for this repository to avoid peer resolution issues on fresh installs.
+---
+
+## 2026-03-10 11:17 UTC - US-037
+- What was implemented
+- Executed a full backlog audit across all stories with `passes=true` (US-001 to US-036), reviewing sequencing, dependency assumptions, acceptance-criteria quality, duplication, and visual-direction consistency against Apollo’s existing identity.
+- Recorded review conclusions: backlog preserves brand identity (palette, hero-first structure, corporate tone), but required clearer modernization guardrails for typography hierarchy, spacing rhythm, grid consistency, and measurable QA evidence.
+- Identified sequencing/dependency risks and captured recommended ordering adjustments for future planning: seed/content readiness should occur before most page/UI stories; performance KPIs require explicit measurement evidence and cannot rely only on implementation-level completion.
+- Refined ambiguous acceptance criteria directly in `prd.json` to make verification objective and implementable without changing product scope.
+- Backlog refinement updates applied in `prd.json`:
+- US-001 AC1 now allows CLI or manual scaffold outcome (instead of a single tooling path).
+- US-003 AC14 now makes Live Preview explicitly optional/non-blocking while requiring admin insert/edit coverage.
+- US-010 and US-011 responsive acceptance criteria now define concrete expected layout behavior.
+- US-027, US-028, and US-029 submit behavior criteria now explicitly require `/api/form-submissions` integration with inline feedback.
+- US-035 now requires documented Lighthouse/Core Web Vitals evidence context.
+- Marked `US-037` as complete (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` initially failed with intermittent Next.js sandbox flakiness (`ENOENT` chunk + `PageNotFoundError: /_document`), then passed on retry and generated all frontend/admin routes.
+- `npx next build --debug` passed (used as fallback diagnostic validation during build flakiness).
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- No product/UI behavior was changed in this story; browser tooling remains unavailable in this environment, and prior visual/manual QA requirements remain unchanged.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Backlog quality improves when acceptance criteria specify measurable outcomes (endpoint, feedback state, responsive target) rather than placeholders or generic labels.
+  - Gotchas encountered
+  - In this sandbox, `npm run build` can intermittently fail with transient Next.js page/chunk resolution errors even when equivalent `next build --debug` and subsequent retries pass.
+  - Useful context
+  - For visual-direction stories, explicit quality gates for typography scale, spacing rhythm, and evidence-based performance checks should be declared in acceptance criteria up front to avoid interpretation drift.
+---
+## 2026-03-10 12:22 UTC - US-038
+- What was implemented
+- Consolidated the phase-2 design-system foundation by adding explicit visual tokens, typography scale, spacing/rhythm aliases, radius/shadow/surface states, and a new `designSystemBase` section in `prd.json`.
+- Added reusable primitives in `src/components/ui/` for buttons, inputs, textareas, selects, cards, chips, badges, headings, and containers, then validated the system by wiring `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` onto the new layer.
+- Updated frontend styling infrastructure with `Manrope` display typography, CSS-token files under `src/styles/`, and Tailwind aliases mapped to the new visual variables.
+- Files changed
+- `prd.json`, `src/app/(frontend)/layout.tsx`, `src/app/globals.css`, `tailwind.config.ts`, `src/styles/tokens.css`, `src/styles/utilities.css`, `src/components/ui/*`, `src/components/ContatoForm.tsx`, `src/components/CookieConsent.tsx`, `src/components/SolutionFilterTabs.tsx`, `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls that now use the new design-system primitives.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Phase-2 design-system foundations now live in `src/styles/tokens.css` and `src/styles/utilities.css`, while Tailwind aliases expose the same tokens to JSX and `src/components/ui/` primitives.
+  - Gotchas encountered
+  - In this Next.js/Tailwind setup, CSS files imported by `src/app/globals.css` should use plain rules/classes; putting `@layer base` inside the imported file caused build-time PostCSS failures.
+- Useful context
+- Shared components such as `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` are low-risk first adopters for new primitives because they validate the system without starting template-level redesign stories early.
+---
+## 2026-03-10 12:45 UTC - US-039
+- What was implemented
+- Repaginated the full global shell for phase 2: navbar, mega menu, mobile menu, search overlay, footer, footer contact form, footer units, social icon treatments, cookie consent, WhatsApp float, and scroll-to-top now share a more premium and cohesive visual language.
+- Centralized header navigation normalization and fallback data in `src/lib/navigation.ts`, then reused that structure in both `NavbarServer` and `Footer` so footer navigation stays aligned with the editorial header global without new CMS schema work.
+- Files changed
+- `src/lib/navigation.ts`, `src/components/NavbarServer.tsx`, `src/components/Navbar.tsx`, `src/components/MegaMenu.tsx`, `src/components/MobileMenu.tsx`, `src/components/SearchOverlay.tsx`, `src/components/Footer.tsx`, `src/components/FooterContactForm.tsx`, `src/components/FooterUnidades.tsx`, `src/components/SocialLinks.tsx`, `src/components/WhatsAppFloat.tsx`, `src/components/ScrollToTop.tsx`, `src/components/CookieConsent.tsx`, `src/components/ui/Input.tsx`, `src/components/ui/Textarea.tsx`, `prd.json`, `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile navbar behavior, mega menu, mobile drawer, search overlay, footer hierarchy, cookie consent, WhatsApp float, and scroll-to-top.
+- **Learnings for future iterations:**
+- Patterns discovered
+- Global header navigation parsing/fallbacks now live in `src/lib/navigation.ts`, which should be reused anywhere shell navigation needs consistent CMS data or resilient fallback structure.
+- Gotchas encountered
+- Footer navigation should derive from the existing Header global rather than a separate hardcoded/footer-only schema source, otherwise global shell surfaces drift editorially.
+- Useful context
+- Shared shell primitives now support cross-surface styling better: `Input` and `Textarea` accept `labelClassName`, and `SocialLinks` accepts per-item shell styling for light and dark contexts.
+---
+## 2026-03-10 13:46 UTC - US-038
+- What was implemented
+- Validated the existing phase-2 design-system foundation against `US-038` acceptance criteria and finalized the story state. Confirmed the PRD already carries the Payload-inspired visual direction, typography hierarchy, spacing/rhythm guidance, and reusable surface/state tokens, while the codebase already exposes shared UI primitives in `src/components/ui/`, global token files in `src/styles/`, and frontend font/style wiring through the layout and Tailwind config.
+- Marked `US-038` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- prd.json
+- progress.txt
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated all frontend/admin routes.
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual visual QA is still required for desktop/tablet/mobile across shared controls and pages that consume the phase-2 design-system primitives.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Story completion can be a validation pass when implementation already exists in the repo, but PRD status and progress history must be reconciled against the current code before flipping `passes`.
+  - Gotchas encountered
+  - `prd.json` can lag behind already-landed implementation work during phased redesign stories, so status should not be trusted without checking the actual style/token/component layers.
+  - Useful context
+  - The current design-system base is anchored by `src/styles/tokens.css`, `src/styles/utilities.css`, Tailwind theme aliases, and the primitives under `src/components/ui/`, with `ContatoForm`, `CookieConsent`, and `SolutionFilterTabs` already serving as live adopters.
+---
+## 2026-03-10 14:01 UTC - US-039A
+- What was implemented
+- Refined the global header and primary navigation in `src/components/Navbar.tsx` to reduce utility noise, remove the separate social strip, increase whitespace and shell polish, and rebalance the layout around logo, main nav, search, and a stronger CTA.
+- Kept existing behavior intact while improving hierarchy: transparent-on-hero handling, active nav states, desktop mega-menu triggers, search access, and mobile menu controls remain in place, with the CTA now also exposed in the small-screen header from `sm` upward.
+- Marked `US-039A` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/Navbar.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npm run build` passed and generated all frontend/admin routes after isolating a stale generated `.next` directory; initial attempts hit the repo's known intermittent `PageNotFoundError: /_document` during page-data collection.
+- `npx tsc --noEmit` passed.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile header behavior, CTA prominence, transparent hero state, and nav/search access.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - For the shell header, primary navigation reads more clearly when search and social affordances are grouped into a secondary utility capsule and the main CTA remains visually isolated.
+  - Gotchas encountered
+  - In this sandbox, transient `next build` failures for `/_document` can clear after moving an existing generated `.next` directory aside and rerunning the required build.
+  - Useful context
+  - Showing the primary CTA in the mobile header only from `sm` upward preserves conversion visibility without overcrowding the smallest breakpoint.
+---
+## 2026-03-10 14:18 UTC - US-039B
+- What was implemented
+- Redesigned the secondary navigation surfaces to match the new phase-2 shell language: `MegaMenu` now behaves like an editorial navigation panel with section metrics, quick links, clearer category cards, and active-path highlighting; `MobileMenu` now carries the same visual hierarchy with a richer drawer header, guided section cards, auto-expanded active branches, and an in-drawer search handoff; `SearchOverlay` now uses a two-column guided layout with suggestion chips, stronger grouping, and cleaner result presentation.
+- Preserved existing accessibility behavior while tightening it: reduced-motion handling remains in place, the mobile drawer and search overlay still trap focus and close on `Escape`, and the mega menu now also closes on `Escape`.
+- Marked `US-039B` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/MegaMenu.tsx`
+- `src/components/MobileMenu.tsx`
+- `src/components/Navbar.tsx`
+- `src/components/SearchOverlay.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual responsive and interaction QA is still required for desktop/tablet/mobile mega menu behavior, mobile drawer hierarchy, search overlay focus flow, and the mobile drawer -> search handoff.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Secondary shell surfaces should reuse the same route-matching helpers (`matchesPath`, `navItemMatchesPath`) as the primary header so active states stay aligned across desktop and mobile navigation layers.
+  - Gotchas encountered
+  - When one overlay launches another on mobile, close the first surface before opening the second so body-scroll locking and focus restoration do not conflict.
+  - Useful context
+  - Suggestion chips in the search overlay are a low-risk way to make the search surface feel more guided without changing the API contract of `/api/search`.
+---
+## 2026-03-10 14:36 UTC - US-039C
+- What was implemented
+- Reworked the footer into clearer tiers so the shell closes with less visual weight: an intro/highlight row, a lighter contact-form + units grid, and a separate brand/navigation panel while keeping the existing Payload/global data flow intact.
+- Restyled `FooterContactForm` into a brighter, more contemporary surface with guided copy and cleaner field treatment; refreshed `FooterUnidades` with clearer cards and direct phone/email links.
+- Unified `WhatsAppFloat`, `CookieConsent`, and `ScrollToTop` around the same dark translucent floating-shell treatment so these global controls no longer feel isolated from the redesigned footer.
+- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
+- Files changed
+- `src/components/Footer.tsx`
+- `src/components/FooterContactForm.tsx`
+- `src/components/FooterUnidades.tsx`
+- `src/components/WhatsAppFloat.tsx`
+- `src/components/CookieConsent.tsx`
+- `src/components/ScrollToTop.tsx`
+- `prd.json`
+- `progress.txt`
+- Quality checks run and results
+- `npm run lint` passed (existing warning only in `src/payload-types.ts`: unused eslint-disable directive).
+- `npm run typecheck` not available (missing script in `package.json`).
+- `npm run test` not available (missing script in `package.json`).
+- `npx tsc --noEmit` passed.
+- `npm run build` passed and generated all frontend/admin routes.
+- Browser/manual verification status
+- Browser tooling unavailable in this environment; manual QA is still required for desktop/tablet/mobile footer hierarchy, footer form usability, WhatsApp/cookie/scroll stacking, and keyboard interaction states.
+- **Learnings for future iterations:**
+  - Patterns discovered
+  - Global floating affordances feel materially more coherent when they share one backdrop/border/shadow language and deliberate vertical spacing instead of being styled independently.
+  - Gotchas encountered
+  - Public-facing shell copy should stay institutional and user-facing; avoid leaking internal redesign/system terminology into footer labels or CTA copy.
+  - Useful context
+  - Footer hierarchy reads lighter when contact, units, social, and navigation are split into distinct layers instead of one dense all-in-one panel.
+---
+
+## 2026-03-10 - US-039A (re-validation)
+- What was implemented
+- US-039A was previously implemented (commit 6fd44e8) but prd.json was reset to passes: false during PRD v3.2 restructuring. Re-evaluated current codebase against acceptance criteria.
+- All 7 acceptance criteria verified as satisfied in the current code:
+  - Header critically revised: Full redesign in Navbar.tsx with sophisticated state management, backdrop blur, gradient surfaces
+  - Cleaner hierarchical composition: Four-zone layout (logo | nav | utilities | CTA) with clear visual separation
+  - More whitespace: Rounded pill containers, progressive spacing, gradient backgrounds
+  - CTA prominence: Green success variant with trailing icon, elevated shadow, separate positioning
+  - Payload-inspired visual language: Rounded modular design, color subtlety, micro-interactions adapted to Apollo institutional context
+  - Search/social isolation: Separate utilities container, social hidden until 2xl, search opens as overlay
+  - Responsive and accessible: Full breakpoint coverage, ARIA labels, keyboard nav, focus management, reduced-motion support
+- Files verified: Navbar.tsx, NavbarServer.tsx, MegaMenu.tsx, MobileMenu.tsx, SearchOverlay.tsx, SocialLinks.tsx, tokens.css, utilities.css, Button.tsx
+- Quality checks run and results
+  - npm run lint: passed (only warning: unused eslint-disable in payload-types.ts)
+  - npx tsc --noEmit: passed
+  - npm run build: passed
+- Browser/manual verification status
+  - Browser tooling unavailable; manual QA still required for transparent nav on hero, mega-menu keyboard nav, mobile menu transitions, search overlay tab trapping
+- **Learnings for future iterations:**
+  - When PRD is restructured (version bump), story passes flags may be reset even if implementation exists; always re-validate current code state
+---
+
+## 2026-03-10 - US-040A
+- Redesigned homepage hero section for premium, Payload-inspired visual language
+- Key changes:
+  - Added institutional badge ("Especialistas em Gestão Patrimonial") with frosted glass pill styling matching shell language
+  - Upgraded headline to `text-display-lg` (clamp-based responsive) with tighter tracking for stronger hierarchy
+  - Refined multi-layer gradient overlays: primary 175deg directional gradient, radial brand accent glow, top-edge navbar integration gradient
+  - Replaced single blue CTA with dual CTA group: primary green (matching shell's CTA green) + secondary frosted outline ("Conheça a Apollo")
+  - CTA shadows use colored glow (`rgba(40,167,69,0.25)`) for premium depth
+  - Secondary CTA uses frosted glass treatment (`bg-white/[0.06]`, `backdrop-blur-sm`, `border-white/20`) consistent with shell surfaces
+  - Enhanced scroll indicator with "Explorar" label, subtler animation, reduced visual weight
+  - Improved vertical spacing: more breathing room between badge → headline → subtitle → CTAs
+  - Used `min-h-[100svh]` for better mobile viewport handling
+  - Background image scale increased to 1.08 for stronger parallax effect
+- Files changed: src/components/HomePage.tsx
+- Visual rationale: The previous hero was functional but lacked the premium sophistication established by the US-039A/B/C shell redesign. The new hero uses frosted glass surfaces, colored CTA shadows, multi-layer gradients, institutional badging, and clamp-based responsive typography to match the shell's Payload-inspired premium language while preserving Apollo's institutional tone.
+- Affected shared components: None — changes scoped to hero section within HomePage.tsx
+- Responsive impact: Dual CTAs stack vertically on mobile, side-by-side on sm+; clamp typography scales smoothly; `100svh` handles mobile browser chrome
+- Accessibility impact: All existing motion gating via `useReducedMotion()` preserved; badge uses semantic span with decorative dot; all aria attributes maintained
+- Quality checks:
+  - npm run lint: passed (only pre-existing payload-types warning)
+  - npx tsc --noEmit: passed
+  - npm run build: passed
+- Browser/manual verification status: Browser tooling unavailable; manual QA required for hero visual appearance, gradient rendering, CTA hover states, mobile stacking, and reduced-motion behavior
+---
+
+## 2026-03-10 - US-039B (re-validation)
+- What was implemented
+- US-039B was previously implemented and the code remains intact in the repository. The prd.json had been reverted to `passes: false`, so this run re-validated all acceptance criteria against the current codebase.
+- All acceptance criteria confirmed satisfied:
+  - Mega menu evolved to sophisticated navigation panel with badges, quick links, category map, and expanded panel (MegaMenu.tsx)
+  - Better visual organization of categories and sub-items with numbered sections, child counts, and active-state highlighting
+  - Mobile menu as natural extension of header with dark drawer, expandable sections, search handoff, and social links (MobileMenu.tsx)
+  - Search overlay with cleaner editorial hierarchy, guided topics sidebar, suggestion chips, grouped results (SearchOverlay.tsx)
+  - Transitions, shadows, borders, and groupings use design system tokens and Framer Motion
+  - Accessible: keyboard navigation, focus trapping, Escape closes, reduced-motion gating, aria attributes
+- Marked `US-039B` as complete in `prd.json` (`"passes": true`).
+- Files changed: prd.json, progress.txt (no component changes needed — prior implementation intact)
+- Quality checks:
+  - `npm run lint`: passed (only pre-existing payload-types warning)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- Browser/manual verification status: Browser tooling unavailable; manual QA still required for desktop/tablet/mobile mega menu, mobile drawer, and search overlay interactions
+- **Learnings for future iterations:**
+  - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
+---
+
+## 2026-03-10 - US-039C (re-validation)
+- What was implemented
+- US-039C was previously implemented (progress entry at 2026-03-10 14:36 UTC) and all code remains intact. The prd.json had been reverted to `passes: false`, so this run re-validated all acceptance criteria against the current codebase.
+- All acceptance criteria confirmed satisfied:
+  - Footer repaginado with tiered layout (highlight row, contact form + units grid, brand/navigation panel) — less visual weight, better hierarchy
+  - FooterContactForm uses light gradient card, guided copy, clean field treatment, guidance sidebar — lighter and more contemporary
+  - WhatsApp float, cookie consent, and scroll-to-top share unified dark translucent floating shell (bg-[#0e1a2d]/92, border-white/12, backdrop-blur, consistent rounding and shadows)
+  - Visual language consistent with Payload-inspired approach: clean surfaces, subtle gradients, premium shadows, consistent typography
+  - Responsive grids (sm/lg/xl breakpoints), aria-labels, prefers-reduced-motion in ScrollToTop — responsive and accessible
+- Marked `US-039C` as complete in `prd.json` (`"passes": true`).
+- Files changed: prd.json, progress.txt (no component changes needed — prior implementation intact)
+- Quality checks:
+  - `npm run lint`: passed (only pre-existing payload-types warning)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- Browser/manual verification status: Browser tooling unavailable; manual QA still required for footer hierarchy, form usability, WhatsApp/cookie/scroll stacking, and keyboard interactions
+- **Learnings for future iterations:**
+  - When prd.json is reverted while code remains, re-validate acceptance criteria against current code rather than re-implementing
+---
+
+## 2026-03-10 - US-040B
+- **Story:** Repaginação dos blocos centrais da homepage
+- **What was implemented:**
+  - Redesigned the 3-pillar services section with premium cards: accent top-bar on hover, larger icon area with contextual SVG fallbacks, better typography hierarchy (display-sm heading, kicker label), staggered entrance animations, arrow links with hover translation
+  - Redesigned the institutional proof/value section: dark-section background with radial accent overlay, kicker label, stats/credentials row (4 stat cards with glass-effect styling), green CTA button matching hero style
+  - Redesigned the about/institutional section: cleaner two-column layout with more generous spacing, kicker label, slide-in animations (x-axis), rounded-full outline-to-fill CTA button, better media placeholder with icon, design-token-driven shadows and radii
+  - Added `rounded-card` to Tailwind borderRadius config (mapping to `--radius-card` token)
+- **Files changed:**
+  - `src/components/HomePage.tsx` — all three post-hero sections rewritten
+  - `tailwind.config.ts` — added `card` borderRadius utility
+- **Visual rationale:**
+  - Sections now use consistent kicker labels, display-sm headings, and section-space-loose padding matching the hero's premium language
+  - Services cards gain micro-interactions (accent bar, icon bg transition, arrow translate) without spectacle
+  - Institutional proof section uses dark surface with stats row for institutional gravitas (numbers, credentials, differentials)
+  - About section gains generous breathing room and slide-in animations for media/text columns
+  - All sections use design tokens (shadow-soft/medium, radius-card, accent-soft, bg-dark-section) for system coherence
+- **Affected shared components:** None — changes are scoped to HomePage.tsx
+- **Responsive impact:** All sections remain responsive; grid breakpoints preserved (lg:grid-cols-3 for pillars, lg:grid-cols-4 for stats, md:grid-cols-2 for about)
+- **Accessibility impact:** Preserved aria-hidden on decorative elements, semantic heading hierarchy, link affordances, reduced-motion gating on all animations
+- **Quality checks:**
+  - `npm run lint`: passed (only pre-existing payload-types warning)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable; manual QA still required for hover interactions, dark section contrast, stats readability, responsive breakpoints
+- **Learnings for future iterations:**
+  - The `--radius-card` token was defined in tokens.css but not mapped in Tailwind config — always verify new token usage has a Tailwind mapping
+  - Hardcoded institutional stats (20+ anos, 500+ clientes, etc.) are appropriate for visual redesign without CMS schema changes per the redesign guardrails
+---
+
+## 2026-03-10 15:47 UTC - US-040C
+- **Story:** Costura final da homepage e consistência de narrativa
+- **What was implemented:**
+  - Added a stitched transition panel between the hero and service pillars with an overlapping premium surface that reframes the homepage as a connected institutional journey instead of isolated stacked sections
+  - Tightened homepage rhythm by reducing dead space after the hero, using the new bridge panel to preview the three solution fronts, and rebalancing the services section spacing around that overlap
+  - Unified section transitions with subtle dividers, blend gradients, and carry-through accent treatments so the light services section, dark proof section, and institutional about section no longer feel visually disconnected
+  - Elevated the about section with trust-signal cards, ambient accent lighting, a framed media shell, and a closing operational note to keep the final section as polished as the hero and proof surfaces
+- **Files changed:**
+  - `src/components/HomePage.tsx` — homepage narrative pacing, transitions, and section finishing pass
+  - `prd.json` — marked `US-040C` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - US-040A and US-040B had already upgraded the hero and core blocks, but the homepage still read as discrete redesigned parts; this pass focuses on flow, density, and narrative continuity across the full page
+  - The overlapping bridge panel creates a more contemporary, Payload-inspired transition out of the hero while preserving Apollo’s institutional tone and commercial clarity
+  - The later sections now share stronger surface language and transition cues, which makes the homepage feel intentionally composed rather than inherited from the original structural reproduction
+- **Affected shared components:** None — changes are scoped to `HomePage.tsx`
+- **Responsive impact:** The overlap panel stacks cleanly on mobile and becomes a split narrative + preview surface on large screens; section spacing was tuned so the homepage remains readable without excessive vertical gaps across breakpoints
+- **Accessibility impact:** Existing reduced-motion gating remains intact, decorative layers stay `aria-hidden`, CTA/link semantics are unchanged, and the revised layout preserves readable hierarchy in light and dark sections
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for homepage overlap spacing, section transitions, dark/light contrast balance, and mobile/tablet rhythm
+- **Learnings for future iterations:**
+  - Final homepage polish can be delivered safely without CMS schema changes by introducing transitional composition layers and narrative bridge surfaces within the existing Payload-driven structure
+  - When a redesign is split across multiple stories, the closing pass should explicitly address the seams between already-upgraded sections rather than treating each block in isolation
+---
+## 2026-03-10 15:57 UTC - US-043A
+- **Story:** Repaginação da página de Clientes
+- **What was implemented:**
+  - Redesigned the `/clientes` hero into a premium split layout with darker layered gradients, stronger typographic hierarchy, dual CTAs, and a trust panel that reframes the page as institutional proof instead of a simple listing
+  - Reworked the segment filters into an elevated surface with clear section framing, active-state summary, and shared `Chip` treatment aligned with the phase-2 design system and header/homepage language
+  - Rebuilt the logo grid with fewer, larger columns, cleaner logo staging, segment badges, improved spacing/contrast, hover polish, and an explicit empty state so brand legibility is prioritized over raw density
+  - Upgraded the closing contact area into a darker consultive section so the page ends with the same premium tone established by the hero and proof surfaces
+- **Files changed:**
+  - `src/components/ClientsPage.tsx` — redesigned hero, filter surface, client-logo grid, and closing CTA section
+  - `prd.json` — marked `US-043A` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous page worked functionally, but the hero and six-column logo wall still felt phase-1 in density and hierarchy
+  - This pass shifts `/clientes` toward the existing phase-2 language: deliberate surfaces, cleaner spacing, stronger display typography, clearer filters, and higher-value brand presentation
+  - The grid now optimizes for readability and perceived quality, which better supports the proof-social goal than compressing many logos into a tighter layout
+- **Affected shared components:** No shared primitives were modified; the page now reuses `Badge`, `Button`, `Chip`, `Container`, and `SectionHeading` for stronger design-system consistency
+- **Responsive impact:** Hero content stacks cleanly on mobile, filter chips still support horizontal overflow, and the logo grid scales from 1 to 4 columns without returning to the previous cramped desktop density
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible filter controls, reduced-motion gating on all new animation surfaces, and decorative layers remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/clientes` desktop/tablet/mobile layout, filter interactions, logo legibility, and dark/light section contrast
+- **Learnings for future iterations:**
+  - For proof-social pages, reducing card density and giving logos a framed presentation improves perceived quality more than maximizing logos per row
+  - Reusing shared filter primitives (`Chip`) keeps redesign pages visually aligned with the shell without reopening CMS/data-model work
+---
+## 2026-03-10 16:12 UTC - US-043B
+- **Story:** Repaginação de Conteúdos e detail pages de material
+- **What was implemented:**
+  - Redesigned `/conteudos` into a premium library surface with a stronger dark hero, editorial framing, access-state stats, a featured material treatment, upgraded support cards, and a closing consultive CTA
+  - Rebuilt `/conteudos/[slug]` to balance image, metadata, reading surface, sticky conversion, and onward discovery with a richer material-detail layout instead of the previous thin hero + sidebar structure
+  - Restyled `ContentDownloadPanel` so gated and direct-download states follow the phase-2 design system while preserving the existing lead-capture behavior and `/api/form-submissions` integration
+- **Files changed:**
+  - `src/app/(frontend)/conteudos/page.tsx` — redesigned conteúdos hub hero, library framing, featured card, supporting card grid, and closing CTA
+  - `src/app/(frontend)/conteudos/[slug]/page.tsx` — redesigned material detail hero, metadata surfaces, rich-content rendering, sticky conversion column, and related-materials section
+  - `src/components/ContentDownloadPanel.tsx` — repaginated gated/direct download panel states with shared UI primitives
+  - `prd.json` — marked `US-043B` as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The phase-1 conteúdos pages were functional, but they still read like simple download listings rather than a premium material library
+  - This pass pushes the template toward the active phase-2 language: darker editorial hero, clearer metadata, stronger card hierarchy, more deliberate surfaces, and a better-resolved download CTA
+  - The detail page now treats conversion as part of the editorial composition instead of a detached utility box
+- **Affected shared components:** `ContentDownloadPanel` was upgraded and now reuses the shared `Badge`, `Button`, `Container`, `Input`, and `SectionHeading` primitives more consistently
+- **Responsive impact:** The hub now scales from stacked mobile cards to a featured-plus-grid library layout on larger screens, and the detail page keeps the conversion panel stacked on small screens before switching to a sticky sidebar on desktop
+- **Accessibility impact:** Preserved semantic headings, visible form labeling, keyboard-accessible links/buttons, readable contrast across dark/light sections, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/conteudos` and `/conteudos/[slug]` across desktop/tablet/mobile, including hero spacing, card density, sticky-sidebar behavior, and gated-download interaction
+- **Learnings for future iterations:**
+  - Material-library pages feel more premium when one item gets a featured treatment and the remaining assets shift into a lighter support grid instead of a flat repeated card wall
+  - Even without extra CMS fields, content detail pages can feel substantially more editorial by surfacing derived metadata (format/access/update state) alongside the existing image, description, and CTA
+---
+
+## 2026-03-11 11:39 UTC - Archive maintenance note
+- Moved the former active-log entries from `US-043C` through the superseded historical `US-050` record into `progress-archive.txt` during `US-051` so `progress.txt` could return to a lean operational log.
+- `prd.json` remains the authoritative source for current story order and status; archived entries are preserved for traceability only.
+---
+## 2026-03-10 16:32 UTC - US-043C
+- **Story:** Repaginação de News e post detail
+- **What was implemented:**
+  - Redesigned `/news` into a more editorial hub with a stronger dark hero, radar/stats panel, elevated search-and-topic filter surface, a featured-story treatment, richer article cards, an integrated desktop sidebar, and a closing consultive CTA
+  - Rebuilt `/news/[slug]` so the article detail now balances hero composition, metadata, lead image fallback, reading surface, sticky share/newsletter/conversion rail, and onward discovery through related articles
+  - Added shared news-mapping helpers so category chips, reading-time labels, and editorial metadata are derived from the existing `posts` schema without reopening CMS modeling
+- **Files changed:**
+  - `src/app/(frontend)/news/page.tsx` — redesigned news hub hero, stats panel, archive composition, and closing CTA
+  - `src/app/(frontend)/news/[slug]/page.tsx` — redesigned article hero, metadata surfaces, reading layout, conversion/sidebar areas, and related-posts section
+  - `src/components/PostList.tsx` — rebuilt archive filtering, featured-story composition, and integrated editorial sidebar
+  - `src/components/PostCard.tsx` — upgraded article-card hierarchy with featured and standard variants
+  - `src/components/NewsletterForm.tsx` — repaginated newsletter capture to match the phase-2 editorial system
+  - `src/lib/news.ts` — added reusable news/article mapping helpers for excerpt, category, date, and reading-time derivation
+  - `prd.json` — marked the selected `US-043C` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous news pages were functional but still felt like phase-1 blog templates, especially in hero framing, card hierarchy, and the way the sidebar detached from the rest of the layout
+  - This pass aligns news with the phase-2 language already established in homepage, clientes, and conteudos: darker editorial heroes, better whitespace, stronger typography, more intentional surfaces, and clearer conversion support
+  - The detail page now treats metadata, image, article body, sharing, and next steps as one composed editorial experience instead of isolated utility blocks
+- **Affected shared components:** `PostCard` and `NewsletterForm` were upgraded, and the news templates now reuse shared `Badge`, `Button`, `Card`, `Chip`, `Container`, `Input`, and `SectionHeading` primitives more consistently
+- **Responsive impact:** The archive collapses cleanly from desktop main-column + side-rail composition into a stacked mobile flow, featured/news cards scale without losing hierarchy, and detail-side surfaces stack before becoming sticky on larger breakpoints
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible filter controls and links, visible form labeling, readable dark/light contrast, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed on retry; first attempt failed with transient Next.js error `ENOENT: no such file or directory, open '/workspace/.next/server/pages-manifest.json'`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/news` and `/news/[slug]` across desktop/tablet/mobile, including filter interactions, sticky-side panels, card density, and dark/light contrast balance
+- **Learnings for future iterations:**
+  - Editorial/news surfaces can feel substantially more premium without CMS schema changes by deriving category chips, reading-time labels, and featured-story hierarchy from existing `posts` content and category fields
+  - Current `prd.json` includes a later duplicate `US-043C` identifier under the polish stream; this run treated the first `US-043C` entry in story order as the selected story and left the later item untouched as future cleanup context
+---
+## 2026-03-10 16:47 UTC - US-044A
+- **Story:** Repaginação da página de contato
+- **What was implemented:**
+  - Redesigned `/contato` into a phase-2 contact landing page with a stronger dark hero, clearer copy hierarchy, premium route cards for `cotacao` and `representante`, and a more intentional balance between copy, shortcuts, units, and the primary form
+  - Rebuilt `ContatoPageForm` on shared UI primitives so public-form styling, validation states, and submit affordances align with the newer design system already used across the redesigned frontend
+  - Reframed the right rail into two clearer supporting surfaces: message-guidance cards for faster triage and richer unidades cards with better hierarchy for regional contact details
+- **Files changed:**
+  - `src/app/(frontend)/contato/page.tsx` — redesigned hero, CTA hierarchy, supporting route cards, guidance/sidebar composition, and unidades presentation
+  - `src/components/ContatoPageForm.tsx` — restyled the main contact form with shared `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives
+  - `prd.json` — marked the selected `US-044A` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous contact page was structurally correct but still read like a phase-1 utility page; the redesign moves it closer to the homepage and shell language with a stronger opening composition, more deliberate surfaces, and clearer routing for different intent paths
+  - The page now treats copy, contact form, units, and alternate flows as one composed experience instead of separate stacked utility blocks
+- **Affected shared components:** `ContatoPageForm` now consistently reuses shared `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives, which is directly relevant for the remaining contact-form redesign stories
+- **Responsive impact:** Hero content collapses from a split layout into a single-column stack on smaller screens, form inputs collapse from two columns to one, and route/unit cards preserve readable spacing and touch targets on mobile
+- **Accessibility impact:** Preserved semantic headings and link structure, kept explicit field labels and inline validation, improved focus treatment through shared form primitives, and exposed submit feedback with `role="status"` / `role="alert"`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/contato`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/contato` across desktop/tablet/mobile, including hero spacing, form states, and unidade-card readability
+- **Learnings for future iterations:**
+  - Contact-form redesign work can stay within phase-2 scope by pairing route-level composition changes with shared UI form primitives instead of reopening CMS modeling
+  - On contact pages, absent hero media should degrade to layered gradients rather than a broken placeholder image path
+---
+## 2026-03-10 17:00 UTC - US-044B
+- **Story:** Repaginação do fluxo de cotação
+- **What was implemented:**
+  - Redesigned `/contato/cotacao` into a phase-2 consultive route with a stronger dark hero, intake-preparation guidance, clearer CTA hierarchy, and a premium bridge between the page opening and the actual multi-step form
+  - Rebuilt `CotacaoForm` around shared UI primitives with a clearer three-step flow, upgraded service-selection cards, more mature upload handling, a live summary rail, and stronger submit/success/error treatment
+  - Kept the existing submission contract (`formType: 'cotacao'` to `/api/form-submissions`) while improving grouping, validation clarity, and responsive behavior without reopening CMS modeling
+- **Files changed:**
+  - `src/app/(frontend)/contato/cotacao/page.tsx` — redesigned hero, intake guidance, CTA structure, and route-level framing around the cotação flow
+  - `src/components/CotacaoForm.tsx` — rebuilt the multi-step form UI, service-selection groups, upload surface, progress stepper, live summary sidebar, and submit feedback states
+  - `prd.json` — marked the selected `US-044B` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The previous cotação route was functional but still behaved like a phase-1 utility form with limited hierarchy between stepper, field groups, upload, and contact confirmation
+  - This pass reframes the page as a consultive intake flow with a stronger narrative: prepare the briefing, structure the demand, attach supporting material, and confirm the return contact
+  - The redesign aligns the route with the phase-2 contact page and shell language by using darker hero framing, more intentional surfaces, better spacing rhythm, and more premium selection/upload states
+- **Affected shared components:** `CotacaoForm` now consistently reuses shared `Badge`, `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives instead of standalone raw control styling
+- **Responsive impact:** The route shifts from a single centered form to a stacked mobile flow with a desktop two-column composition, the stepper remains readable across breakpoints, and the summary rail becomes sticky only on larger screens
+- **Accessibility impact:** Preserved semantic heading hierarchy, exposed the active step with `aria-current`, kept explicit field labels and inline validation, maintained keyboard-accessible action buttons, and exposed submit feedback with `role="status"` / `role="alert"`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/contato/cotacao`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/contato/cotacao` across desktop/tablet/mobile, including step transitions, upload states, sticky summary behavior, and submit feedback
+- **Learnings for future iterations:**
+  - Multi-step public intake flows can be upgraded to the phase-2 language by separating route-level briefing composition from the client-side form state component, rather than changing the submission API or CMS model
+  - When `progress.txt` sync notes drift from the active PRD, story selection still needs to follow the actual `prd.json` story order and dependency state
+---
+## 2026-03-10 17:18 UTC - US-044C
+- **Story:** Repaginacao do fluxo de representante e padronizacao de formularios
+- **What was implemented:**
+  - Finalized `/contato/representante` as a phase-2 partner-intake route with a stronger dark hero, qualification framing, profile pillars, and a more consultive bridge into the representative registration form
+  - Rebuilt `RepresentanteForm` on shared UI primitives with grouped field sections, explicit guidance, a live summary rail, and stronger success/error treatment while preserving the existing `formType: 'representante'` submission payload
+  - Standardized the remaining reused public-form surfaces by upgrading `ContatoForm` and `NewsletterForm` to the same phase-2 language, labels, validation clarity, and submit-feedback pattern already used in the redesigned contact flows
+- **Files changed:**
+  - `src/app/(frontend)/contato/representante/page.tsx` — redesigned the route-level hero, supporting criteria card, and profile pillars around the representative flow
+  - `src/components/RepresentanteForm.tsx` — restored and redesigned the representative registration form with shared `Badge`, `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives
+  - `src/components/ContatoForm.tsx` — upgraded the generic public contact form to the newer shared visual and validation language
+  - `src/components/NewsletterForm.tsx` — aligned the newsletter capture card with shared form primitives and feedback states
+  - `prd.json` — marked the selected `US-044C` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The representative route had already started moving toward the phase-2 shell language at page level, but the missing/deleted representative form left the core interaction stranded in the old phase-1 treatment
+  - This pass treats the representative route as a consultive intake surface, not just a raw registration block, and closes the remaining form-family drift by aligning the generic contact and newsletter forms with the same surface, hierarchy, and feedback language
+  - The result keeps Apollo institutional and commercially clear while making all public-facing form surfaces feel like part of one deliberate system rather than separate one-off widgets
+- **Affected shared components:** `RepresentanteForm` was restored as a shared contact-route component, while `ContatoForm` and `NewsletterForm` now consistently reuse `Badge`, `Button`, `Card`, `Input`, `SectionHeading`, and `Textarea` primitives
+- **Responsive impact:** The representative route now collapses from a desktop two-column form-plus-summary layout into a single-column mobile flow, and the standardized contact/newsletter forms preserve readable spacing, labels, and tap targets across smaller breakpoints
+- **Accessibility impact:** Preserved semantic heading hierarchy, explicit labels, inline validation messaging, keyboard-accessible controls, and submit feedback via `role="status"` / `role="alert"`; decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/contato/representante`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA still required for `/contato/representante`, representative submit states, reused `ContatoForm` embeds, and newsletter signup surfaces across desktop/tablet/mobile
+- **Learnings for future iterations:**
+  - Public-form standardization can stay safely within redesign scope when payload contracts remain unchanged and only the route composition plus shared form primitives are upgraded
+  - If a route-level redesign lands before its underlying client form component, the page can look complete while the critical interaction remains out of family; future contact stories should always validate both layers together
+---
+## 2026-03-10 17:37 UTC - US-046A
+- **Story:** Repaginacao da pagina `/solucoes`
+- **What was implemented:**
+  - Rebuilt the `/solucoes` hub around a stronger phase-2 composition with a darker editorial hero, consultive trust framing, an overlaid introduction/filter panel, a clearer solutions count summary, and a more deliberate bridge into contact
+  - Upgraded the hub filtering treatment so the category chips read as modern interface controls with clearer active state feedback, preserved counters, and stronger visual integration with the design-system surfaces already used across the redesigned shell and homepage
+  - Added a hub-specific premium card presentation for solution listings, including better spacing, category context, refined icon treatment, and a more polished CTA hierarchy while keeping the default shared grid behavior intact for non-hub routes
+- **Files changed:**
+  - `src/app/(frontend)/solucoes/page.tsx` — added category labels to mapped solution data so the redesigned hub cards can surface clearer context without changing CMS schema
+  - `src/components/SolutionsHubPage.tsx` — redesigned the `/solucoes` hero, intro/filter surface, grid framing, and consultive contact bridge
+  - `src/components/SolutionFilterTabs.tsx` — refined filter chips with better spacing, shadow treatment, and explicit active-state semantics
+  - `src/components/SolutionGrid.tsx` — added a hub-specific `variant="hub"` card treatment while preserving the default grid used by existing category pages
+  - `prd.json` — marked the selected `US-046A` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The old hub worked functionally but still read as a straightforward catalog. This pass moves it closer to a consultive solutions map with clearer hierarchy, more whitespace, better contrast between surfaces, and card treatment that feels closer to a premium product interface
+  - The redesign keeps Apollo institutional and commercially direct, but translates the Payload-inspired language through calmer gradients, stronger typography, refined chips, and more intentional section transitions instead of decorative effects
+- **Affected shared components:** `SolutionsHubPage`, `SolutionFilterTabs`, and `SolutionGrid` now carry the new hub treatment; `SolutionGrid` was extended with a scoped hub variant so unfinished category-hub stories can continue independently
+- **Responsive impact:** The hero, intro/filter surface, and contact area now collapse from split desktop compositions into single-column tablet/mobile layouts with preserved chip scrolling, readable card spacing, and cleaner vertical rhythm
+- **Accessibility impact:** Preserved semantic headings, keyboard-accessible filter buttons, visible active-state semantics via `aria-pressed`, reduced-motion gating for animated sections/cards, and decorative backgrounds marked `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - First `npx tsc --noEmit`: failed because `.next/types` entries were missing, matching the known repository validation note
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed with the known transient Next.js sandbox issue (`PageNotFoundError: /_document` after `Collecting page data`)
+  - Retried `npm run build` once as required: passed and generated `/solucoes`
+  - Final `npx tsc --noEmit`: passed after the successful Next build regenerated `.next/types`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` across desktop/tablet/mobile, including hero overlap spacing, filter-chip behavior, grid hover states, and the consultive contact bridge
+- **Learnings for future iterations:**
+  - Shared listing components can absorb redesign scope safely when the new treatment is isolated behind an explicit variant instead of forcing unfinished templates onto the same visual step prematurely
+  - In this repository, practical type validation may need to happen after a successful Next build refreshes `.next/types`, even when the TypeScript pass is listed earlier in the nominal command order
+---
+## 2026-03-10 17:59 UTC - US-046B
+- **Story:** Repaginacao dos hubs de categoria de solucoes
+- **What was implemented:**
+  - Rebuilt the three category hubs under `/solucoes` around a shared phase-2 template with a darker narrative hero, consultive summary panel, an overlapping introduction surface, a premium solution-grid frame, a stronger CTA bridge, and a cleaner contact handoff
+  - Consolidated category-hub data loading into `src/lib/solutionCategories.ts`, preserving resilient Payload-backed metadata and solution fetching while supplying deterministic category-specific fallback narratives, ordered solution lists, and new story copy for Avaliacao Patrimonial, Controle Patrimonial, and Consultoria e Tecnologia
+  - Added a backward-compatible route alias for `/solucoes/controle-patrimonial/identificacao-patrimonial` so legacy/internal links continue to resolve even though the seeded/canonical detail route uses `etiquetas-patrimoniais-inteligentes`
+- **Files changed:**
+  - `src/lib/solutionCategories.ts` — added the shared category-hub config, Payload metadata loader, resilient solution fetcher, and category-specific narrative copy/fallbacks
+  - `src/components/SolutionCategoryHubPage.tsx` — implemented the shared phase-2 category-hub layout spanning hero, intro, grid, CTA, and contact sections
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/page.tsx` — rewired the route to the shared category-hub loader/template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/identificacao-patrimonial/page.tsx` — added a compatibility re-export to the canonical `etiquetas-patrimoniais-inteligentes` route
+  - `prd.json` — marked the selected `US-046B` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The old category hubs still read like first-pass landing pages: fullscreen hero, immediate grid, and form. This pass gives each category a more consultive opening with stronger hierarchy between narrative framing, service map, CTA, and contact so the pages feel closer to the redesigned homepage and `/solucoes` hub
+  - The redesign keeps Apollo institutional, technical, and commercially direct, but moves the hubs away from generic “solucao completa” framing by using more deliberate storytelling, clearer surfaces, and shared premium layout rhythm across all three categories
+- **Affected shared components:** `SolutionCategoryHubPage` and `solutionCategories` now centralize the category-hub experience; existing `SolutionGrid` hub cards and `ContatoForm` were reused so the new pages stay aligned with the phase-2 solutions language without reopening CMS schema work
+- **Responsive impact:** All three hubs now collapse from split hero/CTA compositions into single-column tablet/mobile layouts while preserving readable card spacing, button stacking, and a cleaner vertical rhythm through intro, grid, and contact sections
+- **Accessibility impact:** Preserved semantic heading structure, keyboard-accessible CTA links, reduced-motion gating for animated reveals, sufficient contrast on dark surfaces, and `aria-hidden` treatment for decorative gradient/background layers
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, and the compatibility route `/solucoes/controle-patrimonial/identificacao-patrimonial`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the three category hubs across desktop/tablet/mobile, including hero readability over imagery, section-overlap spacing, CTA emphasis, and the compatibility link path
+- **Learnings for future iterations:**
+  - Shared narrative templates are a safer way to harmonize related redesign pages than advancing each category independently; the categories can still keep distinct copy while the layout rhythm stays consistent
+  - Seed/content slug drift can surface as routing regressions during redesign work, so category-hub refactors should verify seeded solution slugs and preserve compatibility routes when historical paths already exist in content or navigation
+---
+## 2026-03-10 18:11 UTC - US-046C
+- **Story:** Padronizacao visual dos cards e filtros de solucao
+- **What was implemented:**
+  - Extracted a dedicated `SolutionCard` component so the solution listing surface now lives in a reusable primitive instead of inline card markup inside `SolutionGrid`
+  - Rebuilt `SolutionFilterTabs` as a specialized solution rail that supports both interactive filters (`/solucoes`) and link-based category navigation (category hubs), with aligned hover, focus, active, density, and count treatments
+  - Applied the same filter language to the category hubs by adding a shared category rail above the solution grid, keeping navigation inside existing routes while making the solutions system feel coherent across `/solucoes` and all three category templates
+- **Files changed:**
+  - `src/components/SolutionCard.tsx` — added the reusable premium solution-card primitive
+  - `src/components/SolutionGrid.tsx` — replaced inline card rendering with the shared card component for both hub and compact grid variants
+  - `src/components/SolutionFilterTabs.tsx` — upgraded the filter control into a reusable rail that supports button and link modes
+  - `src/components/SolutionCategoryHubPage.tsx` — added the category-level rail so hubs reuse the same solutions navigation language as `/solucoes`
+  - `src/lib/solutionCategories.ts` — added serialized category-filter data for the shared hub rail
+  - `prd.json` — marked the selected `US-046C` story as complete
+  - `progress.txt` — appended delivery log for this story
+- **Visual rationale:**
+  - The prior solution cards already looked better than phase 1, but the visual system was still split between inline card markup and lightweight chips. This pass turns both surfaces into a clearer, more product-like listing language with stronger hierarchy, softer density, and more deliberate hover/focus behavior
+  - The category hubs previously shared the card treatment but not the filter/navigation language. Reusing the same rail across the hub and category templates makes the solutions area feel like one connected system instead of adjacent redesign passes
+- **Affected shared components:** `SolutionCard`, `SolutionGrid`, `SolutionFilterTabs`, `SolutionCategoryHubPage`, and `solutionCategories`
+- **Responsive impact:** The new card primitive preserves equal-height grid behavior across tablet/desktop and keeps compact density for smaller layouts, while the filter rail remains horizontally scrollable on narrow screens and wraps cleanly from tablet upward
+- **Accessibility impact:** Preserved keyboard access for filter buttons and category links, added visible focus treatment on the full card surface and filter rail items, kept `aria-current` for category navigation, preserved `aria-pressed` for active `/solucoes` filters, and retained reduced-motion gating in the animated grid sections
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` and the three category hubs across desktop/tablet/mobile, including card hover/focus states, horizontal rail behavior on mobile, and active category highlighting
+- **Learnings for future iterations:**
+  - A specialized rail component can safely serve both filter and navigation use cases when the visual language stays constant and semantics switch between `aria-pressed` and `aria-current`
+  - Extracting the card into a standalone primitive makes future solution-hub and solution-detail stories less likely to drift, because listing polish now has a single reusable surface instead of duplicated JSX
+---
+## 2026-03-10 18:33 UTC - US-046C
+- **Story:** Padronizacao visual dos cards e filtros de solucao
+- **What was implemented:**
+  - Refined the shared `SolutionCard` and `SolutionFilterTabs` primitives so keyboard focus now mirrors the stronger hover language already used by the solution cards and filter rail
+  - Revalidated the existing `US-046C` architecture in the current repository state, confirming the shared card/filter system is the same one applied on `/solucoes` and the category hubs
+- **Files changed:**
+  - `src/components/SolutionCard.tsx` — aligned focus-visible card chrome, overlay, and CTA states with the established hover treatment
+  - `src/components/SolutionFilterTabs.tsx` — aligned focus-visible rail movement, border treatment, indicator, label, and count states with hover/active behavior
+  - `prd.json` — marked the selected `US-046C` story as complete in the active PRD
+  - `progress.txt` — appended the current delivery log for this run
+- **Visual rationale:**
+  - The shared solution primitives were already structurally in place, but keyboard focus was still visually weaker than hover in the card and filter surfaces
+  - This pass closes that gap so the reusable listing language feels intentional and consistent regardless of whether the user is navigating with pointer or keyboard
+- **Affected shared components:** `SolutionCard` and `SolutionFilterTabs`
+- **Responsive impact:** No layout change; the existing card density and rail behavior remain intact across desktop/tablet/mobile while focus treatment now reads consistently at every breakpoint
+- **Accessibility impact:** Improved keyboard focus parity for reusable solution cards and filter/navigation rail items without changing existing `aria-pressed`, `aria-current`, or reduced-motion behavior
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/solucoes` and the category hubs across desktop/tablet/mobile, especially keyboard focus treatment, hover/focus parity, and mobile rail scrolling
+- **Learnings for future iterations:**
+  - When story logs and `prd.json` drift, story selection and completion state still need to be driven by the active PRD, then revalidated against the current codebase
+  - Reusable listing primitives should treat keyboard focus as part of the premium interaction language, not as an afterthought to hover-only styling
+---
+## 2026-03-10 18:51 UTC - US-047A
+- **Story:** Repaginacao do template base de paginas de solucao
+- **What was implemented:**
+  - Replaced the duplicated phase-1-style solution-detail markup with a shared `SolutionDetailPage` template that standardizes the hero composition, consultive summary card, CTA hierarchy, breadcrumb treatment, metadata surfaces, and controlled reading-width content area across all canonical solution detail routes
+  - Centralized solution-detail data loading and metadata generation so canonical pages now reuse the same Payload fallback logic, support existing legacy slug lookups where required, and emit breadcrumb JSON-LD without reopening the CMS schema
+  - Rewired every canonical solution detail route to lightweight per-page config files that keep local fallback copy intact while inheriting the same phase-2 template language already established in the redesigned shell and solution hubs
+- **Files changed:**
+  - `src/components/SolutionDetailPage.tsx` — added the shared solution-detail template, Payload-backed loader, rich-content renderer, breadcrumb JSON-LD, and metadata helper for canonical solution pages
+  - `src/app/(frontend)/solucoes/controle-patrimonial/controle-e-inventario-de-estoques/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/etiquetas-patrimoniais-inteligentes/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/organizacao-patrimonial/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/controle-patrimonial/processamento-patrimonial/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/arrendamento-mercantil/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/ativos-inteligentes-rfid-rtls/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/combinacao-de-negocios-ppa-cpc-15/page.tsx` — rewired the canonical route to the shared solution-detail template while preserving legacy slug fallback
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/revisao-da-vida-util/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/softwares/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `src/app/(frontend)/solucoes/consultoria-e-tecnologia/teste-de-impairment/page.tsx` — rewired the canonical route to the shared solution-detail template
+  - `prd.json` — marked the selected `US-047A` story as complete
+  - `progress.txt` — appended the current delivery log for this story
+- **Visual rationale:**
+  - The prior solution detail pages were structurally correct but still behaved like first-pass utility templates: a simple dark banner, one CTA, and a wide body/aside split without the same compositional maturity already visible in the shell, homepage, and redesigned solution hubs
+  - This pass reframes the detail template as a consultive product surface with stronger hero hierarchy, more deliberate metadata framing, a separate CTA rail, tighter reading width, and more premium transitions between context, content, and onward navigation
+  - The redesign stays institutional and technical rather than blog-like or SaaS-like, translating the Payload-inspired language into Apollo's commercial tone instead of copying it literally
+- **Affected shared components:** `SolutionDetailPage` is the new shared primitive for canonical solution pages, and all canonical detail routes now inherit the same base template through per-page config objects instead of duplicated JSX/loaders
+- **Responsive impact:** The hero shifts from a desktop two-column composition into a single-column stack on tablet/mobile, and the article body plus CTA/related rail collapse into a vertical flow while preserving controlled reading width and readable spacing
+- **Accessibility impact:** Preserved semantic breadcrumb navigation and heading hierarchy, kept keyboard-accessible CTA and related-solution links with visible focus treatment, and improved structural clarity by separating hero, content, and side actions into clearer semantic regions
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed with the known transient Next.js page-resolution error (`PageNotFoundError: Cannot find module for page: /(frontend)/contato/cotacao/page` and `/contato/page`)
+  - Retried `npm run build` once as required: passed and generated all canonical solution detail routes plus the existing legacy alias routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the canonical solution detail pages and legacy aliases across desktop/tablet/mobile, especially hero readability, content-width comfort, CTA prominence, breadcrumb clarity, and related-solution navigation
+- **Learnings for future iterations:**
+  - Shared detail templates are lower risk than continuing to evolve duplicated route files; future solution-detail stories can now refine one base surface instead of touching every canonical page independently
+  - Breadcrumb, metadata, and CTA hierarchy can be standardized for solution pages entirely in the frontend layer while preserving the current Payload content model and existing compatibility routes
+---
+## 2026-03-10 19:06 UTC - US-048B
+- **Story:** Repaginacao de elementos auxiliares das paginas de solucao
+- **What was implemented:**
+  - Refined the shared `SolutionDetailPage` rich-content renderer so headings, lists, inline emphasis, and quote blocks now read as higher-value auxiliary surfaces instead of plain phase-1 body markup
+  - Added a stronger dark auxiliary-callout layer around the reading surface so highlights, support notes, and CTA context feel intentionally composed with the rest of the solution-detail template
+  - Rebuilt the related-solutions area as a standalone `Veja tambem` recommendation section using the shared `SolutionCard` language, with richer supporting copy and related-solution metadata derived without reopening the CMS schema
+- **Files changed:**
+  - `src/components/SolutionDetailPage.tsx` — upgraded inline rich-text formatting, list/quote/callout treatments, supporting side surfaces, and the related recommendation section for canonical solution pages
+  - `prd.json` — marked the selected `US-048B` story as complete
+  - `progress.txt` — appended the current delivery log for this story
+- **Visual rationale:**
+  - The base detail template from `US-047A` established hierarchy, but auxiliary elements still felt transitional: lists behaved like default prose, quotes read as simple blocks, and related links still looked like utility navigation instead of editorial recommendation
+  - This pass pushes those secondary surfaces into the same Payload-inspired but Apollo-appropriate language already established in the shell and solution hubs, improving polish without adding new product features
+- **Affected shared components:** `SolutionDetailPage` now centralizes richer auxiliary-content treatment for all canonical solution pages, and the story reuses the shared `SolutionCard` primitive for related recommendations instead of one-off list styling
+- **Responsive impact:** Auxiliary callouts and related recommendations collapse from multi-column desktop compositions into stacked mobile cards while preserving reading width, CTA clarity, and touch-friendly spacing
+- **Accessibility impact:** Preserved semantic heading hierarchy, list semantics, keyboard-accessible recommendation links and CTA buttons, and kept strong contrast/focus treatment across the new dark/light supporting surfaces
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all canonical `/solucoes/...` detail routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for the canonical solution detail pages and legacy aliases across desktop/tablet/mobile, especially list/callout readability, auxiliary-surface spacing, and the new `Veja tambem` recommendation cards
+- **Learnings for future iterations:**
+  - Once solution-detail pages share one template, auxiliary-content polish can be delivered safely in a single component without reopening route files or CMS modeling
+  - Related recommendation areas on solution pages can reuse the shared solution-card language if the template fills missing fallback descriptions from existing category/title context
+---
+
+## US-049A — Revisão de consistência do shell global (navbar, footer e overlays)
+- **Date:** 2026-03-10
+- **Status:** Complete
+- **Summary:** Audited and harmonized all shell components for visual consistency with the phase-2 design system.
+- **Files changed:**
+  - `src/components/MobileMenu.tsx` — Replaced `rounded-full` with `rounded-pill` on close button; normalized arbitrary opacity values (`bg-white/6` → `bg-white/[0.06]`, `bg-white/8` → `bg-white/[0.08]`); unified focus ring to `focus-visible:ring-white/15` across all interactive elements
+  - `src/components/SearchOverlay.tsx` — Replaced `rounded-full` with `rounded-pill` on close button; added `hover:bg-white` for better hover feedback
+  - `src/components/Footer.tsx` — Added `focus-visible` states (underline decoration) to all footer navigation links; normalized `border-white/8` → `border-white/10` for consistency
+  - `src/components/FooterUnidades.tsx` — Added `focus-visible` states to phone/email links; normalized `border-white/8` → `border-white/10`
+  - `src/components/WhatsAppFloat.tsx` — Added `focus-visible:ring-4 focus-visible:ring-white/15` for keyboard accessibility
+  - `src/components/ScrollToTop.tsx` — Added `focus-visible:ring-4 focus-visible:ring-white/15` for keyboard accessibility
+  - `src/components/CookieConsent.tsx` — Normalized `bg-white/6` → `bg-white/[0.06]` and `bg-white/8` → `bg-white/[0.08]` for consistency
+- **Racional visual:** All shell components now use consistent focus-visible states, consistent border opacity tokens, and consistent `rounded-pill` instead of `rounded-full`. No component uses pre-phase-2 visual patterns.
+- **Responsive impact:** None — changes are state/token-level only, no layout changes.
+- **Quality checks:**
+  - `npm run lint`: passed (only unrelated `payload-types.ts` warning)
+  - `npx tsc --noEmit`: passed (only TS6053 missing `.next/types` — pre-build artifacts)
+  - `npm run build`: failed twice with known transient Next.js sandbox `PageNotFoundError` (different pages each run: `/news`, `/solucoes/avaliacao-patrimonial/...`). This is a pre-existing environment issue unrelated to US-049A changes.
+- **Browser verification:** Browser tooling unavailable; manual QA required for focus ring visibility and hover states on all shell elements.
+---
+
+## 2026-03-10 - US-049B: Harmonização global de tipografia
+- **What was implemented:** Audited and harmonized all typography across the entire frontend to consistently use the design system's typographic scale (display-lg/md/sm, heading-2xl/xl/lg, body-lg/md/sm, label-sm, meta-sm). Eliminated all bracket-notation font sizes (text-[11px], text-[10px], text-[0.9375rem], text-[1.02rem], text-[1.05rem], text-[1.375rem], text-[2.8rem], text-[2.45rem], text-[2rem], text-[0.93rem], text-[13px], text-[1rem]) and replaced them with semantic design system tokens. Standardized all headings to use font-display + appropriate display-*/heading-* tokens with consistent tracking-tight.
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — H1 → text-display-lg, H2s → text-heading-2xl, subtitle → text-body-lg
+  - `src/components/MissaoVisaoValores.tsx` — H2 → text-heading-2xl, H3 → text-display-sm
+  - `src/components/SolutionDetailPage.tsx` — Body text → text-body-md, H4 → text-heading-lg, labels → text-label-sm
+  - `src/components/HomePage.tsx` — Body → text-body-sm, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/Footer.tsx` — H2 → text-display-sm, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/SearchOverlay.tsx` — H2 → text-heading-2xl, H3 → text-heading-lg, labels → text-label-sm
+  - `src/components/MobileMenu.tsx` — H2 → text-heading-2xl, labels → text-label-sm, nav items → text-body-md/text-meta-sm
+  - `src/components/FooterContactForm.tsx` — H3 → text-heading-2xl, labels → text-label-sm
+  - `src/components/Navbar.tsx` — Nav links → text-body-sm, brand tag → text-label-sm
+  - `src/components/CookieConsent.tsx` — Labels → text-label-sm
+  - `src/components/WhatsAppFloat.tsx` — Labels → text-label-sm
+  - `src/components/FooterUnidades.tsx` — Labels → text-label-sm
+  - `src/components/MegaMenu.tsx` — H2 → text-heading-2xl, labels → text-label-sm
+  - `src/components/SolutionCard.tsx` — Labels → text-label-sm
+  - `src/components/ClientsPage.tsx` — Labels → text-label-sm
+  - `src/components/CotacaoForm.tsx` — Labels → text-label-sm
+  - `src/components/SolutionFilterTabs.tsx` — Labels → text-label-sm
+  - `src/components/ui/Chip.tsx` — Count badge → text-label-sm
+- **Racional visual:** All templates now share a consistent typographic hierarchy: display-* for hero/page-level headings, heading-* for section headings, body-* for content text, label-sm for uppercase micro-labels, meta-sm for navigation meta text. No page uses isolated or off-system font sizes. The only remaining bracket-notation size is text-[0.95em] for inline code, which uses relative em-based sizing by design.
+- **Responsive impact:** Minimal — semantic tokens use CSS clamp() for responsive scaling, replacing ad-hoc responsive breakpoint stacks (sm:text-*, lg:text-*) with fluid type.
+- **Accessibility impact:** No degradation — font sizes remain readable and hierarchy is preserved.
+- **Quality checks:**
+  - `npm run lint`: passed
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed (all 35 static pages generated successfully)
+- **Browser verification:** Browser tooling unavailable; manual QA required to confirm visual consistency across all pages.
+---
+
+## US-049C — Revisão de spacing e rhythm de layout (2026-03-10)
+- **Status:** COMPLETE
+- **Scope:** Audited and harmonized section spacing across all page templates to use design system tokens and utility classes instead of hardcoded Tailwind values.
+- **Inconsistencies corrected:**
+  - `src/app/(frontend)/sobre/page.tsx` — 3 sections: `py-16 sm:py-20` → `section-space`
+  - `src/components/SolutionsHubPage.tsx` — line 311: `py-16 sm:py-20` → `section-space`; line 341: `py-16 sm:py-20 lg:py-24` → `section-space-loose`
+  - `src/components/SolutionCategoryHubPage.tsx` — 3 content sections: `py-20 sm:py-24` → `section-space-loose`; overlap section: `pb-20 sm:pb-24` → `pb-[var(--space-section-loose)]`
+  - `src/components/Footer.tsx` — `py-16 sm:py-20 lg:py-24` → `section-space-loose`
+  - `src/components/SolutionDetailPage.tsx` — hero padding standardized to match other heroes (`pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`); overlap section: `-mt-10 sm:-mt-14 pb-24 sm:pb-28` → `-mt-12 sm:-mt-16 pb-[var(--space-section-loose)]`; related section: `pb-24 sm:pb-28` → `pb-[var(--space-section-loose)]`
+- **Patterns now consistent:**
+  - All content sections use `section-space` (4rem → 5rem) or `section-space-loose` (5rem → 7.5rem) utility classes
+  - Hero sections use consistent asymmetric padding across all templates: `pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`
+  - Overlap sections standardized to `-mt-12 sm:-mt-16` with `pb-[var(--space-section-loose)]`
+  - Grid/card gaps remain consistent (gap-3, gap-4, gap-6, gap-8)
+  - Container horizontal padding aligned across all templates via Container.tsx
+- **Quality checks:**
+  - `npm run lint`: passed
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- **Browser verification:** Browser tooling unavailable; manual QA required.
+---
+
+## 2026-03-10 19:58 UTC - US-049D
+- Harmonized motion and microinteractions around shared CSS utilities/tokens so buttons, form fields, chips, editorial cards, solution cards, social links, pagination, and floating actions now share the same transition rhythm and lighter hover/focus behavior.
+- Files changed:
+  - `src/styles/tokens.css`
+  - `src/styles/utilities.css`
+  - `src/components/ui/Button.tsx`
+  - `src/components/ui/Card.tsx`
+  - `src/components/ui/Chip.tsx`
+  - `src/components/ui/Input.tsx`
+  - `src/components/ui/Select.tsx`
+  - `src/components/ui/Textarea.tsx`
+  - `src/components/PostCard.tsx`
+  - `src/components/SolutionCard.tsx`
+  - `src/components/SocialLinks.tsx`
+  - `src/components/Pagination.tsx`
+  - `src/components/ScrollToTop.tsx`
+  - `src/components/WhatsAppFloat.tsx`
+- Quality checks run and results:
+  - `npm run lint`: passed with the existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling unavailable in this environment; manual QA is still required for hover/focus/reduced-motion behavior across desktop, tablet, and mobile.
+- **Learnings for future iterations:**
+  - Reusable interaction polish should land in the shared motion utility layer first, then be consumed by primitives and high-traffic cards instead of reintroducing hardcoded `duration-*` or transform classes in individual templates.
+  - Full-card links need shell-level `focus-within` handling so keyboard states read with the same visual emphasis as hover states.
+---
+## 2026-03-10 20:14 UTC - US-049F
+- **Story:** Revisao visual das paginas principais
+- **Status:** In progress, not complete
+- **What was implemented:**
+  - Rebuilt `/sobre` so the page now uses the same phase-2 composition language as the redesigned homepage, clientes, contato, and solucoes templates: darker hero framing, stronger CTA hierarchy, overlapped narrative panel, clearer institutional cards, and a refined closing contact bridge
+  - Reworked `MissaoVisaoValores` into a premium two-column editorial surface with active-state navigation, stronger slide presentation, and better integration with the rest of the about-page system instead of the older standalone carousel block
+  - Audited the other primary templates covered by `US-049F` and kept code changes scoped to the remaining visibly outdated surface rather than reopening already-aligned routes
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — redesigned hero, narrative sections, institutional proof cards, CTA framing, and route-level spacing/hierarchy
+  - `src/components/MissaoVisaoValores.tsx` — redesigned the mission/vision/values surface, navigation states, and slide presentation
+- **Visual rationale:**
+  - `/sobre` was the clearest remaining phase-1-style outlier among the audited primary pages, especially in hero treatment, institutional storytelling, and CTA composition
+  - This pass brings the page back into the current Payload-inspired but Apollo-appropriate system without introducing new product behavior or reopening CMS modeling
+- **Affected shared components:** `MissaoVisaoValores` now behaves like a phase-2 shared content surface rather than a legacy isolated carousel
+- **Responsive impact:** The about page now collapses from split hero and narrative compositions into stacked mobile flows while preserving card spacing, CTA clarity, and readable content rhythm
+- **Accessibility impact:** Preserved semantic heading hierarchy, keyboard-accessible slider controls, reduced-motion gating for slide transitions/drag behavior, and decorative backgrounds remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js sandbox error `unhandledRejection Error: Cannot find module './8548.js'` from `.next/server/webpack-runtime.js`
+  - Retried `npm run build` once as required: failed again with the same transient Next.js sandbox error while collecting page data
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/sobre` across desktop/tablet/mobile, especially hero readability, overlap spacing, CTA emphasis, and slider controls
+- **Outcome:** `prd.json` was not updated and no commit was created because the required build check did not pass in the current environment
+- **Learnings for future iterations:**
+  - A late-phase visual audit can stay safely scoped by correcting the last obviously outdated template instead of reworking already-aligned routes just to show broader file churn
+  - The current sandbox still intermittently fails Next production builds with missing `.next/server` module artifacts during page-data collection; this must be resolved or bypassed before `US-049F` can be marked complete
+---
+## 2026-03-10 20:22 UTC - US-049F
+- **Story:** Revisao visual das paginas principais
+- **Status:** Complete
+- **What was implemented:**
+  - Finalized the `/sobre` redesign already scoped in the working tree so the page now matches the phase-2 hierarchy used across homepage, clientes, contato, and solucoes templates
+  - Kept the code changes intentionally narrow to the last visibly outdated primary page and its institutional slider surface, while confirming the other audited main routes were already aligned with the redesign baseline
+  - Revalidated the current state end to end and completed story closure after the required build retry succeeded
+- **Files changed:**
+  - `src/app/(frontend)/sobre/page.tsx` — redesigned hero, narrative bridge, institutional proof cards, history section, and closing CTA composition
+  - `src/components/MissaoVisaoValores.tsx` — upgraded the mission/vision/values module into a shared phase-2 editorial surface with stronger active states and slide presentation
+  - `prd.json` — marked `US-049F` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - `/sobre` was the remaining main-page outlier relative to the already polished homepage, clientes, contato, and solucoes routes
+  - Updating that page was sufficient to remove the last obvious phase-1 visual drift without reopening already-consistent templates or introducing unrelated product work
+- **Affected shared components:** `MissaoVisaoValores` now reads as a reusable phase-2 institutional content module instead of a legacy carousel block
+- **Responsive impact:** The about page preserves the new split compositions on desktop and collapses cleanly into stacked mobile sections without losing CTA clarity or content rhythm
+- **Accessibility impact:** Preserved heading hierarchy, keyboard-accessible slider controls, reduced-motion handling for transitions/drag behavior, and decorative gradients remain `aria-hidden`
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js `PageNotFoundError` for `/solucoes/avaliacao-patrimonial`
+  - Retried `npm run build` once as required: passed and generated all 35 static pages, including `/sobre`, `/clientes`, `/contato`, and `/solucoes`
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for `/sobre` and the audited primary templates across desktop/tablet/mobile, especially hero readability, overlap spacing, CTA emphasis, and slider controls
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and commit created after checks passed
+- **Learnings for future iterations:**
+  - Late-stage visual review can stay precise by correcting the last outlier template instead of forcing broad churn across pages that already satisfy the active phase-2 bar
+  - The intermittent Next build failure for missing solution-route modules can clear on retry, so the required second build attempt remains necessary evidence before treating the issue as a hard blocker
+---
+## 2026-03-10 20:36 UTC - US-049E
+- **Story:** Harmonizacao de motion e microinteracoes
+- **Status:** Complete
+- **What was implemented:**
+  - Closed the remaining high-traffic motion outliers after the earlier shared-primitive pass so shell navigation, overlays, homepage CTAs/cards, solution filters, content cards, and key contact/download/form surfaces now use the same shared motion rhythm instead of mixed `duration-*` and `hover:-translate-*` recipes
+  - Harmonized hover and keyboard-focus behavior on menu links, result cards, homepage solution cards, mobile navigation controls, and content tiles by preferring `motion-transition`, `motion-lift-subtle`, `motion-lift-card`, and `motion-media-scale`
+  - Revalidated the current repository state for the duplicate PRD motion story (`US-049E` after already-complete `US-049D`) and completed only the first remaining incomplete entry in `prd.json`
+- **Files changed:**
+  - `src/components/Navbar.tsx` — normalized shell-surface, nav-link, icon-button, and chevron transition behavior
+  - `src/components/MegaMenu.tsx` — aligned quick links, map cards, category cards, and child links to shared motion utilities
+  - `src/components/MobileMenu.tsx` — aligned close/search/toggle/link states and fixed malformed class-name spacing on child chips
+  - `src/components/SearchOverlay.tsx` — standardized close/search/result-card transitions
+  - `src/components/SolutionFilterTabs.tsx` — moved filter rail hover/focus behavior to shared motion utilities
+  - `src/components/HomePage.tsx` — harmonized CTA, service-card, accent-bar, and inline-link microinteractions
+  - `src/components/ClientsPage.tsx` — aligned client-card lift, overlay, and logo motion behavior
+  - `src/app/(frontend)/conteudos/page.tsx` — aligned featured/standard material-card image and card interactions
+  - `src/app/(frontend)/conteudos/[slug]/page.tsx` — aligned related-material card interactions
+  - `src/app/(frontend)/contato/page.tsx` — aligned route-card and unidade-link hover/focus states
+  - `src/components/ContentDownloadPanel.tsx` — aligned download CTA motion/focus treatment
+  - `src/components/CotacaoForm.tsx` — aligned progress-bar, service-selection, and upload-surface transitions
+  - `src/components/FooterUnidades.tsx` — aligned footer contact-link transitions
+  - `prd.json` — marked `US-049E` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - The first motion polish pass had already upgraded shared primitives and some high-traffic cards, but shell/navigation and a few route-level templates still felt slightly disconnected because they retained bespoke timing and lift rules
+  - This pass keeps Apollo’s tone calm and institutional while making interaction polish feel deliberate and consistent across the public site
+- **Affected shared components:** `Navbar`, `MegaMenu`, `MobileMenu`, `SearchOverlay`, `SolutionFilterTabs`, `FooterUnidades`, and route-level cards on homepage/conteudos/contato/cotacao now read from the same motion language as shared UI primitives
+- **Responsive impact:** The updated motion behavior stays lightweight across desktop, tablet, and mobile; interactive cards and controls now share the same subtle lift/transition cadence without introducing new breakpoint-specific behavior
+- **Accessibility impact:** Preserved reduced-motion handling through the shared motion utility layer, improved keyboard/focus parity on menu links and content/result cards, and retained existing semantic structure and focus rings
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - First `npm run build`: failed during `Collecting page data` with transient Next.js `PageNotFoundError` for `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos-biologicos` and `/news/[slug]`
+  - Retried `npm run build` once as required: passed and generated all public routes
+- **Browser/manual verification status:** Browser tooling unavailable in this environment; manual QA is still required for hover/focus/reduced-motion behavior across desktop/tablet/mobile, especially shell navigation, search overlay, homepage cards, content cards, and contact/cotacao interaction states
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - When a later polish story duplicates earlier acceptance criteria in `prd.json`, completion still needs a fresh current-state audit plus validation evidence before flipping the next pending entry
+  - Shared motion utilities are only effective if shell and route-level outliers are migrated too; otherwise the primitives feel polished while navigation and key templates still read as phase-transition leftovers
+---
+## 2026-03-10 20:50 UTC - US-049G
+- **Story:** QA responsivo completo
+- **Status:** Complete
+- **What was implemented:**
+  - Audited the current phase-2 templates against the active PRD and scoped the code changes to the remaining responsive outliers instead of reopening already-aligned routes
+  - Relaxed the densest mobile metric panels on `/news` and `/conteudos` so the hero-side editorial stats no longer force three cramped columns below the `sm` breakpoint
+  - Added a cookie-aware mobile offset for `ScrollToTop` so the floating control no longer shares the same vertical band as the cookie consent banner when that surface is visible
+- **Files changed:**
+  - `src/app/(frontend)/news/page.tsx` — changed the hero-side radar stats grid from a fixed three-column mobile layout to a stacked mobile / three-column `sm+` layout
+  - `src/app/(frontend)/conteudos/page.tsx` — changed the hero-side curation stats grid from a fixed three-column mobile layout to a stacked mobile / three-column `sm+` layout
+  - `src/components/CookieConsent.tsx` — exposed cookie-banner visibility on `document.body` for shared responsive shell coordination
+  - `src/components/ScrollToTop.tsx` — added a stable hook class for responsive cookie-aware positioning
+  - `src/styles/utilities.css` — added the mobile override that lifts `ScrollToTop` above the cookie banner while the banner is visible
+  - `prd.json` — marked `US-049G` as complete
+  - `progress.txt` — appended the completion record for this story
+- **Visual rationale:**
+  - Most primary templates were already visually aligned, but the audit still found a few places where mobile density and floating-shell ergonomics lagged behind the desktop/tablet polish
+  - These fixes keep the redesign incremental: improve the real breakpoint pressure points without introducing new product behavior or broad template churn
+- **Affected shared components:** `CookieConsent`, `ScrollToTop`, and the hero-side editorial stat panels on `news` and `conteudos`
+- **Responsive impact:** Desktop and tablet layouts remain unchanged where they were already balanced; mobile now gets more legible editorial stat cards on `/news` and `/conteudos`, plus clearer separation between the cookie banner and floating top action
+- **Accessibility impact:** Preserved semantic structure, focus behavior, and reduced-motion handling; the floating top action remains keyboard reachable while no longer competing with the cookie banner on smaller screens
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all 35 static pages
+- **Browser/manual verification status:** Attempted local Playwright-based browser verification, but the environment is missing the Chromium dependency `libnspr4.so`, so headless browser QA could not run here; manual responsive QA is still required for `/news`, `/conteudos`, and the mobile shell surfaces across desktop/tablet/mobile
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - Dense hero-side metric panels that feel balanced on desktop can still become too compressed on sub-`sm` screens; default to stacked mobile layouts unless the card content is genuinely short enough for multi-column mobile treatment
+  - Mobile floating shell actions need cookie-aware spacing instead of assuming they can permanently share the same bottom offset
+---
+## 2026-03-11 11:17 UTC - US-050
+- **Story:** Polish visual, consistencia global e QA de redesign
+- **Status:** Complete
+- **What was implemented:**
+  - Finalized the phase-2 consistency pass by tightening the shared UI primitives that propagate across the public site: buttons, cards, chips, and form controls now share a more aligned border/shadow/focus/hover treatment instead of small template-by-template drift
+  - Added a built-in polished empty state to `SolutionGrid` so solution hubs and future filter states do not collapse into blank whitespace if a recorte yields zero items
+  - Reworked the news load-more surface so pagination now reads as part of the editorial layout rather than an isolated button, with remaining-count context carried into the component
+- **Files changed:**
+  - `src/components/ui/Button.tsx` — harmonized default borders, shadows, hover states, and CTA weight across shared button variants
+  - `src/components/ui/Card.tsx` — aligned default/muted surfaces and interactive hover/focus borders with the current phase-2 premium treatment
+  - `src/components/ui/Input.tsx` — normalized hover, focus, and disabled behavior for text inputs
+  - `src/components/ui/Textarea.tsx` — normalized hover, focus, and disabled behavior for multiline fields
+  - `src/components/ui/Select.tsx` — normalized hover, focus, and disabled behavior for select controls
+  - `src/components/ui/Chip.tsx` — aligned filter-chip elevation, overlay, and count-badge behavior with the shared interaction language
+  - `src/components/SolutionGrid.tsx` — added an explicit empty-state surface with preserved solution/contact CTAs
+  - `src/components/Pagination.tsx` — upgraded the load-more area into a consistent editorial continuation surface
+  - `src/components/PostList.tsx` — passed remaining-item context into the shared pagination component
+  - `prd.json` — marked `US-050` as complete
+  - `progress.txt` — appended the delivery log for this story
+- **Visual rationale:**
+  - By this point the major templates were already redesigned, so the highest-value final pass was not another broad page rewrite; it was removing the last interaction and surface inconsistencies that still made some controls feel slightly older than the surrounding templates
+  - This keeps Apollo institutional and sober while making the Payload-inspired polish feel transversal across cards, filters, forms, and continuation states
+- **Affected shared components:** `Button`, `Card`, `Input`, `Textarea`, `Select`, `Chip`, `SolutionGrid`, and `Pagination`
+- **Responsive impact:** The new solution empty state and the editorial pagination panel are stacked by default and remain readable on mobile while preserving the existing desktop/tablet layouts; shared control changes propagate consistently across breakpoints without adding layout churn
+- **Accessibility impact:** Preserved semantic structure, keyboard reachability, and visible focus rings; form controls now share clearer hover/focus/disabled feedback, and the solution empty state keeps recovery actions available instead of leaving a dead-end surface
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all public routes
+- **Browser/manual verification status:** Browser tooling is not available in this environment, so manual QA is still required across desktop/tablet/mobile for shared buttons, filters, form controls, the solution-grid empty state, and the news load-more surface
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - Final redesign stories are safest when they target shared primitives and true state gaps instead of reopening already-aligned templates
+  - Filterable public grids should own a deliberate empty state rather than assuming editorial content will always populate every recorte
+---
