@@ -459,3 +459,28 @@ Last Updated: 2026-03-11 19:34:46 UTC
   - Story selection for this cycle must follow the first `passes: false` item in `prd.json` even when `progress.txt` contains older forward-looking status notes.
   - A previously blocked visual story can be closed safely as a metadata-only run once the scoped issue is already fixed and the full required validation sequence passes cleanly.
 ---
+
+## 2026-03-11 19:43:08 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: `VR-008`, `VR-009`, `VR-010`
+- What was implemented:
+  - Revalidated that the existing `/clientes` hero and filter-panel spacing in `src/components/ClientsPage.tsx` already resolves the registered first-fold compression by restoring clear desktop breathing below the fixed shell.
+  - Revalidated that the existing `/news` implementation already resolves both scoped editorial issues: the final dark CTA now sits on tighter section spacing, and the side rail uses `NewsletterForm compact` to keep the newsletter card contained.
+  - Closed `VR-008`, `VR-009`, and `VR-010` in `docs/visual-register.md` and marked `VP-004` as passed in the active root `prd.json` without widening the story scope.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed outside the selected story scope while prerendering `/solucoes/controle-patrimonial` and `/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais`
+  - Final required `npm run build`: passed on immediate rerun
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-008`, `VR-009`, and `VR-010`.
+- Learnings for future iterations:
+  - `VP-004` can be safely closed as a reconciliation run when the scoped visual adjustments are already present in the relevant components and only the active register/PRD fell behind.
+  - The current build flake still manifests on unrelated Soluções routes, so only the successful immediate rerun should be treated as the authoritative required build result when no code changes intervene.
+---

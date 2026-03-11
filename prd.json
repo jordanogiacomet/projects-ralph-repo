@@ -124,8 +124,8 @@
     {
       "id": "VP-004",
       "title": "Correções visuais editorial e prova social",
-      "passes": false,
-      "status": "active",
+      "passes": true,
+      "status": "done",
       "description": "Corrigir débitos visuais residuais das rotas /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
       "acceptanceCriteria": [
         "As issues registradas para clientes, conteúdos e news foram tratadas",
