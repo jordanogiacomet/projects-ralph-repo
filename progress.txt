@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 19:34:46 UTC
+Last Updated: 2026-03-11 19:51:56 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -40,6 +40,7 @@ Last Updated: 2026-03-11 19:34:46 UTC
   - VP-003
   - VP-004
   - VP-005
+  - VP-008
   - VP-006
   - VP-007
 - Issue-level source of truth: `docs/visual-register.md`
@@ -49,8 +50,10 @@ Last Updated: 2026-03-11 19:34:46 UTC
 - `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
 - `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
 - `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
-- `VP-004`, `VP-005`, `VP-008`, `VP-006`, and `VP-007` remain open in the active root `prd.json`.
-- Next target: `VP-004 - Correções visuais editorial e prova social`
+- `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
+- `VP-005` completed with the registered contact/form hierarchy fix validated and the story formally closed.
+- `VP-008`, `VP-006`, and `VP-007` remain open in the active root `prd.json`.
+- Next target: `VP-008 - Follow-up visual de shell, homepage e contato`
 
 ## Validation Rules
 - Required validation order:
@@ -483,4 +486,29 @@ Last Updated: 2026-03-11 19:34:46 UTC
 - Learnings for future iterations:
   - `VP-004` can be safely closed as a reconciliation run when the scoped visual adjustments are already present in the relevant components and only the active register/PRD fell behind.
   - The current build flake still manifests on unrelated Soluções routes, so only the successful immediate rerun should be treated as the authoritative required build result when no code changes intervene.
+---
+
+## 2026-03-11 19:51:56 UTC - VP-005
+- Story ID: `VP-005`
+- Issue IDs addressed: `VR-004`
+- What was implemented:
+  - Revalidated that the existing `/contato` hierarchy fix in `src/app/(frontend)/contato/page.tsx` and `src/components/ContatoPageForm.tsx` already resolves the only scoped `VP-005` issue without expanding into the later `VP-008` contact follow-up.
+  - Closed the stale blocker note on `VR-004` in `docs/visual-register.md` after the required validation sequence passed for this run.
+  - Marked `VP-005` as passed in the active root `prd.json` and advanced the run context to `VP-008`.
+- Files changed:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed outside the selected story scope with `Type error: File '/home/node/apollo-visual-r1/.next/types/app/(frontend)/clientes/page.ts' not found`
+  - Final required `npm run build`: passed on immediate rerun
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-004`.
+- Learnings for future iterations:
+  - Current branch metadata can drift backward even when the scoped UI implementation is unchanged, so story selection and closure still need to follow the active root `prd.json`.
+  - This repository can also flake on generated `.next/types` artifacts during `next build`; when an immediate rerun passes without code changes, the rerun should be recorded as the authoritative required build result.
 ---
