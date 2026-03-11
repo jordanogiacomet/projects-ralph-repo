@@ -697,3 +697,40 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Dense hero-side metric panels that feel balanced on desktop can still become too compressed on sub-`sm` screens; default to stacked mobile layouts unless the card content is genuinely short enough for multi-column mobile treatment
   - Mobile floating shell actions need cookie-aware spacing instead of assuming they can permanently share the same bottom offset
 ---
+## 2026-03-11 11:17 UTC - US-050
+- **Story:** Polish visual, consistencia global e QA de redesign
+- **Status:** Complete
+- **What was implemented:**
+  - Finalized the phase-2 consistency pass by tightening the shared UI primitives that propagate across the public site: buttons, cards, chips, and form controls now share a more aligned border/shadow/focus/hover treatment instead of small template-by-template drift
+  - Added a built-in polished empty state to `SolutionGrid` so solution hubs and future filter states do not collapse into blank whitespace if a recorte yields zero items
+  - Reworked the news load-more surface so pagination now reads as part of the editorial layout rather than an isolated button, with remaining-count context carried into the component
+- **Files changed:**
+  - `src/components/ui/Button.tsx` — harmonized default borders, shadows, hover states, and CTA weight across shared button variants
+  - `src/components/ui/Card.tsx` — aligned default/muted surfaces and interactive hover/focus borders with the current phase-2 premium treatment
+  - `src/components/ui/Input.tsx` — normalized hover, focus, and disabled behavior for text inputs
+  - `src/components/ui/Textarea.tsx` — normalized hover, focus, and disabled behavior for multiline fields
+  - `src/components/ui/Select.tsx` — normalized hover, focus, and disabled behavior for select controls
+  - `src/components/ui/Chip.tsx` — aligned filter-chip elevation, overlay, and count-badge behavior with the shared interaction language
+  - `src/components/SolutionGrid.tsx` — added an explicit empty-state surface with preserved solution/contact CTAs
+  - `src/components/Pagination.tsx` — upgraded the load-more area into a consistent editorial continuation surface
+  - `src/components/PostList.tsx` — passed remaining-item context into the shared pagination component
+  - `prd.json` — marked `US-050` as complete
+  - `progress.txt` — appended the delivery log for this story
+- **Visual rationale:**
+  - By this point the major templates were already redesigned, so the highest-value final pass was not another broad page rewrite; it was removing the last interaction and surface inconsistencies that still made some controls feel slightly older than the surrounding templates
+  - This keeps Apollo institutional and sober while making the Payload-inspired polish feel transversal across cards, filters, forms, and continuation states
+- **Affected shared components:** `Button`, `Card`, `Input`, `Textarea`, `Select`, `Chip`, `SolutionGrid`, and `Pagination`
+- **Responsive impact:** The new solution empty state and the editorial pagination panel are stacked by default and remain readable on mobile while preserving the existing desktop/tablet layouts; shared control changes propagate consistently across breakpoints without adding layout churn
+- **Accessibility impact:** Preserved semantic structure, keyboard reachability, and visible focus rings; form controls now share clearer hover/focus/disabled feedback, and the solution empty state keeps recovery actions available instead of leaving a dead-end surface
+- **Quality checks:**
+  - `npm run lint`: passed (pre-existing warning only: unused eslint-disable in `src/payload-types.ts`)
+  - `npm run typecheck`: not available in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not available in `package.json`
+  - `npm run build`: passed and generated all public routes
+- **Browser/manual verification status:** Browser tooling is not available in this environment, so manual QA is still required across desktop/tablet/mobile for shared buttons, filters, form controls, the solution-grid empty state, and the news load-more surface
+- **Outcome:** Story complete in the current repository state; `prd.json` updated and ready to commit after checks passed
+- **Learnings for future iterations:**
+  - Final redesign stories are safest when they target shared primitives and true state gaps instead of reopening already-aligned templates
+  - Filterable public grids should own a deliberate empty state rather than assuming editorial content will always populate every recorte
+---

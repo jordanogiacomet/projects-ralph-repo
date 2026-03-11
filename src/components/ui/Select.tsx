@@ -39,7 +39,7 @@ export function Select({
           aria-describedby={[descriptionId, errorId].filter(Boolean).join(' ') || undefined}
           aria-invalid={error ? true : undefined}
           className={cn(
-            'motion-transition w-full appearance-none rounded-field border border-border bg-surface-primary px-4 py-3 pr-10 text-sm text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] focus:border-accent/40 focus:outline-none focus:ring-4 focus:ring-accent/10',
+            'motion-transition w-full appearance-none rounded-field border border-border bg-surface-primary px-4 py-3 pr-10 text-sm text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] hover:border-border-strong hover:bg-white focus:border-accent/40 focus:outline-none focus:ring-4 focus:ring-accent/10 disabled:cursor-not-allowed disabled:bg-surface-secondary disabled:text-text-muted',
             error && 'border-red-300 focus:border-red-400 focus:ring-red-100',
             className,
           )}

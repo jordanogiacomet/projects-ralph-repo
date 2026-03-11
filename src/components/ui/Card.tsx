@@ -14,8 +14,8 @@ type CardProps = HTMLAttributes<HTMLElement> & {
 }
 
 const toneClasses: Record<CardTone, string> = {
-  default: 'border border-border bg-surface-primary text-text-primary shadow-soft',
-  muted: 'border border-border bg-surface-secondary text-text-primary shadow-soft',
+  default: 'border border-border/90 bg-surface-primary text-text-primary shadow-soft',
+  muted: 'border border-border/85 bg-surface-secondary text-text-primary shadow-soft',
   dark: 'border border-white/10 bg-bg-dark-elevated text-text-on-dark shadow-medium',
 }
 
@@ -24,6 +24,15 @@ const paddingClasses: Record<CardPadding, string> = {
   sm: 'p-5',
   md: 'p-6',
   lg: 'p-6 sm:p-8 lg:p-9',
+}
+
+const interactiveClasses: Record<CardTone, string> = {
+  default:
+    'motion-transition motion-lift-card hover:border-accent/16 hover:shadow-medium focus-within:border-accent/16 focus-within:shadow-medium',
+  muted:
+    'motion-transition motion-lift-card hover:border-accent/16 hover:shadow-medium focus-within:border-accent/16 focus-within:shadow-medium',
+  dark:
+    'motion-transition motion-lift-card hover:border-white/16 hover:shadow-strong focus-within:border-white/16 focus-within:shadow-strong',
 }
 
 export function Card({
@@ -42,7 +51,7 @@ export function Card({
         'rounded-panel',
         toneClasses[tone],
         paddingClasses[padding],
-        interactive && 'motion-transition motion-lift-card hover:shadow-medium focus-within:shadow-medium',
+        interactive && interactiveClasses[tone],
         className,
       )}
       {...props}

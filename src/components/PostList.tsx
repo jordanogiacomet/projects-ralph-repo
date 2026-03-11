@@ -188,7 +188,9 @@ export function PostList({ posts }: PostListProps) {
             </div>
             <Pagination
               hasMore={hasMore}
+              itemLabel="artigos"
               onLoadMore={() => setVisibleCount((count) => count + PAGE_SIZE)}
+              remainingCount={remainingPosts.length - visibleCount}
             />
           </section>
         ) : null}

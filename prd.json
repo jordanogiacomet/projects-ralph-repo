@@ -1334,7 +1334,7 @@
       "phase": "phase-2-redesign",
       "stream": "polish",
       "title": "Polish visual, consistência global e QA de redesign",
-      "passes": false,
+      "passes": true,
       "description": "Revisão final de consistência e acabamento em todo o produto.",
       "acceptanceCriteria": [
         "Todas as principais páginas públicas revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",

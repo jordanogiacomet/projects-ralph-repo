@@ -25,11 +25,16 @@ type ButtonProps = CommonButtonProps &
   (ButtonHTMLAttributes<HTMLButtonElement> | AnchorHTMLAttributes<HTMLAnchorElement>)
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-white shadow-soft hover:bg-accent-hover',
-  secondary: 'border border-accent/10 bg-accent-light text-accent-strong hover:bg-highlight',
-  outline: 'border border-border-strong bg-surface-primary text-text-primary hover:border-accent/30 hover:text-accent',
-  ghost: 'bg-transparent text-text-primary hover:bg-accent-light hover:text-accent',
-  success: 'bg-cta-green text-white shadow-soft hover:bg-cta-green-hover',
+  primary:
+    'border border-accent bg-accent text-white shadow-soft hover:border-accent-hover hover:bg-accent-hover hover:shadow-medium',
+  secondary:
+    'border border-accent/10 bg-accent-light text-accent-strong shadow-[0_12px_28px_rgba(0,86,166,0.08)] hover:border-accent/18 hover:bg-highlight hover:shadow-soft',
+  outline:
+    'border border-border-strong bg-surface-primary text-text-primary shadow-[0_12px_28px_rgba(15,23,42,0.04)] hover:border-accent/28 hover:bg-accent-soft/55 hover:text-accent',
+  ghost:
+    'border border-transparent bg-transparent text-text-primary hover:border-accent/10 hover:bg-accent-light/70 hover:text-accent',
+  success:
+    'border border-cta-green bg-cta-green text-white shadow-soft hover:border-cta-green-hover hover:bg-cta-green-hover hover:shadow-medium',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -50,7 +55,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    'motion-transition motion-lift-subtle inline-flex items-center justify-center gap-2 rounded-button font-semibold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 disabled:pointer-events-none disabled:transform-none disabled:opacity-60',
+    'motion-transition motion-lift-subtle inline-flex items-center justify-center gap-2 rounded-button font-semibold tracking-[0.01em] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15 disabled:pointer-events-none disabled:transform-none disabled:opacity-60',
     sizeClasses[size],
     variantClasses[variant],
     fullWidth && 'w-full',
