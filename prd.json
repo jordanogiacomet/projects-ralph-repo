@@ -3,7 +3,7 @@
   "branchName": "codex/apollo-visual-polish-r1",
   "baseBranch": "main",
   "version": "visual-r1.1",
-  "status": "active",
+  "status": "complete",
   "description": "Ciclo dedicado de correções visuais residuais e ajustes finos do site institucional da Apollo Gestão sobre a baseline já entregue da phase-2-redesign-complete. Este ciclo não reabre o redesign amplo nem a modelagem CMS. O foco é corrigir inconsistências visuais, desalinhamentos, problemas responsivos e pequenos débitos de polish orientados por screenshots e registro de issues.",
   "baseline": {
     "sourcePRD": ".ralph/baseline/prd-phase2.json",
@@ -174,8 +174,8 @@
     {
       "id": "VP-007",
       "title": "Sweep responsivo final e fechamento do round",
-      "passes": false,
-      "status": "deferred",
+      "passes": true,
+      "status": "done",
       "description": "Executar o sweep final do round visual, registrar débito residual e fechar o ciclo.",
       "acceptanceCriteria": [
         "Desktop, tablet e mobile foram rechecados nas rotas trabalhadas neste round",

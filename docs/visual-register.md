@@ -79,6 +79,21 @@ Validation note: `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed 
 
 ---
 
+## VP-007 — Sweep responsivo final e fechamento do round
+
+No new screenshot-backed or otherwise objective issue rows are registered for this final sweep story.
+
+Closed on 2026-03-11: the active visual register remains reconciled after the earlier story fixes, so `VP-007` was completed as a validation-only closure with no product UI changes.
+
+Closure note:
+- Closed: all registered issues `VR-001` through `VR-014` are already marked `fixed`, and no new residual defects were added in this run.
+- Residual: manual browser QA remains pending for `/`, `/sobre`, `/clientes`, `/news`, `/contato`, the shared public shell, and Soluções routes because browser tooling was not available for this sweep.
+- Deferred: none in the active visual register at cycle close.
+
+Validation note: `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed on 2026-03-11. `npm run test` is not defined in `package.json`.
+
+---
+
 ## Resolution log
 
 ### Example
