@@ -171,7 +171,7 @@ export default async function NewsPage() {
         </Container>
       </section>
 
-      <section className="section-space bg-bg-secondary">
+      <section className="section-space-tight bg-bg-secondary">
         <Container>
           <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-bg-dark-section p-8 text-white shadow-strong sm:p-10 lg:p-12">
             <div

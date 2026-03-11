@@ -10,18 +10,27 @@ type SubmitState = 'idle' | 'submitting' | 'success' | 'duplicate' | 'error'
 
 type NewsletterFormProps = {
   className?: string
+  compact?: boolean
   description?: string
   title?: string
 }
 
 export function NewsletterForm({
   className,
-  description = 'Inscreva-se para receber novas leituras, artigos tecnicos e materiais curatoriais da Apollo Gestão.',
-  title = 'Receba novos artigos da Apollo por e-mail.',
+  compact = false,
+  description,
+  title,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [validationMessage, setValidationMessage] = useState<string | null>(null)
+  const resolvedDescription =
+    description ??
+    (compact
+      ? 'Receba novos artigos, leituras tecnicas e materiais curatoriais da Apollo.'
+      : 'Inscreva-se para receber novas leituras, artigos tecnicos e materiais curatoriais da Apollo Gestão.')
+  const resolvedTitle =
+    title ?? (compact ? 'Receba novos artigos da Apollo.' : 'Receba novos artigos da Apollo por e-mail.')
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -65,7 +74,7 @@ export function NewsletterForm({
   return (
     <Card
       as="section"
-      padding="lg"
+      padding={compact ? 'md' : 'lg'}
       className={cn(
         'relative overflow-hidden border-border/90 bg-white/95 shadow-soft backdrop-blur-sm',
         className,
@@ -81,10 +90,18 @@ export function NewsletterForm({
       />
       <div className="relative">
         <Badge tone="accent">Newsletter Apollo</Badge>
-        <SectionHeading className="mt-5" size="sm" title={title} description={description} />
+        <SectionHeading
+          className={cn('mt-5', compact && 'mt-4')}
+          size="sm"
+          title={resolvedTitle}
+          description={resolvedDescription}
+        />
 
         <form
-          className="mt-6 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto]"
+          className={cn(
+            'mt-6 grid gap-4',
+            compact ? 'grid-cols-1' : 'sm:grid-cols-[minmax(0,1fr)_auto]',
+          )}
           onSubmit={handleSubmit}
           noValidate
         >
@@ -97,7 +114,11 @@ export function NewsletterForm({
             label="E-mail"
             labelClassName="sr-only"
             placeholder="Seu melhor e-mail profissional"
-            description="Usamos este cadastro para enviar artigos, leituras tecnicas e materiais curatoriais da Apollo."
+            description={
+              compact
+                ? undefined
+                : 'Usamos este cadastro para enviar artigos, leituras tecnicas e materiais curatoriais da Apollo.'
+            }
             value={email}
             onChange={(event) => {
               setEmail(event.target.value)
@@ -110,8 +131,8 @@ export function NewsletterForm({
           <Button
             type="submit"
             disabled={submitState === 'submitting'}
-            size="lg"
-            className="w-full rounded-pill sm:min-w-[15rem]"
+            size={compact ? 'md' : 'lg'}
+            className={cn('w-full rounded-pill', !compact && 'sm:min-w-[15rem]')}
           >
             {submitState === 'submitting' ? 'Inscrevendo...' : 'Quero receber atualizacoes'}
           </Button>

@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 17:23:34 UTC
+Last Updated: 2026-03-11 17:58:46 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -49,7 +49,8 @@ Last Updated: 2026-03-11 17:23:34 UTC
 - `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
 - `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
 - `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
-- Next target: `VP-004 - Correções visuais editorial e prova social`
+- `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
+- Next target: `VP-005 - Correções visuais de contato e formulários`
 
 ## Validation Rules
 - Required validation order:
@@ -183,4 +184,151 @@ Last Updated: 2026-03-11 17:23:34 UTC
 - Learnings for future iterations:
   - In this institutional template, a small desktop-only offset on the featured split card is enough to correct optical alignment without reopening the broader section design.
   - Screenshot-backed institutional fixes remain safer when they stay inside the nearest shared component instead of duplicating layout overrides in the route file.
+---
+
+## 2026-03-11 17:26:56 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: none; no actionable `VP-004` issue rows are registered.
+- What was implemented:
+  - Verified that `VP-004` is the first eligible open story in the active `prd.json`.
+  - Confirmed that `docs/visual-register.md` contains no issue rows for `/clientes`, `/conteudos`, `/conteudos/[slug]`, `/news`, or `/news/[slug]`, and that `docs/screenshots/` contains no editorial/prova social evidence for this story.
+  - Updated the `VP-004` section of `docs/visual-register.md` to record the blocker explicitly and left `prd.json` unchanged because the story cannot be marked `passes: true` without actionable scoped issues.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not used in this run because there was no registered UI change to verify.
+  - Manual QA for `VP-004` remains pending until screenshot-backed editorial/prova social issues are added to the register.
+- Learnings for future iterations:
+  - `VP-004` cannot advance safely until the active visual register contains objective issue rows tied to the editorial/prova social routes.
+  - When a story lacks both issue rows and screenshots, the correct action is to log the blocker instead of inferring new visual debt from the existing routes.
+---
+
+## 2026-03-11 17:32:46 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: none; blocker revalidated because the story still has no registered issue rows.
+- What was implemented:
+  - Reconfirmed that `VP-004` remains the first eligible open story in the active `prd.json` and that it still cannot be executed safely without issue-level scope.
+  - Verified that `docs/screenshots/` still has no editorial/prova social evidence for `/clientes`, `/conteudos`, `/conteudos/[slug]`, `/news`, or `/news/[slug]`.
+  - Refreshed the `VP-004` blocker note in `docs/visual-register.md` and left `prd.json` unchanged because the story remains incomplete and cannot be marked `passes: true`.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not used because there is still no registered UI change to verify in this story.
+  - Manual QA for `VP-004` remains pending until screenshot-backed editorial/prova social issues are added to the register.
+- Learnings for future iterations:
+  - Rechecking a blocked story should still produce a fresh progress entry so the register state is auditable across runs.
+  - `prd.json` should remain unchanged when the only safe outcome is to keep the current story blocked.
+---
+
+## 2026-03-11 17:46:20 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: none; the story remains blocked because no editorial/prova social issue rows are registered.
+- What was implemented:
+  - Revalidated that `VP-004` is still the first eligible open story in the active `prd.json` and cannot be skipped while it remains open.
+  - Confirmed again that `docs/visual-register.md` still has no scoped issue rows for `/clientes`, `/conteudos`, `/conteudos/[slug]`, `/news`, or `/news/[slug]`, and that `docs/screenshots/` still contains no editorial/prova social screenshots for this story family.
+  - Refreshed the blocker timestamp in `docs/visual-register.md` and left `prd.json` unchanged because there is still no safe basis to mark `VP-004` as `passes: true`.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed with the known intermittent `PageNotFoundError: /_document`
+  - Final required `npm run build`: passed on immediate rerun
+- Browser/manual verification status:
+  - Browser tooling was not used because there is still no registered UI change to verify in this story.
+  - Manual QA for `VP-004` remains pending until screenshot-backed editorial/prova social issues are added to the register.
+- Learnings for future iterations:
+  - A blocked story can still require the full validation sequence for auditability, but passing checks do not unblock a story that lacks issue-level scope.
+  - The intermittent `/_document` build failure remains environmental noise here; only the final successful rerun should be treated as the required build result.
+---
+
+## 2026-03-11 17:52:30 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: none; the story remains blocked because no editorial/prova social issue rows or screenshots are registered.
+- What was implemented:
+  - Revalidated that `VP-004` is still the first eligible open story in the active `prd.json` and must remain the selected story for this run.
+  - Confirmed that `docs/visual-register.md` still contains no issue rows for `/clientes`, `/conteudos`, `/conteudos/[slug]`, `/news`, or `/news/[slug]`, and that `docs/screenshots/` still has no editorial/prova social evidence for those routes.
+  - Refreshed the blocker timestamp in `docs/visual-register.md` and left `prd.json` unchanged because the story still cannot be marked `passes: true` safely.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not used because there is still no registered UI change to verify in this story.
+  - Manual QA for `VP-004` remains pending until screenshot-backed editorial/prova social issues are added to the register.
+- Learnings for future iterations:
+  - Repeated blocked runs should stay strictly register-driven; without scoped issue rows or screenshots, the correct action remains to log the blocker and stop.
+  - Passing repository checks does not change story status when the missing input is issue evidence rather than code correctness.
+---
+
+## 2026-03-11 17:58:46 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: none; the story remains blocked because no editorial/prova social issue rows or screenshots are registered.
+- What was implemented:
+  - Revalidated that `VP-004` is still the first eligible open story in the active `prd.json` and cannot be skipped while it remains open.
+  - Confirmed that `docs/visual-register.md` still has no scoped issue rows for `/clientes`, `/conteudos`, `/conteudos/[slug]`, `/news`, or `/news/[slug]`, and that `docs/screenshots/` still contains no editorial/prova social evidence for those routes.
+  - Refreshed the blocker timestamp in `docs/visual-register.md` and left `prd.json` unchanged because the story still cannot be marked `passes: true` safely.
+- Files changed:
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed during page-data collection with `Cannot find module for page: /contato`
+  - Second `npm run build`: failed with the known intermittent `PageNotFoundError: /_document`
+- Browser/manual verification status:
+  - Browser tooling was not used because there is still no registered UI change to verify in this story.
+  - Manual QA for `VP-004` remains pending until screenshot-backed editorial/prova social issues are added to the register.
+- Learnings for future iterations:
+  - When a story is blocked on missing issue evidence, the safe outcome is to log the blocker again rather than inferring new defects from unrelated routes.
+  - Validation noise is currently broader than the selected story scope: this run hit two separate build failures outside `VP-004`, so the story must remain open and uncommitted even though no code in its scope changed.
+---
+
+## 2026-03-11 18:26:38 UTC - VP-004
+- Story ID: `VP-004`
+- Issue IDs addressed: `VR-008`, `VR-009`, `VR-010`
+- What was implemented:
+  - Increased the desktop hero clearance on `/clientes` and reduced the filter-panel overlap so the first fold clears the fixed shell with more deliberate breathing room.
+  - Added a compact sidebar mode to `NewsletterForm` for `/news`, stacking the field and CTA vertically and removing the oversized desktop button width that was forcing the circular overflow state.
+  - Tightened the final `/news` CTA section spacing so the editorial archive and the dark consultative CTA read as one continuous composition instead of two loosely connected blocks.
+  - Closed the screenshot-backed editorial/prova social issues using `docs/screenshots/VR-008-clientes-desktop-current.png`, `docs/screenshots/VR-009-news-cta-desktop-current.png`, and `docs/screenshots/VR-010-news-empty-newsletter-desktop-current.png` as the visual references.
+- Files changed:
+  - src/components/ClientsPage.tsx
+  - src/components/NewsletterForm.tsx
+  - src/components/PostList.tsx
+  - src/app/(frontend)/news/page.tsx
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First diagnostic `npm run build`: hit the known intermittent `PageNotFoundError: /_document` during page-data collection
+  - Final required `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-008`, `VR-009`, and `VR-010`.
+- Learnings for future iterations:
+  - On editorial list pages, a broken or oversized sidebar newsletter can also create a second-order spacing defect by pushing downstream CTA sections visibly lower than intended.
+  - For shell-fixed hero pages like `/clientes`, a desktop-only padding and overlap adjustment is safer than broad changes to the shared navbar offset model.
 ---

@@ -302,7 +302,7 @@ export function PostList({ posts }: PostListProps) {
           </div>
         </Card>
 
-        <NewsletterForm />
+        <NewsletterForm compact />
 
         <Card tone="muted" className="relative overflow-hidden">
           <div

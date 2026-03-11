@@ -97,7 +97,7 @@ export function ClientsPage({
 
   return (
     <div className="bg-bg-primary text-text-primary">
-      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36">
+      <section className="relative overflow-hidden bg-bg-dark-section pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-40 lg:pt-44">
         <div
           className="absolute inset-0"
           style={{
@@ -211,7 +211,7 @@ export function ClientsPage({
         </Container>
       </section>
 
-      <section className="relative -mt-12 z-10 sm:-mt-16">
+      <section className="relative z-10 -mt-12 sm:-mt-16 lg:-mt-8">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
