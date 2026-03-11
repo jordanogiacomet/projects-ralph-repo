@@ -122,7 +122,9 @@
       "US-049E",
       "US-049F",
       "US-049G",
-      "US-051"
+      "US-051",
+      "US-052",
+      "US-053"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -1467,7 +1469,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-fixes-shell",
       "title": "Correções visuais do shell global e overlays",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir inconsistências visuais restantes em navbar, mega menu, mobile menu, search overlay, footer e floats globais.",
       "acceptanceCriteria": [
         "Navbar, mega menu, mobile menu e search overlay revisados contra o registro de débito visual",

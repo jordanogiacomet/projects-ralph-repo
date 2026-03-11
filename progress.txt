@@ -27,6 +27,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Shared motion behavior belongs in `src/styles/tokens.css` and `src/styles/utilities.css`; prefer `motion-transition`, `motion-lift-*`, and `motion-media-scale` utilities
 - Shared UI primitives in `src/components/ui/` should be preferred over one-off control styling
 - Shared shell-navigation normalization lives in `src/lib/navigation.ts` and should be reused by header/footer navigation loaders
+- Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
 - Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
 
 ## Project Snapshot
@@ -34,9 +35,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-052`
-- Next eligible story after this run: `US-053`
-- Current open phase-2 order: `US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`
+- Story completed in this run: `US-053`
+- Next eligible story after this run: `US-054`
+- Current open phase-2 order: `US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
@@ -50,7 +51,8 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Phase 1 functional foundation is implemented: CMS schema, globals, layout blocks, public routes, SEO/search, form flows, and seed baseline.
 - Phase 2 broad redesign delivery is implemented through `US-049G` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
 - `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
-- The active follow-up cycle is now: shell fixes (`US-053`), institutional fixes (`US-054`), editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-053` closed the first shell debt pass with a lighter consent surface, coordinated floating controls, a navigation-first mobile menu, and a stronger search loading state.
+- The active follow-up cycle is now: institutional fixes (`US-054`), editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -134,4 +136,33 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - A versioned debt register is more useful when each finding is already mapped to the next corrective story stream; that keeps `US-053` through `US-057` scoped and prevents another broad unfocused redesign pass.
   - Missing visual fallback assets can hide in otherwise “working” templates until a browser audit is run; runtime 404s for placeholder media belong in the debt register because they directly change the perceived polish of the page.
   - Even when no horizontal overflow is present, shell-level floating surfaces can still materially damage first-fold readability on mobile and tablet, so the overlay pass (`US-053`) should land before route-specific polish stories.
+---
+## 2026-03-11 12:40 UTC - US-053
+- What was implemented:
+  - Reworked the shell float stack so cookie consent now sits lower and more compact on small screens, exposes its measured height through a shared CSS variable, and no longer forces the initial viewport to surrender as much hero space.
+  - Coordinated `CookieConsent`, `WhatsAppFloat`, `ScrollToTop`, and `src/styles/utilities.css` so the WhatsApp chip hides while cookie consent is active on tablet/mobile and the scroll-to-top control stacks above the consent surface instead of colliding with other floating chrome.
+  - Reduced the mobile menu intro density in `src/components/MobileMenu.tsx` by removing the oversized structure card from the first viewport, compressing the heading block, and moving search/CTA shortcuts below the primary navigation list.
+  - Strengthened the desktop search overlay loading state in `src/components/SearchOverlay.tsx` with query-adjacent status feedback plus result-pane skeleton groups so loading feels anchored to the search field instead of leaving a mostly empty pane.
+- Files changed:
+  - `src/components/CookieConsent.tsx`
+  - `src/components/WhatsAppFloat.tsx`
+  - `src/components/ScrollToTop.tsx`
+  - `src/components/MobileMenu.tsx`
+  - `src/components/SearchOverlay.tsx`
+  - `src/styles/utilities.css`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: passed on the first attempt
+- Browser/manual verification status:
+  - Manual browser QA is still required for this UI story.
+  - A local browser verification attempt was made after `npm run build` by starting the production app on `http://127.0.0.1:3001` and launching Playwright Chromium, but the environment is missing the required shared library `libnspr4.so`, so responsive browser automation could not run in this session.
+- Learnings for future iterations:
+  - Shell floating elements need a single shared offset contract; coordinating them through shared CSS variables is more robust than hard-coding independent bottom offsets per component.
+  - Mobile menu utility actions should live after the primary route list whenever first-fold navigation density matters more than shell promotion.
+  - Search loading states feel materially stronger when status copy and placeholder structure stay visually attached to the query field instead of appearing as a distant spinner in the results pane.
 ---

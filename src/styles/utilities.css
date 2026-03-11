@@ -4,6 +4,13 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --apollo-cookie-consent-height: 0px;
+  --apollo-shell-safe-bottom: calc(env(safe-area-inset-bottom) + 0.875rem);
+  --apollo-shell-float-gap: 0.875rem;
+  --apollo-whatsapp-stack-height: 4.5rem;
+}
+
 body {
   min-height: 100vh;
   background: var(--bg-primary);
@@ -79,8 +86,8 @@ button {
 }
 
 .motion-transition {
-  transition-property: transform, opacity, color, background-color, border-color, box-shadow,
-    text-decoration-color;
+  transition-property:
+    transform, opacity, color, background-color, border-color, box-shadow, text-decoration-color;
   transition-duration: var(--transition-standard);
   transition-timing-function: var(--ease-standard);
 }
@@ -111,9 +118,30 @@ button {
   transform: scale(var(--motion-scale-media));
 }
 
-@media (max-width: 639px) {
+.apollo-cookie-consent,
+.apollo-whatsapp-float {
+  bottom: var(--apollo-shell-safe-bottom);
+}
+
+.apollo-scroll-to-top {
+  bottom: calc(
+    var(--apollo-shell-safe-bottom) + var(--apollo-whatsapp-stack-height) +
+      var(--apollo-shell-float-gap)
+  );
+}
+
+@media (max-width: 1023px) {
+  body[data-cookie-consent-visible='true'] .apollo-whatsapp-float {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+  }
+
   body[data-cookie-consent-visible='true'] .apollo-scroll-to-top {
-    bottom: 10.75rem;
+    bottom: calc(
+      var(--apollo-shell-safe-bottom) + var(--apollo-cookie-consent-height) +
+        var(--apollo-shell-float-gap)
+    );
   }
 }
 

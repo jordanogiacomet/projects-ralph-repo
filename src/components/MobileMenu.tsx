@@ -150,10 +150,10 @@ export function MobileMenu({
             aria-modal="true"
             aria-label="Menu de navegação"
           >
-            <div className="relative border-b border-white/10 px-5 pb-5 pt-5">
+            <div className="relative border-b border-white/10 px-4 pb-4 pt-4 sm:px-5 sm:pb-5">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_top_left,rgba(0,86,166,0.28),transparent_36%)]"
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_26%),radial-gradient(circle_at_top_left,rgba(0,86,166,0.24),transparent_34%)]"
               />
 
               <div className="relative flex items-start justify-between gap-4">
@@ -161,11 +161,12 @@ export function MobileMenu({
                   <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
                     Navegação
                   </p>
-                  <h2 className="mt-3 font-display text-heading-2xl font-semibold tracking-tight text-white">
+                  <h2 className="mt-2 font-display text-heading-xl font-semibold tracking-tight text-white sm:text-heading-2xl">
                     Explore a Apollo
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-white/68">
-                    Um mapa mais editorial para acessar soluções, páginas e conteúdos no mobile.
+                    Acesse soluções, páginas institucionais e conteúdos com a rota principal logo no
+                    primeiro scroll.
                   </p>
                 </div>
 
@@ -187,63 +188,17 @@ export function MobileMenu({
                 </button>
               </div>
 
-              <div className="relative mt-5 rounded-[24px] border border-white/10 bg-white/[0.06] p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-white/44">
-                      Estrutura
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-white/78">
-                      {sectionCount} seções e {routeCount} grupos navegáveis
-                    </p>
-                  </div>
-                  <span className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-pill border border-white/10 bg-white/10 px-3 text-sm font-semibold text-white">
-                    Menu
-                  </span>
-                </div>
+              <div className="relative mt-4 flex flex-wrap gap-2.5">
+                <span className="inline-flex min-h-9 items-center rounded-pill border border-white/10 bg-white/[0.08] px-3.5 text-label-sm font-semibold uppercase tracking-[0.2em] text-white/72">
+                  {sectionCount} seções
+                </span>
+                <span className="inline-flex min-h-9 items-center rounded-pill border border-white/10 bg-white/[0.08] px-3.5 text-label-sm font-semibold uppercase tracking-[0.2em] text-white/72">
+                  {routeCount} grupos
+                </span>
               </div>
-
-              {(onSearchOpen || (ctaButton?.label && ctaButton.link)) && (
-                <div className="relative mt-5 grid gap-3 sm:grid-cols-2">
-                  {onSearchOpen ? (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        onClose()
-                        onSearchOpen()
-                      }}
-                      className="motion-transition motion-lift-subtle inline-flex min-h-12 items-center justify-center gap-2 rounded-pill border border-white/12 bg-white/[0.08] px-5 text-sm font-semibold text-white hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        className="h-4.5 w-4.5"
-                      >
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.3-4.3" />
-                      </svg>
-                      <span>Abrir busca</span>
-                    </button>
-                  ) : null}
-
-                  {ctaButton?.label && ctaButton.link ? (
-                    <Button
-                      href={ctaButton.link}
-                      variant="success"
-                      fullWidth
-                      className="rounded-pill shadow-[0_18px_36px_rgba(31,138,56,0.26)]"
-                      onClick={onClose}
-                    >
-                      {ctaButton.label}
-                    </Button>
-                  ) : null}
-                </div>
-              )}
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-4 py-5">
+            <nav className="flex-1 overflow-y-auto px-4 py-4">
               <ul className="space-y-3.5">
                 {navItems.map((item) => {
                   const key = item.id || item.label
@@ -491,6 +446,50 @@ export function MobileMenu({
                 })}
               </ul>
             </nav>
+
+            {(onSearchOpen || (ctaButton?.label && ctaButton.link)) && (
+              <div className="border-t border-white/10 bg-white/[0.03] px-4 py-4 sm:px-5">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.24em] text-white/42">
+                  Atalhos
+                </p>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {onSearchOpen ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onClose()
+                        onSearchOpen()
+                      }}
+                      className="motion-transition motion-lift-subtle inline-flex min-h-12 items-center justify-center gap-2 rounded-pill border border-white/12 bg-white/[0.08] px-5 text-sm font-semibold text-white hover:bg-white/12 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        className="h-4.5 w-4.5"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                      </svg>
+                      <span>Abrir busca</span>
+                    </button>
+                  ) : null}
+
+                  {ctaButton?.label && ctaButton.link ? (
+                    <Button
+                      href={ctaButton.link}
+                      variant="success"
+                      fullWidth
+                      className="rounded-pill shadow-[0_18px_36px_rgba(31,138,56,0.26)]"
+                      onClick={onClose}
+                    >
+                      {ctaButton.label}
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
+            )}
 
             {socialLinks && socialLinks.length > 0 ? (
               <div className="border-t border-white/10 bg-white/[0.04] px-5 py-4">

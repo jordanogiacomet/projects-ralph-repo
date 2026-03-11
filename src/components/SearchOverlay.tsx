@@ -56,6 +56,16 @@ const searchTopics = [
 ]
 
 const suggestedQueries = ['controle patrimonial', 'avaliacao de ativos', 'cotacao', 'news']
+const loadingPreviewGroups = [
+  {
+    label: 'Páginas e soluções',
+    items: 2,
+  },
+  {
+    label: 'Conteúdos e news',
+    items: 3,
+  },
+]
 
 function normalizeText(value: unknown): string {
   if (typeof value !== 'string') return ''
@@ -213,6 +223,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const hasQuery = query.trim().length > 0
   const hasResults = response.total > 0
   const shouldShowEmptyState = hasQuery && !isLoading && !hasResults
+  const loadingQuery = debouncedQuery || query.trim()
 
   return (
     <AnimatePresence>
@@ -371,7 +382,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-text-muted">
                       <span>Pesquise em páginas, notícias, soluções e conteúdos.</span>
                       {hasQuery ? (
-                        <span>
+                        <span aria-live="polite">
                           {isLoading
                             ? 'Buscando resultados...'
                             : hasResults
@@ -382,6 +393,32 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         <span>Digite um termo ou use uma sugestão rápida.</span>
                       )}
                     </div>
+
+                    {isLoading ? (
+                      <div
+                        className="mt-4 rounded-[26px] border border-accent/12 bg-accent-soft/45 px-4 py-4 sm:px-5"
+                        aria-live="polite"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[16px] border border-accent/12 bg-white text-accent shadow-sm">
+                            <span
+                              className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-accent/18 border-t-accent"
+                              aria-hidden
+                            />
+                          </span>
+                          <div>
+                            <p className="text-label-sm font-semibold uppercase tracking-[0.22em] text-accent-strong">
+                              Atualizando resultados
+                            </p>
+                            <p className="mt-2 text-sm leading-6 text-text-secondary">
+                              Buscando por &quot;{loadingQuery}&quot; em páginas, soluções,
+                              conteúdos e publicações para manter a navegação orientada pelo mesmo
+                              contexto da consulta.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
 
                     <div className="mt-6 max-h-[60vh] overflow-y-auto pr-1">
                       {!hasQuery ? (
@@ -419,12 +456,34 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       ) : null}
 
                       {isLoading ? (
-                        <div className="flex items-center justify-center gap-3 py-12 text-text-secondary">
-                          <span
-                            className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-text-muted/30 border-t-text-secondary"
-                            aria-hidden
-                          />
-                          <span className="text-sm">Buscando resultados...</span>
+                        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+                          {loadingPreviewGroups.map((group) => (
+                            <div
+                              key={group.label}
+                              className="rounded-[28px] border border-border bg-[linear-gradient(180deg,rgba(248,250,252,0.92)_0%,rgba(255,255,255,0.98)_100%)] p-5"
+                            >
+                              <div className="flex items-center justify-between gap-3">
+                                <div>
+                                  <div className="h-3 w-28 rounded-full bg-border/80" />
+                                  <div className="mt-3 h-5 w-40 rounded-full bg-border/80" />
+                                </div>
+                                <div className="h-8 w-8 rounded-pill bg-white shadow-sm" />
+                              </div>
+
+                              <div className="mt-5 space-y-3">
+                                {Array.from({ length: group.items }).map((_, index) => (
+                                  <div
+                                    key={`${group.label}-${index}`}
+                                    className="animate-pulse rounded-[22px] border border-border/80 bg-white px-4 py-4"
+                                  >
+                                    <div className="h-4 w-3/4 rounded-full bg-border/80" />
+                                    <div className="mt-3 h-3 w-full rounded-full bg-border/70" />
+                                    <div className="mt-2 h-3 w-5/6 rounded-full bg-border/60" />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       ) : null}
 
@@ -490,7 +549,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                                           </p>
                                         ) : null}
                                       </div>
-                                      <span className="motion-transition mt-1 text-text-muted" aria-hidden>
+                                      <span
+                                        className="motion-transition mt-1 text-text-muted"
+                                        aria-hidden
+                                      >
                                         &rarr;
                                       </span>
                                     </Link>

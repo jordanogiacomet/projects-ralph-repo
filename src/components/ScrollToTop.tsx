@@ -29,7 +29,7 @@ export function ScrollToTop() {
         })
       }}
       aria-label="Voltar ao topo"
-      className="apollo-scroll-to-top group motion-transition motion-lift-subtle fixed bottom-[5.25rem] right-4 z-40 inline-flex items-center justify-center gap-2 rounded-[18px] border border-white/12 bg-[#0e1a2d]/88 px-3 py-3 text-white shadow-[0_20px_40px_rgba(7,12,23,0.24)] backdrop-blur hover:border-white/18 hover:bg-[#12213a]/94 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15 sm:bottom-[5.85rem] sm:right-5"
+      className="apollo-scroll-to-top group motion-transition motion-lift-subtle fixed right-4 z-40 inline-flex items-center justify-center gap-2 rounded-[18px] border border-white/12 bg-[#0e1a2d]/88 px-3 py-3 text-white shadow-[0_20px_40px_rgba(7,12,23,0.24)] backdrop-blur hover:border-white/18 hover:bg-[#12213a]/94 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15 sm:right-5"
     >
       <svg
         viewBox="0 0 24 24"
