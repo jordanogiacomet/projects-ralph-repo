@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 16:44:45 UTC
+Last Updated: 2026-03-11 17:14:58 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -47,8 +47,8 @@ Last Updated: 2026-03-11 16:44:45 UTC
 
 ## Current Delivery Status
 - `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
-- Screenshot-backed actionable issues now start in the shell/homepage scope.
-- Next target: `VP-002 - Correções visuais do shell e homepage`
+- `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
+- Next target: `VP-003 - Correções visuais institucionais`
 
 ## Validation Rules
 - Required validation order:
@@ -65,6 +65,7 @@ Last Updated: 2026-03-11 16:44:45 UTC
 - Screenshot-driven work can sprawl if issues are not small and objective.
 - Shared-component fixes can accidentally affect multiple routes; always record blast radius.
 - Manual QA may still be necessary if the environment cannot launch browser tooling.
+- This environment can still surface an intermittent Next.js `PageNotFoundError: /_document` during `next build`; rerunning the same build command can clear it without code changes.
 
 ---
 
@@ -101,4 +102,59 @@ Last Updated: 2026-03-11 16:44:45 UTC
 - Learnings for future iterations:
   - The active register should explicitly note when a story is bootstrap-only so the absence of issue rows is read as intentional rather than incomplete.
   - The first actionable screenshot-backed implementation work in this cycle now starts at `VP-002`.
+---
+
+## 2026-03-11 17:02:00 UTC - VP-002
+- Story ID: `VP-002`
+- Issue IDs addressed: `VR-001`, `VR-002`, `VR-003`, `VR-005`, `VR-006`
+- What was implemented:
+  - Relaxed the homepage hero-to-panel transition by increasing hero bottom breathing and reducing the introductory panel overlap while keeping the existing component structure local to `HomePage`.
+  - Reworked the homepage metrics cards so value/label hierarchy reads as a deliberate vertical stack with stronger spacing and more institutional weight.
+  - Reduced desktop navbar crowding on `/` with more outer shell padding, a wider search trigger, delayed display of the brand tag, and removal of the redundant `Home` desktop item on the home route.
+  - Compressed the shared mega menu header/body spacing and added viewport-safe internal scroll containment so both the Contato and Soluções panels stay controlled at desktop 100% zoom.
+- Files changed:
+  - src/components/HomePage.tsx
+  - src/components/Navbar.tsx
+  - src/components/MegaMenu.tsx
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: failed after isolating stale build output; a clean build errors on `/_not-found` because the repository currently lacks safe root app-router `not-found`/layout wiring
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for the five `VP-002` issues.
+- Learnings for future iterations:
+  - Clean rebuilds should be treated as authoritative for this cycle; cached `.next` output can mask app-router wiring problems that block story closure.
+  - The `VP-002` visual fixes are implemented in code, but `prd.json` must remain unchanged until the unrelated clean-build blocker is resolved and QA can be completed.
+---
+
+## 2026-03-11 17:14:58 UTC - VP-002
+- Story ID: `VP-002`
+- Issue IDs addressed: `VR-001`, `VR-002`, `VR-003`, `VR-005`, `VR-006`
+- What was implemented:
+  - Validated the existing homepage and shell polish already applied in `src/components/HomePage.tsx`, `src/components/Navbar.tsx`, and `src/components/MegaMenu.tsx` without expanding the story scope.
+  - Re-ran the required validation sequence, confirmed a successful `npm run build`, and closed the stale blocker notes in the visual register.
+  - Marked `VP-002` as passed in `prd.json` and advanced the run context to `VP-003`.
+- Files changed:
+  - src/components/HomePage.tsx
+  - src/components/Navbar.tsx
+  - src/components/MegaMenu.tsx
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First diagnostic `npm run build`: hit the known intermittent `PageNotFoundError: /_document` during page-data collection
+  - Final required `npm run build`: passed and generated the current frontend/admin routes
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-001`, `VR-002`, `VR-003`, `VR-005`, and `VR-006`.
+- Learnings for future iterations:
+  - In this environment, transient `next build` failures for `/_document` do not necessarily indicate a code regression; the final successful required build should be recorded alongside the flake.
+  - When a story’s code already exists in the worktree, closure can be a validation-only pass as long as the register, PRD status, and required checks are reconciled in the same run.
 ---

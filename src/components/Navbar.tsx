@@ -71,6 +71,10 @@ export function Navbar({
   }, [])
 
   const normalizedPath = normalizePathname(pathname)
+  const desktopNavItems =
+    normalizedPath === '/'
+      ? navItems.filter((item) => normalizePathname(item.link) !== '/')
+      : navItems
   const isHeroRoute = HERO_TRANSPARENT_ROUTES.has(normalizedPath)
   const usesTransparentNavbar = isHeroPage || isHeroRoute
   const isTransparent = usesTransparentNavbar && !scrolled && !megaMenuOpen
@@ -89,7 +93,7 @@ export function Navbar({
       : 'border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(246,248,251,0.94)_100%)] shadow-[0_24px_60px_rgba(15,23,42,0.14)]',
   )
   const desktopUtilityClass = cn(
-    'hidden items-center gap-2 rounded-pill border px-2 py-2 lg:flex',
+    'hidden items-center gap-2.5 rounded-pill border px-2.5 py-2 lg:flex',
     isTransparent
       ? 'border-white/10 bg-white/[0.06] text-white/62'
       : 'border-border/70 bg-white/72 text-text-muted shadow-soft',
@@ -118,7 +122,7 @@ export function Navbar({
       : 'border-border/70 bg-surface-secondary/80 text-text-secondary hover:border-accent/20 hover:bg-white hover:text-text-primary',
   )
   const brandTagClass = cn(
-    'hidden xl:inline-flex items-center rounded-pill border px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.22em]',
+    'hidden 2xl:inline-flex items-center rounded-pill border px-3 py-1 text-label-sm font-semibold uppercase tracking-[0.22em]',
     isTransparent
       ? 'border-white/10 bg-white/[0.05] text-white/62'
       : 'border-border/70 bg-white/76 text-text-muted',
@@ -139,7 +143,7 @@ export function Navbar({
           size="wide"
           className={cn(
             'motion-transition motion-transition-emphasis',
-            isTransparent ? 'pt-3.5 lg:pt-5' : 'pt-3.5 lg:pt-4',
+            isTransparent ? 'pt-3.5 lg:pt-5 xl:px-10 2xl:px-12' : 'pt-3.5 lg:pt-4 xl:px-10 2xl:px-12',
           )}
         >
           <div className="relative">
@@ -152,7 +156,7 @@ export function Navbar({
                 )}
               />
               <nav
-                className="flex h-[70px] items-center justify-between gap-3 px-4 sm:px-5 lg:h-[88px] lg:px-7 xl:px-8"
+                className="flex h-[70px] items-center justify-between gap-3 px-4 sm:px-5 lg:h-[88px] lg:px-6 xl:gap-4 xl:px-8"
                 aria-label="Navegação principal"
               >
                 <Link
@@ -183,9 +187,9 @@ export function Navbar({
                   <span className={brandTagClass}>Avaliações e Controle Patrimonial</span>
                 </Link>
 
-                <div className="hidden flex-1 justify-center px-4 lg:flex">
+                <div className="hidden flex-1 justify-center px-3 lg:flex xl:px-5">
                   <div className={desktopGroupClass}>
-                    {navItems.map((item) => {
+                    {desktopNavItems.map((item) => {
                       const key = item.id || item.label
                       const hasChildren = (item.children?.length ?? 0) > 0
                       const isActive = navItemMatchesPath(item, normalizedPath)
@@ -251,12 +255,15 @@ export function Navbar({
                   </div>
                 </div>
 
-                <div className="hidden items-center gap-3 lg:flex">
+                <div className="hidden items-center gap-4 xl:gap-5 lg:flex">
                   <div className={desktopUtilityClass}>
                     <button
                       type="button"
                       onClick={() => setSearchOpen(true)}
-                      className={cn(iconButtonClass, 'h-10 gap-2 px-3.5')}
+                      className={cn(
+                        iconButtonClass,
+                        'h-10 min-w-[3rem] gap-2 px-3.5 xl:min-w-[8.75rem] xl:justify-start',
+                      )}
                       aria-label="Abrir busca"
                     >
                       <svg

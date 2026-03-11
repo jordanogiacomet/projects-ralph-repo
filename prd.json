@@ -98,7 +98,7 @@
     {
       "id": "VP-002",
       "title": "Correções visuais do shell e homepage",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir débitos visuais residuais do shell global e da homepage orientados por screenshots e issues registradas.",
       "acceptanceCriteria": [
         "Navbar, mega menu, mobile menu, search overlay, footer e floats do shell ficam alinhados ao registro de issues deste escopo",

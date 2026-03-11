@@ -153,7 +153,7 @@ export function HomePage({
         />
 
         {/* Hero content */}
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-12 pt-24 text-center text-text-on-dark sm:px-8 sm:pb-20 sm:pt-36 lg:px-12">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-24 pt-24 text-center text-text-on-dark sm:px-8 sm:pb-32 sm:pt-36 lg:px-12 lg:pb-40 xl:pb-44">
           {/* Institutional badge */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
@@ -196,7 +196,7 @@ export function HomePage({
 
           {/* Dual CTA group */}
           <motion.div
-            className="mt-8 flex w-full max-w-sm flex-col items-center gap-3 sm:mt-12 sm:max-w-none sm:flex-row sm:gap-5"
+            className="mt-10 flex w-full max-w-sm flex-col items-center gap-3 sm:mt-14 sm:max-w-none sm:flex-row sm:gap-5"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -273,7 +273,7 @@ export function HomePage({
         />
         <div className="mx-auto max-w-content px-6 sm:px-8 lg:px-12">
           <motion.div
-            className="relative z-10 -mt-16 overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/92 p-6 shadow-[var(--shadow-strong)] backdrop-blur-sm sm:-mt-20 sm:p-8 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)] lg:items-start lg:gap-10"
+            className="relative z-10 mx-auto -mt-10 max-w-[72rem] overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/92 p-6 shadow-[var(--shadow-strong)] backdrop-blur-sm sm:-mt-14 sm:p-8 lg:-mt-16 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.3fr)] lg:items-start lg:gap-8 lg:p-9 xl:max-w-[74rem] xl:gap-10"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
@@ -500,7 +500,7 @@ export function HomePage({
 
           {/* Stats / credentials row */}
           <motion.div
-            className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-6 sm:mt-16 sm:gap-8 lg:grid-cols-4"
+            className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-4 lg:gap-6"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -513,16 +513,16 @@ export function HomePage({
             {proofStats.map((stat) => (
               <div
                 key={stat.label}
-                className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-6 text-center backdrop-blur-sm sm:px-6 sm:py-8"
+                className="relative flex min-h-[10rem] flex-col justify-between overflow-hidden rounded-[1.6rem] border border-white/[0.1] bg-[linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.03)_100%)] px-4 py-5 text-left backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-6 sm:py-6"
               >
                 <div
                   className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent"
                   aria-hidden
                 />
-                <span className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                <span className="block font-display text-[2.5rem] font-extrabold leading-none tracking-[-0.05em] text-white sm:text-[2.9rem]">
                   {stat.value}
                 </span>
-                <span className="mt-2 text-xs font-medium leading-snug text-white/50 sm:text-sm">
+                <span className="mt-4 block max-w-[11ch] text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/60 sm:text-[0.82rem]">
                   {stat.label}
                 </span>
               </div>
