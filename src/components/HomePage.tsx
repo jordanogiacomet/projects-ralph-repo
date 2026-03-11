@@ -40,6 +40,26 @@ type HomePageProps = {
   }
 }
 
+const homepageHeroFallbackMediaStyle = {
+  backgroundImage: [
+    'linear-gradient(126deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 34%)',
+    'radial-gradient(circle at 18% 18%, rgba(255,255,255,0.14), transparent 20%)',
+    'radial-gradient(circle at 78% 20%, rgba(0,86,166,0.38), transparent 34%)',
+    'radial-gradient(circle at 54% 74%, rgba(40,167,69,0.14), transparent 32%)',
+    'linear-gradient(142deg, rgba(8,14,26,0.98) 0%, rgba(10,18,32,0.94) 46%, rgba(8,14,26,1) 100%)',
+  ].join(', '),
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+}
+
+function getHomepageHeroBackgroundStyle(backgroundImageUrl?: string) {
+  if (backgroundImageUrl) {
+    return { backgroundImage: `url(${backgroundImageUrl})` }
+  }
+
+  return homepageHeroFallbackMediaStyle
+}
+
 function toEmbedUrl(url: string): string {
   if (url.includes('youtube.com/watch?v=')) {
     const videoId = url.split('v=')[1]?.split('&')[0]
@@ -97,7 +117,7 @@ export function HomePage({
         <motion.div
           style={{
             y: shouldReduceMotion ? 0 : backgroundY,
-            backgroundImage: `url(${hero.backgroundImageUrl || '/images/home-hero-placeholder.jpg'})`,
+            ...getHomepageHeroBackgroundStyle(hero.backgroundImageUrl),
           }}
           className="absolute inset-0 scale-[1.08] bg-cover bg-center"
           aria-hidden
@@ -133,7 +153,7 @@ export function HomePage({
         />
 
         {/* Hero content */}
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-16 pt-32 text-center text-text-on-dark sm:px-8 sm:pb-20 sm:pt-36 lg:px-12">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pb-12 pt-24 text-center text-text-on-dark sm:px-8 sm:pb-20 sm:pt-36 lg:px-12">
           {/* Institutional badge */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
@@ -142,14 +162,14 @@ export function HomePage({
               shouldReduceMotion ? { duration: 0 } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
             }
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-xs font-medium tracking-wide text-white/80 backdrop-blur-sm sm:px-5 sm:text-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-1.5 text-[0.7rem] font-medium tracking-wide text-white/80 backdrop-blur-sm sm:px-5 sm:text-sm">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-cta-green" aria-hidden />
               Especialistas em Gestão Patrimonial
             </span>
           </motion.div>
 
           <motion.h1
-            className="mt-8 font-display text-display-lg font-extrabold tracking-[-0.03em] text-white sm:mt-10"
+            className="mt-6 max-w-4xl font-display text-display-md font-extrabold tracking-[-0.03em] text-white sm:mt-10 sm:text-display-lg"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -162,7 +182,7 @@ export function HomePage({
           </motion.h1>
 
           <motion.p
-            className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:mt-8 sm:text-lg md:text-xl md:leading-relaxed"
+            className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:mt-8 sm:text-lg md:text-xl md:leading-relaxed"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -176,7 +196,7 @@ export function HomePage({
 
           {/* Dual CTA group */}
           <motion.div
-            className="mt-10 flex flex-col items-center gap-4 sm:mt-12 sm:flex-row sm:gap-5"
+            className="mt-8 flex w-full max-w-sm flex-col items-center gap-3 sm:mt-12 sm:max-w-none sm:flex-row sm:gap-5"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={
@@ -187,7 +207,7 @@ export function HomePage({
           >
             <Link
               href={hero.ctaLink}
-              className="motion-transition motion-lift-subtle inline-flex items-center gap-2.5 rounded-full bg-cta-green px-8 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:px-10 sm:py-4 sm:text-base"
+              className="motion-transition motion-lift-subtle inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-cta-green px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(40,167,69,0.25)] hover:bg-cta-green-hover hover:shadow-[0_12px_40px_rgba(40,167,69,0.35)] sm:w-auto sm:px-10 sm:py-4 sm:text-base"
             >
               {hero.ctaLabel}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -202,7 +222,7 @@ export function HomePage({
             </Link>
             <Link
               href="/sobre"
-              className="motion-transition motion-lift-subtle inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-7 py-3.5 text-sm font-medium text-white/90 backdrop-blur-sm hover:border-white/30 hover:bg-white/[0.1] sm:px-9 sm:py-4 sm:text-base"
+              className="motion-transition motion-lift-subtle inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-6 py-3 text-sm font-medium text-white/90 backdrop-blur-sm hover:border-white/30 hover:bg-white/[0.1] sm:w-auto sm:px-9 sm:py-4 sm:text-base"
             >
               Conheça a Apollo
             </Link>
@@ -211,7 +231,7 @@ export function HomePage({
 
         {/* Scroll indicator — refined */}
         <motion.div
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 sm:bottom-10"
+          className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 sm:flex sm:bottom-10"
           animate={shouldReduceMotion ? { y: 0 } : { y: [0, 6, 0] }}
           transition={
             shouldReduceMotion

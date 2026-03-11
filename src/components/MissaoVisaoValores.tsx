@@ -18,6 +18,26 @@ type MissaoVisaoValoresProps = {
   slides: Slide[]
 }
 
+const institutionalSlideFallbackMediaStyle = {
+  backgroundImage: [
+    'linear-gradient(126deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 36%)',
+    'radial-gradient(circle at 18% 18%, rgba(0,86,166,0.34), transparent 34%)',
+    'radial-gradient(circle at 78% 74%, rgba(40,167,69,0.14), transparent 26%)',
+    'radial-gradient(circle at 82% 20%, rgba(255,255,255,0.14), transparent 18%)',
+    'linear-gradient(150deg, rgba(12,22,38,0.88) 0%, rgba(15,23,36,0.96) 48%, rgba(8,14,26,1) 100%)',
+  ].join(', '),
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+}
+
+function getInstitutionalSlideBackgroundStyle(backgroundImageUrl?: string) {
+  if (backgroundImageUrl) {
+    return { backgroundImage: `url(${backgroundImageUrl})` }
+  }
+
+  return institutionalSlideFallbackMediaStyle
+}
+
 function arrowIcon(direction: 'left' | 'right') {
   const path = direction === 'left' ? 'M14 6L8 12L14 18' : 'M10 6L16 12L10 18'
 
@@ -174,9 +194,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url(${currentSlide.backgroundImageUrl || '/images/sobre-slide-placeholder.jpg'})`,
-                  }}
+                  style={getInstitutionalSlideBackgroundStyle(currentSlide.backgroundImageUrl)}
                   aria-hidden
                 />
                 <div

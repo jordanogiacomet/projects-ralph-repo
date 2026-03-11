@@ -29,15 +29,16 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Shared shell-navigation normalization lives in `src/lib/navigation.ts` and should be reused by header/footer navigation loaders
 - Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
 - Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
+- When premium route media is optional, prefer layered gradient fallback treatments in-component instead of hard-coded placeholder image URLs that can 404
 
 ## Project Snapshot
 - Project: `apollo-gestao-website`
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-053`
-- Next eligible story after this run: `US-054`
-- Current open phase-2 order: `US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`
+- Story completed in this run: `US-054`
+- Next eligible story after this run: `US-055`
+- Current open phase-2 order: `US-055 -> US-056 -> US-057 -> US-058 -> US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
@@ -52,7 +53,8 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Phase 2 broad redesign delivery is implemented through `US-049G` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
 - `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
 - `US-053` closed the first shell debt pass with a lighter consent surface, coordinated floating controls, a navigation-first mobile menu, and a stronger search loading state.
-- The active follow-up cycle is now: institutional fixes (`US-054`), editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-054` cleared the current institutional debt pass by replacing broken homepage/about media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
+- The active follow-up cycle is now: editorial/proof fixes (`US-055`), contact fixes (`US-056`), solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -165,4 +167,29 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - Shell floating elements need a single shared offset contract; coordinating them through shared CSS variables is more robust than hard-coding independent bottom offsets per component.
   - Mobile menu utility actions should live after the primary route list whenever first-fold navigation density matters more than shell promotion.
   - Search loading states feel materially stronger when status copy and placeholder structure stay visually attached to the query field instead of appearing as a distant spinner in the results pane.
+---
+## 2026-03-11 12:52 UTC - US-054
+- What was implemented:
+  - Cleared `VD-005` on the homepage by replacing the broken `/images/home-hero-placeholder.jpg` fallback with an intentional layered gradient treatment in `src/components/HomePage.tsx`, preserving depth when CMS hero media is absent instead of issuing a 404-backed background request.
+  - Cleared `VD-006` on the homepage by tightening the mobile hero composition in `src/components/HomePage.tsx`: the badge, heading, subtitle, CTA spacing, button widths, and scroll indicator visibility now prioritize both hero CTAs within the first mobile viewport while keeping the desktop/tablet rhythm unchanged.
+  - Cleared `VD-007` on `/sobre` by replacing the broken `/images/sobre-slide-placeholder.jpg` fallback in `src/components/MissaoVisaoValores.tsx` with a dark institutional gradient surface that preserves the slider’s storytelling weight when slide media is missing.
+  - Kept the existing overlap and section-transition structure intact so the dark/light cadence between homepage sections and the `/sobre` narrative stack stays aligned with the current design system instead of introducing a broader template rewrite.
+- Files changed:
+  - `src/components/HomePage.tsx`
+  - `src/components/MissaoVisaoValores.tsx`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: failed on the first attempt with transient Next.js page-resolution errors while collecting page data for `/conteudos` and `/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais`; passed on the required retry
+- Browser/manual verification status:
+  - Manual browser QA is still required for this UI story.
+  - A local verification attempt was made by starting the built app on `http://127.0.0.1:3001` and launching Playwright Chromium, but the bundled browser cannot start in this environment because `libnspr4.so` is missing.
+  - As a lightweight fallback verification, the built routes `/` and `/sobre` both returned `HTTP/1.1 200 OK`, and their rendered responses no longer referenced the removed placeholder URLs.
+- Learnings for future iterations:
+  - When optional editorial media drives a premium hero or slider surface, layered CSS fallbacks are safer than depending on static placeholder assets that may never be committed.
+  - Mobile hero fixes land more cleanly when spacing, typography scale, CTA width, and non-essential chrome are tuned together instead of only shrinking one element in isolation.
 ---

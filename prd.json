@@ -124,7 +124,8 @@
       "US-049G",
       "US-051",
       "US-052",
-      "US-053"
+      "US-053",
+      "US-054"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -1485,7 +1486,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-fixes-institutional",
       "title": "Correções visuais da homepage e da página Sobre",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir inconsistências visuais remanescentes na homepage e em /sobre com foco em hero, ritmo vertical, blocos institucionais e CTAs.",
       "acceptanceCriteria": [
         "Homepage revisada contra o registro de débito visual em desktop, tablet e mobile",
