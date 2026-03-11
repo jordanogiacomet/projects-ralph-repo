@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 17:58:46 UTC
+Last Updated: 2026-03-11 18:47:21 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -50,7 +50,8 @@ Last Updated: 2026-03-11 17:58:46 UTC
 - `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
 - `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
 - `VP-004` completed with the registered editorial/prova social fixes validated and the story formally closed.
-- Next target: `VP-005 - Correções visuais de contato e formulários`
+- `VP-005` completed with the registered contact/form hierarchy fix validated and the story formally closed.
+- Next target: `VP-006 - Correções visuais de soluções`
 
 ## Validation Rules
 - Required validation order:
@@ -331,4 +332,57 @@ Last Updated: 2026-03-11 17:58:46 UTC
 - Learnings for future iterations:
   - On editorial list pages, a broken or oversized sidebar newsletter can also create a second-order spacing defect by pushing downstream CTA sections visibly lower than intended.
   - For shell-fixed hero pages like `/clientes`, a desktop-only padding and overlap adjustment is safer than broad changes to the shared navbar offset model.
+---
+
+## 2026-03-11 18:39:36 UTC - VP-005
+- Story ID: `VP-005`
+- Issue IDs addressed: `VR-004`
+- What was implemented:
+  - Rebalanced the `/contato` content grid so the primary form surface carries more horizontal weight than the supporting guidance and units rail.
+  - Refactored `ContatoPageForm` to keep helper copy in a compact supporting panel, add stronger surface treatment to the main card, and give the submit tray a clearer CTA hierarchy.
+  - Compressed the right-hand supporting cards so they reinforce the form instead of competing with it for first-read attention on desktop.
+- Files changed:
+  - src/app/(frontend)/contato/page.tsx
+  - src/components/ContatoPageForm.tsx
+  - docs/visual-register.md
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed with the known intermittent `PageNotFoundError: /_document`
+  - Final required `npm run build`: failed outside the selected story scope while prerendering `/solucoes/consultoria-e-tecnologia/teste-de-impairment`, followed by the existing `/500` `<Html>` import error
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-004`.
+- Learnings for future iterations:
+  - The contact page responds well to a simple hierarchy shift: widening the form column and demoting helper surfaces is safer than rewriting the route structure.
+  - This repository still has unrelated production-build blockers outside `VP-005`, so the story must remain open and `prd.json` must stay unchanged until those checks can pass.
+---
+
+## 2026-03-11 18:47:21 UTC - VP-005
+- Story ID: `VP-005`
+- Issue IDs addressed: `VR-004`
+- What was implemented:
+  - Validated the existing `/contato` hierarchy polish already present in `src/app/(frontend)/contato/page.tsx` and `src/components/ContatoPageForm.tsx` without expanding the story scope beyond the registered issue.
+  - Re-ran the required validation sequence, confirmed a successful final `npm run build`, and removed the stale build-blocker note from the `VR-004` register row.
+  - Marked `VP-005` as passed in `prd.json` and advanced the progress snapshot to `VP-006`.
+- Files changed:
+  - src/app/(frontend)/contato/page.tsx
+  - src/components/ContatoPageForm.tsx
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - First `npm run build`: failed outside the selected story scope while collecting page data for `/solucoes/avaliacao-patrimonial/avaliacao-de-maquinas`
+  - Final required `npm run build`: passed on immediate rerun
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-004`.
+- Learnings for future iterations:
+  - In this repository, intermittent page-data collection failures can still surface on unrelated routes during `next build`; the successful immediate rerun should be recorded as the authoritative result when no code changes intervene.
+  - When a story's scoped fix is already present in the worktree, the safe closure path is a validation-and-reconciliation pass rather than additional churn in the UI component.
 ---

@@ -132,7 +132,7 @@
     {
       "id": "VP-005",
       "title": "Correções visuais de contato e formulários",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir débitos visuais residuais de /contato, /contato/cotacao, /contato/representante e superfícies públicas de formulário.",
       "acceptanceCriteria": [
         "As issues registradas para contato e formulários foram tratadas",

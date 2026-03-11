@@ -408,11 +408,15 @@ export default async function ContatoPage() {
       </section>
 
       <section className="relative -mt-8 pb-section-loose sm:-mt-10">
-        <div className="mx-auto grid max-w-content gap-8 px-6 sm:px-8 lg:grid-cols-[minmax(0,1.12fr)_minmax(19rem,0.88fr)] lg:px-12">
+        <div className="mx-auto grid max-w-content gap-6 px-6 sm:px-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:items-start lg:gap-7 lg:px-12 xl:grid-cols-[minmax(0,1.26fr)_minmax(19rem,0.74fr)]">
           <ContatoPageForm />
 
-          <aside className="space-y-6">
-            <Card as="section" padding="lg" className="relative overflow-hidden">
+          <aside className="space-y-5 lg:pt-3">
+            <Card
+              as="section"
+              padding="md"
+              className="relative overflow-hidden border-border/80 bg-white/92"
+            >
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
@@ -424,19 +428,19 @@ export default async function ContatoPage() {
               <div className="relative">
                 <SectionHeading
                   eyebrow="Como agilizar o retorno"
-                  size="md"
+                  size="sm"
                   title="Envie informacoes que ajudem na triagem ja no primeiro contato."
                   description="Alguns detalhes tornam o encaminhamento mais rapido e preciso, especialmente em demandas tecnicas ou com varias unidades envolvidas."
                 />
 
-                <div className="mt-8 space-y-3">
+                <div className="mt-6 divide-y divide-border/70">
                   {messageGuidance.map((item, index) => (
                     <div
                       key={item.title}
-                      className="rounded-[1.25rem] border border-border bg-white/80 p-5"
+                      className="py-4 first:pt-0 last:pb-0"
                     >
                       <div className="flex items-start gap-4">
-                        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent-strong">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent-strong">
                           0{index + 1}
                         </span>
                         <div>
@@ -464,7 +468,7 @@ export default async function ContatoPage() {
               <div className="relative">
                 <SectionHeading
                   eyebrow="Unidades Apollo"
-                  size="md"
+                  size="sm"
                   title="Atendimento regional com coordenacao integrada."
                   description="Equipes especializadas no Rio Grande do Sul, Santa Catarina e Sao Paulo, com capacidade de encaminhar projetos de forma coordenada."
                 />
@@ -473,7 +477,7 @@ export default async function ContatoPage() {
                   {unidades.map((unit, index) => (
                     <article
                       key={unit.id || `${unit.state}-${index}`}
-                      className="rounded-[1.3rem] border border-border bg-white/85 p-5 shadow-[var(--shadow-soft)]"
+                      className="rounded-[1.3rem] border border-border bg-white/85 p-4 shadow-[var(--shadow-soft)]"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
