@@ -1518,7 +1518,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-fixes-contact",
       "title": "Correções visuais dos fluxos de contato e formulários públicos",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir inconsistências visuais restantes em /contato, /contato/cotacao, /contato/representante e formulários públicos compartilhados.",
       "acceptanceCriteria": [
         "Página /contato revisada contra o registro de débito visual",

@@ -3,6 +3,8 @@
 import { useRef, useState, type ChangeEvent, type DragEvent } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { PublicFormStatus } from '@/components/PublicFormStatus'
+import { PublicFormSummary } from '@/components/PublicFormSummary'
 import { Badge, Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
@@ -188,6 +190,12 @@ const formatFileSize = (size: number): string => {
   return `${(size / (1024 * 1024)).toFixed(1)} MB`
 }
 
+const formatSelectedServicesSummary = (services: string[]): string | null => {
+  if (services.length === 0) return null
+  if (services.length <= 2) return services.join(' • ')
+  return `${services.slice(0, 2).join(' • ')} +${services.length - 2}`
+}
+
 function ArrowIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -254,6 +262,23 @@ export function CotacaoForm() {
   const progressWidth = `${((currentStepIndex + 1) / STEPS.length) * 100}%`
 
   const contactSummary = [contactName?.trim(), contactEmail?.trim()].filter(Boolean).join(' • ')
+  const summaryItems = [
+    {
+      label: 'Escopo',
+      value: formatSelectedServicesSummary(selectedServices),
+      fallback: 'Nenhum servico selecionado ainda.',
+    },
+    {
+      label: 'Anexo',
+      value: selectedFile ? `${selectedFile.name} (${formatFileSize(selectedFile.size)})` : null,
+      fallback: 'Nenhum arquivo anexado.',
+    },
+    {
+      label: 'Contato',
+      value: contactSummary || null,
+      fallback: 'Preencha na etapa final.',
+    },
+  ]
 
   const handleNextStep = async () => {
     setSubmitState('idle')
@@ -713,21 +738,16 @@ export function CotacaoForm() {
                 </div>
 
                 {selectedFile ? (
-                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800">
-                    <div>
-                      <p className="font-semibold">Arquivo selecionado</p>
-                      <p className="mt-1 text-emerald-700/90">
-                        {selectedFile.name} ({formatFileSize(selectedFile.size)})
-                      </p>
-                    </div>
-                    <Badge tone="success">Pronto para envio</Badge>
-                  </div>
+                  <PublicFormStatus tone="success" title="Arquivo selecionado">
+                    {selectedFile.name} ({formatFileSize(selectedFile.size)}) pronto para seguir com
+                    o envio do briefing.
+                  </PublicFormStatus>
                 ) : null}
 
                 {fileError ? (
-                  <p className="text-meta-sm text-red-600" role="alert">
+                  <PublicFormStatus tone="error" title="Anexo invalido">
                     {fileError}
-                  </p>
+                  </PublicFormStatus>
                 ) : null}
               </div>
             ) : null}
@@ -831,7 +851,7 @@ export function CotacaoForm() {
               </div>
             ) : null}
 
-            <div className="border-t border-border pt-6">
+            <div className="rounded-[1.25rem] border border-border/80 bg-surface-secondary/72 p-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="max-w-xl text-meta-sm text-text-muted">
                   Os campos obrigatorios sao validados antes do avancar entre as etapas para manter
@@ -840,49 +860,58 @@ export function CotacaoForm() {
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   {currentStep > 1 ? (
-                    <Button type="button" variant="outline" onClick={handlePreviousStep}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handlePreviousStep}
+                      className="w-full sm:w-auto"
+                    >
                       Voltar
                     </Button>
                   ) : null}
 
                   {currentStep < 3 ? (
-                    <Button type="button" onClick={handleNextStep} trailingIcon={<ArrowIcon />}>
+                    <Button
+                      type="button"
+                      onClick={handleNextStep}
+                      trailingIcon={<ArrowIcon />}
+                      className="w-full sm:w-auto"
+                    >
                       Continuar
                     </Button>
                   ) : (
-                    <Button type="submit" disabled={isSubmitting} trailingIcon={<ArrowIcon />}>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      trailingIcon={<ArrowIcon />}
+                      className="w-full sm:w-auto"
+                    >
                       {isSubmitting ? 'Enviando...' : 'Enviar solicitacao'}
                     </Button>
                   )}
                 </div>
               </div>
+            </div>
 
-              <div className="mt-4" aria-live="polite">
-                {submitState === 'success' ? (
-                  <p
-                    className="rounded-[1.2rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700"
-                    role="status"
-                  >
-                    Cotacao enviada com sucesso. Nossa equipe fara a triagem do briefing e retornara
-                    em seguida.
-                  </p>
-                ) : null}
+            <div className="space-y-3" aria-live="polite">
+              {submitState === 'success' ? (
+                <PublicFormStatus tone="success" title="Cotacao enviada">
+                  Nossa equipe fara a triagem do briefing e retornara com o encaminhamento
+                  comercial mais aderente.
+                </PublicFormStatus>
+              ) : null}
 
-                {submitState === 'error' ? (
-                  <p
-                    className="rounded-[1.2rem] border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
-                    role="alert"
-                  >
-                    Nao foi possivel enviar agora. Tente novamente em alguns minutos.
-                  </p>
-                ) : null}
-              </div>
+              {submitState === 'error' ? (
+                <PublicFormStatus tone="error" title="Envio indisponivel">
+                  Nao foi possivel enviar agora. Tente novamente em alguns minutos.
+                </PublicFormStatus>
+              ) : null}
             </div>
           </form>
         </div>
       </Card>
 
-      <div className="space-y-5 lg:sticky lg:top-24">
+      <div className="space-y-5 lg:sticky lg:top-28">
         <Card tone="dark" padding="lg" className="relative overflow-hidden">
           <div
             className="pointer-events-none absolute inset-0"
@@ -917,68 +946,38 @@ export function CotacaoForm() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-6 rounded-[1.3rem] border border-white/10 bg-white/[0.06] p-4">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-label-sm font-semibold uppercase tracking-[0.16em] text-white/62">
-                  Resumo atual
-                </p>
-                <span className="text-xs font-medium text-white/42">
-                  {selectedServices.length} servico{selectedServices.length === 1 ? '' : 's'}
-                </span>
-              </div>
-
-              <div className="mt-4 space-y-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.14em] text-white/42">Escopo</p>
-                  {selectedServices.length > 0 ? (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {selectedServices.slice(0, 4).map((service) => (
-                        <span
-                          key={service}
-                          className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-label-sm font-semibold text-white/82"
-                        >
-                          {service}
-                        </span>
-                      ))}
-                      {selectedServices.length > 4 ? (
-                        <span className="inline-flex items-center rounded-pill border border-white/10 bg-white/[0.08] px-3 py-1 text-label-sm font-semibold text-white/82">
-                          +{selectedServices.length - 4} adicionais
-                        </span>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <p className="mt-2 text-sm text-white/62">Nenhum servico selecionado ainda.</p>
-                  )}
-                </div>
-
-                <div>
-                  <p className="text-xs uppercase tracking-[0.14em] text-white/42">Anexo</p>
-                  <p className="mt-2 text-sm text-white/78">
-                    {selectedFile ? selectedFile.name : 'Nenhum arquivo anexado.'}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs uppercase tracking-[0.14em] text-white/42">Contato</p>
-                  <p className="mt-2 text-sm text-white/78">
-                    {contactSummary || 'Preencha na etapa final.'}
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </Card>
 
-        <Card padding="md" className="border-accent/10 bg-accent-soft/45">
-          <p className="text-label-sm font-semibold uppercase tracking-[0.16em] text-accent-strong">
-            Depois do envio
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            A Apollo cruza escopo, volume, localidade e material de apoio para devolver o
-            encaminhamento comercial mais aderente ao contexto informado.
-          </p>
-        </Card>
+        <PublicFormSummary
+          title="Resumo do briefing"
+          items={summaryItems}
+          footerTitle="Depois do envio"
+          footerDescription="A Apollo cruza escopo, volume, localidade e material de apoio para devolver o encaminhamento comercial mais aderente ao contexto informado."
+        >
+          {selectedServices.length > 0 ? (
+            <div>
+              <p className="text-label-sm font-semibold uppercase tracking-[0.16em] text-text-muted">
+                Frentes selecionadas
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {selectedServices.map((service) => (
+                  <span
+                    key={service}
+                    className="inline-flex items-center rounded-pill border border-accent/15 bg-accent-soft px-3 py-1.5 text-xs font-semibold text-accent-strong"
+                  >
+                    {service}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm leading-relaxed text-text-secondary">
+              Selecione uma ou mais frentes de trabalho para visualizar o resumo completo do
+              briefing.
+            </p>
+          )}
+        </PublicFormSummary>
       </div>
     </div>
   )

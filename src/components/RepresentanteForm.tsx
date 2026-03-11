@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { PublicFormStatus } from '@/components/PublicFormStatus'
+import { PublicFormSummary } from '@/components/PublicFormSummary'
 import { Badge, Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
-import { cn } from '@/lib/utils'
 
 type RepresentanteFormValues = {
   nome: string
@@ -59,20 +60,6 @@ function ArrowIcon() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function CheckIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M5 13l4 4L19 7"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
@@ -338,39 +325,42 @@ export function RepresentanteForm() {
               />
             </Card>
 
-            <div className="flex flex-col gap-4 border-t border-border pt-2 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-xl text-meta-sm text-text-muted">
-                Ao enviar, o cadastro segue para triagem comercial. Quanto mais clara a combinacao
-                entre cobertura, segmento e experiencia, mais objetivo tende a ser o retorno.
-              </p>
+            <div className="rounded-[1.25rem] border border-border/80 bg-surface-secondary/72 p-5">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="max-w-xl text-meta-sm text-text-muted">
+                  Ao enviar, o cadastro segue para triagem comercial. Quanto mais clara a
+                  combinacao entre cobertura, segmento e experiencia, mais objetivo tende a ser o
+                  retorno.
+                </p>
 
-              <Button
-                type="submit"
-                size="lg"
-                disabled={isSubmitting}
-                trailingIcon={<ArrowIcon />}
-                className="sm:shrink-0"
-              >
-                {isSubmitting ? 'Enviando...' : 'Enviar cadastro'}
-              </Button>
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  trailingIcon={<ArrowIcon />}
+                  className="w-full sm:w-auto sm:shrink-0"
+                >
+                  {isSubmitting ? 'Enviando...' : 'Enviar cadastro'}
+                </Button>
+              </div>
             </div>
 
             {submitState === 'success' ? (
-              <p className="text-sm text-emerald-600" role="status" aria-live="polite">
-                Cadastro enviado com sucesso.
-              </p>
+              <PublicFormStatus tone="success" title="Cadastro enviado">
+                Recebemos seu cadastro e o time Apollo avaliara a aderencia da representacao.
+              </PublicFormStatus>
             ) : null}
             {submitState === 'error' ? (
-              <p className="text-sm text-red-600" role="alert">
-                Nao foi possivel enviar agora. Tente novamente.
-              </p>
+              <PublicFormStatus tone="error" title="Envio indisponivel">
+                Nao foi possivel enviar agora. Tente novamente em alguns minutos.
+              </PublicFormStatus>
             ) : null}
           </form>
         </div>
       </Card>
 
-      <div className="space-y-4 lg:sticky lg:top-28">
-        <Card tone="dark" className="relative overflow-hidden border-white/10">
+      <div className="space-y-5 lg:sticky lg:top-28">
+        <Card tone="dark" padding="lg" className="relative overflow-hidden border-white/10">
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -403,45 +393,12 @@ export function RepresentanteForm() {
           </div>
         </Card>
 
-        <Card className="border-white/70 bg-white/92 shadow-soft">
-          <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
-            Resumo do cadastro
-          </p>
-          <dl className="mt-5 space-y-4">
-            {summaryItems.map((item) => (
-              <div key={item.label}>
-                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-text-muted">
-                  {item.label}
-                </dt>
-                <dd
-                  className={cn(
-                    'mt-1 text-sm leading-relaxed',
-                    item.value ? 'text-text-primary' : 'text-text-secondary',
-                  )}
-                >
-                  {item.value || item.fallback}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-6 rounded-[1.25rem] border border-accent/10 bg-accent-soft/55 p-4">
-            <div className="flex items-start gap-3">
-              <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-accent-strong shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-                <CheckIcon />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-text-primary">
-                  Mais contexto, menos ruido
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                  O objetivo desta pagina e qualificar melhor a conversa desde o primeiro envio, sem
-                  mudar o fluxo tecnico de recebimento do cadastro.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+        <PublicFormSummary
+          title="Resumo do cadastro"
+          items={summaryItems}
+          footerTitle="Mais contexto, menos ruido"
+          footerDescription="O objetivo desta pagina e qualificar melhor a conversa desde o primeiro envio, sem mudar o fluxo tecnico de recebimento do cadastro."
+        />
       </div>
     </div>
   )

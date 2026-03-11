@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
+
+import { PublicFormStatus } from '@/components/PublicFormStatus'
+import { Badge, Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
 
 type ContactFormValues = {
   nome: string
@@ -90,8 +92,9 @@ export function ContatoPageForm() {
       />
 
       <div className="relative">
+        <Badge tone="accent">Contato principal</Badge>
         <SectionHeading
-          eyebrow="Contato principal"
+          className="mt-5"
           size="lg"
           title="Conte um pouco sobre a sua demanda"
           description="Descreva o contexto, a urgencia e o objetivo do projeto. Nossa equipe encaminha sua solicitacao para o especialista mais aderente."
@@ -180,41 +183,48 @@ export function ContatoPageForm() {
             })}
           />
 
-          <div className="flex flex-col gap-4 border-t border-border pt-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-md text-meta-sm text-text-muted">
-              Ao enviar, sua mensagem segue para a equipe da Apollo responsavel por orientar o
-              proximo passo do atendimento.
-            </p>
+          <div className="sm:col-span-2 rounded-[1.25rem] border border-border/80 bg-surface-secondary/72 p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-md text-meta-sm text-text-muted">
+                Ao enviar, sua mensagem segue para a equipe da Apollo responsavel por orientar o
+                proximo passo do atendimento.
+              </p>
 
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              trailingIcon={
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 12h14M13 6l6 6-6 6"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-            >
-              {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
-            </Button>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto sm:shrink-0"
+                trailingIcon={
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
+              </Button>
+            </div>
           </div>
 
           {submitState === 'success' ? (
-            <p className="text-sm text-emerald-600 sm:col-span-2" role="status" aria-live="polite">
-              Mensagem enviada com sucesso.
-            </p>
+            <PublicFormStatus
+              tone="success"
+              title="Mensagem enviada"
+              className="sm:col-span-2"
+            >
+              Recebemos sua solicitacao e a equipe Apollo fara o encaminhamento adequado.
+            </PublicFormStatus>
           ) : null}
           {submitState === 'error' ? (
-            <p className="text-sm text-red-600 sm:col-span-2" role="alert">
-              Nao foi possivel enviar agora. Tente novamente.
-            </p>
+            <PublicFormStatus tone="error" title="Envio indisponivel" className="sm:col-span-2">
+              Nao foi possivel enviar agora. Tente novamente em alguns minutos.
+            </PublicFormStatus>
           ) : null}
         </form>
       </div>

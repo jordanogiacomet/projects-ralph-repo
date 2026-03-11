@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { PublicFormStatus } from '@/components/PublicFormStatus'
 import { Badge, Button, Card, Input, SectionHeading, Textarea } from '@/components/ui'
 
 type ContatoFormProps = {
@@ -180,45 +181,48 @@ export function ContatoForm({ title = 'Solicite um contato' }: ContatoFormProps)
               },
             })}
           />
-          <div className="flex flex-col gap-4 border-t border-border pt-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-md text-meta-sm text-text-muted">
-              Ao enviar, sua mensagem segue para a equipe responsavel por direcionar o proximo passo
-              do atendimento.
-            </p>
+          <div className="sm:col-span-2 rounded-[1.25rem] border border-border/80 bg-surface-secondary/72 p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-md text-meta-sm text-text-muted">
+                Ao enviar, sua mensagem segue para a equipe responsavel por direcionar o proximo
+                passo do atendimento.
+              </p>
 
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              trailingIcon={
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  <path
-                    d="M12 5L19 12L12 19"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-            >
-              {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
-            </Button>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto sm:shrink-0"
+                trailingIcon={
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path
+                      d="M12 5L19 12L12 19"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
+              </Button>
+            </div>
           </div>
           {submitState === 'success' && (
-            <p
-              className="text-meta-sm text-emerald-600 sm:col-span-2"
-              role="status"
-              aria-live="polite"
+            <PublicFormStatus
+              tone="success"
+              title="Mensagem enviada"
+              className="sm:col-span-2"
             >
-              Mensagem enviada com sucesso.
-            </p>
+              Recebemos sua solicitacao e a equipe Apollo seguira com o direcionamento do contato.
+            </PublicFormStatus>
           )}
           {submitState === 'error' && (
-            <p className="text-meta-sm text-red-600 sm:col-span-2" role="alert">
-              Nao foi possivel enviar agora. Tente novamente.
-            </p>
+            <PublicFormStatus tone="error" title="Envio indisponivel" className="sm:col-span-2">
+              Nao foi possivel enviar agora. Tente novamente em alguns minutos.
+            </PublicFormStatus>
           )}
         </form>
       </div>

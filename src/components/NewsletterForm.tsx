@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 
+import { PublicFormStatus } from '@/components/PublicFormStatus'
 import { Badge, Button, Card, Input, SectionHeading } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
@@ -116,21 +117,22 @@ export function NewsletterForm({
           </Button>
         </form>
 
-        <div className="mt-4 min-h-5" aria-live="polite">
+        <div className="mt-4 space-y-3" aria-live="polite">
           {submitState === 'success' ? (
-            <p className="text-sm text-emerald-700" role="status">
-              Inscricao realizada com sucesso.
-            </p>
+            <PublicFormStatus tone="success" title="Inscricao realizada">
+              Voce passara a receber novos artigos, leituras tecnicas e materiais curatoriais da
+              Apollo.
+            </PublicFormStatus>
           ) : null}
           {submitState === 'duplicate' ? (
-            <p className="text-sm text-amber-700" role="status">
-              Este e-mail ja esta inscrito na newsletter.
-            </p>
+            <PublicFormStatus tone="warning" title="Cadastro ja existente">
+              Este e-mail ja esta inscrito na newsletter da Apollo.
+            </PublicFormStatus>
           ) : null}
           {submitState === 'error' ? (
-            <p className="text-sm text-red-700" role="alert">
-              Nao foi possivel concluir agora. Tente novamente.
-            </p>
+            <PublicFormStatus tone="error" title="Inscricao indisponivel">
+              Nao foi possivel concluir agora. Tente novamente em alguns minutos.
+            </PublicFormStatus>
           ) : null}
         </div>
       </div>
