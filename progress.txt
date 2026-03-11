@@ -30,6 +30,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Shared shell-navigation normalization lives in `src/lib/navigation.ts` and should be reused by header/footer navigation loaders
 - Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
 - Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
+- Solution category navigation counts should derive from the deterministic `orderedSolutionSlugs` config in `src/lib/solutionCategories.ts` so hubs stay stable even when Payload data is unavailable
 - When premium route media is optional, prefer layered gradient fallback treatments in-component instead of hard-coded placeholder image URLs that can 404
 - With multiple top-level route groups acting as root layouts, branded public 404s should live in segment-level `not-found.tsx` files (for example `news/not-found.tsx`) rather than a root `src/app/not-found.tsx`
 
@@ -38,9 +39,9 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-056`
-- Next eligible story after this run: `US-057`
-- Current open phase-2 order: `US-057 -> US-058 -> US-050`
+- Story completed in this run: `US-057`
+- Next eligible story after this run: `US-058`
+- Current open phase-2 order: `US-058 -> US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
@@ -58,7 +59,8 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - `US-054` cleared the homepage/about debt pass by replacing broken media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
 - `US-055` closed the editorial/proof debt pass by introducing Apollo-branded missing-route recovery, tightening the News zero-results flow, and aligning empty-state/sticky-rail behavior across `clientes`, `conteudos`, and `news`.
 - `US-056` closed the contact/forms debt pass by unifying submit-state messaging, CTA trays, upload feedback, and summary rails across the public contact flows and newsletter surface.
-- The active follow-up cycle is now: solutions fixes (`US-057`), responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-057` closed the solutions debt pass by aligning the solution-family filter rails, category hubs, detail-page support surfaces, and related-solution cards around the shared phase-2 visual system.
+- The active follow-up cycle is now: responsive evidence sweep (`US-058`), then final gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -257,4 +259,30 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Learnings for future iterations:
   - Public-form polish lands more predictably when submit states and summary rails are shared primitives instead of per-form ad hoc markup.
   - Keeping primary public-form CTAs full-width on mobile and anchored inside a muted action tray makes the contact flows feel more coherent without reopening the underlying submission logic.
+---
+## 2026-03-11 13:40 UTC - US-057
+- What was implemented:
+  - Revised the shared solution surfaces in `src/components/SolutionFilterTabs.tsx`, `src/components/SolutionCard.tsx`, and `src/lib/solutionCategories.ts` so the main hub and category hubs now share the same refined filter-rail styling, deterministic count badges, and a middle-density related-card treatment that keeps `/solucoes` aligned with the category and detail templates.
+  - Tightened the category hub navigation panel in `src/components/SolutionCategoryHubPage.tsx` by adding an active-front summary card and clearer cross-category guidance, so `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia` no longer feel like a lighter, disconnected variant of the main solutions hub.
+  - Reworked the shared detail template in `src/components/SolutionDetailPage.tsx` so the internal hero now keeps an intentional gradient-backed surface even when solution media is absent, the sticky rail now functions as navigation plus CTA support instead of duplicating article callouts, and the `Veja também` cards now use a denser treatment that stays visually consistent with the rest of the solutions system.
+- Files changed:
+  - `src/components/SolutionFilterTabs.tsx`
+  - `src/components/SolutionCard.tsx`
+  - `src/components/SolutionCategoryHubPage.tsx`
+  - `src/components/SolutionDetailPage.tsx`
+  - `src/lib/solutionCategories.ts`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: passed on the first attempt
+- Browser/manual verification status:
+  - Browser tooling is unavailable in this Codex environment, so manual browser QA is still required for this UI story.
+  - As a lightweight fallback verification, the built app was started locally on `http://127.0.0.1:3001`; `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, and representative detail routes from all three categories returned `200` and exposed the updated solution markers (`Solucoes exibidas`, `Troque de categoria sem perder o contexto do portfolio.`, `Continue a trilha com o mesmo contexto do hub.`, `Nesta mesma frente`).
+- Learnings for future iterations:
+  - The solution-family navigation stays more stable in static builds when category counts come from deterministic route config (`orderedSolutionSlugs`) instead of runtime-only CMS state.
+  - Detail side rails should complement the reading flow with navigation and CTA support; repeating the same support-copy blocks in both the article body and the rail makes the template feel denser than the rest of phase 2.
 ---

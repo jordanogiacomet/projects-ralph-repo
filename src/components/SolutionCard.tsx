@@ -13,7 +13,7 @@ type SolutionItem = {
   categoryLabel?: string
 }
 
-type SolutionCardVariant = 'compact' | 'feature'
+type SolutionCardVariant = 'compact' | 'feature' | 'related'
 
 type SolutionCardProps = {
   item: SolutionItem
@@ -29,6 +29,12 @@ const cardDensityClasses: Record<
     card: 'rounded-panel',
     content: 'p-5 sm:p-6',
     title: 'mt-3 text-xl',
+    body: 'mt-3 text-sm',
+  },
+  related: {
+    card: 'rounded-panel',
+    content: 'p-5 sm:p-6',
+    title: 'mt-4 font-display text-heading-lg tracking-tight',
     body: 'mt-3 text-sm',
   },
   feature: {

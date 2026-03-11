@@ -125,7 +125,10 @@
       "US-051",
       "US-052",
       "US-053",
-      "US-054"
+      "US-054",
+      "US-055",
+      "US-056",
+      "US-057"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -1534,7 +1537,7 @@
       "phase": "phase-2-redesign",
       "stream": "visual-fixes-solutions",
       "title": "Correções visuais das páginas de soluções e details",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir inconsistências visuais remanescentes em /solucoes, hubs de categoria e páginas de detalhe de solução.",
       "acceptanceCriteria": [
         "Página /solucoes revisada contra o registro de débito visual",

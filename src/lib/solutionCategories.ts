@@ -39,6 +39,7 @@ type SolutionCategoryFilterLink = {
   key: string
   label: string
   href: string
+  count: number
 }
 
 type SolutionCategoryStory = {
@@ -424,17 +425,25 @@ function withCategoryLabel(
 function buildCategoryFilters(
   activeSlug: SolutionCategorySlug,
   activeLabel: string,
+  activeCount: number,
 ): SolutionCategoryFilterLink[] {
+  const totalCount = Object.values(solutionCategoryConfigs).reduce(
+    (sum, config) => sum + config.orderedSolutionSlugs.length,
+    0,
+  )
+
   return [
     {
       key: 'all',
       label: 'Portfolio completo',
       href: '/solucoes',
+      count: totalCount,
     },
     ...Object.values(solutionCategoryConfigs).map((config) => ({
       key: config.slug,
       label: config.slug === activeSlug ? activeLabel : config.fallbackCategoryTitle,
       href: config.path,
+      count: config.slug === activeSlug ? activeCount : config.orderedSolutionSlugs.length,
     })),
   ]
 }
@@ -571,7 +580,7 @@ export async function getSolutionCategoryPageData(
     ...config.story,
     slug,
     categoryLabel,
-    categoryFilters: buildCategoryFilters(slug, categoryLabel),
+    categoryFilters: buildCategoryFilters(slug, categoryLabel, solutions.length),
     heroTitle,
     heroDescription,
     heroImage,

@@ -20,7 +20,7 @@ type SolutionFilterTabsProps = {
 }
 
 const railItemClassName =
-  'group motion-transition motion-lift-subtle relative inline-flex min-h-[3.5rem] items-center gap-3 overflow-hidden rounded-[1.15rem] border px-4 py-3 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15'
+  'group motion-transition motion-lift-subtle relative inline-flex min-h-[3.75rem] items-center gap-3.5 overflow-hidden rounded-[1.2rem] border px-4 py-3.5 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15'
 
 function renderFilterContent(filter: SolutionFilter, isActive: boolean) {
   return (
@@ -96,7 +96,7 @@ export function SolutionFilterTabs({
             railItemClassName,
             isActive
               ? 'border-accent/18 bg-white text-text-primary shadow-[var(--shadow-soft)]'
-              : 'border-border/80 bg-surface-primary/95 text-text-secondary shadow-[0_12px_28px_rgba(15,23,42,0.06)] hover:border-accent/20 focus-visible:border-accent/20',
+              : 'border-border/80 bg-surface-primary/96 text-text-secondary shadow-[0_10px_24px_rgba(15,23,42,0.05)] hover:border-accent/20 focus-visible:border-accent/20',
           )
 
           if (filter.href) {

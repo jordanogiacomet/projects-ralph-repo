@@ -36,6 +36,7 @@ export function SolutionCategoryHubPage({
   solutions,
 }: SolutionCategoryHubPageProps) {
   const shouldReduceMotion = useReducedMotion()
+  const activeFrontDescription = `${solutions.length} caminhos organizados para ${categoryLabel.toLowerCase()} com a mesma leitura consultiva do hub principal.`
 
   return (
     <div className="bg-bg-primary text-text-primary">
@@ -258,23 +259,38 @@ export function SolutionCategoryHubPage({
             }
             className="mt-8 rounded-panel border border-border/80 bg-white/92 p-5 shadow-[var(--shadow-soft)] sm:p-6"
           >
-            <div className="grid gap-4 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:items-center">
-              <div>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.04fr)_minmax(260px,0.96fr)] lg:items-end">
+              <SectionHeading
+                eyebrow="Navegue entre frentes"
+                title="Troque de categoria sem perder o contexto do portfolio."
+                description="O mesmo sistema de filtros do hub principal agora organiza a navegacao entre categorias, o retorno ao portfolio completo e a leitura de volume entre frentes."
+                size="sm"
+                className="max-w-2xl"
+              />
+
+              <Card padding="md" className="border-border bg-surface-secondary shadow-soft">
                 <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
-                  Navegue entre frentes
+                  Frente ativa
+                </p>
+                <p className="mt-3 font-display text-heading-lg font-bold text-text-primary">
+                  {categoryLabel}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                  O mesmo sistema de filtros do hub principal agora organiza a troca entre
-                  categorias e o retorno ao portfolio completo.
+                  {activeFrontDescription}
                 </p>
-              </div>
-
-              <SolutionFilterTabs
-                filters={categoryFilters}
-                activeFilter={slug}
-                ariaLabel="Navegar entre frentes de solucao"
-              />
+              </Card>
             </div>
+
+            <SolutionFilterTabs
+              filters={categoryFilters}
+              activeFilter={slug}
+              ariaLabel="Navegar entre frentes de solucao"
+              className="mt-6"
+            />
+            <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+              As contagens acompanham a navegacao entre hubs para deixar claro o peso relativo de
+              cada frente antes de aprofundar a leitura de uma solucao.
+            </p>
           </motion.div>
 
           <motion.div

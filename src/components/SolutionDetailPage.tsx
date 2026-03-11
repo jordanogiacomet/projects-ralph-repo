@@ -443,12 +443,13 @@ export async function generateSolutionDetailMetadata(
 
 export async function SolutionDetailPage({ config }: { config: SolutionDetailConfig }) {
   const data = await getSolutionPageData(config)
+  const categoryPath = `/solucoes/${data.categorySlug || config.categorySlug}`
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: 'Home', path: '/' },
     { name: 'Solucoes', path: '/solucoes' },
     {
       name: data.categoryTitle,
-      path: `/solucoes/${data.categorySlug || config.categorySlug}`,
+      path: categoryPath,
     },
     {
       name: data.breadcrumbTitle || data.title,
@@ -502,6 +503,22 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
           : 'Portfolio Apollo',
     },
     { label: 'Foco', value: heroTags[0] || 'Atuacao tecnica' },
+  ]
+  const railNavigationLinks = [
+    {
+      href: categoryPath,
+      eyebrow: 'Frente atual',
+      title: data.categoryTitle,
+      description:
+        'Volte ao hub desta categoria para comparar escopos, sinais e caminhos de aprofundamento antes do briefing.',
+    },
+    {
+      href: '/solucoes',
+      eyebrow: 'Portfolio Apollo',
+      title: 'Explorar todas as frentes',
+      description:
+        'Releia o mapa completo de solucoes para conectar esta demanda a outras trilhas patrimoniais e tecnicas.',
+    },
   ]
 
   return (
@@ -653,33 +670,41 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
         <Container>
           <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
             <article className="overflow-hidden rounded-[1.75rem] border border-border bg-white shadow-strong">
-              {data.heroImage ? (
-                <div className="relative h-52 overflow-hidden border-b border-border/80 sm:h-60">
+              <div className="relative h-52 overflow-hidden border-b border-border/80 sm:h-60">
+                {data.heroImage ? (
                   <div
                     className="absolute inset-0 scale-[1.04] bg-cover bg-center"
                     style={{ backgroundImage: `url(${data.heroImage})` }}
                     aria-hidden
                   />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(24deg, rgba(8,14,26,0.86) 0%, rgba(8,14,26,0.28) 42%, rgba(255,255,255,0.12) 100%)',
-                    }}
-                    aria-hidden
-                  />
-                  <div className="relative flex h-full items-end px-6 py-6 sm:px-8 sm:py-8">
-                    <div className="max-w-xl text-white">
-                      <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
-                        {data.categoryTitle}
-                      </p>
-                      <p className="mt-4 font-display text-heading-2xl font-semibold text-white">
-                        {data.heroTitle}
-                      </p>
-                    </div>
+                ) : null}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(24deg, rgba(8,14,26,0.92) 0%, rgba(8,14,26,0.66) 42%, rgba(0,86,166,0.18) 100%)',
+                  }}
+                  aria-hidden
+                />
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 18% 18%, rgba(0,86,166,0.28), transparent 34%), radial-gradient(circle at 84% 16%, rgba(255,255,255,0.12), transparent 24%)',
+                  }}
+                  aria-hidden
+                />
+                <div className="relative flex h-full items-end px-6 py-6 sm:px-8 sm:py-8">
+                  <div className="max-w-xl text-white">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.2em] text-white/58">
+                      {data.categoryTitle}
+                    </p>
+                    <p className="mt-4 font-display text-heading-2xl font-semibold text-white">
+                      {data.heroTitle}
+                    </p>
                   </div>
                 </div>
-              ) : null}
+              </div>
 
               <div className="border-b border-border/80 px-6 py-6 sm:px-8">
                 <SectionHeading
@@ -746,7 +771,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
               </div>
             </article>
 
-            <div className="space-y-5 xl:sticky xl:top-28 xl:self-start">
+            <div className="space-y-5 xl:sticky xl:top-32 xl:self-start">
               <Card padding="lg" className="border-accent/10 bg-white/94">
                 <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-accent/80">
                   Proximo passo
@@ -769,31 +794,75 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                 </div>
               </Card>
 
-              <Card padding="lg" tone="dark" className="overflow-hidden">
-                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-white/58">
-                  Apoios da leitura
+              <Card padding="lg" className="border-border/85 bg-surface-secondary/92">
+                <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                  Navegacao da frente
                 </p>
-                <h2 className="mt-4 font-display text-heading-lg font-semibold text-white">
-                  Superficies auxiliares com mais clareza editorial.
+                <h2 className="mt-4 font-display text-heading-lg font-semibold text-text-primary">
+                  Continue a trilha com o mesmo contexto do hub.
                 </h2>
-                <p className="mt-3 text-body-sm text-white/72">
-                  Os destaques da pagina foram separados em camadas claras para que conteudo,
-                  contexto e acao avancem no mesmo ritmo.
+                <p className="mt-3 text-body-sm text-text-secondary">
+                  O rail agora concentra retorno rapido para a categoria, o portfolio completo e as
+                  recomendacoes conectadas sem repetir os mesmos blocos auxiliares do artigo.
                 </p>
 
-                <div className="mt-5 space-y-3">
-                  {supportHighlights.map((highlight) => (
-                    <div
-                      key={highlight.title}
-                      className="rounded-card border border-white/10 bg-white/[0.05] p-4"
+                <div className="mt-5 grid gap-3">
+                  {railNavigationLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="group rounded-card border border-border bg-white px-4 py-4 shadow-soft transition hover:border-accent/18 hover:shadow-medium focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
                     >
-                      <p className="text-sm font-semibold text-white">{highlight.title}</p>
-                      <p className="mt-2 text-sm leading-relaxed text-white/68">
-                        {highlight.description}
+                      <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                        {link.eyebrow}
                       </p>
-                    </div>
+                      <p className="mt-2 text-sm font-semibold text-text-primary group-hover:text-accent group-focus-visible:text-accent">
+                        {link.title}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                        {link.description}
+                      </p>
+                    </Link>
                   ))}
                 </div>
+
+                {data.relatedSolutions.length > 0 ? (
+                  <div className="mt-6 border-t border-border/80 pt-6">
+                    <p className="text-label-sm font-semibold uppercase tracking-[0.18em] text-text-muted">
+                      Nesta mesma frente
+                    </p>
+                    <div className="mt-4 space-y-3">
+                      {data.relatedSolutions.map((solution) => (
+                        <Link
+                          key={solution.id}
+                          href={solution.href}
+                          className="group block rounded-card border border-border bg-white px-4 py-4 shadow-soft transition hover:border-accent/18 hover:shadow-medium focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/15"
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-text-primary group-hover:text-accent group-focus-visible:text-accent">
+                                {solution.title}
+                              </p>
+                              <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                                {buildRelatedSolutionDescription(
+                                  solution.title,
+                                  solution.categoryLabel || data.categoryTitle,
+                                  solution.description,
+                                )}
+                              </p>
+                            </div>
+                            <span
+                              className="mt-0.5 text-base font-semibold text-accent transition group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
+                              aria-hidden
+                            >
+                              →
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </Card>
             </div>
           </div>
@@ -815,7 +884,7 @@ export async function SolutionDetailPage({ config }: { config: SolutionDetailCon
                   <SolutionCard
                     key={solution.id}
                     index={index}
-                    variant="compact"
+                    variant="related"
                     item={{
                       id: solution.id,
                       title: solution.title,
