@@ -169,7 +169,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
           <Card
             tone="dark"
             padding="none"
-            className="relative overflow-hidden border-white/10 bg-white/[0.04] shadow-[0_32px_80px_rgba(8,14,26,0.28)]"
+            className="relative overflow-hidden border-white/10 bg-white/[0.04] shadow-[0_32px_80px_rgba(8,14,26,0.28)] xl:mt-8 2xl:mt-10"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.article
@@ -190,7 +190,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
                   if (info.offset.x < -80) goTo(activeIndex + 1)
                   if (info.offset.x > 80) goTo(activeIndex - 1)
                 }}
-                className="relative min-h-[28rem] cursor-grab active:cursor-grabbing"
+                className="relative min-h-[28rem] cursor-grab active:cursor-grabbing xl:min-h-[26rem]"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center"
@@ -214,7 +214,7 @@ export function MissaoVisaoValores({ heading, slides }: MissaoVisaoValoresProps)
                   aria-hidden
                 />
 
-                <div className="relative flex min-h-[28rem] flex-col justify-between p-6 sm:p-8 lg:p-10">
+                <div className="relative flex min-h-[28rem] flex-col justify-between p-6 sm:p-8 lg:p-10 xl:min-h-[26rem] xl:px-9 xl:pb-9 xl:pt-8">
                   <div className="flex items-center justify-between gap-3">
                     <Badge className="border border-white/12 bg-white/[0.08] text-white/78">
                       Pilar Apollo

@@ -1,6 +1,6 @@
 # Ralph Visual Progress Log
 Started: 2026-03-11 00:00:00
-Last Updated: 2026-03-11 17:14:58 UTC
+Last Updated: 2026-03-11 17:23:34 UTC
 
 ## Codebase Patterns
 - Project lives in the existing Apollo repository root; all commands must run from that root.
@@ -48,7 +48,8 @@ Last Updated: 2026-03-11 17:14:58 UTC
 ## Current Delivery Status
 - `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
 - `VP-002` completed with the registered shell/homepage fixes validated and the story formally closed.
-- Next target: `VP-003 - Correções visuais institucionais`
+- `VP-003` completed with the registered institutional alignment fix validated and the story formally closed.
+- Next target: `VP-004 - Correções visuais editorial e prova social`
 
 ## Validation Rules
 - Required validation order:
@@ -157,4 +158,29 @@ Last Updated: 2026-03-11 17:14:58 UTC
 - Learnings for future iterations:
   - In this environment, transient `next build` failures for `/_document` do not necessarily indicate a code regression; the final successful required build should be recorded alongside the flake.
   - When a story’s code already exists in the worktree, closure can be a validation-only pass as long as the register, PRD status, and required checks are reconciled in the same run.
+---
+
+## 2026-03-11 17:23:34 UTC - VP-003
+- Story ID: `VP-003`
+- Issue IDs addressed: `VR-007`
+- What was implemented:
+  - Adjusted the desktop composition of `Missao, Visao e Valores` on `/sobre` so the featured panel on the right sits lower and reads less lifted relative to the narrative column on the left.
+  - Reduced the featured panel's desktop min-height and tightened its internal spacing to keep the highlighted surface calmer without changing the section structure or interaction model.
+  - Closed the screenshot-backed institutional issue using `docs/screenshots/VR-007-sobre-mvv-desktop-current.png` as the visual reference and marked `VP-003` as passed.
+- Files changed:
+  - src/components/MissaoVisaoValores.tsx
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
+- Browser/manual verification status:
+  - Browser tooling was not available in this run.
+  - Manual QA remains pending for `VR-007`.
+- Learnings for future iterations:
+  - In this institutional template, a small desktop-only offset on the featured split card is enough to correct optical alignment without reopening the broader section design.
+  - Screenshot-backed institutional fixes remain safer when they stay inside the nearest shared component instead of duplicating layout overrides in the route file.
 ---

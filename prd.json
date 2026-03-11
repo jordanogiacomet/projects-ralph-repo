@@ -110,7 +110,7 @@
     {
       "id": "VP-003",
       "title": "Correções visuais institucionais",
-      "passes": false,
+      "passes": true,
       "description": "Corrigir débitos visuais residuais das rotas institucionais, principalmente /sobre e seções relacionadas.",
       "acceptanceCriteria": [
         "As issues registradas para rotas institucionais foram tratadas",
