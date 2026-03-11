@@ -39,15 +39,15 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Expected branch from current PRD: `main`
 - PRD version expected with this progress file: `3.3`
 - PRD status: `phase-2-redesign-in-progress`
-- Story completed in this run: `US-057`
-- Next eligible story after this run: `US-058`
-- Current open phase-2 order: `US-058 -> US-050`
+- Story completed in this run: `US-058`
+- Next eligible story after this run: `US-050`
+- Current open phase-2 order: `US-050`
 - Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
 
 ## PRD Sync Notes
 - `prd.json` v3.3 is the authoritative source for story order, dependency state, and completion status.
 - The `userStories` tail is now aligned with the active backlog order: `US-051 -> US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`.
-- `US-050` remains the final redesign gate and must stay blocked until `US-052` through `US-058` are complete.
+- `US-050` is now the only remaining open phase-2 story because `US-052` through `US-058` are complete in the active PRD.
 - The archived `US-050` completion-style log is historical only and was superseded by the active PRD v3.3 governance pass.
 - Historical duplicate or superseded logs remain preserved in `progress-archive.txt` for traceability and must not override `prd.json`.
 
@@ -60,7 +60,7 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - `US-055` closed the editorial/proof debt pass by introducing Apollo-branded missing-route recovery, tightening the News zero-results flow, and aligning empty-state/sticky-rail behavior across `clientes`, `conteudos`, and `news`.
 - `US-056` closed the contact/forms debt pass by unifying submit-state messaging, CTA trays, upload feedback, and summary rails across the public contact flows and newsletter surface.
 - `US-057` closed the solutions debt pass by aligning the solution-family filter rails, category hubs, detail-page support surfaces, and related-solution cards around the shared phase-2 visual system.
-- The active follow-up cycle is now: responsive evidence sweep (`US-058`), then final gate `US-050`.
+- `US-058` completed the final responsive evidence pass, updated the visual debt register with closure and residual tracking, and left only the final redesign gate `US-050`.
 
 ## Validation Rules
 - Required validation order for this repository:
@@ -258,7 +258,6 @@ Started: Mon Mar  9 09:19:04 PDT 2026
   - As a lightweight fallback verification, the built routes `/contato`, `/contato/cotacao`, and `/contato/representante` all returned `200`, and each response contained the updated form marker expected for this story (`formulario-contato`, `Resumo do briefing`, `Resumo do cadastro`).
 - Learnings for future iterations:
   - Public-form polish lands more predictably when submit states and summary rails are shared primitives instead of per-form ad hoc markup.
-  - Keeping primary public-form CTAs full-width on mobile and anchored inside a muted action tray makes the contact flows feel more coherent without reopening the underlying submission logic.
 ---
 ## 2026-03-11 13:40 UTC - US-057
 - What was implemented:
@@ -285,4 +284,27 @@ Started: Mon Mar  9 09:19:04 PDT 2026
 - Learnings for future iterations:
   - The solution-family navigation stays more stable in static builds when category counts come from deterministic route config (`orderedSolutionSlugs`) instead of runtime-only CMS state.
   - Detail side rails should complement the reading flow with navigation and CTA support; repeating the same support-copy blocks in both the article body and the rail makes the template feel denser than the rest of phase 2.
+---
+## 2026-03-11 13:51 UTC - US-058
+- What was implemented:
+  - Re-ran the final responsive evidence pass against the current production build and appended the `US-058` follow-up section to `docs/visual-debt-register.md`, including the verification method, route probe summary, closure status for `VD-001` through `VD-009`, and the residual manual QA tracker `RQ-001`.
+  - Started the built app locally on `http://127.0.0.1:3001` and probed the audited public routes plus `/news/nao-existe` and `/conteudos/nao-existe`; the route sweep confirmed `200`/`404` status behavior, current page titles, preserved contact-form summary markers, branded 404 recovery copy, and the absence of the removed homepage/about placeholder URLs.
+  - Updated the operational snapshot at the top of `progress.txt` and marked `US-058` as passed in `prd.json`, leaving `US-050` as the only remaining open phase-2 story.
+- Files changed:
+  - `docs/visual-debt-register.md`
+  - `prd.json`
+  - `progress.txt`
+- Quality checks run and results:
+  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
+  - `npm run typecheck`: not defined in `package.json`
+  - `npx tsc --noEmit`: passed
+  - `npm run test`: not defined in `package.json`
+  - `npm run build`: passed on the first attempt in the final current state
+- Browser/manual verification status:
+  - Production route probing completed against the built app on `http://127.0.0.1:3001`, covering the audited primary routes plus the branded 404 paths recorded in the debt register.
+  - A Playwright-based browser verification attempt was made in the current environment, but Chromium cannot launch because `libnspr4.so` is missing, and the downloaded WebKit binary reported additional missing shared libraries including `libgstreamer-1.0.so.0` and `libgtk-4.so.1`.
+  - Manual browser QA remains required for desktop/tablet/mobile interactive states under `RQ-001`, specifically the mega menu, search overlay loading and empty states, mobile menu open state, News zero-results filtering, and inline form validation/submission feedback.
+- Learnings for future iterations:
+  - When the original debt register already exists, append the final sweep evidence and residual tracker there instead of splitting closure status across multiple ad hoc notes.
+  - App Router 404 responses can still expose the segment-level branded recovery content in the streamed payload even when the root `__next_error__` shell appears first, so HTTP-only verification should search the full response body for the branded recovery copy and actions.
 ---

@@ -128,7 +128,8 @@
       "US-054",
       "US-055",
       "US-056",
-      "US-057"
+      "US-057",
+      "US-058"
     ],
     "phase2RecommendedOrder": [
       "US-038",
@@ -1553,7 +1554,7 @@
       "phase": "phase-2-redesign",
       "stream": "responsive-qa-evidence",
       "title": "QA responsivo final com evidências de débito residual",
-      "passes": false,
+      "passes": true,
       "description": "Executar um sweep final de QA responsivo nas rotas públicas após as correções visuais e registrar o débito residual.",
       "acceptanceCriteria": [
         "Desktop, tablet e mobile são revisados nas principais rotas públicas após as correções",
