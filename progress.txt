@@ -1,340 +1,104 @@
+# Ralph Visual Progress Log
+Started: 2026-03-11 00:00:00
+Last Updated: 2026-03-11 16:44:45 UTC
+
 ## Codebase Patterns
-- Payload CMS 3.x is integrated into Next.js (not standalone) - config at `src/payload.config.ts`
-- Frontend routes live in `src/app/(frontend)/`, Payload admin/API in `src/app/(payload)/`
-- Use `@payload-config` for the Payload config alias and `@/*` for `src` imports
-- Collections live in `src/collections/`, globals in `src/globals/`, and blocks in `src/blocks/`
-- Access helpers live in `src/access/index.ts` - prefer `isAdmin`, `isAdminOrEditor`, `isLoggedIn`, and `anyone`
-- Slug normalization should reuse `formatSlugHook` from `src/hooks/formatSlug.ts` in `hooks.beforeValidate`
-- Block definitions must be exported from `src/blocks/index.ts` and mapped through `src/components/BlockRenderer.tsx`
-- Interactive layout surfaces follow a server/client split: server wrappers fetch data, client components own state and events
-- Payload upload and relation fields may resolve as string IDs or populated objects - guard `typeof field === "object"` before nested access
-- When route slugs change, preserve compatibility with a re-export route: `export { default, generateMetadata } from "../canonical/page"`
-- Global shell components need deterministic fallback data so static builds still render when Payload or Postgres is unavailable
-- Footer fallback values for unidades, social links, cookie copy, and WhatsApp live in `src/lib/constants.ts` and are merged with Payload globals
-- Public contact/download flows reuse `/api/form-submissions`; advanced forms keep a server-page plus client-form split
-- Shared public-form feedback and summary surfaces live in `src/components/PublicFormStatus.tsx` and `src/components/PublicFormSummary.tsx`; reuse them across contact/newsletter flows before introducing one-off submit-state UI
-- Posts author relations may resolve as populated `users` objects or raw IDs, so UI mappers must guard `typeof author === "object"`
-- Route metadata should be authored with `buildMetadata` from `src/lib/seo.ts`; structured data is emitted with `JsonLd`
-- Public origin resolution should prefer `NEXT_PUBLIC_SERVER_URL` and fall back to `NEXT_PUBLIC_SITE_URL`
-- Search discovery routes live in `src/app/sitemap.ts` and `src/app/robots.ts`; site search is served by `src/app/api/search/route.ts`
-- Search responses stay grouped by collection type (`pages`, `posts`, `solucoes`, `conteudos`) so overlays can render resilient sectioned results
-- Section spacing should use the shared utilities from `src/styles/utilities.css`: `section-space-tight`, `section-space`, and `section-space-loose`
-- Hero sections use the shared asymmetric padding rhythm `pb-24 pt-28 sm:pb-28 sm:pt-32 lg:pb-32 lg:pt-36`
-- Overlap sections should use `-mt-12 sm:-mt-16` with `pb-[var(--space-section-loose)]` to stay aligned with the redesign system
-- Shared motion behavior belongs in `src/styles/tokens.css` and `src/styles/utilities.css`; prefer `motion-transition`, `motion-lift-*`, and `motion-media-scale` utilities
-- Shared UI primitives in `src/components/ui/` should be preferred over one-off control styling
-- Dark-surface secondary CTAs should use `Button` variant `inverted` from `src/components/ui/Button.tsx` instead of duplicating white-glass button classes per template
-- Shared shell-navigation normalization lives in `src/lib/navigation.ts` and should be reused by header/footer navigation loaders
-- Floating shell controls coordinate through `body[data-cookie-consent-visible]` plus the shared offset variables in `src/styles/utilities.css`; keep cookie, WhatsApp, and scroll-to-top stacking aligned there
-- Canonical solution detail routes use per-page config plus the shared `src/components/SolutionDetailPage.tsx` template/loader; keep alias routes when historical slugs must resolve
-- Solution category navigation counts should derive from the deterministic `orderedSolutionSlugs` config in `src/lib/solutionCategories.ts` so hubs stay stable even when Payload data is unavailable
-- When premium route media is optional, prefer layered gradient fallback treatments in-component instead of hard-coded placeholder image URLs that can 404
-- With multiple top-level route groups acting as root layouts, branded public 404s should live in segment-level `not-found.tsx` files (for example `news/not-found.tsx`) rather than a root `src/app/not-found.tsx`
+- Project lives in the existing Apollo repository root; all commands must run from that root.
+- This visual cycle does NOT replace the frozen baseline; it runs on top of it.
+- The active source of truth for this round is `prd.json` in the worktree root.
+- The baseline phase-2 history lives under `.ralph/baseline/`.
+- This cycle is screenshot-driven and issue-driven: visual fixes must reference `docs/visual-register.md`.
+- Use issue IDs in the format `VR-001`, `VR-002`, etc.
+- Implement exactly one visual story per iteration.
+- Within a story, fix only issues that belong to that story’s scope.
+- Do not reopen broad redesign work when the issue is a localized spacing/alignment/polish problem.
+- Prefer the smallest safe fix in the nearest responsible component.
+- Reuse existing design-system primitives and shared utilities before introducing new one-off styling.
+- If a problem exists in multiple routes because of one shared component, fix the shared component once and record all affected routes.
+- Every completed story must update:
+  - `prd.json`
+  - `progress.txt`
+  - `docs/visual-register.md`
+- If checks fail, do not mark the story complete.
+- If browser tooling is unavailable, explicitly record manual QA as pending.
+- Do not rewrite the legacy `progress-phase2.txt` from the old cycle during this round.
 
 ## Project Snapshot
-- Project: `apollo-gestao-website`
-- Expected branch from current PRD: `main`
-- PRD version expected with this progress file: `3.3`
-- PRD status: `phase-2-redesign-complete`
-- Story completed in this run: `US-050`
-- Next eligible story after this run: `none - phase-2 complete`
-- Current open phase-2 order: `none - all phase-2 stories complete`
-- Stack: Next.js 15.4.x + Payload CMS 3.x + PostgreSQL + Tailwind CSS 3.x + TypeScript + React Hook Form + Framer Motion
+- Project: Apollo Gestão website
+- Visual cycle: `visual-r1`
+- Objective: residual visual debt cleanup after the completed phase-2 redesign baseline
+- Scope: shell, homepage, institucional, editorial/proof, contato/forms, and soluções
+- Method: screenshot-driven fixes + issue register + incremental stories
+- Expected branch: `codex/apollo-visual-polish-r1`
 
 ## PRD Sync Notes
-- `prd.json` v3.3 is the authoritative source for story order, dependency state, and completion status.
-- All phase-2 redesign stories are now complete in the active PRD: `US-051 -> US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`.
-- `US-050` closed the final redesign gate in the active PRD; no open phase-2 story order remains.
-- Residual manual browser QA remains tracked only in `docs/visual-debt-register.md` under `RQ-001`; it does not reopen the completed phase-2 backlog sequence.
-- Historical duplicate or superseded logs remain preserved in `progress-archive.txt` for traceability and must not override `prd.json`.
+- `prd.json` in this worktree root is the source of truth for THIS cycle.
+- The old phase-2 baseline remains frozen under `.ralph/baseline/`.
+- Story order for this cycle:
+  - VP-001
+  - VP-002
+  - VP-003
+  - VP-004
+  - VP-005
+  - VP-006
+  - VP-007
+- Issue-level source of truth: `docs/visual-register.md`
+- If the register and the story scope disagree, update the register before changing code.
 
 ## Current Delivery Status
-- Phase 1 functional foundation is implemented: CMS schema, globals, layout blocks, public routes, SEO/search, form flows, and seed baseline.
-- Phase 2 redesign delivery is complete through `US-050` across shell, homepage, editorial/proof templates, contact flows, and solutions templates.
-- `US-052` completed the structured multi-breakpoint audit and persisted the versioned visual debt register at `docs/visual-debt-register.md`.
-- `US-053` closed the first shell debt pass with a lighter consent surface, coordinated floating controls, a navigation-first mobile menu, and a stronger search loading state.
-- `US-054` cleared the homepage/about debt pass by replacing broken media fallbacks and tightening the homepage mobile hero spacing so the CTA pair stays intentional.
-- `US-055` closed the editorial/proof debt pass by introducing Apollo-branded missing-route recovery, tightening the News zero-results flow, and aligning empty-state/sticky-rail behavior across `clientes`, `conteudos`, and `news`.
-- `US-056` closed the contact/forms debt pass by unifying submit-state messaging, CTA trays, upload feedback, and summary rails across the public contact flows and newsletter surface.
-- `US-057` closed the solutions debt pass by aligning the solution-family filter rails, category hubs, detail-page support surfaces, and related-solution cards around the shared phase-2 visual system.
-- `US-058` completed the final responsive evidence pass and left the residual manual QA tracker `RQ-001` in the visual debt register.
-- `US-050` closed the redesign gate by harmonizing the remaining dark-surface secondary CTA treatment through shared UI primitives and revalidating the final public route set against the production build.
+- `VP-001` completed with bootstrap-only artifact updates; no product UI changes were made.
+- Screenshot-backed actionable issues now start in the shell/homepage scope.
+- Next target: `VP-002 - Correções visuais do shell e homepage`
 
 ## Validation Rules
-- Required validation order for this repository:
+- Required validation order:
   - `npm run lint`
-  - `npm run typecheck` if it exists; otherwise `npx tsc --noEmit`
-  - `npm run test` if it exists
+  - `npm run typecheck` if available, otherwise `npx tsc --noEmit`
+  - `npm run test` if available
   - `npm run build`
-- `npm run typecheck` is not currently defined in `package.json`, so `npx tsc --noEmit` is the practical type-check gate.
-- `npm run test` is not currently defined in `package.json`.
-- If `.next/types` is missing and `npx tsc --noEmit` fails because of that, rerun type validation after a successful Next build path.
-- If `npm run build` fails with known transient Next.js sandbox issues, retry once and record the exact result.
-- If `npx next build --debug` is used for diagnosis, log it explicitly and do not silently treat it as the same as `npm run build`.
-- Browser verification is required only for UI stories; when tooling is unavailable, record that manual QA is still pending.
+- UI fixes should be browser-verified if tooling exists.
+- If browser tooling does not exist, record manual QA as pending.
+- Do not mark a story complete if required checks fail.
 
 ## Active Risks / Known Issues
-- `prd.json` must remain the source of truth; archived progress entries may include superseded completion attempts that are preserved only for traceability.
-- Residual manual QA tracker `RQ-001` remains open because the current environment still cannot launch Playwright Chromium/WebKit due missing shared libraries; production route probes passed, but interactive browser confirmation is still pending.
-- Sandbox/static builds may log Postgres connectivity errors during static generation even when the build exits successfully - distinguish runtime noise from build failure.
-- Plain `npm run build` may intermittently fail in the sandbox with transient Next.js worker, module, or page-resolution issues; retry once and log the exact outcome.
-- Mobile and tablet experience must not be deferred until the end of redesign work.
-- There is ongoing risk of mixing phase-1 and phase-2 visual language if audit-driven fixes are not applied systematically.
-- The Payload-inspired language must stay translated into Apollo's institutional context rather than drifting into a literal SaaS clone.
-- Do not reopen CMS modeling purely to solve visual debt unless editorial governance materially improves.
+- The old baseline PRD is already complete, so agents can mistakenly think there is nothing left to do unless they read the new root `prd.json`.
+- Screenshot-driven work can sprawl if issues are not small and objective.
+- Shared-component fixes can accidentally affect multiple routes; always record blast radius.
+- Manual QA may still be necessary if the environment cannot launch browser tooling.
 
-## Phase-2 Redesign Guardrails
-- Modernize without decharacterizing Apollo.
-- Preserve institutional seriousness with more mature execution.
-- Increase whitespace and reduce visual noise.
-- Make cards, grids, filters, overlays, and forms feel more premium.
-- Use motion as refinement, not spectacle.
-- Keep the site consultive, technical, and commercially clear.
-- Keep SEO, accessibility, keyboard navigation, reduced motion, and route integrity intact.
-- Prefer design-system and template evolution over CMS remodeling.
+---
 
-## Progress Entry Format
-- Always append a new entry for the selected story.
-- Record: what was implemented, files changed, quality checks run and results, browser/manual verification status, and learnings for future iterations.
-- For documentation-maintenance stories, note what was archived or re-synchronized and why.
+## 2026-03-11 00:00:00 - INIT
+- Initialized the dedicated visual-r1 progress log.
+- Established operational rules for screenshot-driven visual debt work on top of the completed phase-2 baseline.
+- No product code changed in this entry.
+- Files changed:
+  - progress.txt
+- **Learnings for future iterations:**
+  - This cycle must stay separated from the legacy redesign PRD to avoid confusion with already-complete stories.
+  - Visual fixes should always be traceable to issue IDs in the visual register.
+---
 
-## 2026-03-11 11:44 UTC - US-051
+## 2026-03-11 16:44:45 UTC - VP-001
+- Story ID: `VP-001`
+- Issue IDs addressed: none; bootstrap story only.
 - What was implemented:
-  - Realigned the operational backlog artifacts with PRD v3.3 by updating `AGENTS.md` story-selection rules, removing the conflicting all-complete sentinel, and making the current open sequence explicit: `US-051 -> US-052 -> US-053 -> US-054 -> US-055 -> US-056 -> US-057 -> US-058 -> US-050`.
-  - Reordered the open `userStories` tail in `prd.json` so the structured story order now matches `storyExecutionPlan.phase2RecommendedOrder`, while keeping `US-050` blocked as the final gate behind `US-052` through `US-058`.
-  - Slimmed `progress.txt` back to the operational sections required for active runs and moved the no-longer-active redesign logs from `US-043C` through the superseded historical `US-050` record into `progress-archive.txt` without deleting traceability.
+  - Verified that the active visual-r1 bootstrap artifacts are already in place: the root `prd.json` is the source of truth, `docs/visual-register.md` exists, and the current issues are grouped by story/template family with the required fields.
+  - Added an explicit `VP-001` bootstrap status note to `docs/visual-register.md` so later runs do not treat the lack of product issue rows under this story as missing setup.
+  - Marked `VP-001` as passed in `prd.json` and advanced the progress snapshot to `VP-002` without changing any product UI code.
 - Files changed:
-  - `AGENTS.md`
-  - `prd.json`
-  - `progress.txt`
-  - `progress-archive.txt`
-- Quality checks run and results:
+  - docs/visual-register.md
+  - prd.json
+  - progress.txt
+- Checks run and results:
   - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
   - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt
+  - `npm run test`: skipped because the script is not defined in `package.json`
+  - `npm run build`: passed
 - Browser/manual verification status:
-  - Not applicable for this story because no UI/template behavior changed; no browser verification was required.
+  - Browser verification is not applicable for this bootstrap-only story.
+  - Manual QA remains pending for later UI stories because no browser tooling was used in this run.
 - Learnings for future iterations:
-  - Backlog-governance stories need the structured `userStories` order and the narrative execution-plan text to agree, otherwise agents can land on blocked gate stories even when dependencies are technically enforcing the right answer.
-  - When historical progress entries become operationally misleading, archive them with context instead of deleting them; keep `progress.txt` focused on current-state guidance and treat `prd.json` as the final source of truth for completion state.
----
-## 2026-03-11 12:20 UTC - US-052
-- What was implemented:
-  - Audited the main public route set in desktop, tablet, and mobile: `/`, `/sobre`, `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, `/clientes`, `/conteudos`, `/conteudos/e-book-identificacao-patrimonial`, `/news`, `/contato`, `/contato/cotacao`, and `/contato/representante`.
-  - Exercised the relevant non-default shell and archive states available in the current build: desktop mega-menu open, desktop search overlay open/loading/empty, mobile menu open, News zero-results search, and a representative missing-route 404 at `/news/nao-existe`.
-  - Created the versioned visual debt register at `docs/visual-debt-register.md` with uniquely tracked items `VD-001` through `VD-009`, including route, breakpoint, component, observed issue, expected behavior, severity, and the intended follow-up story (`US-053` through `US-055`).
-  - Recorded two concrete missing fallback-media debts discovered during the browser pass: `/images/home-hero-placeholder.jpg` from `src/components/HomePage.tsx` and `/images/sobre-slide-placeholder.jpg` from `src/components/MissaoVisaoValores.tsx`.
-- Files changed:
-  - `docs/visual-debt-register.md`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt
-- Browser/manual verification status:
-  - Browser verification completed with a local Playwright audit pass across desktop/tablet/mobile plus the additional open/loading/empty/error states listed above.
-  - Inline validation and success/error messaging for `CotacaoForm` and `RepresentanteForm` were reviewed at the page/template level, but their interactive messages did not surface stable headless captures in this run; keep manual interactive confirmation in scope for `US-056`.
-- Learnings for future iterations:
-  - A versioned debt register is more useful when each finding is already mapped to the next corrective story stream; that keeps `US-053` through `US-057` scoped and prevents another broad unfocused redesign pass.
-  - Missing visual fallback assets can hide in otherwise “working” templates until a browser audit is run; runtime 404s for placeholder media belong in the debt register because they directly change the perceived polish of the page.
-  - Even when no horizontal overflow is present, shell-level floating surfaces can still materially damage first-fold readability on mobile and tablet, so the overlay pass (`US-053`) should land before route-specific polish stories.
----
-## 2026-03-11 12:40 UTC - US-053
-- What was implemented:
-  - Reworked the shell float stack so cookie consent now sits lower and more compact on small screens, exposes its measured height through a shared CSS variable, and no longer forces the initial viewport to surrender as much hero space.
-  - Coordinated `CookieConsent`, `WhatsAppFloat`, `ScrollToTop`, and `src/styles/utilities.css` so the WhatsApp chip hides while cookie consent is active on tablet/mobile and the scroll-to-top control stacks above the consent surface instead of colliding with other floating chrome.
-  - Reduced the mobile menu intro density in `src/components/MobileMenu.tsx` by removing the oversized structure card from the first viewport, compressing the heading block, and moving search/CTA shortcuts below the primary navigation list.
-  - Strengthened the desktop search overlay loading state in `src/components/SearchOverlay.tsx` with query-adjacent status feedback plus result-pane skeleton groups so loading feels anchored to the search field instead of leaving a mostly empty pane.
-- Files changed:
-  - `src/components/CookieConsent.tsx`
-  - `src/components/WhatsAppFloat.tsx`
-  - `src/components/ScrollToTop.tsx`
-  - `src/components/MobileMenu.tsx`
-  - `src/components/SearchOverlay.tsx`
-  - `src/styles/utilities.css`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt
-- Browser/manual verification status:
-  - Manual browser QA is still required for this UI story.
-  - A local browser verification attempt was made after `npm run build` by starting the production app on `http://127.0.0.1:3001` and launching Playwright Chromium, but the environment is missing the required shared library `libnspr4.so`, so responsive browser automation could not run in this session.
-- Learnings for future iterations:
-  - Shell floating elements need a single shared offset contract; coordinating them through shared CSS variables is more robust than hard-coding independent bottom offsets per component.
-  - Mobile menu utility actions should live after the primary route list whenever first-fold navigation density matters more than shell promotion.
-  - Search loading states feel materially stronger when status copy and placeholder structure stay visually attached to the query field instead of appearing as a distant spinner in the results pane.
----
-## 2026-03-11 12:52 UTC - US-054
-- What was implemented:
-  - Cleared `VD-005` on the homepage by replacing the broken `/images/home-hero-placeholder.jpg` fallback with an intentional layered gradient treatment in `src/components/HomePage.tsx`, preserving depth when CMS hero media is absent instead of issuing a 404-backed background request.
-  - Cleared `VD-006` on the homepage by tightening the mobile hero composition in `src/components/HomePage.tsx`: the badge, heading, subtitle, CTA spacing, button widths, and scroll indicator visibility now prioritize both hero CTAs within the first mobile viewport while keeping the desktop/tablet rhythm unchanged.
-  - Cleared `VD-007` on `/sobre` by replacing the broken `/images/sobre-slide-placeholder.jpg` fallback in `src/components/MissaoVisaoValores.tsx` with a dark institutional gradient surface that preserves the slider’s storytelling weight when slide media is missing.
-  - Kept the existing overlap and section-transition structure intact so the dark/light cadence between homepage sections and the `/sobre` narrative stack stays aligned with the current design system instead of introducing a broader template rewrite.
-- Files changed:
-  - `src/components/HomePage.tsx`
-  - `src/components/MissaoVisaoValores.tsx`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: failed on the first attempt with transient Next.js page-resolution errors while collecting page data for `/conteudos` and `/solucoes/avaliacao-patrimonial/avaliacao-de-imoveis-urbanos-e-rurais`; passed on the required retry
-- Browser/manual verification status:
-  - Manual browser QA is still required for this UI story.
-  - A local verification attempt was made by starting the built app on `http://127.0.0.1:3001` and launching Playwright Chromium, but the bundled browser cannot start in this environment because `libnspr4.so` is missing.
-  - As a lightweight fallback verification, the built routes `/` and `/sobre` both returned `HTTP/1.1 200 OK`, and their rendered responses no longer referenced the removed placeholder URLs.
-- Learnings for future iterations:
-  - When optional editorial media drives a premium hero or slider surface, layered CSS fallbacks are safer than depending on static placeholder assets that may never be committed.
-  - Mobile hero fixes land more cleanly when spacing, typography scale, CTA width, and non-essential chrome are tuned together instead of only shrinking one element in isolation.
----
-## 2026-03-11 13:12 UTC - US-055
-- What was implemented:
-  - Cleared `VD-008` by adding an Apollo-branded recovery template at `src/app/(frontend)/not-found.tsx` and routing the `news` and `conteudos` segments through `src/app/(frontend)/news/not-found.tsx` and `src/app/(frontend)/conteudos/not-found.tsx`, so missing editorial URLs no longer fall back to the generic Next.js English 404 view.
-  - Cleared `VD-009` in `src/components/PostList.tsx` by moving zero-results recovery copy and actions directly under the News search/filter controls, while keeping the fuller archive empty state below for broader guidance.
-  - Added the shared `src/components/EditorialEmptyState.tsx` pattern and reused it across `src/components/PostList.tsx`, `src/components/ClientsPage.tsx`, and `src/app/(frontend)/conteudos/page.tsx` so archive empty states now share one visual language and clearer recovery CTAs.
-  - Tightened editorial detail-rail consistency by aligning the sticky offset rhythm in `src/app/(frontend)/news/[slug]/page.tsx` and `src/app/(frontend)/conteudos/[slug]/page.tsx`, and added a quick reset action to the clients filter summary for faster archive recovery.
-- Files changed:
-  - `src/components/EditorialEmptyState.tsx`
-  - `src/components/PostList.tsx`
-  - `src/components/ClientsPage.tsx`
-  - `src/app/(frontend)/conteudos/page.tsx`
-  - `src/app/(frontend)/conteudos/[slug]/page.tsx`
-  - `src/app/(frontend)/news/[slug]/page.tsx`
-  - `src/app/(frontend)/not-found.tsx`
-  - `src/app/(frontend)/news/not-found.tsx`
-  - `src/app/(frontend)/conteudos/not-found.tsx`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the final current state
-- Browser/manual verification status:
-  - Browser tooling is unavailable in this Codex environment, so manual browser QA is still required for this UI story.
-  - As a lightweight fallback verification, the built app was started locally on `http://127.0.0.1:3001`; `/clientes`, `/conteudos`, and `/news` returned `200`, while `/news/nao-existe` and `/conteudos/nao-existe` returned `404` and exposed the new Apollo-branded recovery copy in the response payload.
-- Learnings for future iterations:
-  - In this codebase, multiple top-level route groups behave as separate root layouts, so branded public 404s should be attached at the relevant segment (`news/not-found.tsx`, `conteudos/not-found.tsx`) instead of attempting a root `src/app/not-found.tsx`.
-  - Archive empty states feel more actionable when the first recovery sentence sits next to the active filters, with a fuller empty-state panel following below for secondary guidance and CTA depth.
----
-## 2026-03-11 13:27 UTC - US-056
-- What was implemented:
-  - Revised the shared contact-intake surfaces in `src/components/ContatoPageForm.tsx` and `src/components/ContatoForm.tsx` so the submit tray now uses the same muted callout treatment, mobile CTA width, and structured success/error feedback used by the stronger phase-2 forms.
-  - Added the shared `src/components/PublicFormStatus.tsx` and `src/components/PublicFormSummary.tsx` primitives, then reused them in `src/components/CotacaoForm.tsx`, `src/components/RepresentanteForm.tsx`, and `src/components/NewsletterForm.tsx` to align labels, helper copy, submit-state messaging, upload feedback, and summary-rail language across the public contact flows.
-  - Reworked the `CotacaoForm` right rail so the current-step guidance stays in the dark support card while the briefing summary moves into a consistent light summary panel with the same footer-callout pattern used by the representative flow; also aligned the quote and representative sticky offsets and wrapped both submit-control areas in the same muted tray treatment.
-  - Kept the existing submission endpoints and step logic intact; this story only tightened presentation and breakpoint behavior for `/contato`, `/contato/cotacao`, `/contato/representante`, and the shared newsletter/contact surfaces.
-- Files changed:
-  - `src/components/ContatoPageForm.tsx`
-  - `src/components/ContatoForm.tsx`
-  - `src/components/CotacaoForm.tsx`
-  - `src/components/RepresentanteForm.tsx`
-  - `src/components/NewsletterForm.tsx`
-  - `src/components/PublicFormStatus.tsx`
-  - `src/components/PublicFormSummary.tsx`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt in the final current state
-- Browser/manual verification status:
-  - Manual browser QA is still required for this UI story.
-  - A local verification attempt was made after `npm run build` by starting the production app on `http://127.0.0.1:3001` and launching Playwright Chromium, but the bundled browser still cannot start in this environment because `libnspr4.so` is missing.
-  - As a lightweight fallback verification, the built routes `/contato`, `/contato/cotacao`, and `/contato/representante` all returned `200`, and each response contained the updated form marker expected for this story (`formulario-contato`, `Resumo do briefing`, `Resumo do cadastro`).
-- Learnings for future iterations:
-  - Public-form polish lands more predictably when submit states and summary rails are shared primitives instead of per-form ad hoc markup.
----
-## 2026-03-11 13:40 UTC - US-057
-- What was implemented:
-  - Revised the shared solution surfaces in `src/components/SolutionFilterTabs.tsx`, `src/components/SolutionCard.tsx`, and `src/lib/solutionCategories.ts` so the main hub and category hubs now share the same refined filter-rail styling, deterministic count badges, and a middle-density related-card treatment that keeps `/solucoes` aligned with the category and detail templates.
-  - Tightened the category hub navigation panel in `src/components/SolutionCategoryHubPage.tsx` by adding an active-front summary card and clearer cross-category guidance, so `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, and `/solucoes/consultoria-e-tecnologia` no longer feel like a lighter, disconnected variant of the main solutions hub.
-  - Reworked the shared detail template in `src/components/SolutionDetailPage.tsx` so the internal hero now keeps an intentional gradient-backed surface even when solution media is absent, the sticky rail now functions as navigation plus CTA support instead of duplicating article callouts, and the `Veja também` cards now use a denser treatment that stays visually consistent with the rest of the solutions system.
-- Files changed:
-  - `src/components/SolutionFilterTabs.tsx`
-  - `src/components/SolutionCard.tsx`
-  - `src/components/SolutionCategoryHubPage.tsx`
-  - `src/components/SolutionDetailPage.tsx`
-  - `src/lib/solutionCategories.ts`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt
-- Browser/manual verification status:
-  - Browser tooling is unavailable in this Codex environment, so manual browser QA is still required for this UI story.
-  - As a lightweight fallback verification, the built app was started locally on `http://127.0.0.1:3001`; `/solucoes`, `/solucoes/avaliacao-patrimonial`, `/solucoes/controle-patrimonial`, `/solucoes/consultoria-e-tecnologia`, and representative detail routes from all three categories returned `200` and exposed the updated solution markers (`Solucoes exibidas`, `Troque de categoria sem perder o contexto do portfolio.`, `Continue a trilha com o mesmo contexto do hub.`, `Nesta mesma frente`).
-- Learnings for future iterations:
-  - The solution-family navigation stays more stable in static builds when category counts come from deterministic route config (`orderedSolutionSlugs`) instead of runtime-only CMS state.
-  - Detail side rails should complement the reading flow with navigation and CTA support; repeating the same support-copy blocks in both the article body and the rail makes the template feel denser than the rest of phase 2.
----
-## 2026-03-11 13:51 UTC - US-058
-- What was implemented:
-  - Re-ran the final responsive evidence pass against the current production build and appended the `US-058` follow-up section to `docs/visual-debt-register.md`, including the verification method, route probe summary, closure status for `VD-001` through `VD-009`, and the residual manual QA tracker `RQ-001`.
-  - Started the built app locally on `http://127.0.0.1:3001` and probed the audited public routes plus `/news/nao-existe` and `/conteudos/nao-existe`; the route sweep confirmed `200`/`404` status behavior, current page titles, preserved contact-form summary markers, branded 404 recovery copy, and the absence of the removed homepage/about placeholder URLs.
-  - Updated the operational snapshot at the top of `progress.txt` and marked `US-058` as passed in `prd.json`, leaving `US-050` as the only remaining open phase-2 story.
-- Files changed:
-  - `docs/visual-debt-register.md`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: passed
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: passed on the first attempt in the final current state
-- Browser/manual verification status:
-  - Production route probing completed against the built app on `http://127.0.0.1:3001`, covering the audited primary routes plus the branded 404 paths recorded in the debt register.
-  - A Playwright-based browser verification attempt was made in the current environment, but Chromium cannot launch because `libnspr4.so` is missing, and the downloaded WebKit binary reported additional missing shared libraries including `libgstreamer-1.0.so.0` and `libgtk-4.so.1`.
-  - Manual browser QA remains required for desktop/tablet/mobile interactive states under `RQ-001`, specifically the mega menu, search overlay loading and empty states, mobile menu open state, News zero-results filtering, and inline form validation/submission feedback.
-- Learnings for future iterations:
-  - When the original debt register already exists, append the final sweep evidence and residual tracker there instead of splitting closure status across multiple ad hoc notes.
-  - App Router 404 responses can still expose the segment-level branded recovery content in the streamed payload even when the root `__next_error__` shell appears first, so HTTP-only verification should search the full response body for the branded recovery copy and actions.
----
-## 2026-03-11 14:12 UTC - US-050
-- What was implemented:
-  - Added the shared `inverted` variant to `src/components/ui/Button.tsx` so dark-surface secondary CTAs now share one white-glass treatment with a white focus ring instead of per-template one-off classes.
-  - Replaced the remaining duplicated dark CTA styling across the major public templates and recovery surfaces: `src/app/(frontend)/sobre/page.tsx`, `src/app/(frontend)/conteudos/page.tsx`, `src/app/(frontend)/news/page.tsx`, `src/app/(frontend)/not-found.tsx`, `src/components/ClientsPage.tsx`, `src/components/SolutionsHubPage.tsx`, `src/components/SolutionCategoryHubPage.tsx`, and `src/components/SolutionDetailPage.tsx`.
-  - Closed the final phase-2 consistency gap around hover/focus treatment for high-visibility public CTAs without introducing new product features or changing route structure, content modeling, or form behavior.
-  - Revalidated the affected production routes after the design-system update and confirmed the rendered responses still expose the expected CTA/recovery copy plus the new shared dark-surface focus-ring class.
-- Files changed:
-  - `src/components/ui/Button.tsx`
-  - `src/app/(frontend)/sobre/page.tsx`
-  - `src/app/(frontend)/conteudos/page.tsx`
-  - `src/app/(frontend)/news/page.tsx`
-  - `src/app/(frontend)/not-found.tsx`
-  - `src/components/ClientsPage.tsx`
-  - `src/components/SolutionsHubPage.tsx`
-  - `src/components/SolutionCategoryHubPage.tsx`
-  - `src/components/SolutionDetailPage.tsx`
-  - `prd.json`
-  - `progress.txt`
-- Quality checks run and results:
-  - `npm run lint`: passed with the pre-existing warning in `src/payload-types.ts` about an unused eslint-disable directive
-  - `npm run typecheck`: not defined in `package.json`
-  - `npx tsc --noEmit`: initially failed because `.next/types` was absent; passed after a successful Next build regenerated the type outputs
-  - `npm run test`: not defined in `package.json`
-  - `npm run build`: first attempt failed with transient `PageNotFoundError` for `/_document`; the required retry failed with transient prerender page-resolution errors for `/solucoes/controle-patrimonial` and `/solucoes/avaliacao-patrimonial/avaliacao-de-ativos`; after moving the generated `.next` directory aside to force a clean output directory, a fresh `npm run build` passed
-- Browser/manual verification status:
-  - Browser tooling is still unavailable in this Codex environment; Playwright-based responsive/manual interaction QA remains tracked under `RQ-001` because Chromium/WebKit cannot launch due missing shared libraries (`libnspr4.so`, `libgstreamer-1.0.so.0`, `libgtk-4.so.1`)
-  - As a lightweight production fallback, the built app was started locally on `http://127.0.0.1:3001`; `/sobre`, `/clientes`, `/conteudos`, `/news`, `/solucoes`, and `/solucoes/controle-patrimonial` returned `200`, `/news/nao-existe` returned `404`, and each response exposed the expected CTA or recovery marker plus `focus-visible:ring-white/15` from the new shared variant
-- Learnings for future iterations:
-  - Dark-surface secondary CTAs should stay on a shared `Button` variant with a white focus ring; duplicating white-glass classes across templates makes final polish harder to keep consistent.
-  - When transient Next page-resolution failures persist after the documented retry, preserving the old `.next` directory and rebuilding into a fresh output path can restore a clean validation run without touching source files.
+  - The active register should explicitly note when a story is bootstrap-only so the absence of issue rows is read as intentional rather than incomplete.
+  - The first actionable screenshot-backed implementation work in this cycle now starts at `VP-002`.
 ---

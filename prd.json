@@ -1,1682 +1,198 @@
 {
-  "projectName": "apollo-gestao-website",
-  "branchName": "main",
-  "version": "3.3",
-  "status": "phase-2-redesign-complete",
-  "description": "Reimaginação do site institucional da Apollo Gestão (apollogestao.com.br) — empresa de avaliações, controle patrimonial e consultoria. O projeto começou como uma reconstrução funcional e estrutural inspirada no site anterior em WordPress, mas agora entra em uma segunda fase: repaginação visual, refinamento de experiência e fortalecimento de percepção de marca. O objetivo deixa de ser copiar fielmente o visual do site anterior e passa a ser preservar seu posicionamento, conteúdo, arquitetura de informação e identidade institucional, elevando a execução visual para um padrão mais contemporâneo, limpo, premium, técnico e confiável. Toda a camada pública do front deve carregar uma pegada visual inspirada no site do Payload CMS em termos de clareza, navegação, hero, CTAs, espaçamento, hierarquia tipográfica, polimento de interface e sensação de produto moderno — sem copiar literalmente sua IA, sua estrutura comercial ou sua identidade de marca. O site continua multi-página, orientado a conversão e conteúdo, com navegação robusta, áreas de solução, prova social, formulários e CMS centralizado via Payload.",
-  "productVision": {
-    "coreIdea": "Evoluir o site institucional da Apollo Gestão de uma reconstrução fiel para uma experiência digital premium, moderna, consultiva e claramente inspirada na linguagem visual do ecossistema Payload.",
-    "positioning": "O site deve transmitir autoridade, clareza, confiança, organização, maturidade institucional e acabamento de produto contemporâneo.",
-    "experienceGoal": "A percepção do usuário deve ser a de uma empresa sólida, especializada e contemporânea, com navegação clara, conteúdo bem estruturado, estética limpa e acabamento visual superior.",
-    "editorialGoal": "O time da Apollo deve conseguir manter páginas, soluções, conteúdos, clientes e notícias via Payload sem depender de mudanças estruturais no front para operações rotineiras."
+  "projectName": "apollo-gestao-website-visual-r1",
+  "branchName": "codex/apollo-visual-polish-r1",
+  "baseBranch": "main",
+  "version": "visual-r1.0",
+  "status": "active",
+  "description": "Ciclo dedicado de correções visuais residuais e ajustes finos do site institucional da Apollo Gestão sobre a baseline já entregue da phase-2-redesign-complete. Este ciclo não reabre o redesign amplo nem a modelagem CMS. O foco é corrigir inconsistências visuais, desalinhamentos, problemas responsivos e pequenos débitos de polish orientados por screenshots e registro de issues.",
+  "baseline": {
+    "sourcePRD": ".ralph/baseline/prd-phase2.json",
+    "sourceProgress": ".ralph/baseline/progress-phase2.txt",
+    "sourceStatus": "phase-2-redesign-complete",
+    "assumption": "A baseline funcional e visual da fase 2 já está entregue. Este PRD organiza apenas um round novo, menor e orientado a débito visual residual."
   },
-  "projectStrategy": {
-    "phase1": "Reconstrução funcional e estrutural baseada no site anterior, com CMS, rotas, conteúdo, SEO, formulários e arquitetura já implementados.",
-    "phase2": "Repaginação visual, refinamento de UX, fortalecimento de percepção de marca, maior consistência de design system e acabamento premium em todos os templates públicos. Após as entregas amplas de redesign (US-038 até US-049G), a fase 2 entra em um subciclo de saneamento operacional do backlog, auditoria visual estruturada, correções orientadas por débito visual e sweep responsivo final antes do gate de fechamento.",
-    "phase3": "Hardening operacional posterior, incluindo automação de testes, CI/CD mais robusto, operação de formulários, observabilidade e evidências formais de performance/acessibilidade, quando entrar no backlog.",
-    "visualPositioning": "Não perseguir clone visual do WordPress. Usar o site anterior apenas como referência de conteúdo, estrutura, hierarquia institucional e repertório comercial.",
-    "payloadInspirationRule": "Todo o site público deve assumir explicitamente uma pegada visual inspirada no site do Payload CMS. Essa inspiração deve aparecer em header, hero, grids, cards, filtros, CTAs, listagens, páginas editoriais, formulários e acabamento de componentes, principalmente em clareza, composição, espaçamento, hierarquia e acabamento premium.",
-    "implementationRule": "Stories já concluídas permanecem como base funcional entregue. O redesign deve acontecer por meio de novas histórias incrementais, sem apagar o histórico técnico da fase anterior.",
-    "nonBreakingRule": "A fase 2 deve preferir evolução incremental da base existente. Alterações de modelagem CMS só devem ocorrer se houver ganho claro de governança editorial ou de qualidade visual impossível de atingir apenas no front.",
-    "reviewRule": "Cada etapa de redesign deve deixar evidência em progress.txt sobre racional visual, componentes afetados, impactos em responsividade, acessibilidade, consistência global e, quando aplicável, referência aos itens do débito visual auditado.",
-    "headerRedesignRule": "O header foi revisado na fase 2 (US-039A/B/C). As próximas stories devem referenciar e manter consistência com o shell já repaginado.",
-    "priorityRule": "No estado atual da fase 2, a ordem de prioridade aberta é: (1) saneamento do backlog e artefatos operacionais, (2) auditoria visual estruturada, (3) correções visuais de shell, homepage/sobre, editorial/prova social, contato e soluções, (4) QA responsivo com evidências, (5) gate final US-050. As entregas amplas anteriores permanecem como base concluída.",
-    "translationRule": "A inspiração no Payload deve ser traduzida para o universo institucional da Apollo. O resultado final precisa parecer Apollo com linguagem visual moderna, e não uma cópia de um site de SaaS.",
-    "note": "Polish stories may modify multiple templates but must avoid architectural refactors."
+  "goal": {
+    "primary": "Eliminar débitos visuais residuais de alta e média severidade sem introduzir novas features nem refatorações amplas.",
+    "secondary": [
+      "Melhorar alinhamento, spacing, ritmo vertical, consistência tipográfica, densidade de interface e comportamento responsivo",
+      "Usar screenshots e issue register como insumo principal de correção",
+      "Manter a linguagem Payload-inspired já consolidada na baseline",
+      "Fechar um round objetivo, pequeno e rastreável de polish visual"
+    ]
   },
-  "contentAndCMSStrategy": {
-    "principle": "Reaproveitar a modelagem do Payload construída na fase 1 sempre que possível.",
-    "allowedEvolution": [
-      "Adicionar campos não-breaking quando houver ganho editorial real",
-      "Aprimorar labels, descriptions e organização do admin",
-      "Criar novos componentes/layout primitives no front sem refatorar collections desnecessariamente"
+  "scopeRules": {
+    "allowed": [
+      "Correções de layout, spacing, alinhamento, contraste, densidade, hierarquia, estados hover/focus/open, responsividade e polish visual",
+      "Ajustes pequenos em componentes compartilhados quando necessários para corrigir problemas reais em múltiplas rotas",
+      "Atualização de classes, wrappers, grids, gaps, paddings, margens, sticky offsets, empty states e fallbacks visuais",
+      "Ajustes curtos de copy apenas quando necessários para evitar quebra visual ou melhorar consistência de UI"
     ],
-    "avoid": [
-      "Reabrir toda a modelagem do CMS sem necessidade",
-      "Criar novos tipos de conteúdo apenas para resolver problemas puramente visuais",
-      "Acoplar decisões de design a hacks de conteúdo que compliquem o trabalho editorial"
+    "forbidden": [
+      "Novas features de produto",
+      "Reabertura da modelagem Payload por motivo puramente visual",
+      "Refatorações arquiteturais grandes",
+      "Troca de stack, troca de biblioteca ou redesign amplo de páginas já estáveis sem issue visual concreta",
+      "Reescrever rotas inteiras sem necessidade comprovada por issue registrada"
+    ]
+  },
+  "issueWorkflow": {
+    "sourceOfTruth": "docs/visual-register.md",
+    "issueIdFormat": "VR-001",
+    "requiredFieldsPerIssue": [
+      "id",
+      "story",
+      "route",
+      "breakpoint",
+      "state",
+      "severity",
+      "screenshots",
+      "problem",
+      "expected",
+      "suspectedArea",
+      "status"
+    ],
+    "rules": [
+      "Toda correção deve referenciar pelo menos um issue ID do registro visual",
+      "Toda issue deve ter screenshot atual ou descrição objetiva suficiente para execução segura",
+      "A story só pode ser marcada como completa quando todas as issues daquele escopo estiverem fechadas, rejeitadas ou movidas explicitamente para backlog futuro",
+      "Issues sem evidência suficiente não devem gerar alteração especulativa"
+    ]
+  },
+  "validation": {
+    "requiredChecks": [
+      "npm run lint",
+      "npm run typecheck se existir; caso contrário npx tsc --noEmit",
+      "npm run test se existir",
+      "npm run build"
+    ],
+    "uiVerification": [
+      "Browser verification quando tooling estiver disponível",
+      "Se não houver browser tooling, registrar necessidade de QA manual"
     ]
   },
   "successCriteria": {
-    "business": [
-      "O site deve transmitir percepção mais premium e confiável do que a versão anterior",
-      "Fluxos de contato e cotação devem parecer mais claros, profissionais e orientados à conversão",
-      "As páginas de soluções devem comunicar melhor profundidade técnica e valor comercial",
-      "A linguagem visual deve parecer mais próxima de produto moderno de alto nível do que de site institucional antigo"
+    "visual": [
+      "Não restam problemas visuais de severidade alta no registro visual deste ciclo",
+      "Problemas de severidade média do escopo deste round estão corrigidos ou explicitamente adiados com justificativa",
+      "Shell, homepage, institucional, editorial, contato e soluções mantêm consistência visual perceptível",
+      "Desktop, tablet e mobile não apresentam quebras gritantes nas rotas auditadas deste ciclo"
     ],
-    "editorial": [
-      "O conteúdo continua gerenciável via Payload sem regressão operacional",
-      "O time editorial consegue atualizar páginas, posts, conteúdos e clientes sem depender de alterações de código para tarefas rotineiras"
-    ],
-    "quality": [
-      "A fase 2 deve elevar consistência visual entre homepage, hubs, detalhes, conteúdo editorial e formulários",
-      "O projeto deve manter ou melhorar SEO, responsividade e acessibilidade já implementados na fase 1",
-      "O redesign não deve introduzir regressões visuais gritantes entre desktop, tablet e mobile",
-      "A pegada Payload deve ser perceptível no sistema visual como um todo, não apenas no header",
-      "O backlog e os artefatos operacionais devem permanecer coerentes com o estado real do produto para evitar deriva de execução"
+    "operational": [
+      "Cada correção fica rastreável por issue ID, arquivos alterados, checks executados e observação de QA",
+      "O ciclo fecha sem reabrir indevidamente o PRD de redesign amplo da fase 2"
     ]
-  },
-  "storyExecutionPlan": {
-    "phase1CompletedStories": [
-      "US-001",
-      "US-002",
-      "US-003",
-      "US-004",
-      "US-005",
-      "US-006",
-      "US-007",
-      "US-008",
-      "US-009",
-      "US-010",
-      "US-011",
-      "US-012",
-      "US-013",
-      "US-014",
-      "US-015",
-      "US-016",
-      "US-017",
-      "US-018",
-      "US-019",
-      "US-020",
-      "US-021",
-      "US-022",
-      "US-023",
-      "US-024",
-      "US-025",
-      "US-026",
-      "US-027",
-      "US-028",
-      "US-029",
-      "US-030",
-      "US-031",
-      "US-032",
-      "US-033",
-      "US-034",
-      "US-035",
-      "US-036",
-      "US-037"
-    ],
-    "phase2CompletedStories": [
-      "US-038",
-      "US-039A",
-      "US-039B",
-      "US-039C",
-      "US-040A",
-      "US-040B",
-      "US-040C",
-      "US-043A",
-      "US-043B",
-      "US-043C",
-      "US-044A",
-      "US-044B",
-      "US-044C",
-      "US-046A",
-      "US-046B",
-      "US-046C",
-      "US-047A",
-      "US-048B",
-      "US-049A",
-      "US-049B",
-      "US-049C",
-      "US-049D",
-      "US-049E",
-      "US-049F",
-      "US-049G",
-      "US-051",
-      "US-052",
-      "US-053",
-      "US-054",
-      "US-055",
-      "US-056",
-      "US-057",
-      "US-058",
-      "US-050"
-    ],
-    "phase2RecommendedOrder": [
-      "US-038",
-      "US-039A",
-      "US-039B",
-      "US-039C",
-      "US-040A",
-      "US-040B",
-      "US-040C",
-      "US-043A",
-      "US-043B",
-      "US-043C",
-      "US-044A",
-      "US-044B",
-      "US-044C",
-      "US-046A",
-      "US-046B",
-      "US-046C",
-      "US-047A",
-      "US-048B",
-      "US-049A",
-      "US-049B",
-      "US-049C",
-      "US-049D",
-      "US-049E",
-      "US-049F",
-      "US-049G",
-      "US-051",
-      "US-052",
-      "US-053",
-      "US-054",
-      "US-055",
-      "US-056",
-      "US-057",
-      "US-058",
-      "US-050"
-    ],
-    "phase2Logic": "A base de redesign amplo da fase 2 já foi entregue entre US-038 e US-049G. O ciclo aberto atual começa com saneamento do backlog e dos artefatos operacionais (US-051), segue com auditoria visual estruturada e criação do registro de débito visual (US-052), depois executa correções por família de template e componente (US-053 até US-057), em seguida roda o sweep responsivo com evidências e registro de débito residual (US-058), e só então fecha o gate final de polish e consistência global (US-050)."
-  },
-  "storyDependencies": {
-    "US-039A": [
-      "US-038"
-    ],
-    "US-039B": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-039C": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-040A": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-040B": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-040C": [
-      "US-038",
-      "US-039A",
-      "US-040A",
-      "US-040B"
-    ],
-    "US-043A": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-043B": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-043C": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-044A": [
-      "US-038",
-      "US-039A"
-    ],
-    "US-044B": [
-      "US-038",
-      "US-039A",
-      "US-044A"
-    ],
-    "US-044C": [
-      "US-038",
-      "US-039A",
-      "US-044A"
-    ],
-    "US-046A": [
-      "US-038",
-      "US-039A",
-      "US-040A"
-    ],
-    "US-046B": [
-      "US-038",
-      "US-039A",
-      "US-046A"
-    ],
-    "US-046C": [
-      "US-038",
-      "US-039A",
-      "US-046A",
-      "US-046B"
-    ],
-    "US-047A": [
-      "US-038",
-      "US-039A",
-      "US-046A",
-      "US-046B",
-      "US-046C"
-    ],
-    "US-048B": [
-      "US-038",
-      "US-039A",
-      "US-047A"
-    ],
-    "US-049A": [
-      "US-038",
-      "US-039A",
-      "US-039B",
-      "US-039C"
-    ],
-    "US-049B": [
-      "US-038"
-    ],
-    "US-049C": [
-      "US-038"
-    ],
-    "US-049D": [
-      "US-038",
-      "US-039A",
-      "US-039B",
-      "US-039C"
-    ],
-    "US-049E": [
-      "US-049D"
-    ],
-    "US-049F": [
-      "US-040C",
-      "US-043A",
-      "US-043B",
-      "US-043C",
-      "US-044A",
-      "US-044B",
-      "US-044C",
-      "US-046A",
-      "US-046B",
-      "US-046C",
-      "US-047A",
-      "US-048B"
-    ],
-    "US-049G": [
-      "US-049F"
-    ],
-    "US-051": [
-      "US-049A",
-      "US-049B",
-      "US-049C",
-      "US-049D",
-      "US-049E",
-      "US-049F",
-      "US-049G"
-    ],
-    "US-052": [
-      "US-051"
-    ],
-    "US-053": [
-      "US-052"
-    ],
-    "US-054": [
-      "US-052"
-    ],
-    "US-055": [
-      "US-052"
-    ],
-    "US-056": [
-      "US-052"
-    ],
-    "US-057": [
-      "US-052"
-    ],
-    "US-058": [
-      "US-053",
-      "US-054",
-      "US-055",
-      "US-056",
-      "US-057"
-    ],
-    "US-050": [
-      "US-051",
-      "US-052",
-      "US-053",
-      "US-054",
-      "US-055",
-      "US-056",
-      "US-057",
-      "US-058"
-    ]
-  },
-  "qualityGates": {
-    "globalRules": [
-      "Nenhuma story de redesign deve degradar SEO já entregue na fase 1",
-      "Nenhuma story de redesign deve quebrar conteúdo ou rotas existentes",
-      "Acessibilidade, keyboard navigation e reduced motion devem ser preservados",
-      "Todas as alterações visuais relevantes devem ser verificadas em desktop, tablet e mobile",
-      "Toda implementação de redesign deve ser avaliada contra a diretriz de pegada visual Payload-inspired",
-      "O shell repaginado em US-039A/B/C deve ser referência de linguagem para todas as stories seguintes"
-    ],
-    "perStoryEvidence": [
-      "Lista de arquivos alterados",
-      "Racional visual resumido",
-      "Impactos em componentes compartilhados",
-      "Validação mínima com lint, typecheck prático e build quando aplicável",
-      "Observações de QA manual pendente quando browser tooling não estiver disponível",
-      "Referência aos IDs do débito visual quando a story for orientada por auditoria"
-    ]
-  },
-  "techStack": [
-    "Next.js 15.4.x (App Router)",
-    "TypeScript",
-    "Payload CMS 3.x",
-    "PostgreSQL",
-    "Tailwind CSS 3.x",
-    "React Hook Form",
-    "Framer Motion"
-  ],
-  "designDirection": {
-    "aesthetic": "Corporativo premium contemporâneo com forte pegada visual inspirada no Payload CMS — visual profissional, sóbrio, técnico, limpo e mais refinado que o site anterior. A nova interface deve transmitir autoridade, clareza, precisão e confiança, mantendo a identidade institucional da Apollo Gestão, mas com melhor uso de whitespace, tipografia mais forte, grids mais limpos, superfícies mais elegantes, motion discreto e acabamento visual superior.",
-    "visualGoal": "Modernizar sem descaracterizar. O site deve parecer uma evolução natural e mais madura da Apollo, e não uma ruptura estética gratuita.",
-    "brandCharacter": [
-      "confiável",
-      "técnico",
-      "consultivo",
-      "institucional",
-      "premium",
-      "claro",
-      "sóbrio"
-    ],
-    "siteWidePayloadPegada": "Todo o front público deve carregar uma sensação visual próxima ao que o Payload comunica: clareza, produto maduro, interface limpa, conteúdo bem respirado, CTA forte, tipografia firme e navegação premium.",
-    "shellReference": "O shell global (navbar, mega menu, mobile menu, search overlay, footer, floats) foi repaginado em US-039A/B/C e serve como referência visual base para todos os templates seguintes. Stories de redesign devem garantir coerência com esse shell.",
-    "payloadInspiredLanguage": {
-      "primaryInspiration": "Payload official website",
-      "inspirationUse": "Usar como referência de linguagem visual para todo o site, especialmente header, hero, CTAs, grids, listagens, páginas editoriais, formulários e acabamento de componentes.",
-      "translateForApollo": [
-        "header mais limpo e sofisticado",
-        "hero mais forte e editorial",
-        "CTAs com presença mais clara",
-        "mais whitespace e composição premium",
-        "cards mais polidos e menos genéricos",
-        "navegação e overlays com sensação de produto maduro",
-        "detalhes editoriais e técnicos melhor organizados"
-      ],
-      "doNotCopy": [
-        "Não copiar literalmente a arquitetura de informação do Payload",
-        "Não transformar a Apollo em um site de SaaS puro",
-        "Não abandonar necessidades institucionais e comerciais específicas da Apollo",
-        "Não remover o mega menu de soluções se ele continuar cumprindo papel estratégico"
-      ]
-    },
-    "doNotDo": [
-      "Não transformar o site em uma landing page genérica de startup",
-      "Não exagerar em gradientes, glassmorphism ou animações chamativas",
-      "Não usar excesso de dark sections sem propósito narrativo",
-      "Não depender de stock images fracas para compensar falta de hierarquia visual",
-      "Não poluir a interface com muitos elementos competindo ao mesmo tempo"
-    ],
-    "colorPalette": {
-      "--bg-primary": "#FFFFFF",
-      "--bg-secondary": "#F6F8FB",
-      "--bg-tertiary": "#EEF2F7",
-      "--bg-dark-section": "#0F1724",
-      "--bg-dark-elevated": "#162033",
-      "--bg-hero-overlay": "rgba(10,18,32,0.58)",
-      "--surface-primary": "#FFFFFF",
-      "--surface-secondary": "#F8FAFC",
-      "--surface-muted": "#F1F5F9",
-      "--text-primary": "#0F172A",
-      "--text-secondary": "#475569",
-      "--text-muted": "#64748B",
-      "--text-on-dark": "#FFFFFF",
-      "--accent": "#0056A6",
-      "--accent-hover": "#004785",
-      "--accent-soft": "#EAF2FB",
-      "--accent-strong": "#003D7A",
-      "--highlight": "#D9E8F8",
-      "--border": "#E2E8F0",
-      "--border-strong": "#CBD5E1",
-      "--cta-green": "#28A745",
-      "--cta-green-hover": "#1F8A38",
-      "--success-soft": "#EAF8EE",
-      "--shadow-soft": "0 10px 30px rgba(15, 23, 42, 0.08)",
-      "--shadow-medium": "0 18px 45px rgba(15, 23, 42, 0.12)"
-    },
-    "typography": {
-      "display": "Tipografia de títulos mais sofisticada e contemporânea, preferencialmente sans-serif de personalidade forte e excelente legibilidade em grandes escalas (ex.: Manrope, Inter Tight, Plus Jakarta Sans ou equivalente). Deve sustentar headlines institucionais com alto impacto sem parecer publicitária demais.",
-      "heading": "Hierarquia clara para H1-H4, com contrastes perceptíveis de peso, tamanho e ritmo vertical.",
-      "body": "Sans-serif limpa e altamente legível para texto corrido, labels, navegação e formulários. Inter continua sendo uma base segura.",
-      "accent": "Ênfases em headlines podem usar peso, itálico controlado ou contraste de cor, mas com parcimônia. O destaque deve parecer intencional, não decorativo.",
-      "rules": [
-        "Headlines mais curtas, densas e com melhor quebra de linha",
-        "Corpo de texto com line-height confortável e largura de leitura controlada",
-        "Metadata, breadcrumbs e labels com escala menor e contraste suficiente",
-        "Evitar excesso de texto com o mesmo peso visual"
-      ]
-    },
-    "layoutSystem": {
-      "containerWidths": {
-        "content": "max-width ~ 1200px",
-        "reading": "max-width ~ 760px",
-        "wide": "max-width ~ 1360px"
-      },
-      "spacingScale": [
-        4,
-        8,
-        12,
-        16,
-        24,
-        32,
-        40,
-        48,
-        64,
-        80,
-        96,
-        120,
-        144
-      ],
-      "sectionRhythm": "As páginas devem ter ritmo vertical claro entre blocos, com respiro superior ao site anterior. Evitar empilhamento apertado e seções visualmente equivalentes sem contraste de densidade ou fundo.",
-      "gridPrinciples": [
-        "Cards e colunas com alinhamento ótico consistente",
-        "Menos blocos competindo visualmente ao mesmo tempo",
-        "Alternância intencional entre superfícies claras, neutras e escuras",
-        "Hierarquia definida por espaçamento, peso tipográfico e contraste, não por excesso de bordas"
-      ]
-    },
-    "componentLanguage": {
-      "buttons": "Botões com geometria precisa, padding generoso, estados hover/focus refinados e contraste alto. O CTA principal deve ter presença visual forte, mas sem parecer agressivo.",
-      "cards": "Cards mais premium, com superfícies limpas, bordas sutis, sombra suave e hover discreto. Evitar aparência genérica de card branco quadrado com ícone.",
-      "forms": "Formulários mais elegantes, com campos espaçosos, labels claras, estados de foco fortes e agrupamento visual coerente.",
-      "navigation": "Navbar e mega menu foram repaginados em US-039A/B/C. Novos templates devem respeitar e reforçar essa linguagem.",
-      "filters": "Tabs e chips de filtro devem parecer controles modernos de interface, com estados ativo, hover e contagem bem resolvidos."
-    },
-    "motionLanguage": {
-      "principle": "Motion como refinamento e orientação, não como espetáculo.",
-      "style": "Animações suaves, curtas e discretas. Menos efeitos chamativos; mais sensação de precisão e acabamento.",
-      "rules": [
-        "Fade, translate e scale leves como padrão",
-        "Parallax apenas quando realmente agrega profundidade",
-        "Transitions coerentes entre overlays, menus, grids e cards",
-        "Sempre respeitar prefers-reduced-motion"
-      ]
-    },
-    "imageryDirection": {
-      "approach": "Misturar fotografia institucional, texturas discretas, fundos com profundidade e elementos gráficos técnicos com moderação.",
-      "rules": [
-        "Evitar visual datado de hero escuro genérico com stock image pesada",
-        "Usar imagens mais bem tratadas, com overlay e composição mais sofisticados",
-        "Ícones e ilustrações devem ter linguagem consistente",
-        "Quando não houver bom asset, preferir composição limpa e abstrata em vez de imagem fraca"
-      ]
-    },
-    "templateGuidelines": {
-      "homepage": "Deve parecer vitrine institucional premium, não apenas uma sequência de seções cumprindo requisito.",
-      "solutionHubs": "Devem equilibrar valor consultivo, filtros claros e grids premium, sem parecer catálogo seco.",
-      "solutionDetails": "Devem parecer páginas de autoridade técnica com boa leitura, CTAs claros e recomendação relacionada elegante.",
-      "contentPages": "Devem ter caráter mais editorial e organizado, com boa relação entre imagem, texto, metadata e conversão.",
-      "contactFlows": "Devem parecer fluxos profissionais e confiáveis, com visual claro e orientado à conclusão."
-    },
-    "designPrinciples": [
-      "Modernizar sem descaracterizar a Apollo Gestão",
-      "Preservar seriedade institucional com execução visual mais madura",
-      "Priorizar clareza, hierarquia e confiança",
-      "Aumentar whitespace e reduzir ruído visual",
-      "Transformar grids, cards e filtros em superfícies premium",
-      "Usar hero fullscreen apenas quando houver ganho real de impacto",
-      "Manter caminhos de contato e conversão visíveis sem tornar todas as páginas pesadas",
-      "Fazer o site parecer mais consultivo, técnico e contemporâneo",
-      "Usar motion como acabamento de produto, não como distração",
-      "Garantir consistência entre homepage, hubs, páginas internas, formulários e conteúdo editorial",
-      "Garantir que a pegada visual inspirada no Payload seja perceptível em todo o site público, incluindo header, homepage, hubs, detalhes, conteúdo e formulários"
-    ]
-  },
-  "folderStructure": {
-    "src/app/(frontend)/": [
-      "layout.tsx — Layout principal com Navbar, Footer, WhatsApp float, CookieConsent",
-      "page.tsx — Homepage",
-      "sobre/page.tsx — Página Sobre",
-      "solucoes/page.tsx — Hub de Soluções com grid filtrado",
-      "solucoes/[categorySlug]/page.tsx — Hub de categoria (Controle, Consultoria, Avaliação)",
-      "solucoes/[categorySlug]/[solutionSlug]/page.tsx — Página individual de solução",
-      "clientes/page.tsx — Grid de clientes com filtro por segmento",
-      "contato/page.tsx — Página de contato geral",
-      "contato/cotacao/page.tsx — Formulário de cotação avançado",
-      "contato/representante/page.tsx — Formulário para representantes",
-      "conteudos/page.tsx — Hub de conteúdos (e-books, planilhas)",
-      "conteudos/[slug]/page.tsx — Página individual de conteúdo/download",
-      "news/page.tsx — Listagem de posts do blog",
-      "news/[slug]/page.tsx — Post individual do blog"
-    ],
-    "src/app/(payload)/": [
-      "admin/[[...segments]]/page.tsx — Painel admin do Payload",
-      "api/[...slug]/route.ts — API routes do Payload"
-    ],
-    "src/collections/": [
-      "Pages.ts",
-      "Posts.ts",
-      "Solucoes.ts",
-      "SolucaoCategories.ts",
-      "Clientes.ts",
-      "ClienteSegmentos.ts",
-      "Conteudos.ts",
-      "Media.ts",
-      "Users.ts",
-      "FormSubmissions.ts",
-      "NewsletterSubscribers.ts"
-    ],
-    "src/globals/": [
-      "Header.ts — Logo, nav links, social links, CTA button",
-      "Footer.ts — Dados das 3 unidades, redes sociais, copyright",
-      "SiteSettings.ts — WhatsApp number, cookie text, analytics ID, SEO defaults"
-    ],
-    "src/blocks/": [
-      "HeroBlock.ts",
-      "RichContentBlock.ts",
-      "ServiceCardsBlock.ts",
-      "CTABlock.ts",
-      "AccordionBlock.ts",
-      "TestimonialsBlock.ts",
-      "StatsBlock.ts",
-      "ContactFormBlock.ts",
-      "ImageTextBlock.ts",
-      "ClientLogosBlock.ts",
-      "VideoBlock.ts",
-      "DownloadBlock.ts"
-    ],
-    "src/components/": [
-      "Navbar.tsx",
-      "MegaMenu.tsx",
-      "MobileMenu.tsx",
-      "Footer.tsx",
-      "FooterContactForm.tsx",
-      "FooterUnidades.tsx",
-      "HeroSection.tsx",
-      "ServiceCard.tsx",
-      "ClientGrid.tsx",
-      "ClientFilterTabs.tsx",
-      "PostCard.tsx",
-      "PostList.tsx",
-      "Pagination.tsx",
-      "Breadcrumbs.tsx",
-      "SearchOverlay.tsx",
-      "WhatsAppFloat.tsx",
-      "CookieConsent.tsx",
-      "ScrollToTop.tsx",
-      "NewsletterForm.tsx",
-      "SolutionGrid.tsx",
-      "SolutionFilterTabs.tsx",
-      "CotacaoForm.tsx",
-      "RepresentanteForm.tsx",
-      "ContatoForm.tsx",
-      "SocialLinks.tsx",
-      "MissaoVisaoValores.tsx",
-      "SEOHead.tsx",
-      "RichTextRenderer.tsx",
-      "BlockRenderer.tsx"
-    ],
-    "src/components/ui/": [
-      "Button.tsx",
-      "Input.tsx",
-      "Textarea.tsx",
-      "Select.tsx",
-      "Chip.tsx",
-      "Badge.tsx",
-      "Card.tsx",
-      "SectionHeading.tsx",
-      "Container.tsx",
-      "Kicker.tsx",
-      "Metric.tsx",
-      "Surface.tsx"
-    ],
-    "src/components/layout/": [
-      "PageHero.tsx",
-      "SectionShell.tsx",
-      "PageIntro.tsx",
-      "PreFooterCTA.tsx",
-      "TopNav.tsx",
-      "MegaPanel.tsx"
-    ],
-    "src/components/sections/": [
-      "HeroSection.tsx",
-      "ServicesSection.tsx",
-      "ProofSection.tsx",
-      "ClientsSection.tsx",
-      "NewsSection.tsx",
-      "ContactSection.tsx"
-    ],
-    "src/components/templates/": [
-      "HomeTemplate.tsx",
-      "SolutionHubTemplate.tsx",
-      "SolutionDetailTemplate.tsx",
-      "EditorialListTemplate.tsx",
-      "EditorialDetailTemplate.tsx",
-      "ContactTemplate.tsx"
-    ],
-    "src/lib/": [
-      "payload.ts",
-      "queries.ts",
-      "utils.ts",
-      "constants.ts",
-      "navigation.ts",
-      "seo.ts"
-    ],
-    "src/styles/": [
-      "tokens.css — Tokens visuais e aliases de cor/spacing/shadow/radius",
-      "utilities.css — Classes utilitárias complementares do design system",
-      "payload-inspired.css — regras globais de acabamento visual para o redesign"
-    ],
-    "public/": [
-      "images/",
-      "fonts/"
-    ]
-  },
-  "payloadCollections": {
-    "Pages": {
-      "description": "Páginas estáticas e dinâmicas do site",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique, auto-generated)",
-        "heroType": "select [fullscreen, banner, none]",
-        "heroTitle": "richText",
-        "heroSubtitle": "text",
-        "heroImage": "upload (Media)",
-        "heroCTALabel": "text",
-        "heroCTALink": "text",
-        "layout": "blocks[]",
-        "parent": "relationship (Pages)",
-        "showContactForm": "checkbox",
-        "meta": "group { title, description, image }"
-      }
-    },
-    "Posts": {
-      "description": "Artigos do blog/news",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique)",
-        "excerpt": "textarea",
-        "featuredImage": "upload (Media)",
-        "content": "richText",
-        "categories": "relationship[]",
-        "author": "text",
-        "publishedAt": "date",
-        "status": "select [draft, published]",
-        "meta": "group { title, description, image }"
-      }
-    },
-    "Solucoes": {
-      "description": "14 serviços em 3 categorias",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique)",
-        "icon": "upload (Media)",
-        "shortDescription": "textarea",
-        "content": "richText/blocks",
-        "category": "relationship (SolucaoCategories)",
-        "tags": "relationship[]",
-        "order": "number",
-        "meta": "group { title, description, image }"
-      }
-    },
-    "SolucaoCategories": {
-      "description": "3 categorias de soluções",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique)",
-        "description": "textarea",
-        "heroTitle": "richText",
-        "heroImage": "upload (Media)",
-        "order": "number"
-      }
-    },
-    "Clientes": {
-      "description": "Logos e dados dos clientes",
-      "fields": {
-        "name": "text (required)",
-        "logo": "upload (Media)",
-        "segmento": "relationship (ClienteSegmentos)",
-        "website": "text",
-        "order": "number"
-      }
-    },
-    "ClienteSegmentos": {
-      "description": "32 segmentos de atuação",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique)"
-      }
-    },
-    "Conteudos": {
-      "description": "Materiais para download",
-      "fields": {
-        "title": "text (required)",
-        "slug": "text (unique)",
-        "description": "textarea",
-        "featuredImage": "upload (Media)",
-        "downloadFile": "upload (Media)",
-        "requiresEmail": "checkbox",
-        "content": "richText",
-        "meta": "group { title, description, image }"
-      }
-    },
-    "Media": {
-      "description": "Uploads de imagens e arquivos",
-      "fields": {
-        "alt": "text",
-        "caption": "text"
-      }
-    },
-    "Users": {
-      "description": "Usuários do admin",
-      "fields": {
-        "email": "email (required)",
-        "name": "text",
-        "role": "select [admin, editor]"
-      }
-    },
-    "FormSubmissions": {
-      "description": "Envios de formulários",
-      "fields": {
-        "formType": "select [contato, cotacao, representante, newsletter]",
-        "data": "json",
-        "submittedAt": "date",
-        "status": "select [new, read, replied]"
-      }
-    },
-    "NewsletterSubscribers": {
-      "description": "E-mails de newsletter",
-      "fields": {
-        "email": "email (required, unique)",
-        "subscribedAt": "date"
-      }
-    }
-  },
-  "payloadGlobals": {
-    "Header": {
-      "fields": {
-        "logo": "upload (Media)",
-        "logoNegativo": "upload (Media)",
-        "navItems": "array [{ label, link, children }]",
-        "ctaButton": "group { label, link }",
-        "socialLinks": "array [{ platform, url }]"
-      }
-    },
-    "Footer": {
-      "fields": {
-        "unidades": "array [{ name, phone, email, address }]",
-        "copyrightText": "text",
-        "socialLinks": "array [{ platform, url }]"
-      }
-    },
-    "SiteSettings": {
-      "fields": {
-        "whatsappNumber": "text",
-        "whatsappMessage": "text",
-        "cookieConsentText": "richText",
-        "defaultMeta": "group { title, description, image }",
-        "analyticsId": "text",
-        "maintenanceMode": "checkbox"
-      }
-    }
   },
   "userStories": [
     {
-      "id": "US-001",
-      "phase": "phase-1-foundation",
-      "stream": "foundation",
-      "title": "Setup do projeto Next.js + Payload CMS",
-      "passes": true
-    },
-    {
-      "id": "US-002",
-      "phase": "phase-1-foundation",
-      "stream": "cms-modeling",
-      "title": "Collections e Globals do Payload CMS",
-      "passes": true
-    },
-    {
-      "id": "US-003",
-      "phase": "phase-1-foundation",
-      "stream": "cms-layout-builder",
-      "title": "Blocos de layout (Payload Blocks)",
-      "passes": true
-    },
-    {
-      "id": "US-004",
-      "phase": "phase-1-foundation",
-      "stream": "layout-global",
-      "title": "Layout global: Navbar com Mega Menu",
-      "passes": true
-    },
-    {
-      "id": "US-005",
-      "phase": "phase-1-foundation",
-      "stream": "layout-global",
-      "title": "Layout global: Footer com formulário e unidades",
-      "passes": true
-    },
-    {
-      "id": "US-006",
-      "phase": "phase-1-foundation",
-      "stream": "public-pages",
-      "title": "Homepage",
-      "passes": true
-    },
-    {
-      "id": "US-007",
-      "phase": "phase-1-foundation",
-      "stream": "public-pages",
-      "title": "Página Sobre",
-      "passes": true
-    },
-    {
-      "id": "US-008",
-      "phase": "phase-1-foundation",
-      "stream": "solutions",
-      "title": "Página Hub de Soluções",
-      "passes": true
-    },
-    {
-      "id": "US-009",
-      "phase": "phase-1-foundation",
-      "stream": "solutions",
-      "title": "Página Hub de Categoria — Controle Patrimonial",
-      "passes": true
-    },
-    {
-      "id": "US-010",
-      "phase": "phase-1-foundation",
-      "stream": "solutions",
-      "title": "Página Hub de Categoria — Consultoria e Tecnologia",
-      "passes": true
-    },
-    {
-      "id": "US-011",
-      "phase": "phase-1-foundation",
-      "stream": "solutions",
-      "title": "Página Hub de Categoria — Avaliação Patrimonial",
-      "passes": true
-    },
-    {
-      "id": "US-012",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Organização Patrimonial",
-      "passes": true
-    },
-    {
-      "id": "US-013",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Controle e Inventário de Estoques",
-      "passes": true
-    },
-    {
-      "id": "US-014",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Processamento Patrimonial",
-      "passes": true
-    },
-    {
-      "id": "US-015",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Etiquetas Patrimoniais Inteligentes",
-      "passes": true
-    },
-    {
-      "id": "US-016",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Teste de Impairment",
-      "passes": true
-    },
-    {
-      "id": "US-017",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Revisão da Vida Útil",
-      "passes": true
-    },
-    {
-      "id": "US-018",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Ativos Inteligentes RFID e RTLS",
-      "passes": true
-    },
-    {
-      "id": "US-019",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Arrendamento Mercantil",
-      "passes": true
-    },
-    {
-      "id": "US-020",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Combinação de Negócios (PPA) – CPC 15",
-      "passes": true
-    },
-    {
-      "id": "US-021",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Softwares",
-      "passes": true
-    },
-    {
-      "id": "US-022",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Avaliação de Ativos",
-      "passes": true
-    },
-    {
-      "id": "US-023",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Avaliação de Ativos Biológicos",
-      "passes": true
-    },
-    {
-      "id": "US-024",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Avaliação de Imóveis Urbanos e Rurais",
-      "passes": true
-    },
-    {
-      "id": "US-025",
-      "phase": "phase-1-foundation",
-      "stream": "solution-details",
-      "title": "Subpágina de Solução — Avaliação de Máquinas",
-      "passes": true
-    },
-    {
-      "id": "US-026",
-      "phase": "phase-1-foundation",
-      "stream": "proof-social",
-      "title": "Página de Clientes com filtro por segmento",
-      "passes": true
-    },
-    {
-      "id": "US-027",
-      "phase": "phase-1-foundation",
-      "stream": "contact",
-      "title": "Página de Contato",
-      "passes": true
-    },
-    {
-      "id": "US-028",
-      "phase": "phase-1-foundation",
-      "stream": "contact",
-      "title": "Formulário de Cotação avançado",
-      "passes": true
-    },
-    {
-      "id": "US-029",
-      "phase": "phase-1-foundation",
-      "stream": "contact",
-      "title": "Formulário de Representante",
-      "passes": true
-    },
-    {
-      "id": "US-030",
-      "phase": "phase-1-foundation",
-      "stream": "content",
-      "title": "Página de Conteúdos (materiais para download)",
-      "passes": true
-    },
-    {
-      "id": "US-031",
-      "phase": "phase-1-foundation",
-      "stream": "content",
-      "title": "Blog/News — listagem e post individual",
-      "passes": true
-    },
-    {
-      "id": "US-032",
-      "phase": "phase-1-foundation",
-      "stream": "seo",
-      "title": "SEO, meta tags e sitemap",
-      "passes": true
-    },
-    {
-      "id": "US-033",
-      "phase": "phase-1-foundation",
-      "stream": "search",
-      "title": "Busca global do site",
-      "passes": true
-    },
-    {
-      "id": "US-034",
-      "phase": "phase-1-foundation",
-      "stream": "seed",
-      "title": "Seed de dados iniciais",
-      "passes": true
-    },
-    {
-      "id": "US-035",
-      "phase": "phase-1-foundation",
-      "stream": "quality",
-      "title": "Performance, acessibilidade e otimização",
-      "passes": true
-    },
-    {
-      "id": "US-036",
-      "phase": "phase-1-foundation",
-      "stream": "operations",
-      "title": "Deploy e documentação",
-      "passes": true
-    },
-    {
-      "id": "US-037",
-      "phase": "phase-1-foundation",
-      "stream": "strategy",
-      "title": "Revisar backlog e direção visual",
-      "passes": true
-    },
-    {
-      "id": "US-038",
-      "phase": "phase-2-redesign",
-      "stream": "design-system",
-      "title": "Definir direção visual refinada, pegada Payload e design system base",
+      "id": "VP-001",
+      "title": "Bootstrap do ciclo visual e registro de issues",
       "passes": true,
-      "description": "Consolidar a segunda fase com tokens, escalas, componentes-base e padrões reutilizáveis de layout.",
+      "description": "Preparar o novo ciclo visual, criar e consolidar o registro de débito visual residual e organizar as issues por família de template.",
       "acceptanceCriteria": [
-        "Direção visual atualizada no PRD",
-        "Escala tipográfica clara para display, headings, body, labels",
-        "Escala de spacing e rhythm vertical",
-        "Tokens/aliases para superfícies, bordas, sombras, radius e estados",
-        "Camada src/components/ui/ com botões, inputs, textareas, cards, chips, badges, headings, containers",
-        "Camada de estilos globais com sensação Payload-inspired",
-        "Documentado em progress.txt o racional da nova direção visual"
+        "Existe um registro versionado em docs/visual-register.md",
+        "As issues estão agrupadas por story/template family",
+        "Cada issue tem route, breakpoint, state, severity, problem, expected e suspectedArea",
+        "Nenhuma correção visual de produto é feita além do mínimo necessário para preparar o ciclo"
       ]
     },
     {
-      "id": "US-039A",
-      "phase": "phase-2-redesign",
-      "stream": "shell-global",
-      "title": "Repaginação do header e navegação principal",
-      "passes": true,
-      "description": "Redesenhar o header principal para navegação mais limpa, premium e inspirada no Payload.",
+      "id": "VP-002",
+      "title": "Correções visuais do shell e homepage",
+      "passes": false,
+      "description": "Corrigir débitos visuais residuais do shell global e da homepage orientados por screenshots e issues registradas.",
       "acceptanceCriteria": [
-        "Header criticamente revisto",
-        "Composição mais limpa e hierárquica entre logo, navegação, CTA e utilitários",
-        "Mais whitespace e sensação de produto sofisticado",
-        "CTA principal com mais destaque",
-        "Pegada visual Payload traduzida ao universo Apollo",
-        "Busca e sociais não competem com navegação principal",
-        "Responsivo e acessível"
+        "Navbar, mega menu, mobile menu, search overlay, footer e floats do shell ficam alinhados ao registro de issues deste escopo",
+        "Homepage fica alinhada ao registro de issues deste escopo",
+        "Nenhuma issue aberta de severidade alta permanece neste escopo sem justificativa",
+        "Cada correção referencia issue IDs no progress.txt"
       ]
     },
     {
-      "id": "US-039B",
-      "phase": "phase-2-redesign",
-      "stream": "shell-global",
-      "title": "Repaginação do mega menu, menu mobile e overlay de busca",
-      "passes": true,
-      "description": "Redesenhar superfícies de navegação secundária para linguagem mais premium e coerente.",
+      "id": "VP-003",
+      "title": "Correções visuais institucionais",
+      "passes": false,
+      "description": "Corrigir débitos visuais residuais das rotas institucionais, principalmente /sobre e seções relacionadas.",
       "acceptanceCriteria": [
-        "Mega menu evoluído para painel de navegação mais sofisticado",
-        "Melhor organização visual de categorias e subitens",
-        "Menu mobile como extensão natural do header",
-        "Overlay de busca com hierarquia mais limpa e editorial",
-        "Transições, sombras, bordas e agrupamentos refletem o design system",
-        "Acessível com navegação por teclado e foco gerenciado"
+        "As issues registradas para rotas institucionais foram tratadas",
+        "Hierarquia, spacing, cards, blocos institucionais e CTA surfaces ficam consistentes",
+        "Desktop, tablet e mobile são revisados no escopo desta story"
       ]
     },
     {
-      "id": "US-039C",
-      "phase": "phase-2-redesign",
-      "stream": "shell-global",
-      "title": "Repaginação do footer, CTA flutuantes e elementos globais",
-      "passes": true,
-      "description": "Refinar footer, WhatsApp float, cookie consent e scroll-to-top para linguagem uniforme.",
+      "id": "VP-004",
+      "title": "Correções visuais editorial e prova social",
+      "passes": false,
+      "description": "Corrigir débitos visuais residuais das rotas /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
       "acceptanceCriteria": [
-        "Footer repaginado com menos peso visual e melhor hierarquia",
-        "Formulário global de contato mais leve e contemporâneo",
-        "WhatsApp float, cookie consent e scroll-to-top integrados ao sistema",
-        "Sensação visual consistente com pegada Payload-inspired",
-        "Responsivo e acessível"
+        "As issues registradas para clientes, conteúdos e news foram tratadas",
+        "Cards, filtros, side rails, metadata, empty states e sticky behavior ficam coerentes",
+        "Nenhuma quebra visual de severidade alta permanece nesse escopo"
       ]
     },
     {
-      "id": "US-040A",
-      "phase": "phase-2-redesign",
-      "stream": "homepage",
-      "title": "Repaginação do hero da homepage",
-      "passes": true,
-      "description": "Transformar o hero da homepage em uma abertura institucional premium, mais próxima da força visual do Payload, adaptada ao posicionamento da Apollo.",
+      "id": "VP-005",
+      "title": "Correções visuais de contato e formulários",
+      "passes": false,
+      "description": "Corrigir débitos visuais residuais de /contato, /contato/cotacao, /contato/representante e superfícies públicas de formulário.",
       "acceptanceCriteria": [
-        "Hero redesenhado com melhor composição, headline e tratamento de imagem/fundo",
-        "Transmite clareza, autoridade e sofisticação visual imediatamente",
-        "Headline, subtítulo e CTA com hierarquia mais forte e limpa",
-        "Visual moderno e premium em desktop e mobile",
-        "Visivelmente mais maduro que a versão da fase 1",
-        "Coerente com a linguagem do shell repaginado em US-039A/B/C"
+        "As issues registradas para contato e formulários foram tratadas",
+        "Labels, campos, mensagens, summary rails e CTA trays ficam visualmente coerentes",
+        "Estados responsivos e de feedback ficam consistentes"
       ]
     },
     {
-      "id": "US-040B",
-      "phase": "phase-2-redesign",
-      "stream": "homepage",
-      "title": "Repaginação dos blocos centrais da homepage",
-      "passes": true,
-      "description": "Redesenhar seções de serviços, prova institucional e bloco institucional da homepage.",
+      "id": "VP-006",
+      "title": "Correções visuais de soluções",
+      "passes": false,
+      "description": "Corrigir débitos visuais residuais de /solucoes, hubs de categoria e detail pages de solução.",
       "acceptanceCriteria": [
-        "Seção dos 3 pilares com novo tratamento de cards, hierarquia e microinterações",
-        "Seção de valor/prova institucional com composição mais premium (números, credenciais ou diferenciais)",
-        "Seção institucional da Apollo mais limpa, respirada e contemporânea",
-        "Blocos refletem a pegada Payload-inspired em layout, espaçamento e clareza",
-        "Coerência visual com hero (US-040A) e shell (US-039)"
+        "As issues registradas para hubs e details foram tratadas",
+        "Cards, filters, rails, hero interno, largura de leitura e related surfaces ficam coerentes",
+        "Nenhuma rota principal de soluções permanece com outlier visual gritante"
       ]
     },
     {
-      "id": "US-040C",
-      "phase": "phase-2-redesign",
-      "stream": "homepage",
-      "title": "Costura final da homepage e consistência de narrativa",
-      "passes": true,
-      "description": "Revisar ordem, densidade, transições e coerência da homepage como vitrine institucional completa.",
+      "id": "VP-007",
+      "title": "Sweep responsivo final e fechamento do round",
+      "passes": false,
+      "description": "Executar o sweep final do round visual, registrar débito residual e fechar o ciclo.",
       "acceptanceCriteria": [
-        "Homepage não parece mais apenas reprodução estrutural do site anterior",
-        "Ordem e densidade das seções revisadas para melhor ritmo e fluidez",
-        "Homepage moderna, premium e comercialmente clara em todos os breakpoints",
-        "Design system e inspiração Payload aplicados de forma transversal",
-        "Nenhuma seção destoa visualmente das demais"
-      ]
-    },
-    {
-      "id": "US-043A",
-      "phase": "phase-2-redesign",
-      "stream": "content-and-proof",
-      "title": "Repaginação da página de Clientes",
-      "passes": true,
-      "description": "Atualizar a página de Clientes para que prova social e filtros pareçam mais premium e organizados.",
-      "acceptanceCriteria": [
-        "Novo tratamento de hero, filtros e grid de logos com sensação mais premium",
-        "Filtros mais claros, refinados e consistentes com os demais filtros do sistema",
-        "Grid de logos equilibra limpeza visual, valor de marca e legibilidade",
-        "Coerente com o design system e shell repaginados",
-        "Responsivo e acessível"
-      ]
-    },
-    {
-      "id": "US-043B",
-      "phase": "phase-2-redesign",
-      "stream": "content-and-proof",
-      "title": "Repaginação de Conteúdos e detail pages de material",
-      "passes": true,
-      "description": "Atualizar hub de conteúdos e páginas de material para biblioteca mais premium.",
-      "acceptanceCriteria": [
-        "Página de Conteúdos parece biblioteca de materiais de valor com cards mais fortes e CTA de download bem resolvida",
-        "Páginas de detalhe equilibram imagem, tipografia, metadata e conversão",
-        "Linguagem visual reflete o design system Payload-inspired em cards, blocos e estados",
-        "Responsivo e acessível"
-      ]
-    },
-    {
-      "id": "US-043C",
-      "phase": "phase-2-redesign",
-      "stream": "content-and-proof",
-      "title": "Repaginação de News e post detail",
-      "passes": true,
-      "description": "Atualizar listagens e detalhes editoriais do blog/news para estética mais editorial e premium.",
-      "acceptanceCriteria": [
-        "Páginas de News com tratamento mais editorial, cards e metadata mais sofisticados",
-        "Sidebar de News (desktop) integrada ao sistema, não colada lateralmente",
-        "Telas de conteúdo equilibram imagem, tipografia, metadata e conversão",
-        "Inspiração Payload aparece em clareza de hierarquia, respiro e polimento",
-        "Responsivo e acessível"
-      ]
-    },
-    {
-      "id": "US-044A",
-      "phase": "phase-2-redesign",
-      "stream": "contact",
-      "title": "Repaginação da página de contato",
-      "passes": true,
-      "description": "Redesenhar a página principal de contato para parecer mais confiável, organizada e contemporânea.",
-      "acceptanceCriteria": [
-        "Layout refinado com melhor composição entre copy, unidades e formulário",
-        "Hierarquia e distribuição visual mais claras em desktop e mobile",
-        "Linguagem do front reflete padrão premium inspirado no Payload",
-        "Responsivo e acessível"
-      ]
-    },
-    {
-      "id": "US-044B",
-      "phase": "phase-2-redesign",
-      "stream": "contact",
-      "title": "Repaginação do fluxo de cotação",
-      "passes": true,
-      "description": "Redesenhar o formulário de cotação para parecer fluxo consultivo de alto nível.",
-      "acceptanceCriteria": [
-        "Inputs, labels, validações e agrupamentos visuais alinhados ao design system",
-        "Página de cotação parece fluxo consultivo e profissional",
-        "Stepper, grupos de seleção, upload e estados de erro/sucesso com tratamento visual maduro",
-        "Fluxo claro, responsivo e acessível"
-      ]
-    },
-    {
-      "id": "US-044C",
-      "phase": "phase-2-redesign",
-      "stream": "contact",
-      "title": "Repaginação do fluxo de representante e padronização de formulários",
-      "passes": true,
-      "description": "Redesenhar a página de representante e consolidar linguagem única para formulários.",
-      "acceptanceCriteria": [
-        "Página de representante segue mesma linguagem premium dos demais fluxos de contato",
-        "Todos os formulários públicos compartilham linguagem visual clara e coerente",
-        "Formulários responsivos, acessíveis e claros no mobile"
-      ]
-    },
-    {
-      "id": "US-046A",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação da página /solucoes",
-      "passes": true,
-      "description": "Redesenhar a página hub de soluções para ser menos mecânica e mais consultiva.",
-      "acceptanceCriteria": [
-        "Hero, introdução, filtros e grid alinhados ao design system",
-        "Filtros evoluídos para chips/tabs modernos com estados ativos e contadores legíveis",
-        "Cards com aparência mais premium, proporção, padding e hover refinados",
-        "Página carrega claramente a pegada visual Payload-inspired"
-      ]
-    },
-    {
-      "id": "US-046B",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação dos hubs de categoria de soluções",
-      "passes": true,
-      "description": "Redesenhar hubs de categoria para aberturas consultivas mais narrativas por domínio.",
-      "acceptanceCriteria": [
-        "Páginas de categoria com abertura mais narrativa e valor percebido",
-        "Hierarquia entre hero, introdução, grid, CTA e contato revista",
-        "Experiência visual consistente entre as três categorias",
-        "Hubs conversam visualmente com homepage e linguagem Payload-inspired"
-      ]
-    },
-    {
-      "id": "US-046C",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Padronização visual dos cards e filtros de solução",
-      "passes": true,
-      "description": "Criar linguagem consistente e premium para cards, filtros e superfícies de listagem.",
-      "acceptanceCriteria": [
-        "Cards e filtros de solução viram primitives visuais coerentes e reutilizáveis",
-        "Hover, foco, estados ativos e densidade harmonizados",
-        "Acabamento mais próximo de produto premium",
-        "Mesma linguagem aplicável em /solucoes e nos hubs de categoria"
-      ]
-    },
-    {
-      "id": "US-047A",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação do template base de páginas de solução",
-      "passes": true,
-      "description": "Refinar o template base das páginas individuais de solução.",
-      "acceptanceCriteria": [
-        "Hero/banner refinado com melhor composição, respiro e tipografia mais forte",
-        "Breadcrumbs, metadata e CTA com hierarquia mais elegante",
-        "Área de conteúdo rico com largura de leitura controlada e melhor espaçamento tipográfico",
-        "Template melhora percepção de autoridade técnica"
-      ]
-    },
-    {
-      "id": "US-048B",
-      "phase": "phase-2-redesign",
-      "stream": "solutions",
-      "title": "Repaginação de elementos auxiliares das páginas de solução",
-      "passes": true,
-      "description": "Refinar blocos auxiliares e área de recomendação relacionada.",
-      "acceptanceCriteria": [
-        "Tratamentos visuais consistentes para listas, destaques, blocos ricos, callouts",
-        "Área 'Veja também' redesenhada como recomendação editorial de alto nível",
-        "Linguagem coerente com inspiração Payload sem perder tom institucional da Apollo"
-      ]
-    },
-    {
-      "id": "US-049A",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Revisão de consistência do shell global (navbar, footer e overlays)",
-      "passes": true,
-      "description": "Auditar e harmonizar o shell global do site para garantir consistência visual e comportamental com o novo design system.",
-      "acceptanceCriteria": [
-        "Navbar revisada para spacing, alinhamento, estados hover/focus e contraste",
-        "Mega menu e mobile menu revisados para consistência de tipografia, espaçamento e superfícies",
-        "SearchOverlay revisado para spacing, tipografia, estados e animações",
-        "Footer revisado para hierarquia visual, spacing vertical e consistência de botões e links",
-        "CookieConsent, WhatsAppFloat e ScrollToTop alinhados ao novo padrão visual",
-        "Nenhum componente do shell apresenta aparência anterior à fase 2",
-        "progress.txt registra ajustes aplicados e inconsistências encontradas"
-      ]
-    },
-    {
-      "id": "US-049B",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Harmonização global de tipografia",
-      "passes": true,
-      "description": "Garantir que todos os templates usem a escala tipográfica e hierarquia definidas no design system.",
-      "acceptanceCriteria": [
-        "Headings H1–H6 consistentes entre templates",
-        "Body text, subtitles e labels seguem escala tipográfica definida",
-        "Line-height e spacing vertical harmonizados",
-        "Nenhuma página usa estilos tipográficos isolados ou fora do design system",
-        "progress.txt registra correções aplicadas"
-      ]
-    },
-    {
-      "id": "US-049C",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Revisão de spacing e rhythm de layout",
-      "passes": true,
-      "description": "Auditar e harmonizar spacing entre seções, grids e componentes em todo o site.",
-      "acceptanceCriteria": [
-        "Espaçamento vertical consistente entre seções principais",
-        "Grids e cards seguem rhythm consistente",
-        "Containers e paddings alinhados ao design system",
-        "Nenhuma página apresenta compressão ou excesso de whitespace",
-        "progress.txt registra inconsistências corrigidas"
-      ]
-    },
-    {
-      "id": "US-049D",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Harmonização de motion e microinterações",
-      "passes": true,
-      "description": "Revisar e padronizar animações e microinterações em todo o site.",
-      "acceptanceCriteria": [
-        "Transições consistentes entre templates",
-        "Hover e focus states harmonizados",
-        "Animações não são excessivas ou inconsistentes",
-        "Respeito a prefers-reduced-motion",
-        "progress.txt registra ajustes realizados"
-      ]
-    },
-    {
-      "id": "US-049E",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Follow-up de harmonização de motion e microinterações em rotas e shells críticos",
-      "passes": true,
-      "description": "Fechar outliers remanescentes de animação, hover e focus em shells e rotas críticas após a primeira harmonização global.",
-      "acceptanceCriteria": [
-        "Shells e rotas críticas migrados para a mesma linguagem de motion da camada compartilhada",
-        "Hover e focus states mantêm paridade visual nos componentes revisados",
-        "Animações remanescentes fora do padrão são eliminadas ou justificadas",
-        "Respeito a prefers-reduced-motion é preservado",
-        "progress.txt registra ajustes realizados"
-      ]
-    },
-    {
-      "id": "US-049F",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Revisão visual das páginas principais",
-      "passes": true,
-      "description": "Auditar páginas principais para garantir consistência com o redesign.",
-      "acceptanceCriteria": [
-        "Home revisada para spacing, grids e hierarquia visual",
-        "Sobre revisada para consistência de layout e tipografia",
-        "Soluções e páginas de solução revisadas",
-        "Clientes revisada para consistência de cards e grids",
-        "Contato e formulários revisados",
-        "Nenhuma página principal apresenta aparência defasada",
-        "progress.txt registra correções realizadas"
-      ]
-    },
-    {
-      "id": "US-049G",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "QA responsivo completo",
-      "passes": true,
-      "description": "Revisão completa de comportamento responsivo em desktop, tablet e mobile.",
-      "acceptanceCriteria": [
-        "Desktop revisado para alinhamento, spacing e grids",
-        "Tablet revisado para adaptação de layout e legibilidade",
-        "Mobile revisado para spacing vertical e ergonomia",
-        "Nenhum layout quebra ou apresenta overflow",
-        "progress.txt registra ajustes realizados"
-      ]
-    },
-    {
-      "id": "US-051",
-      "phase": "phase-2-redesign",
-      "stream": "backlog-governance",
-      "title": "Saneamento do backlog de redesign e artefatos operacionais",
-      "passes": true,
-      "description": "Alinhar prd.json, progress.txt, progress-archive.txt e AGENTS.md ao estado real do projeto antes de novas correções visuais.",
-      "acceptanceCriteria": [
-        "storyExecutionPlan atualizado para refletir apenas a ordem real das stories existentes no backlog atual",
-        "storyDependencies sincronizado com as stories atualmente válidas do phase-2-redesign",
-        "Duplicações, IDs conflitantes e stories obsoletas identificadas e corrigidas sem apagar histórico técnico relevante",
-        "progress.txt fica com topo operacional enxuto, atualizado e coerente com o prd.json atual",
-        "Histórico antigo não essencial ao próximo ciclo é movido para progress-archive.txt sem perda de rastreabilidade",
-        "AGENTS.md passa a refletir com clareza a ordem real do backlog e as regras de seleção de story sem ambiguidade",
-        "Nenhuma story funcional ou visual é executada dentro desta task"
-      ]
-    },
-    {
-      "id": "US-052",
-      "phase": "phase-2-redesign",
-      "stream": "visual-audit",
-      "title": "Auditoria visual estruturada e criação do registro de débito visual",
-      "passes": true,
-      "description": "Auditar as rotas públicas do site e registrar problemas visuais de forma objetiva antes das correções.",
-      "acceptanceCriteria": [
-        "Todas as principais rotas públicas são auditadas em desktop, tablet e mobile",
-        "Estados relevantes são auditados quando aplicável: default, hover, focus, active, open, empty, loading e error",
-        "Cada problema visual registrado inclui rota, breakpoint, componente afetado, descrição do problema, comportamento esperado e severidade",
-        "É criado um registro persistente de débito visual em arquivo versionado no repositório",
-        "Cada item do débito visual recebe um identificador único para rastreamento",
-        "A auditoria não reabre modelagem CMS nem adiciona features novas"
-      ]
-    },
-    {
-      "id": "US-053",
-      "phase": "phase-2-redesign",
-      "stream": "visual-fixes-shell",
-      "title": "Correções visuais do shell global e overlays",
-      "passes": true,
-      "description": "Corrigir inconsistências visuais restantes em navbar, mega menu, mobile menu, search overlay, footer e floats globais.",
-      "acceptanceCriteria": [
-        "Navbar, mega menu, mobile menu e search overlay revisados contra o registro de débito visual",
-        "Footer, cookie consent, WhatsApp float e scroll-to-top revisados contra o registro de débito visual",
-        "Nenhum overflow, desalinhamento gritante, foco invisível ou contraste inconsistente permanece nos componentes do shell auditados",
-        "Estados hover, focus e open dos componentes do shell ficam coerentes entre si",
-        "Responsividade do shell é validada em desktop, tablet e mobile",
-        "progress.txt registra os componentes corrigidos, impactos compartilhados e QA manual pendente"
-      ]
-    },
-    {
-      "id": "US-054",
-      "phase": "phase-2-redesign",
-      "stream": "visual-fixes-institutional",
-      "title": "Correções visuais da homepage e da página Sobre",
-      "passes": true,
-      "description": "Corrigir inconsistências visuais remanescentes na homepage e em /sobre com foco em hero, ritmo vertical, blocos institucionais e CTAs.",
-      "acceptanceCriteria": [
-        "Homepage revisada contra o registro de débito visual em desktop, tablet e mobile",
-        "Página /sobre revisada contra o registro de débito visual em desktop, tablet e mobile",
-        "Hero, overlap sections, cards institucionais, sliders e CTAs mantêm hierarquia consistente com o design system",
-        "Não permanecem quebras visuais evidentes entre seções escuras e claras",
-        "Tipografia, spacing e densidade de interface ficam coerentes entre homepage e /sobre",
-        "progress.txt registra os templates corrigidos e impactos em componentes compartilhados"
-      ]
-    },
-    {
-      "id": "US-055",
-      "phase": "phase-2-redesign",
-      "stream": "visual-fixes-editorial-proof",
-      "title": "Correções visuais de Clientes, Conteúdos e News",
-      "passes": true,
-      "description": "Corrigir inconsistências visuais remanescentes em /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
-      "acceptanceCriteria": [
-        "Página /clientes revisada contra o registro de débito visual",
-        "Hub e detalhe de Conteúdos revisados contra o registro de débito visual",
-        "Hub e detalhe de News revisados contra o registro de débito visual",
-        "Filtros, grids, cards editoriais, side rails, sticky blocks e empty states ficam coerentes com o phase-2 design system",
-        "Nenhum layout principal dessas rotas apresenta overflow, compressão severa ou hierarquia inconsistente entre desktop, tablet e mobile",
-        "progress.txt registra os templates corrigidos, componentes compartilhados impactados e QA manual pendente"
-      ]
-    },
-    {
-      "id": "US-056",
-      "phase": "phase-2-redesign",
-      "stream": "visual-fixes-contact",
-      "title": "Correções visuais dos fluxos de contato e formulários públicos",
-      "passes": true,
-      "description": "Corrigir inconsistências visuais restantes em /contato, /contato/cotacao, /contato/representante e formulários públicos compartilhados.",
-      "acceptanceCriteria": [
-        "Página /contato revisada contra o registro de débito visual",
-        "Fluxo /contato/cotacao revisado contra o registro de débito visual",
-        "Fluxo /contato/representante revisado contra o registro de débito visual",
-        "ContatoForm, CotacaoForm, RepresentanteForm e NewsletterForm mantêm linguagem visual consistente entre labels, campos, mensagens e CTAs",
-        "Stepper, upload, estados de erro/sucesso e summary rails ficam visualmente coerentes em todos os breakpoints aplicáveis",
-        "progress.txt registra os fluxos corrigidos e impactos em componentes compartilhados"
-      ]
-    },
-    {
-      "id": "US-057",
-      "phase": "phase-2-redesign",
-      "stream": "visual-fixes-solutions",
-      "title": "Correções visuais das páginas de soluções e details",
-      "passes": true,
-      "description": "Corrigir inconsistências visuais remanescentes em /solucoes, hubs de categoria e páginas de detalhe de solução.",
-      "acceptanceCriteria": [
-        "Página /solucoes revisada contra o registro de débito visual",
-        "Todos os hubs de categoria revisados contra o registro de débito visual",
-        "Template base de detail pages revisado contra o registro de débito visual",
-        "Cards, rails, filtros, hero interno, largura de leitura, blocos auxiliares e seção Veja também ficam coerentes entre templates",
-        "Nenhuma rota principal de soluções apresenta aparência claramente defasada em relação ao restante da fase 2",
-        "progress.txt registra os templates corrigidos, primitives impactadas e QA manual pendente"
-      ]
-    },
-    {
-      "id": "US-058",
-      "phase": "phase-2-redesign",
-      "stream": "responsive-qa-evidence",
-      "title": "QA responsivo final com evidências de débito residual",
-      "passes": true,
-      "description": "Executar um sweep final de QA responsivo nas rotas públicas após as correções visuais e registrar o débito residual.",
-      "acceptanceCriteria": [
-        "Desktop, tablet e mobile são revisados nas principais rotas públicas após as correções",
-        "Nenhum overflow horizontal, colapso de grid ou conflito gritante entre elementos flutuantes permanece nas rotas auditadas",
-        "É gerada evidência final do que foi corrigido e do que permanece pendente",
-        "Pendências residuais ficam registradas de forma objetiva e rastreável",
-        "progress.txt registra o sweep final, limitações de ambiente e QA manual pendente quando aplicável"
-      ]
-    },
-    {
-      "id": "US-050",
-      "phase": "phase-2-redesign",
-      "stream": "polish",
-      "title": "Polish visual, consistência global e QA de redesign",
-      "passes": true,
-      "description": "Gate final de consistência e acabamento do produto após saneamento operacional, auditoria visual e correções dirigidas por débito visual.",
-      "acceptanceCriteria": [
-        "Todas as principais páginas públicas revisadas para consistência de spacing, tipografia, superfícies, botões, formulários, grids e motion",
-        "Revisão específica de desktop, tablet e mobile",
-        "Nenhuma página principal com aparência defasada em relação ao novo padrão",
-        "Hover, focus, estados vazios, transições e interações harmonizados entre templates",
-        "progress.txt registra o que foi harmonizado, débitos visuais e decisões de design system",
-        "Evolução clara em relação à fase 1 sem quebrar identidade institucional da Apollo",
-        "Pegada visual Payload perceptível de forma transversal em todo o site público",
-        "US-051 até US-058 concluídas e refletidas nos artefatos operacionais"
+        "Desktop, tablet e mobile foram rechecados nas rotas trabalhadas neste round",
+        "O registro visual indica o que foi fechado, o que ficou residual e o que foi adiado",
+        "progress.txt registra o fechamento do round",
+        "Todas as stories VP-001 até VP-006 estão concluídas antes desta"
       ]
     }
   ],
-  "functionalRequirements": [
-    "FR-01: Next.js 15.4.x com App Router e React Server Components",
-    "FR-02: Payload CMS 3.x integrado ao Next.js (não standalone, single deploy)",
-    "FR-03: PostgreSQL como banco de dados via @payloadcms/db-postgres",
-    "FR-04: TypeScript strict em todo o projeto",
-    "FR-05: Tailwind CSS 3.x para estilização com tokens de design customizados",
-    "FR-06: Todo conteúdo do site gerenciável via painel admin do Payload em /admin",
-    "FR-07: Layout builder com blocos reutilizáveis para Pages",
-    "FR-08: Mega menu dropdown com 3 categorias de soluções e sub-itens",
-    "FR-09: Formulários de contato, cotação e representante com validação client-side",
-    "FR-10: Grid de clientes com filtro por segmento (~130+ clientes, ~32 segmentos)",
-    "FR-11: Grid de soluções com filtro por tag/categoria (14 soluções)",
-    "FR-12: Blog/news com listagem paginada, busca e newsletter",
-    "FR-13: Busca global em Pages, Posts, Soluções e Conteúdos",
-    "FR-14: SEO dinâmico: meta tags, OG, sitemap.xml, robots.txt, JSON-LD",
-    "FR-15: Responsivo em desktop, tablet e mobile",
-    "FR-16: Framer Motion para animações de entrada e parallax; CSS transitions para hover/micro-interações",
-    "FR-17: Cookie consent banner",
-    "FR-18: Botão flutuante do WhatsApp",
-    "FR-19: Scroll-to-top button",
-    "FR-20: Breadcrumbs nas páginas de soluções e posts",
-    "FR-21: Conteúdos para download com opção de lead capture (e-mail)",
-    "FR-22: Upload de mídia via Payload (local ou S3/R2)",
-    "FR-23: Acessibilidade WCAG 2.1 AA: semantic HTML, ARIA, keyboard nav, focus management, prefers-reduced-motion",
-    "FR-24: O projeto deve possuir um design system explícito com tokens visuais, escalas tipográficas, espaçamento, sombras, raios e superfícies reutilizáveis.",
-    "FR-25: O site deve evoluir de uma recriação estrutural para uma execução visual premium e contemporânea, sem romper a identidade institucional da Apollo Gestão.",
-    "FR-26: Navbar, footer, overlays, cards, grids, filtros e formulários devem seguir uma linguagem visual unificada e mais sofisticada que a fase inicial do projeto.",
-    "FR-27: Hero sections não precisam ser fullscreen em todas as páginas; o uso deve ser decidido por valor de comunicação e impacto visual do template.",
-    "FR-28: As páginas internas devem apresentar melhor hierarquia de leitura, largura de conteúdo controlada, rhythm vertical consistente e CTAs melhor posicionados.",
-    "FR-29: A experiência visual precisa ser consistente entre desktop, tablet e mobile, com evidência de revisão de espaçamento, proporção, contraste e densidade de interface.",
-    "FR-30: A evolução visual deve ser incremental sobre a base existente, sem invalidar a arquitetura CMS, rotas, SEO e conteúdo já implementados.",
-    "FR-31: O redesign deve priorizar percepção de marca, clareza comercial e acabamento premium antes de introduzir novas features funcionais.",
-    "FR-32: Todo o site público deve ter uma pegada visual inspirada no site do Payload CMS, aplicada de forma consistente em navegação, hero, CTAs, grids, cards, conteúdo editorial, overlays e formulários.",
-    "FR-33: O shell global foi repaginado em US-039A/B/C e serve como referência de linguagem para todos os templates seguintes.",
-    "FR-34: A inspiração no Payload deve ser traduzida para o contexto institucional da Apollo sem descaracterizar sua identidade nem transformar o site em uma cópia de produto SaaS.",
-    "FR-35: O sistema visual do redesign deve tornar perceptível uma sensação de clareza de produto maduro, com whitespace, hierarquia e acabamento superiores aos da fase 1.",
-    "FR-36: A ordem de prioridade atual do ciclo aberto da fase 2 é: saneamento do backlog, auditoria visual, correções dirigidas por débito visual, QA responsivo com evidências e gate final de fechamento."
-  ],
-  "nonGoals": [
-    "Clone visual pixel-perfect do WordPress atual",
-    "Clone visual pixel-perfect do site do Payload",
-    "Migração automática do conteúdo do WordPress atual",
-    "Migração dos posts existentes do blog",
-    "Rebranding completo da Apollo Gestão com mudança radical de identidade",
-    "Interface de startup genérica ou visual excessivamente promocional",
-    "Transformar a Apollo em um produto SaaS no discurso visual e comercial",
-    "E-commerce ou processamento de pagamentos",
-    "Área restrita / autenticação de clientes no frontend",
-    "Integração com ERP ou sistemas internos da Apollo",
-    "App mobile nativo",
-    "Multi-idioma / internacionalização (apenas pt-BR)",
-    "Chat ao vivo (além do WhatsApp float)",
-    "A/B testing",
-    "Definição da solução final de mensageria/entrega operacional dos formulários",
-    "Dark mode / toggle de tema nesta fase"
-  ],
-  "risksAndConstraints": {
-    "mainRisks": [
-      "Misturar linguagem visual antiga e nova por tempo demais durante a fase 2",
-      "Introduzir redesign sem design system suficiente e gerar inconsistência",
-      "Reabrir modelagem CMS sem ganho claro e atrasar a execução",
-      "Melhorar visualmente desktop e deixar mobile como adaptação tardia",
-      "Perder clareza comercial em nome de estética",
-      "Confundir inspiração no Payload com cópia literal e descaracterizar a Apollo",
-      "Bloquear homepage e conteúdo editorial aguardando stories de soluções",
-      "Permitir deriva entre prd.json, progress.txt, progress-archive.txt e AGENTS.md e fazer o agente executar stories fora de ordem ou com contexto inconsistente"
-    ],
-    "constraints": [
-      "O redesign deve respeitar a base técnica e editorial já construída",
-      "As páginas públicas já existem e devem evoluir incrementalmente",
-      "SEO e rotas já entregues não devem ser prejudicados",
-      "Nem toda melhoria visual justifica nova modelagem de conteúdo",
-      "A linguagem Payload-inspired deve ser traduzida, não copiada",
-      "Stories de soluções não devem bloquear homepage, conteúdo editorial ou formulários"
-    ]
+  "storyDependencies": {
+    "VP-002": ["VP-001"],
+    "VP-003": ["VP-001"],
+    "VP-004": ["VP-001"],
+    "VP-005": ["VP-001"],
+    "VP-006": ["VP-001"],
+    "VP-007": ["VP-002", "VP-003", "VP-004", "VP-005", "VP-006"]
   },
+  "storyOrder": [
+    "VP-001",
+    "VP-002",
+    "VP-003",
+    "VP-004",
+    "VP-005",
+    "VP-006",
+    "VP-007"
+  ],
   "definitionOfDone": {
     "storyLevel": [
-      "Critérios de aceite atendidos",
-      "Arquivos alterados registrados",
-      "Racional da decisão documentado em progress.txt",
-      "Lint, validação de tipo prática e build executados quando aplicável",
-      "Impactos em acessibilidade e responsividade considerados",
-      "Débitos ou QA manual pendente explicitados",
-      "Quando aplicável, IDs do débito visual auditado referenciados na entrega"
+      "A story selecionada teve suas issues tratadas ou explicitamente resolvidas no registro",
+      "Checks aplicáveis foram executados",
+      "A story foi marcada com passes: true",
+      "Foi adicionado um novo log em progress.txt",
+      "Foi feito commit se os checks passaram"
     ],
-    "phase2Completion": [
-      "Navbar, footer, homepage, hubs, detalhes, conteúdo e formulários compartilham linguagem visual coerente",
-      "Há evidência clara de evolução visual em relação à fase 1",
-      "Não existem páginas principais com aparência claramente defasada em relação ao novo padrão",
-      "O produto preserva identidade institucional da Apollo enquanto eleva seu acabamento",
-      "A pegada visual inspirada no Payload é perceptível de forma transversal em todo o site público",
-      "Os artefatos operacionais do projeto permanecem sincronizados com o estado real do backlog e da execução"
+    "cycleLevel": [
+      "Todas as stories VP-001 a VP-007 estão com passes: true",
+      "O registro visual está atualizado",
+      "O round está rastreável e com débito residual explícito"
     ]
   }
 }
