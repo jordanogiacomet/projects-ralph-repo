@@ -32,3 +32,13 @@ Thumbs.db
 prd.json
 progress.txt
 .last-branch
+
+.next/
+.next-stale-*/
+*.tsbuildinfo
+*.tsbuildinfo.stale-*
+
+.next/
+.next-stale-*/
+*.tsbuildinfo
+*.tsbuildinfo.stale-*
