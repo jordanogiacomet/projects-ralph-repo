@@ -1,0 +1,5 @@
+categoria,descricao,vida_util_anos,valor_residual_percentual,metodo_depreciacao
+Maquinas,Equipamento industrial,10,10,Linear
+Veiculos,Frota operacional leve,5,20,Linear
+Moveis,Mobiliario corporativo,10,5,Linear
+Tecnologia,Servidores e equipamentos de TI,5,0,Linear

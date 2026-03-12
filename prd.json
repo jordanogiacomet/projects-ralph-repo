@@ -1,0 +1,240 @@
+{
+  "projectName": "apollo-gestao-website-visual-r1",
+  "branchName": "codex/apollo-visual-polish-r1",
+  "baseBranch": "main",
+  "version": "visual-r1.1",
+  "status": "complete",
+  "description": "Ciclo dedicado de correções visuais residuais e ajustes finos do site institucional da Apollo Gestão sobre a baseline já entregue da phase-2-redesign-complete. Este ciclo não reabre o redesign amplo nem a modelagem CMS. O foco é corrigir inconsistências visuais, desalinhamentos, problemas responsivos e pequenos débitos de polish orientados por screenshots e registro de issues.",
+  "baseline": {
+    "sourcePRD": ".ralph/baseline/prd-phase2.json",
+    "sourceProgress": ".ralph/baseline/progress-phase2.txt",
+    "sourceStatus": "phase-2-redesign-complete",
+    "assumption": "A baseline funcional e visual da fase 2 já está entregue. Este PRD organiza apenas um round novo, menor e orientado a débito visual residual."
+  },
+  "goal": {
+    "primary": "Eliminar débitos visuais residuais de alta e média severidade sem introduzir novas features nem refatorações amplas.",
+    "secondary": [
+      "Melhorar alinhamento, spacing, ritmo vertical, consistência tipográfica, densidade de interface e comportamento responsivo",
+      "Usar screenshots e issue register como insumo principal de correção",
+      "Manter a linguagem Payload-inspired já consolidada na baseline",
+      "Fechar um round objetivo, pequeno e rastreável de polish visual"
+    ]
+  },
+  "scopeRules": {
+    "allowed": [
+      "Correções de layout, spacing, alinhamento, contraste, densidade, hierarquia, estados hover/focus/open, responsividade e polish visual",
+      "Ajustes pequenos em componentes compartilhados quando necessários para corrigir problemas reais em múltiplas rotas",
+      "Atualização de classes, wrappers, grids, gaps, paddings, margens, sticky offsets, empty states e fallbacks visuais",
+      "Ajustes curtos de copy apenas quando necessários para evitar quebra visual ou melhorar consistência de UI"
+    ],
+    "forbidden": [
+      "Novas features de produto",
+      "Reabertura da modelagem Payload por motivo puramente visual",
+      "Refatorações arquiteturais grandes",
+      "Troca de stack, troca de biblioteca ou redesign amplo de páginas já estáveis sem issue visual concreta",
+      "Reescrever rotas inteiras sem necessidade comprovada por issue registrada"
+    ]
+  },
+  "issueWorkflow": {
+    "sourceOfTruth": "docs/visual-register.md",
+    "issueIdFormat": "VR-001",
+    "requiredFieldsPerIssue": [
+      "id",
+      "story",
+      "route",
+      "breakpoint",
+      "state",
+      "severity",
+      "screenshots",
+      "problem",
+      "expected",
+      "suspectedArea",
+      "status"
+    ],
+    "rules": [
+      "Toda correção deve referenciar pelo menos um issue ID do registro visual",
+      "Toda issue deve ter screenshot atual ou descrição objetiva suficiente para execução segura",
+      "A story só pode ser marcada como completa quando todas as issues daquele escopo estiverem fechadas, rejeitadas ou movidas explicitamente para backlog futuro",
+      "Issues sem evidência suficiente não devem gerar alteração especulativa"
+    ]
+  },
+  "validation": {
+    "requiredChecks": [
+      "npm run lint",
+      "npm run typecheck se existir; caso contrário npx tsc --noEmit",
+      "npm run test se existir",
+      "npm run build"
+    ],
+    "uiVerification": [
+      "Browser verification quando tooling estiver disponível",
+      "Se não houver browser tooling, registrar necessidade de QA manual"
+    ]
+  },
+  "successCriteria": {
+    "visual": [
+      "Não restam problemas visuais de severidade alta no registro visual deste ciclo para as stories ativas",
+      "Problemas de severidade média do escopo ativo deste round estão corrigidos ou explicitamente adiados com justificativa",
+      "Shell, homepage, institucional, editorial, contato e follow-up de shell/homepage/contato mantêm consistência visual perceptível",
+      "Desktop, tablet e mobile não apresentam quebras gritantes nas rotas auditadas deste ciclo"
+    ],
+    "operational": [
+      "Cada correção fica rastreável por issue ID, arquivos alterados, checks executados e observação de QA",
+      "O ciclo fecha sem reabrir indevidamente o PRD de redesign amplo da fase 2"
+    ]
+  },
+  "userStories": [
+    {
+      "id": "VP-001",
+      "title": "Bootstrap do ciclo visual e registro de issues",
+      "passes": true,
+      "status": "done",
+      "description": "Preparar o novo ciclo visual, criar e consolidar o registro de débito visual residual e organizar as issues por família de template.",
+      "acceptanceCriteria": [
+        "Existe um registro versionado em docs/visual-register.md",
+        "As issues estão agrupadas por story/template family",
+        "Cada issue tem route, breakpoint, state, severity, problem, expected e suspectedArea",
+        "Nenhuma correção visual de produto é feita além do mínimo necessário para preparar o ciclo"
+      ]
+    },
+    {
+      "id": "VP-002",
+      "title": "Correções visuais do shell e homepage",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais residuais do shell global e da homepage orientados por screenshots e issues registradas.",
+      "acceptanceCriteria": [
+        "Navbar, mega menu, mobile menu, search overlay, footer e floats do shell ficam alinhados ao registro de issues deste escopo",
+        "Homepage fica alinhada ao registro de issues deste escopo",
+        "Nenhuma issue aberta de severidade alta permanece neste escopo sem justificativa",
+        "Cada correção referencia issue IDs no progress.txt"
+      ]
+    },
+    {
+      "id": "VP-003",
+      "title": "Correções visuais institucionais",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais residuais das rotas institucionais, principalmente /sobre e seções relacionadas.",
+      "acceptanceCriteria": [
+        "As issues registradas para rotas institucionais foram tratadas",
+        "Hierarquia, spacing, cards, blocos institucionais e CTA surfaces ficam consistentes",
+        "Desktop, tablet e mobile são revisados no escopo desta story"
+      ]
+    },
+    {
+      "id": "VP-004",
+      "title": "Correções visuais editorial e prova social",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais residuais das rotas /clientes, /conteudos, /conteudos/[slug], /news e /news/[slug].",
+      "acceptanceCriteria": [
+        "As issues registradas para clientes, conteúdos e news foram tratadas",
+        "Cards, filtros, side rails, metadata, empty states e sticky behavior ficam coerentes",
+        "Nenhuma quebra visual de severidade alta permanece nesse escopo"
+      ]
+    },
+    {
+      "id": "VP-005",
+      "title": "Correções visuais de contato e formulários",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais residuais de /contato, /contato/cotacao, /contato/representante e superfícies públicas de formulário.",
+      "acceptanceCriteria": [
+        "As issues registradas para contato e formulários foram tratadas",
+        "Labels, campos, mensagens, summary rails e CTA trays ficam visualmente coerentes",
+        "Estados responsivos e de feedback ficam consistentes"
+      ]
+    },
+    {
+      "id": "VP-008",
+      "title": "Follow-up visual de shell, homepage e contato",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais adicionais descobertos após o primeiro lote de shell, homepage e contato, com foco em header widescreen, costura do hero da homepage, refinamento do formulário principal e apresentação mais discreta das unidades.",
+      "acceptanceCriteria": [
+        "As issues registradas para shell, homepage e contato neste follow-up foram tratadas",
+        "Header widescreen mantém contenção visual e distribuição equilibrada",
+        "A transição hero -> próxima seção na homepage fica mais respirada e intencional",
+        "A página de contato passa a usar composição mais limpa, com formulário principal mais claro e unidades mais discretas",
+        "Cada correção referencia issue IDs no progress.txt"
+      ]
+    },
+    {
+      "id": "VP-006",
+      "title": "Correções visuais de soluções",
+      "passes": true,
+      "status": "done",
+      "description": "Corrigir débitos visuais residuais de /solucoes, hubs de categoria e detail pages de solução.",
+      "acceptanceCriteria": [
+        "As issues registradas para hubs e details foram tratadas",
+        "Cards, filters, rails, hero interno, largura de leitura e related surfaces ficam coerentes",
+        "Nenhuma rota principal de soluções permanece com outlier visual gritante"
+      ]
+    },
+    {
+      "id": "VP-007",
+      "title": "Sweep responsivo final e fechamento do round",
+      "passes": true,
+      "status": "done",
+      "description": "Executar o sweep final do round visual, registrar débito residual e fechar o ciclo.",
+      "acceptanceCriteria": [
+        "Desktop, tablet e mobile foram rechecados nas rotas trabalhadas neste round",
+        "O registro visual indica o que foi fechado, o que ficou residual e o que foi adiado",
+        "progress.txt registra o fechamento do round",
+        "Todas as stories ativas anteriores ao sweep estão concluídas antes desta"
+      ]
+    }
+  ],
+  "storyDependencies": {
+    "VP-002": [
+      "VP-001"
+    ],
+    "VP-003": [
+      "VP-001"
+    ],
+    "VP-004": [
+      "VP-001"
+    ],
+    "VP-005": [
+      "VP-001"
+    ],
+    "VP-008": [
+      "VP-005"
+    ],
+    "VP-006": [
+      "VP-001"
+    ],
+    "VP-007": [
+      "VP-002",
+      "VP-003",
+      "VP-004",
+      "VP-005",
+      "VP-008",
+      "VP-006"
+    ]
+  },
+  "storyOrder": [
+    "VP-001",
+    "VP-002",
+    "VP-003",
+    "VP-004",
+    "VP-005",
+    "VP-008",
+    "VP-006",
+    "VP-007"
+  ],
+  "definitionOfDone": {
+    "storyLevel": [
+      "A story selecionada teve suas issues tratadas ou explicitamente resolvidas no registro",
+      "Checks aplicáveis foram executados",
+      "A story foi marcada com passes: true",
+      "Foi adicionado um novo log em progress.txt",
+      "Foi feito commit se os checks passaram"
+    ],
+    "cycleLevel": [
+      "Todas as stories ativas do round estão com passes: true",
+      "O registro visual está atualizado",
+      "O round está rastreável e com débito residual explícito"
+    ]
+  }
+}

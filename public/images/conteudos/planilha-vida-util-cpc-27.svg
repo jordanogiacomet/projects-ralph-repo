@@ -1,0 +1,29 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#143052" />
+  <rect x="56" y="56" width="1088" height="563" rx="30" fill="url(#paint0_linear)" />
+  <rect x="132" y="140" width="916" height="392" rx="22" fill="#FFFFFF" fill-opacity="0.16" />
+  <rect x="170" y="178" width="840" height="44" rx="12" fill="#FFFFFF" fill-opacity="0.82" />
+  <rect x="170" y="246" width="840" height="1" fill="#FFFFFF" fill-opacity="0.42" />
+  <rect x="170" y="306" width="840" height="1" fill="#FFFFFF" fill-opacity="0.42" />
+  <rect x="170" y="366" width="840" height="1" fill="#FFFFFF" fill-opacity="0.42" />
+  <rect x="170" y="426" width="840" height="1" fill="#FFFFFF" fill-opacity="0.42" />
+  <rect x="290" y="160" width="1" height="350" fill="#FFFFFF" fill-opacity="0.35" />
+  <rect x="450" y="160" width="1" height="350" fill="#FFFFFF" fill-opacity="0.35" />
+  <rect x="610" y="160" width="1" height="350" fill="#FFFFFF" fill-opacity="0.35" />
+  <rect x="770" y="160" width="1" height="350" fill="#FFFFFF" fill-opacity="0.35" />
+  <rect x="930" y="160" width="1" height="350" fill="#FFFFFF" fill-opacity="0.35" />
+  <circle cx="186" cy="112" r="62" fill="#FFFFFF" fill-opacity="0.14" />
+  <circle cx="1032" cy="560" r="138" fill="#FFFFFF" fill-opacity="0.1" />
+  <text x="170" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="46" font-weight="700">
+    Planilha de Vida Util CPC 27
+  </text>
+  <text x="170" y="518" fill="#FFFFFF" fill-opacity="0.88" font-family="Arial, sans-serif" font-size="26" font-weight="400">
+    Template para revisao tecnica de depreciacao e valor residual.
+  </text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="100" y1="90" x2="1088" y2="614" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D5FAE" />
+      <stop offset="1" stop-color="#1B6FB5" />
+    </linearGradient>
+  </defs>
+</svg>

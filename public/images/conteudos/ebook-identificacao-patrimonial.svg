@@ -1,0 +1,27 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#112E52" />
+  <rect x="56" y="56" width="1088" height="563" rx="30" fill="url(#paint0_linear)" />
+  <rect x="132" y="126" width="224" height="332" rx="16" fill="#FFFFFF" fill-opacity="0.2" />
+  <rect x="160" y="164" width="168" height="20" rx="10" fill="#FFFFFF" />
+  <rect x="160" y="202" width="132" height="14" rx="7" fill="#FFFFFF" fill-opacity="0.7" />
+  <rect x="160" y="229" width="146" height="14" rx="7" fill="#FFFFFF" fill-opacity="0.7" />
+  <rect x="160" y="256" width="118" height="14" rx="7" fill="#FFFFFF" fill-opacity="0.7" />
+  <rect x="160" y="294" width="168" height="102" rx="12" fill="#FFFFFF" fill-opacity="0.14" />
+  <circle cx="990" cy="140" r="102" fill="#FFFFFF" fill-opacity="0.14" />
+  <circle cx="950" cy="560" r="144" fill="#FFFFFF" fill-opacity="0.1" />
+  <text x="412" y="250" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="52" font-weight="700">
+    E-book
+  </text>
+  <text x="412" y="312" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="44" font-weight="700">
+    Identificacao Patrimonial
+  </text>
+  <text x="412" y="366" fill="#FFFFFF" fill-opacity="0.88" font-family="Arial, sans-serif" font-size="26" font-weight="400">
+    Guia pratico para organizar ativos com padrao tecnico.
+  </text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="100" y1="92" x2="1080" y2="612" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0056A6" />
+      <stop offset="1" stop-color="#1A5EA5" />
+    </linearGradient>
+  </defs>
+</svg>
